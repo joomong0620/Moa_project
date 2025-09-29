@@ -1,0 +1,294 @@
+.signUp-content {
+
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+
+}
+
+.blank{
+    width: 1920px;
+    height: 100px;
+    background-color: white;
+}
+
+#sign{
+    width: 1720px;
+    height: 150px;
+    color: white;
+    background-color: #27374D;
+    font-size: 50px;
+
+    padding-left: 345px;
+    padding-top: 75px;
+    
+}
+
+.id-top{
+
+    margin-top: 300px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+.id-top > *{
+    color: red;
+}
+
+.id-input{
+
+    margin-left: 345px;
+    width: 1230px;
+    height: 100px;
+    border-radius: 20px;
+    font-size: 35px;
+    border-color: #D9D9D9;
+    border: 1px solid #D9D9D9;
+    padding-left: 30px;
+    
+}
+
+.id-bottom{
+
+    margin-top: 20px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+.pw-top{
+
+    margin-top: 100px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+.pw-top > *{
+    color: red;
+}
+
+.pw-input{
+
+    margin-left: 345px;
+    width: 1230px;
+    height: 100px;
+    border-radius: 20px;
+    font-size: 35px;
+    border-color: #D9D9D9;
+    border: 1px solid #D9D9D9;
+    padding-left: 30px;
+    
+}
+
+.pw-bottom{
+
+    margin-top: 20px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+
+.pwcon-top{
+
+    margin-top: 100px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+.pwcon-top > *{
+    color: red;
+}
+
+.pwcon-input{
+
+    margin-left: 345px;
+    width: 1230px;
+    height: 100px;
+    border-radius: 20px;
+    font-size: 35px;
+    border-color: #D9D9D9;
+    border: 1px solid #D9D9D9;
+    padding-left: 30px;
+    
+}
+
+.pwcon-bottom{
+
+    margin-top: 20px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+
+.email-top{
+
+    margin-top: 100px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+.email-top > *{
+    color: red;
+}
+
+.email-input{
+
+    margin-left: 345px;
+    width: 1230px;
+    height: 100px;
+    border-radius: 20px;
+    font-size: 35px;
+    border-color: #D9D9D9;
+    border: 1px solid #D9D9D9;
+    padding-left: 30px;
+    
+}
+
+.email-bottom{
+
+    margin-top: 20px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+
+.nick-top{
+
+    margin-top: 100px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+.nick-top > *{
+    color: red;
+}
+
+.nick-input{
+
+    margin-left: 345px;
+    width: 1230px;
+    height: 100px;
+    border-radius: 20px;
+    font-size: 35px;
+    border-color: #D9D9D9;
+    border: 1px solid #D9D9D9;
+    padding-left: 30px;
+    
+}
+
+.nick-bottom{
+
+    margin-top: 20px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+
+
+.tel-top{
+
+    margin-top: 100px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+.tel-top > *{
+    color: red;
+}
+
+.tel-input{
+
+    margin-left: 345px;
+    width: 1230px;
+    height: 100px;
+    border-radius: 20px;
+    font-size: 35px;
+    border-color: #D9D9D9;
+    border: 1px solid #D9D9D9;
+    padding-left: 30px;
+    
+}
+
+.tel-bottom{
+
+    margin-top: 20px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+
+.addr-top{
+
+    margin-top: 100px;
+    margin-left: 345px;
+    margin-bottom: 30px;   
+    font-weight: bold;
+}
+
+.addr-top > span{
+    color: red;
+}
+
+.addr-input{
+
+    margin-left: 345px;
+    width: 1230px;
+    height: 100px;
+    border-radius: 20px;
+    font-size: 35px;
+    border-color: #D9D9D9;
+    border: 1px solid #D9D9D9;
+    padding-left: 30px;
+    
+}
+
+.addr-Btn{
+
+    margin-left: 1065px;
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+
+}
+
+
+#sign-Btn{
+
+    margin-top: 300px;
+    margin-left: 700px;
+    width: 466px;
+    height: 116px;
+    background-color: #27374D;
+    color: white;
+
+    font-size: 35px;
+    border-radius: 10px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @PropertySource("classpath:/config.properties")
@@ -28,6 +29,14 @@ public class DBConfig {
 		return new HikariConfig();
 	}
 	
+	@Bean
+	public DataSource dataSource(HikariConfig config) {
+		DataSource dataSource = new HikariDataSource(config);
+		
+		return dataSource;
+	}
+	
+	
 	
 	@Bean
 	public SqlSessionFactory sessionFactory(DataSource dataSource) throws Exception{
@@ -37,7 +46,9 @@ public class DBConfig {
 		sessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mappers/**.xml"));
 		
 		sessionFactoryBean.setTypeAliasesPackage( "edu.og.moa");
-			
+		
+		sessionFactoryBean.set
+		
 		return sessionFactoryBean.getObject();
 	}
 

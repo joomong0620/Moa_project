@@ -7,53 +7,60 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
     
+    <!-- <script th:src="@{https://kit.fontawesome.com/f7459b8054.js}" crossorigin="anonymous"></script> -->
+    <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script>
+
+
     <link rel="stylesheet" href="../../static/css/performance/pm-detail-style.css">
     <title>Document</title>
 </head>
 <body>
+    <th:block th:replace="~{/common/header}">header.html</th:block>
+    
     <main>
-        <th:block th:replace="~{/common/header}">header.html</th:block>
 
-        <section>
-            <div class="detail-content">
-                <table border="1" id="detail-content" width="502px" height="305px">
+        <section id="main-container">
+
+            <!-- 상단 상세정보 공간 -->
+
+                <table id="detail-content">
 
                     <tr id="detail-title">
-                        <th width="200px" rowspan="5">썸네일 포스터
+                        <th rowspan="6">
                             <img th:src="@{${performance.posterUrl}}">
                         </th>
             
-                        <th width="300px" colspan="2">
-                            <h3 th:text="${performance.title}">공연 제목</h3>
+                        <th colspan="3">
+                            <h3 th:text="${performance.title}">공연 제목d</h3>
                         </th>
                     </tr>
 
                     <tr id="detail-place">
-                        <th width="80px" height="50px">공연 장소</th>
+                        <th class="subttt">공연 장소</th>
 
-                        <th width="232px" height="50px">
+                        <th colspan="2">
                             <p th:text="${performance.location}">공연 장소</p>
                         </th>
                     </tr>
 
                     <tr id="detail-date">
-                        <th>공연 기간</th>
-                        <th>
+                        <th class="subttt">공연 기간</th>
+                        <th colspan="2">
                             <p th:text="${performance.location}">공연 기간</p>
                         </th>
                     </tr>
 
                     <tr id="detail-time">
-                        <th>공연 시간</th>
-                        <th>
+                        <th class="subttt">공연 시간</th>
+                        <th colspan="2">
                             <p th:text="${performance.location}">공연 기간</p>
                         </th>
                     </tr>
             
                     <tr id="detail-price">
-                        <th height="140px">좌석 가격</th>
+                        <th class="subttt" rowspan="2">좌석 가격</th>
 
-                        <th width="232px">
+                        <th rowspan="2" colspan="2">
                             <!-- 개수만큼 반복?  안쪽 요소 js에서 배치 생각중-->
                             <table id="price-detail">
                                 <td>vip석</td>
@@ -63,17 +70,16 @@
                     </tr>
 
                 </table>
-
-            </div>
     
             <!-- 탭 메뉴 -->
             <ul class="detail-nav nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="poster-tab" data-bs-toggle="tab" data-bs-target="#poster-tab-pane" type="button" role="tab" aria-controls="poster-tab-pane" aria-selected="true">포스터</button>
-                    
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="comment-tab" data-bs-toggle="tab" data-bs-target="#comment-tab-pane" type="button" role="tab" aria-controls="comment-tab-pane" aria-selected="false">기대평 (0)</button>
+                    <button class="nav-link" id="comment-tab" data-bs-toggle="tab" data-bs-target="#comment-tab-pane" type="button" role="tab" aria-controls="comment-tab-pane" aria-selected="false">
+                        기대평 <th:block th:text="|(${board.commentCount})|">(숫자)</th:block>
+                    </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">오시는 길</button>
@@ -91,31 +97,39 @@
                     <p>기대평들이 없습니다.</p>
                 </div>
                 <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-                    <p>오지 마세요</p>
+                    <div id="map-container">
+                        안에 지도
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab" tabindex="0">...</div>
+                <div class="tab-pane fade" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
+                    리뷰게시판에 
+                </div>
             </div>
+            
+
 
         </section>
 
-        <!-- 탭 컨텐츠 -->
-        <div class="tab-content" aria-disabled="true">
-
-            <div class="tab-pane active" id="poster">
-                <img th:src="#" alt="포스터 이미지">
+        <section id="calendar-container">
+            <div class="calendar">
+                <img src="" alt="">
             </div>
+            
+            <button id="pm-buy-btn">예매하기</button>
 
-            <div class="tab-pane" id="expectation"></div>
+            <span class="like-area">
+                <!-- <i class="fa-heart" th:classappend="${likeCheck} ? 'fa-solid' : 'fa-regular'" id="boardLike"></i> -->
 
-            <div class="tab-pane" id="map">
-                <p th:text="${performance.locationInfo}"></p>
-                <div id="map-container"></div>
-            </div>
+                <!-- 모양잡기용 임시 하트 -->
+                <i class="fa-heart fa-regular" id="boardLike"></i>
+                <span th:text="*{likeCount}">좋아요 수</span>
 
-            <div class="tab-pane" id="review"></div>
-        
-        </div>
+            </span>
 
+        </section>
     </main>
+    
+    <th:block th:replace="~{/common/header}">header.html</th:block>
+    
 </body>
 </html>

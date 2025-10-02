@@ -22,51 +22,72 @@
         <section id="main-container">
 
             <!-- 상단 상세정보 공간 -->
-
                 <table id="detail-content">
 
+                    <!-- 썸네일 포스터 -->
                     <tr id="detail-title">
-                        <th rowspan="6">
+                        <td rowspan="6" width="400px" height="533px">
                             <img th:src="@{${performance.posterUrl}}">
-                        </th>
+                        </td>
             
-                        <th colspan="3">
-                            <h3 th:text="${performance.title}">공연 제목d</h3>
-                        </th>
+                        <!-- 제목 -->
+                        <td colspan="3" width="630px" height="130px">
+                            <h3 th:text="${performance.title}">제5회 코랄레움 인 서울 연주회: 합창명작 마주하기 프로젝트 V. 바흐 & 헨델 탄생 340주년 기념, 조우: 바로크 동갑내기 거장을 만나다</h3>
+                        </td>
                     </tr>
 
+                    <!-- 장소 -->
                     <tr id="detail-place">
-                        <th class="subttt">공연 장소</th>
+                        <td width="" height="60px">
+                            공연 장소
+                        </td>
 
-                        <th colspan="2">
-                            <p th:text="${performance.location}">공연 장소</p>
-                        </th>
+                        <td width="" colspan="2"  >
+                            <div th:text="${performance.location}">공연 장소</div>
+                        </td>
                     </tr>
 
+                    <!-- 기간 -->
                     <tr id="detail-date">
-                        <th class="subttt">공연 기간</th>
-                        <th colspan="2">
-                            <p th:text="${performance.location}">공연 기간</p>
-                        </th>
+                        <td width="120px" height="60px">
+                            공연 기간
+                        </td>
+                        <td width="" colspan="2" >
+                            <div th:text="${performance.playtime}">공연 기간</div>
+                        </td>
                     </tr>
 
+                    <!-- 시간 -->
                     <tr id="detail-time">
-                        <th class="subttt">공연 시간</th>
-                        <th colspan="2">
-                            <p th:text="${performance.location}">공연 기간</p>
-                        </th>
+                        <td width="" height="60px">공연 시간</td>
+                        <td colspan="2">
+                            <div th:text="${performance.runtime}">공연 시간</div>
+                        </td>
                     </tr>
             
+                    <!-- 가격 -->
                     <tr id="detail-price">
-                        <th class="subttt" rowspan="2">좌석 가격</th>
+                        <td width="" height="140px" rowspan="2">
+                            좌석 가격
+                        </td>
+                        
+                        <td rowspan="2" colspan="2">
 
-                        <th rowspan="2" colspan="2">
-                            <!-- 개수만큼 반복?  안쪽 요소 js에서 배치 생각중-->
-                            <table id="price-detail">
-                                <td>vip석</td>
-                                <td>25000원</td>
-                            </table>
-                        </th>
+                            <!-- 개수만큼 반복 -->
+                            <div th:each=" pm : ${pmPrice}" class="priceList">
+                                <th:block th:text="${pm.type}">무슨무슨석</th:block><!-- 석 -->
+                                <th:block th:text="${pm.price}">10,000 원</th:block><!-- 원 -->
+                            </div>
+                            <div th:each=" pm : ${pmPrice}" class="priceList">
+                                <th:block th:text="${pm.type}">무슨무슨석</th:block><!-- 석 -->
+                                <th:block th:text="${pm.price}">10,000 원</th:block><!-- 원 -->
+                            </div>
+                            <div th:each=" pm : ${pmPrice}" class="priceList">
+                                <th:block th:text="${pm.type}">무슨무슨석</th:block><!-- 석 -->
+                                <th:block th:text="${pm.price}">10,000 원</th:block><!-- 원 -->
+                            </div>
+
+                        </td>
                     </tr>
 
                 </table>
@@ -85,7 +106,7 @@
                     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">오시는 길</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">관련 후기</button>
+                    <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review -tab-pane" type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">관련 후기</button>
                 </li>
             </ul>
             <!-- 탭 컨텐츠 -->

@@ -9,27 +9,28 @@ body{
 main {
     display: flex;
     justify-content: space-between;
-    padding: 0 10%;
+    padding-left: 10%;
+    padding-right: 10%;
     margin-top: 10%;
 }
 
 /* 메인 공간 */
 #main-container{
     flex: 1;
-    max-width: 75%;
+    /* max-width: 75%; */
     padding-right: 1px;
 }
 
 /* 상세 정보 테이블 */
 #detail-content{
-    width: 100%;
+
     border-collapse: collapse;
     margin-bottom: 30px;
 }
 
 
 /* 내부 확인용 */
-#detail-content th, #detail-content td {
+#detail-content td {
     border: 1px solid #ddd;
     vertical-align: middle;
 }
@@ -37,8 +38,6 @@ main {
 
 /* 썸네일 포스터 영역 */
 #detail-title th:first-child{
-    width: 300px;
-    height: 400px;
     text-align: center;
 }
 
@@ -50,18 +49,35 @@ main {
 
 
 /* 공연 제목 */
-#detail-title th:last-child{
-    height: 100%;
-    width: 70%;
+#detail-title td:last-child{
+    width: 650px;
+    height: 130px;
+    vertical-align: middle;   /* 가운데 정렬 */
 
-    overflow-wrap: break-word;
+}
+#detail-title h3 {
+    width: 100%;
+    max-width: 630px;            /* 칸 고정 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;        /* flexbox 기반 멀티라인 처리 */
+    -webkit-line-clamp: 3;       /* 최대 2줄 */
+    -webkit-box-orient: vertical;
+    white-space: normal;         /* 줄바꿈 허용 */
+    word-break: break-word;      /* 긴 단어 강제 줄바꿈 */
+    margin: 0;
     text-align: center;
-    font-size: large;
     font-weight: bold;
+    font-size: 30px;
 }
 
-#subttt{
-    width: 120px;
+tr td
+
+
+
+
+.priceList {
+    vertical-align: top;
 }
 
 

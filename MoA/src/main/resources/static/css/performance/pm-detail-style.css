@@ -1,0 +1,10 @@
+.detail-content{
+    border: 1px solid black;
+    display : block;
+}
+
+#detail-content{
+    border: 1px solid black;
+    display: flex;
+    
+}

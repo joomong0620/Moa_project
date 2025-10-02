@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.og.moa.model.dao.MemberMapper">
+
+	<insert id="signUp">
+	
+		INSERT INTO "MEMBER" VALUES(
+    
+		    SEQ_MEMBER_NO.NEXTVAL,
+		    MEMBER_ID, MEMBER_EMAIL, 
+		    MEMBER_PW, MEMBER_NICKNAME,
+		    MEMBER_TEL, MEMBER_ADDR, 
+		    DEFAULT, DEFAULT, DEFAULT
+		    
+
+)
+	
+	
+	</insert>
+
+  
+</mapper>

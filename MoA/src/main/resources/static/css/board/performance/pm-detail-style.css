@@ -1,0 +1,148 @@
+/* 화면 전체 가로스크롤  */
+body{
+    min-width: 1920px;
+    overflow-x: auto;
+}
+
+
+/* 본문 */
+main {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 10%;
+}
+
+/* 메인 공간 */
+#main-container{
+    flex: 1;
+    /* max-width: 75%; */
+    padding-right: 1px;
+}
+
+/* 상세 정보 테이블 */
+#detail-content{
+
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+
+/* 내부 확인용 */
+#detail-content td {
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+
+/* 썸네일 포스터 영역 */
+#detail-title th:first-child{
+    text-align: center;
+}
+
+/* 이미지 조정 */
+#detail-title img {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* 공연 제목 */
+#detail-title td:last-child{
+    width: 650px;
+    height: 130px;
+    vertical-align: middle;   /* 가운데 정렬 */
+
+}
+#detail-title h3 {
+    width: 100%;
+    max-width: 630px;            /* 칸 고정 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;        /* flexbox 기반 멀티라인 처리 */
+    -webkit-line-clamp: 3;       /* 최대 2줄 */
+    -webkit-box-orient: vertical;
+    white-space: normal;         /* 줄바꿈 허용 */
+    word-break: break-word;      /* 긴 단어 강제 줄바꿈 */
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+tr td
+
+
+
+
+.priceList {
+    vertical-align: top;
+}
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+
+
+
+/* 하단 네비게이션 본문 */
+.tab-content {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    border-top: none;
+    background: #fff;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+
+
+/* 달력 영역 */
+#calendar-container {
+    border: 1px solid red;
+    position: sticky;   /* 스크롤해도 따라옴 */
+    top: 120px;         /* header 높이만큼 띄우기 */
+    width: 400px;       /* 달력 고정 크기 */
+    height: 600px;
+    border-radius: 10px;
+    flex-shrink: 0;     /* 줄어들지 않게 */
+    text-align: center;
+}
+
+#calendar-container .calendar {
+    border: 1px solid blue;
+    border-radius: 10px;
+    padding: 15px;
+    background: #fafafa;
+    margin-bottom: 15px;
+}
+
+#pm-buy-btn {
+    width: 100%;
+    padding: 10px;
+    background: #526D82;
+    border: none;
+
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+
+/* 좋아요 */
+#boardLike{
+    font-size: 1.5em;
+    color: red;
+    cursor: pointer;
+}

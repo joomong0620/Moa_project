@@ -113,13 +113,17 @@ replay_pid*
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,visualstudiocode
+######################################################################################
 
-
-
+# eclipse 추가 ignore할 화일
 .project
 .classpath
+# Spring Boot 설치에 추가 아래 두개
 .settings/
 classes/
+
+
+# 2025/09/10 spring boot관련 .gitignore 추가
 HELP.md
 .gradle
 build/
@@ -158,3 +162,5 @@ out/
 ### VS Code ###
 .vscode/
 
+# spring boot관련 .gitignore 추가: db연결정보 안올라가게, added 2025/10/02
+config.properties

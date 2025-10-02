@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import edu.og.moa.model.dto.Member;
-import edu.og.moa.model.service.MemberService;
+import edu.og.moa.member.model.dto.Member;
+import edu.og.moa.member.model.service.MemberService;
 
 @RequestMapping("/member")
 @Controller

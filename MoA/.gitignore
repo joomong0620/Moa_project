@@ -164,3 +164,4 @@ out/
 
 # spring boot관련 .gitignore 추가: db연결정보 안올라가게, added 2025/10/02
 config.properties
+application.properties

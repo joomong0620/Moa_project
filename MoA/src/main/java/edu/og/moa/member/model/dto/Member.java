@@ -1,4 +1,4 @@
-package edu.og.moa.model.dto;
+package edu.og.moa.member.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,10 +1,10 @@
-package edu.og.moa.model.dao;
+package edu.og.moa.member.model.dao;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import edu.og.moa.model.dto.Member;
+import edu.og.moa.member.model.dto.Member;
 
 @Repository
 public class MemberDAO {

@@ -1,6 +1,6 @@
-package edu.og.moa.model.service;
+package edu.og.moa.member.model.service;
 
-import edu.og.moa.model.dto.Member;
+import edu.og.moa.member.model.dto.Member;
 
 public interface MemberService {
 

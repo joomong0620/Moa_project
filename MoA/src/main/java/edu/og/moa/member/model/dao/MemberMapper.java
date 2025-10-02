@@ -1,8 +1,8 @@
-package edu.og.moa.model.dao;
+package edu.og.moa.member.model.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import edu.og.moa.model.dto.Member;
+import edu.og.moa.member.model.dto.Member;
 
 @Mapper
 public interface MemberMapper {

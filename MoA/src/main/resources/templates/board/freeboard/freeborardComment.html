@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/freeboardComment.css"/>
+</head>
+
+<body>
+    <div id="commentTitle">
+        <h3>댓글</h3>
+    </div>
+    <div id="commentArea">
+        <!-- 댓글 목록 -->
+        <div class="comment-list-area">
+            <ul id="commentList">
+                <!-- 댓글 예시 (실제로는 JavaScript로 동적 생성) -->
+                <li class="comment-row" data-comment-no="1">
+                    <p class="comment-writer">
+                        <!-- 프로필 이미지 -->
+                        <img src="/images/user.png" alt="프로필">
+                        <!-- 닉네임 -->
+                        <span>닉네임!</span>
+                        <!-- 댓글 내용 -->
+                        <p class="comment-content">댓글 내용이 여기에 표시됩니다.</p>
+
+                        <!-- 작성일 -->
+                        <span class="comment-date">2025-09-29 14:30</span>
+                    </p>
+
+
+                    <!-- 버튼 영역 -->
+                    <div class="comment-btn-area">
+                        <button onclick="showUpdateComment(1, this)">수정</button>
+                        <button onclick="deleteComment(1)">삭제</button>
+                    </div>
+                </li>
+
+                <!-- 추가 댓글들이 여기에 동적으로 추가됩니다 -->
+            </ul>
+        </div>
+
+        <!-- 댓글 작성 부분 -->
+        <div class="comment-write-area">
+            <textarea id="commentContent" placeholder="댓글을 입력하세요"></textarea>
+            <button id="addComment">
+                댓글<br>
+                등록
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>

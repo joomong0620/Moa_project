@@ -1,0 +1,92 @@
+body {
+    font-family: "Noto Sans KR", sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* 상세 전체 영역 */
+.board-detail {
+    width: 1000px;
+    margin: 50px auto;
+}
+
+/* 카테고리 (자유게시판) */
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+/* 제목 + 작성자/조회수 */
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    /* 왼쪽/오른쪽 분리 */
+    align-items: flex-start;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.left-area .board-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.right-area {
+    text-align: right;
+}
+
+.board-info p {
+    margin: 2px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.board-info span {
+    font-weight: bold;
+    margin-right: 6px;
+}
+
+.like-area {
+    margin-top: 5px;
+    font-size: 16px;
+    color: red;
+}
+
+#boardLike {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+/* 본문 */
+.board-content {
+    margin: 30px 0;
+    font-size: 15px;
+    color: #444;
+}
+
+/* 버튼 영역 */
+.board-btn-area {
+    text-align: right;
+}
+
+.board-btn-area button {
+    margin-top: 20px;
+    margin-left: 5px;
+    width: 90px;
+    height: 34px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    background-color: #27374D;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.board-btn-area button:hover {
+    background-color: #27374D;
+}

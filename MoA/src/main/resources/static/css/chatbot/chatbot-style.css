@@ -1,0 +1,495 @@
+/* section, div{ border : 1px solid black;}  */
+
+/* === 전체 초기화 및 공통 설정 === */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+/* === 전체 페이지 레이아웃 === */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+}
+
+.main-header,
+.main-nav,
+.main-footer {
+    height: 60px;
+    background-color: #ddd;
+    width: 100%;
+}
+
+/* === 본문 전체 === */
+.content-wrapper {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+/* === 상단 영역 === */
+.content-top,
+.content-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.content-top > div,
+.content-bottom > div {
+    min-height: 60px;
+    /* background-color: #f0f0f0; */
+    background-color: #fff;
+}
+
+/* === 본문 중앙 영역 === */
+
+.content-top-container{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: flex-start; /* 자식 항목 왼쪽 붙여서 */
+    align-items: center; /* 세로 가운데 정렬 */
+    width: 100%; /* 가로 꽉 차게 */
+    padding: 10px; /* 선택적: 안쪽 여백 */
+
+    box-sizing: border-box;
+
+}
+.content-top-container > div {
+    flex: 0 1 auto; /* 각 항목이 동일한 너비로 배치, inline처럼 요소 콘텐츠영역만 차지 */
+    text-align: left; 
+    padding: 5px; 
+    box-sizing: border-box;
+}
+
+.content-middle-container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    margin-left: 0%;
+    margin-right: 0%;
+
+}
+
+.section-container{
+    background-color: #fff;
+} 
+
+.section-container.left {
+    background-color: #fdfafa;
+
+    width: 30%;
+    display: block;
+    position: relative;
+
+}
+
+
+
+/* 섹션 컨테이너: 수직 정렬 */
+.section-container.right {
+    width: 100%;
+    display: block;
+    position: relative;
+
+}
+
+
+/* === 하단 bottom === */
+.content-bottom{
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+.section-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #F2F2F2;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.exhibition-title{
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.exhibition-subtitle{
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.sec-right-div2.btn-wrapper{
+    margin-top: 20px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end; 
+    align-items: flex-end; 
+    width: 100%;
+    padding: 10px; 
+
+    box-sizing: border-box;    
+}
+
+.btn-purchase {
+    border: 1px solid black;
+    padding: 0 10px;
+}
+
+.btn-chatbot {
+    border: 1px solid black;
+    padding: 0 10px;
+}
+
+.placeholder-area1{
+    border: 1px solid black;
+
+    /* 선택적: 안쪽 여백 */
+    padding: 50px 10px;
+
+    /* 선택적: 바깥 여백 : top right bottom left*/
+    margin: 20px 0 40px 0; 
+
+    text-align: center;
+}
+
+.placeholder-area2{
+    border: 1px solid black;
+
+    /* 선택적: 안쪽 여백 */
+    padding:150px 10px;
+
+    /* 선택적: 바깥 여백 : top right bottom left*/
+    margin: 0 0 0px 0; 
+
+    text-align: center;
+}
+
+
+
+/* ================= chatbot UI =================== */
+.arrow {
+    display: inline-block;
+    transform: rotate(90deg); /* 시계 방향 90도 회전 */
+    border: 1px solid black;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    text-justify: center;
+}
+.exhibition-select-btn {
+    margin: 0px 5px 0 20px;
+}
+.exhibitionList-search-input{
+    margin: 0px 5px 0 0px;
+    border: 1px solid black;
+    width: 500px; 
+    /* popup layer의 길이 결정: 500px; popup layer여기에 갖다 붙일 것*/
+    font-weight: bold;
+    padding: 2px 5px
+
+}
+
+
+/* 버튼 */
+.btn-arrow-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin-top: 0px;
+    width: 120px;
+    height: 30px;
+    font-weight: bold;
+    border: 0;
+
+    background-color: white;
+    color : black;
+
+    cursor: pointer;
+}
+.btn-arrow-wrapper:hover {
+    background-color: #455ba8;
+    color :  white;
+    border: 2px solid white;   
+}
+
+
+/* 왼쪽 menu, faq 컬럼 */
+.menu-faq-wrapper{
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-items: space-around;
+    align-items: flex-start;
+}
+
+/* ====== */
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+
+    margin-top: 10%;
+    margin-bottom: 60%;
+    margin-left: 5%;
+}
+
+.btn-menu {
+    margin: 20px 0;
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+    border: 0;
+
+    background-color: white;
+    color : black;
+
+    cursor: pointer;
+}
+.btn-menu:hover {
+    background-color: #455ba8;
+    color :  white;
+    border: 2px solid white;   
+}
+
+
+.btn-menu.home {
+    display: inline;
+    font-size: 1.5em;
+}
+.btn-menu.refresh {
+    display: inline;
+    font-size: 1.5em;
+}
+
+
+/* ====== */
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+
+    margin-top: 0%;
+    margin-bottom: 50%;
+    margin-left: 2%;
+    margin-right: 5%;
+}
+
+.btn-faq {
+    margin: 10px 10px;
+    padding: 5px 5px;
+    width: 100%;
+    height: 100%;
+    font-size: 0.9em;
+    border: 0;
+    border-radius: 5%;
+
+    background-color: #DDE6ED;
+    color : black;
+
+    cursor: pointer;
+
+}
+.btn-faq:hover {
+    background-color: #455ba8;
+    color :  white;
+    border: 2px solid white;   
+}
+
+.section.right{
+    width: 100%;
+    height: 100%;
+}
+
+
+/* 채팅 내용 */
+.chatting-content{
+    /* .section class="section right"의 높이 100% 받아온다 */
+    height: 100%;
+}
+
+
+.display-chatting {
+    width: 100%;
+    height: 80%;
+    border: 1px solid black;
+    overflow: auto;
+    list-style: none;
+    padding: 10px 10px;
+}
+
+
+.display-chatting > li{
+    margin: 10px 0;
+}
+
+
+.target-chat{
+    display: flex;
+    align-items: flex-start;
+}
+.target-chat > img{
+    width: 50px;
+    margin-right: 5px;
+}
+
+.my-chat img{
+    width: 50px;
+    margin-left: 5px;
+}
+
+.chat {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #eee;
+    text-align: left;
+    max-width: 500px;
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+
+
+
+.input-area {
+    height: 15%;
+    width: 100%;
+    display: flex;
+}
+
+/* textarea id="inputChatting" */
+#inputChatting {
+    padding: 3px;
+    font-size: 1.3em;
+    width: 80%;
+    resize: none;
+}
+
+
+#send {
+    width: 20%;
+    font-size: 2em;
+    font-weight: bold;
+    color: #455ba8;
+
+}
+
+
+.my-chat {
+    text-align: right;
+}
+
+
+.target-chat p {
+    background-color: #27374D;
+    color: white;
+}
+
+
+.chatDate {
+    font-size: 9px;
+}
+
+
+/* 팝업레이어 */
+
+#addTargetPopupLayer{
+    position: fixed;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1200;
+
+    background-color: #f5f5f5;
+    border: 5px inset #455ba8;
+    
+    /* width: 450px; 위 .exhibitionList-search-input 에서 500px로 정했으므로 여기에 맞춰준다 */
+    width: 500px;
+    height: 600px;
+
+}
+
+
+.popup-layer-close{ display: none;  }
+
+#closeBtn{
+    position: absolute;
+    top: -15px;
+    right: -30px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.target-input-area{
+    width: 100%;
+    height: 40px;
+    border-bottom: 2px solid black;
+}
+
+#targetInput{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    padding: 3px 10px;
+    font-size: 20px;
+}
+
+#resultArea{
+    list-style: none;
+    overflow: auto;
+    height: 550px;
+}
+
+.result-row{
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+
+.result-row:hover{  background-color: #dadada;}
+
+
+.result-row > *{
+    margin-right: 10px;
+    user-select: none;
+}
+
+
+.result-row-img{ width: 40px;}
+
+
+

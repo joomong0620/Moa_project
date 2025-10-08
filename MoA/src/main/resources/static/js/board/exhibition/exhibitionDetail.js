@@ -1,0 +1,1 @@
+console.log("exhibitionDetail.js loaded...");

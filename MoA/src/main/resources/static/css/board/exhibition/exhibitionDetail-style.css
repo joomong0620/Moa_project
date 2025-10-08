@@ -1,0 +1,547 @@
+/* section, div{ border : 1px solid black;}  */
+/* 요소 영역 확인용 */
+
+/* === 전체 초기화 및 공통 설정 === */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+/* === 전체 페이지 레이아웃 === */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+}
+
+.main-header,
+.main-nav,
+.main-footer {
+    height: 60px;
+    background-color: #ddd;
+    width: 100%;
+}
+
+/* === 본문 전체 === */
+.content-wrapper {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+/* === 상단 영역 === */
+.content-top,
+.content-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.content-top > div,
+.content-bottom > div {
+    min-height: 60px;
+    background-color: #fff;
+}
+
+/* === 본문 중앙 영역 === */
+
+.content-top-container{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between; 
+    align-items: flex-start; 
+    width: 100%; 
+    padding: 10px; 
+
+    box-sizing: border-box;
+
+    margin-left: 10%;
+    margin-right: 10%;
+
+}
+.content-top-container > div {
+    flex: 0 1 auto; /* 각 항목이 동일한 너비로 배치, inline처럼 요소 콘텐츠영역만 차지 */
+    text-align: left; 
+    padding: 5px; 
+    box-sizing: border-box;
+}
+
+
+
+.content-middle-container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    margin-left: 10%;
+    margin-right: 10%;
+
+}
+
+.section-container-left.top{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: flex-start; 
+    align-items: flex-end; 
+    
+    width: 100%; 
+    box-sizing: border-box;
+
+    height: 50px;
+
+}
+.section-container-left.top > span {
+    flex: 0 1 auto; /* 각 항목이 자기 콘텐츠크기만큼만 영역차지, 왼쪽으로 붙음 */
+
+    text-align: left; 
+    padding: 5px; 
+    box-sizing: border-box;
+}
+
+
+.section-container-right.top{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between; 
+    align-items: flex-start; 
+    width: 100%; 
+
+    box-sizing: border-box;
+
+    height: 50px;
+}
+.section-container-right.top > span {
+
+    flex: 0 1 auto;
+    text-align: left; 
+    padding: 5px; 
+    box-sizing: border-box;
+
+}
+
+
+.section-container{
+    background-color: #ddd;
+} 
+
+.section-container.left {
+    width: 100%;
+    display: block;
+    position: relative;
+
+}
+
+/* 섹션 컨테이너: 수직 정렬 */
+.section-container.right {
+    width: 100%;
+    display: block;
+    position: relative;
+
+}
+
+/* section: 위에서 아래로 정렬 */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    padding: 10px;
+}
+
+/* section 내부 div 공통 스타일 */
+.section > div {
+    min-height: 400px;
+    background-color: #fff;
+    padding: 8px;
+}
+
+
+/* === section left의 이미지 영역 처리 === */
+.sec-left-div1.exhibition-image {
+    display: flex;
+
+    overflow: visible;
+
+    width: 100%;
+    border-collapse: collapse;
+}
+.image-wrapper{
+    border: 1px solid black;
+
+    /* 선택적: 안쪽 여백 */
+    padding:2px 2px;
+
+    flex: 1;
+}
+
+/* === section left의 description 영역 처리 === */
+.sec-left-div2.exhibition-description {
+    overflow: auto;
+
+    max-height: 600px; 
+    /* 필요 시 제한 높이, 없애도 됨 */
+}
+
+/* description영역 기본 스타일 */
+.sec-left-div2.exhibition-description {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+/* === 하단 section-bottom === */
+.section-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.section-bottom > div{
+    visibility: hidden ;
+}
+.content-bottom{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+
+.content-bottom-btn-wrapper{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: flex-end; 
+    align-items: flex-end; 
+    width: 100%; 
+    padding: 10px; 
+
+    box-sizing: border-box;
+
+}
+
+
+
+
+.sec-right-div2.btn-wrapper{
+    margin-top: 20px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end; 
+    align-items: flex-end; 
+    width: 100%; 
+    padding: 10px; 
+
+    box-sizing: border-box;    
+}
+
+#purchaseBtn{
+    width: 80px;
+    height: 30px;
+    font-weight: bold;
+    border: 0;
+
+    background-color: #455ba8;
+    color : white;
+    cursor: pointer;
+}
+
+#purchaseBtn:hover{
+    background-color: white;
+    color : #455ba8;
+    border: 2px solid #455ba8;
+}
+
+#chatbotBtn{
+    width: 250px;
+    height: 30px;
+    font-weight: bold;
+    border: 0;
+
+    background-color: #455ba8;
+    color : white;
+    cursor: pointer;
+}
+
+#chatbotBtn:hover{
+    background-color: white;
+    color : #455ba8;
+    border: 2px solid #455ba8;
+}
+
+
+
+
+
+
+/* 오른쪽 섹션 하단에 placeholder 영역 2개  */
+.placeholder-area1{
+    border: 1px solid black;
+
+    padding: 50px 10px;
+
+    margin: 20px 0 40px 0; 
+
+    text-align: center;
+}
+
+.placeholder-area2{
+    border: 1px solid black;
+
+    padding:150px 10px;
+
+    margin: 0 0 0px 0; 
+
+    text-align: center;
+}
+
+
+
+/* ====================================================== */
+
+
+
+/* 작성자 영역 */
+
+/* 프로필: profileImage */
+.section-container-left.top  img{
+    width: 40px;
+    height: 40px;
+
+    margin-left: 20px;
+}
+
+/* 닉네임 */
+.section-container-left.top > span{
+    font-weight: bold;
+    margin-left : 10px;
+}
+
+/* 작성일(최종수정일), 조회수 */
+.section-container-right.top  span{
+    font-weight: bold;
+    margin-left : 10px;
+
+    height: 40px; 
+    /* section-container-left.top 과 section-container-right.top 높이 맞춰주기위함"" */
+
+    margin-right: 20px;
+}
+
+/* 좋아요 */
+.exhibition-detail-like-area{
+    margin-left: 30px;
+}
+
+/* need to fix this: unseen heart... */
+#exhibitionLike{
+    font-size: 1.5em;
+    color: red;
+    cursor: pointer;
+
+}
+
+.heart-wrapper{
+    font-size: 1.5em;
+    color: blue;
+    cursor: pointer;
+
+    width: 40px;
+    height: 40p;
+}
+
+
+/* .exhibitionImg를 감싸는 div */
+.img-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* thumbnail이 중앙에 오도록 */
+    align-items: center;
+}
+
+
+/* 이미지를 감싸는 div */
+.exhibitionImg{
+    display: inline-block;
+    text-align: center;
+}
+
+/* 이미지를 감싸는 div */
+.exhibitionImg.thumbnail{
+    display: block;
+    text-align: center;
+}
+
+
+/* 이미지 */
+.exhibitionImg img{
+    max-width: 90%;
+    max-height: 90%;
+}
+
+/* 썸네일만 이미지 크게 */
+.thumbnail{
+    width: 300px;   
+    height: 300px;
+}
+
+/* 다운로드 a태그 */
+.exhibitionImg a{
+    display: block;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    font-size: 12px;
+    margin-top: 5px;
+
+}
+
+/* 다운로드 a태그 효과 처리*/
+a{
+    text-decoration: none;
+    color : black;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* 내용 */
+.exhibition-description-title{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.exhibition-description-text-wrapper{
+    padding:5px 0px;
+}
+.exhibition-description-text{
+    flex: 1;
+    word-break: break-all;
+}
+
+.exhibition-description-text{
+    clear: both;
+    padding: 30px 30px;
+    border-bottom : 3px solid #ccc; 
+
+    border-top : 3px solid #ccc; 
+
+    font-size: 18px;
+    min-height: 250px;
+    white-space: pre-wrap;
+}
+
+
+
+/* 게시글 정보 */
+.sec-right-div1.exhibition-lines{
+    width: 100%;
+    font-size: 1.2em;
+    font-weight: bold;    
+}
+
+.sec-right-div1.exhibition-lines > div{
+    margin: 10px 5px;
+}
+
+.sec-right-div1.exhibition-lines span{
+    width: 100%;
+    display: inline-block;
+    font-weight: bold;
+}
+
+/* 게시글 제목 */
+.exhibition-title{
+    margin : 0;
+    padding: 20px 0;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;    
+    border-bottom : 3px solid #ccc;
+}
+.exhibition-title > span{
+    font-size: 16px;
+    color: gray;
+}
+
+
+
+.exhibition-subtitle{
+    font-size: 1.4em;
+    font-weight: bold;
+
+    text-align: center;
+
+    white-space: pre-line;  /* 줄바꿈 허용 */
+    word-break: break-word; /* 긴 단어도 줄바꿈 가능 */
+    line-height: 1.6;        /* 줄간격 보기 좋게 */
+
+    padding: 0px 0 70px 0;
+}
+
+.exhibition-info{
+    padding-bottom: 18px;
+}
+
+
+
+
+/* 버튼 영역 */
+.content-bottom-btn-wrapper{
+    width:100%;
+
+    display: flex;
+    justify-content: last baseline;
+    align-items: center;
+}
+
+
+.content-bottom-btn-wrapper > div {
+    flex: 0 1 auto;
+
+    text-align: left; 
+    padding: 0 10px; 
+    margin-left: 20px; 
+    box-sizing: border-box;
+}
+
+
+/* 버튼 */
+.content-bottom-btn-wrapper button{
+    margin-top: 20px;
+    width: 80px;
+    height: 30px;
+    font-weight: bold;
+    border: 0;
+    background-color: #455ba8;
+    color : white;
+
+    cursor: pointer;
+}
+
+.content-bottom-btn-wrapper button:hover{
+    background-color: white;
+    color : #455ba8;
+    border: 2px solid #455ba8;
+}

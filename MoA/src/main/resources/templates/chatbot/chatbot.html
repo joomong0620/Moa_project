@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${communityName}+'챗봇방'">전시 챗봇방</title>
+    
+    <link rel="stylesheet" th:href="@{/css/chatbot/chatbot-style.css}">
+
+    <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- 전체를 감싸는 태그 -->
+    <div class="page-wrapper">
+        <main>
+
+            <!-- 헤더 -->
+            <header class="main-header">header</header>
+            <!-- <th:block th:replace="~{common/header}"></th:block> -->    
+            
+            <!-- 네비게이션 -->
+            <nav class="main-nav"></nav>
+    
+            <!-- 본문 -->
+            <div class="content-wrapper">
+                <!-- 본문 상단 영역 -->
+                <div class="content-top">
+                    <div class="content-top-container button">
+                        <div class="btn-arrow-wrapper" id="btnSelectArrow">
+                            <span class="exhibition-select-btn">전시선택</span>
+                            <span class="arrow">&gt;</span>
+                        </div>
+                        <span class="exhibitionList-search-input">전시 제목</span>
+                    </div>
+
+                    <!-- [ [${loginMember}] ] ok -->
+                    <!-- [ [${roomList}] ] ok -->
+
+                    <!-- 팝업 검색: to-do 채팅상대에서 전시게시물로 바꿀것 -->
+                    <div id="addTargetPopupLayer" class="popup-layer-close">  
+                        <span id="closeBtn">&times</span>
+
+                        <div class="target-input-area">
+                            <input type="search" id="targetInput" placeholder="전시게시물 제목 또는 제목 검색 키워드를 입력하세요" autocomplete="off">
+                        </div>
+
+                        <ul id="resultArea">
+                            <li class="result-row"  data-id="1">
+                                <img class="result-row-img" th:src="@{/images/board/exhibition/monet_pond.jpg}">
+                                <span><mark>모네</mark>특별전</span>
+                            </li>
+                            <li class="result-row">일치하는 전시게시물이 없습니다</li>
+                        </ul>
+                    </div>
+
+                </div>
+    
+                <!-- 본문 중앙 영역 -->
+                <div class="content-middle">
+                        
+                    <div class="content-middle-container">
+                        <div class="section-container left"   id="sectionContainerLeft">
+                            <div class="menu-faq-wrapper">
+
+                                <div class="menu-container">
+                                    <span class="btn-menu home" id="menuHome">
+                                        <span class="home-main">&#127968;</span>
+                                        <span class="home-main-btn">메인으로</span>
+                                    </span>
+                                    <div class="btn-menu refresh" id="menuRefresh">
+                                        <span class="circle-refresh">&#8635;</span>
+                                        <span class="circle-refresh-btn">새로고침</span>
+                                    </div>                                    
+                                </div>
+
+                                <div class="faq-title" style="font-weight: bold;">자주 묻는 질문</div>
+                                <div class="faq-container">
+                                    <div class="btn-faq author" id="faqAuthor">                                       
+                                        <span class="faq-author"><p>작가분에 대해 알고 싶어요.</p></span>
+                                    </div>                                    
+                                    <div class="btn-faq artwork" id="faqArtwork">                                       
+                                        <span class="faq-artwork"><p>작품에 대해 궁금한게 있어요.</p></span>
+                                    </div> 
+                                    <div class="btn-faq explain" id="faqExplain">                                       
+                                        <span class="faq-explain"><p>작품이 어려워요. 쉬운 해설이 필요해요.</p></span>
+                                    </div> 
+                                    <div class="btn-faq suggest" id="faqSuggest">                                       
+                                        <span class="faq-suggenst"><p>작품이 흥미로와요. 함께 관람해 볼만한 다른 작품들도 추천해 주세요.</p></span>
+                                    </div> 
+                                    <div class="btn-faq facility" id="faqFacility">                                       
+                                        <span class="faq-facility"><p>작품 전시관에 대해 설명해 주세요.</p></span>
+                                    </div> 
+                                </div>
+                            </div>
+
+                        </div>    
+                        
+                        <div class="section-container right" id="sectionContainerRight">
+
+                            <section class="section right">
+
+                                <div class="chatting-content">
+                                    <ul class="display-chatting">
+                                        샘플 화면 
+                                        <li class="my-chat">
+                                            <div>
+                                                <span class="chatDate">12:11</span>
+                                                <p class="chat">dkdkdkdkdkdkddfdsfdsf fdsfdsf dsfdsfdsfdsf fsdf sdf sdf fsdf fdsf sdf sd  dsfdsf  fdsfdsf 오늘 수업 어땠어?</p>
+                                                <img th:src="@{/images/board/exhibition/member/penguin.jpeg}">
+                                            </div>
+                                        </li>
+
+
+                                        <li class="target-chat">
+                                            <img th:src="@{/images/board/exhibition/member/penguin02_400x400.jpg}">
+                                            <div>
+                                                <b>나챗봇</b>  <br>
+                                                <p class="chat">fjkdlsajfkldajfkldjsakfl fdsaf  fasf  fdsaf!<br> fdaffdsaf   fdsfa fdsaf~~~~~</p>
+                                                <span class="chatDate">14:05</span>
+                                            </div>
+                                        </li>
+                                    </ul>  
+                                
+                                    <div class="input-area">
+                                        <textarea id="inputChatting" rows="3"></textarea>
+                                        <button id="send">&#128232;</button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div> 
+                        
+                    </div>
+    
+                </div>
+    
+                <!-- 본문 하단 영역 -->
+                <div class="content-bottom">
+                </div>
+    
+            </div>
+
+        </main>
+        
+        <!-- ######################################################## -->
+        <!-- 푸터 -->
+        <footer class="main-footer">footer</footer>
+        <!-- footer.html 추가 -->
+        <!-- <th:block th:replace="~{common/footer}">footer.html</th:block> -->
+
+    </div>
+    
+    <!--------------------------------------- sockjs를 이용한 WebSocket 구현을 위해 라이브러리 추가 ---------------------------------------------->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+    <script th:inline="javascript">
+        // 로그인한 회원 번호를 전역변수로 선언 -> 아래에 링크된 chatting.js에서 사용
+        const loginMemberNo = /*[[${session.loginMember.memberNo}]]*/ "로그인한 회원 번호";
+
+        const memberNickname =   /*[[${session.loginMember.memberNickname}]]*/ "로그인한 회원 닉네임";
+    </script>
+
+    <script th:src="@{/js/chatbot/chatbot.js}"></script>
+
+</body>
+</html>

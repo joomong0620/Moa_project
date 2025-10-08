@@ -1,0 +1,558 @@
+/* section, div{ border : 1px solid black;} */
+
+
+/* 페이지 전체 */
+#page-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    background: #f9f9f9;
+}
+
+/* 헤더, 네비게이션, 푸터 */
+#main-header,
+#main-nav,
+#main-footer {
+    width: 100%;
+    height: 60px;
+    background-color: #e0e0e0;
+}
+
+/* 본문 전체 */
+#content-wrapper {
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+}
+
+/* 본문 상단, 중앙, 하단 영역 */
+/* 본문 상단, 하단 영역:  "세로로 쌓이도록(1열에 3행)"*/
+#content-top,
+#content-middle,
+#content-bottom {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-direction: column;
+}
+
+
+/* 상단 영역의 서브 영역들 => #contop-sub1 */
+#content-top > div {
+    min-height: 15px;
+}
+
+/* 하단 영역의 서브 영역들 */
+#content-bottom > div {
+    min-height: 50px;
+    background-color: #f0f0f0;
+}
+
+
+
+/* 기본 스타일 보완 */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* 
+###############################세부 스타일[from board] ###############################
+*/
+.board-name{
+	font-size : 2em;
+	margin : 20px 0;
+    /*  */
+    margin-left: 50px;
+}
+
+a{
+    text-decoration: none;
+    color : black;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.exhibition-list{
+    width: 1000px;
+    /* height: 800px; */
+    margin : 50px auto;
+}
+
+.exhibition-title{
+    margin-left : 30px;
+    font-size: 2.5em;
+}
+
+
+.list-wrapper{
+    min-height: 670px;
+    width: 100%;
+}
+
+.list-table{
+    width: 100%;
+    padding: 20px;
+    border-collapse: collapse;
+}
+
+.list-table > thead{ background-color: #455ba8; color: white;}
+
+
+.list-table tr{
+    height: 60px;
+}
+
+.list-table > tbody > tr{
+    border-bottom: 1px solid gray;
+
+}
+
+
+.list-table tr > *{ text-align: center; }
+.list-table tr > *:nth-of-type(1){ width: 10%; }
+
+.list-table tr > td:nth-of-type(2){
+    width: 50%; 
+    text-align: left;
+    padding-left: 50px;
+    text-decoration: none;
+}
+
+.list-table tr > *:nth-of-type(3){ width: 13%; }
+.list-table tr > *:nth-of-type(4){ width: 10%; }
+.list-table tr > *:nth-of-type(5){ width: 8%; }
+.list-table tr > *:nth-of-type(6){ width: 8%; }
+
+
+.btn-area{
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+.btn-area > button{
+    margin-right: 50px;
+    
+    width: 80px;
+    height: 40px;   
+    background-color: white;
+
+    font-weight: bold;
+    color: #455ba8;
+    border: 2px solid #455ba8;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+}
+
+
+.pagination{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.pagination li{
+    width: 20px;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.pagination a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.current{
+    font-weight: bold;
+    background-color: #455ba8;
+    border-radius: 50%;
+    color: white !important;
+    letter-spacing: 0 !important;
+}
+
+#exhibitionSearch{
+    text-align: center;
+    width: 500px;
+    height: 30px;
+    margin: 30px auto;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+
+#exhibitionSearch * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#exhibitionSearch select{
+    width: 100px;
+}
+
+#exhibitionSearch input{
+    flex-grow: 1;
+    margin: 0 10px;
+    padding-left: 10px;
+}  
+
+#exhibitionSearch button{
+    
+    width: 100px;
+
+    font-weight: bold;
+    background-color: #455ba8;
+    border: none;
+    color: white;
+
+    cursor: pointer;
+    
+
+}
+
+
+/* 썸네일 */
+.list-table .list-thumbnail{
+    position: absolute;
+    max-height: 30px;
+    max-width: 50px;
+    left: -15px;
+    top: 17px;
+}
+
+.list-table tr > td:nth-of-type(2){
+    position: relative;
+}
+
+
+/* ---------------------------------------------------------- */
+.modal{
+    background-color: rgba(0, 0, 0, 0.4);
+
+    /* position: absolute;  부모요소 기준 */
+    position: fixed;  
+    top: 0;
+    left: 0;
+    z-index: 20; 
+
+    width: 100%;
+    height: 100%;
+
+    display: none; 
+
+}
+
+
+.modal.show{
+    display: flex;
+    animation-name: show; 
+    animation-duration: 1.5s; 
+}
+
+.modal.hide{
+    animation-name: hide; 
+    animation-duration: 1.5s; 
+}
+
+@keyframes show {
+    from {opacity: 0;}  /* 투명 */
+    to {opacity: 1;}    /* 불투명 */
+}
+
+
+@keyframes hide {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+
+
+#modal-image{
+    margin: auto;
+    background-color: white;
+    border-radius: 10px;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 닫기 버튼 */
+#modal-close{
+    position: absolute;
+    top: 20px;
+    right: 40px;
+
+    font-size: 50px;
+    font-weight: bold;
+    color : white;
+    cursor: pointer;
+    transition-duration: 0.3s;
+
+}
+
+#modal-close:hover{
+    transform: scale(1.2);
+}
+
+
+/* 
+###############################세부 스타일 [추가 for exhibition 목록조회/테이블] ###################################
+*/
+
+/* 섹션 컨테이너: 본문 중앙-가운데-테이블 영역 */
+#section-container{
+    flex: 1;
+    display: flex; /* 이걸로 컨테이너 안에 담긴 section1,2,3를 열로 정렬 */
+    flex-direction: column;
+    gap: 10px;      
+    margin-bottom: 100px;
+}
+
+#section-container{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+
+/* 각 section 내부 요소 */
+section > div {
+    height: 20px;
+    background-color: white;
+}
+
+
+/* 테이블 섹션 */
+#section-table{
+    height: auto;
+}
+/* 테이블 섹션: table-top-area"*/
+#table-top-area{
+    height: 50px;
+}
+
+/* 테이블 섹션 */
+#table-list-exhibition {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+}
+
+#list-table-wrapper{
+    flex: 0 1 auto; 
+
+}
+
+/* 페이지네이션 섹션 */
+#section-pagination{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 70px;
+}
+
+#section-pagination > div {
+    height: 50px;
+    flex: 1 ; 
+}
+
+
+
+/* 
+###############################세부 스타일 [추가 for exhibition 목록조회/카드슬라이더] ###################################
+*/
+
+/*  카드목록 조회 섹션 */
+#section-card-list{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 900px;
+}
+
+#section-card-list > div {
+    height: 100px;
+    flex: 1 ; /* 콘텐츠 크기에 따라 늘어나게 */
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+}
+
+/*  for all present, future, past classes*/
+.card{
+    width: 100%;
+    display: block;
+    position: relative;
+}
+
+/* .card-present-title{ */
+.card-title{
+    font-size: 2em;
+}
+
+
+/* 슬라이더 영역 */
+.slider-container {
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.slider-wrapper {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+    flex: 0 1 auto;
+
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.slide {
+    min-width: 33.33%; 
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.slide-item {
+    border: 1px solid #ccc;
+    text-align: center;
+    background: white;
+    
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    justify-content: flex-start;    
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.slider-thumbnail {
+    width: 100%;
+    height: auto;
+    max-height: 300px; /* 선택 사항 */
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+
+
+.slider-thumbnail {
+    flex: 0 1 auto; 
+}
+/* for Present, Future, Past */
+.slide-item {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column; /* 수직 정렬 */
+    align-items: center;
+    
+    justify-content: center;
+    
+    box-sizing: border-box;
+    padding: 10px;
+    overflow: hidden;
+}
+
+/* for Present, Future, Past */
+.slide-item img.slider-thumbnail {
+    width: 100%;
+    height: auto; /* 비율 유지 */
+    max-height: 80px; 
+    /* 작은것은 문제않되는데, 큰 것은 넘쳐나는 문제 있다 */
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.slide.present > h4,
+.slide.present > p {
+    width: 100%;
+    margin: 5px 0;
+    text-align: center;
+    word-wrap: break-word;
+    font-size: 1rem;
+}
+
+/* for Present, Future, Past */
+.slide h4,
+.slide p {
+    width: 100%;
+    margin: 5px 0;
+    text-align: center;
+    word-wrap: break-word;
+    font-size: 1rem;
+}
+
+
+.slider-button.left {
+    left: 10px;
+}
+
+.slider-button.right {
+    right: 10px;
+}
+
+.slider-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+
+.slider-button.present {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: red;
+    /* background-color: red; */
+    color: white;
+    border: none;
+    /* border: 2px solid green; */
+    padding: 10px;
+    cursor: pointer;
+}
+
+.slider-button.future {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: purple;
+    /* background-color: red; */
+    color: white;
+    border: none;
+    /* border: 2px solid green; */
+    padding: 10px;
+    cursor: pointer;
+}
+
+.slider-button.past {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: blue;
+    /* background-color: red; */
+    color: white;
+    border: none;
+    /* border: 2px solid green; */
+    padding: 10px;
+    cursor: pointer;
+}

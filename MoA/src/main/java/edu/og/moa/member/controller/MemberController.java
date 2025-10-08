@@ -38,7 +38,7 @@ public class MemberController {
 		
 		
 		
-		return null;
+		return "common/main";
 		
 		
 		

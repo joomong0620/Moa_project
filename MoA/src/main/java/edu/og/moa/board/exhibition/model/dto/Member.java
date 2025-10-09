@@ -1,4 +1,4 @@
-package edu.og.moa.member.model.dto;
+package edu.og.moa.board.exhibition.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,19 +8,16 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Member {
-	
-	
-	private String memberNo;
-	private String memberId;
+
+	private int memberNo;
 	private String memberEmail;
 	private String memberPw;
 	private String memberNickname;
 	private String memberTel;
-	private String memberAddr;
-	private String memberAdmin;
-	private String profileImg;
-	private String memberDelFl;
-	
-	
-
+	private String memberAddress;
+	private String profileImage;
+	private String enrollDate;
+	private String memberDeleteFlag;
+	private int authority;
+	   
 }

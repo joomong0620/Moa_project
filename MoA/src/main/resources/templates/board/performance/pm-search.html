@@ -1,15 +1,89 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <main>
         <th:block th:replace="~{/common/header}">header.html</th:block>
 
-        
+        <div class="search-container">
+
+
+            <div class="search-bar">
+                <input type="text" placeholder="검색어를 입력하세요" />
+                <button class="search-btn">🔍</button>
+            </div>
+
+            <div class="filter-section">
+
+                <div class="filter-group" data-filter="genre">
+                    <h3>장르</h3>
+                    <div class="filter-options">
+                        <label><input type="checkbox" data-value="all" checked> 전체</label>
+                        <label><input type="checkbox" data-value="play"> 연극</label>
+                        <label><input type="checkbox" data-value="musical"> 뮤지컬</label>
+                        <label><input type="checkbox" data-value="music"> 음악</label>
+                        <label><input type="checkbox" data-value="dance"> 무용</label>
+                        <label><input type="checkbox" data-value="circus"> 서커스/마술</label>
+                    </div>
+                </div>
+
+                <div class="filter-group" data-filter="price">
+                    <h3>가격</h3>
+                    <div class="filter-options">
+                        <label><input type="checkbox" data-value="all" checked> 전체</label>
+                        <label><input type="checkbox" data-value="free"> 무료</label>
+                        <label><input type="checkbox" data-value="0-10000"> 1만원 미만</label>
+                        <label><input type="checkbox" data-value="10000-30000"> 1만원~3만원 미만</label>
+                        <label><input type="checkbox" data-value="30000-50000"> 3만원~5만원 미만</label>
+                        <label><input type="checkbox" data-value="50000-100000"> 5만원~10만원 미만</label>
+                        <label><input type="checkbox" data-value="100000+"> 10만원 이상</label>
+                    </div>
+                </div>
+
+                <div class="filter-group" data-filter="period">
+                    <h3>기간</h3>
+                    <div class="filter-options">
+                        <label><input type="checkbox" data-value="all" checked> 전체</label>
+                        <label><input type="checkbox" data-value="1day"> 1일 이내</label>
+                        <label><input type="checkbox" data-value="1week"> 1주일 이내</label>
+                        <label><input type="checkbox" data-value="1month"> 1개월 이내</label>
+                        <label><input type="checkbox" data-value="3month"> 3개월 이내</label>
+                        <label><input type="checkbox" data-value="1year"> 1년 이내</label>
+                    </div>
+                </div>
+
+                <div class="filter-group" data-filter="region">
+                    <h3>지역</h3>
+                    <div class="filter-options">
+                        <label><input type="checkbox" data-value="all" checked> 전체</label>
+                        <label><input type="checkbox" data-value="seoul"> 서울</label>
+                        <label><input type="checkbox" data-value="busan"> 부산</label>
+                        <label><input type="checkbox" data-value="daegu"> 대구</label>
+                        <label><input type="checkbox" data-value="incheon"> 인천</label>
+                        <label><input type="checkbox" data-value="gwangju"> 광주</label>
+                        <label><input type="checkbox" data-value="daejeon"> 대전</label>
+                        <label><input type="checkbox" data-value="ulsan"> 울산</label>
+                        <label><input type="checkbox" data-value="gyeonggi"> 경기</label>
+                        <label><input type="checkbox" data-value="gangwon"> 강원도</label>
+                        <label><input type="checkbox" data-value="chungbuk"> 충북</label>
+                        <label><input type="checkbox" data-value="chungnam"> 충남</label>
+                        <label><input type="checkbox" data-value="jeonbuk"> 전북</label>
+                        <label><input type="checkbox" data-value="jeonnam"> 전남</label>
+                        <label><input type="checkbox" data-value="gyeongbuk"> 경북</label>
+                        <label><input type="checkbox" data-value="gyeongnam"> 경남</label>
+                        <label><input type="checkbox" data-value="jeju"> 제주도</label>
+                    </div>
+                </div>
+
+                <button class="apply-btn">반영하기</button>
+            </div>
+        </div>
 
 
 
@@ -20,4 +94,5 @@
     </main>
 
 </body>
+
 </html>

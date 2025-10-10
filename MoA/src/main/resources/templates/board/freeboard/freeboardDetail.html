@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,53 +7,135 @@
     <title>게시판 상세</title>
 
     <!-- 외부 CSS 연결 -->
-    <link rel="stylesheet" href="../css/freeboardDetail.css" />
+    <link
+      rel="stylesheet"
+      th:href="@{/css/board/freeboard/freeboardDetail.css}"
+    />
+    <link
+      rel="stylesheet"
+      th:href="@{/css/board/freeboard/freeboardComment.css}"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
   </head>
+
   <body>
     <main>
       <section class="board-detail">
         <!-- 카테고리 -->
-        <h1>자유게시판</h1>
+        <h1 th:text="${board.boardTypeName}">자유게시판</h1>
 
         <!-- 제목 + 작성자/작성일/조회수 + 좋아요 -->
         <div class="board-header">
           <!-- 왼쪽 (제목) -->
           <div class="left-area">
-            <h3 class="board-title">고전 미술 작품 속에서 느낀 시간 여행</h3>
+            <h3 class="board-title" th:text="${board.boardTitle}">
+              게시글 제목
+            </h3>
           </div>
 
           <!-- 오른쪽 (닉네임, 작성일, 조회수, 좋아요) -->
           <div class="right-area">
             <div class="board-info">
-              <p><span>닉네임</span> joomong</p>
-              <p><span>작성일</span> 2025-09-29</p>
-              <p><span>조회수</span> 2789</p>
+              <p>
+                <span>닉네임</span>
+                <span th:text="${board.memberNickname}">joomong</span>
+              </p>
+              <p>
+                <span>작성일</span>
+                <span th:text="${board.boardCreateDate}">2025-09-29</span>
+              </p>
+              <p>
+                <span>조회수</span>
+                <span th:text="${board.boardCount}">2789</span>
+              </p>
             </div>
-            <div class="like-area">
-              <i class="fa-regular fa-heart" id="boardLike"></i>
-              <span>10</span>
-            </div>
+
+            <!-- 좋아요 하트 -->
+            <span class="like-area">
+              <i
+                class="fa-heart"
+                th:classappend="${likeCheck} ? fa-solid : fa-regular"
+                id="boardLike"
+              ></i>
+
+              <span th:text="${board.likeCount}">0</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- 썸네일 -->
+        <div class="board-thumbnail" th:if="${thumbnail != null}">
+          <h5>썸네일</h5>
+          <img
+            th:src="|${thumbnail.imgPath}${thumbnail.imgRename}|"
+            th:alt="${thumbnail.imgOrig}"
+            class="thumb-img"
+          />
+        </div>
+
+        <!-- 나머지 업로드 이미지 -->
+        <div
+          class="board-images"
+          th:if="${board.imageList != null and #lists.size(board.imageList) > start}"
+        >
+          <h5>업로드 이미지</h5>
+          <div
+            class="image-item"
+            th:each="img : ${board.imageList.subList(start, board.imageList.size())}"
+          >
+            <img
+              th:src="|${img.imgPath}${img.imgRename}|"
+              th:alt="${img.imgOrig}"
+            />
           </div>
         </div>
 
         <!-- 본문 -->
-        <div class="board-content">
-          몇 달 전부터 기다리던 뮤지컬을 드디어 현장에서 직접 보고 왔습니다.
-          TV로 보던 것과는 전혀 다른 생생한 감동이 느껴졌고, 배우들의 열정적인
-          무대를 보며 오랜만에 심금을 울리는 시간이었습니다.
+        <div class="board-content" th:text="${board.boardContent}">
+          게시글 내용
         </div>
 
-        <!-- 버튼 영역-->
+        <!-- 버튼 영역 -->
         <div class="board-btn-area">
-          <button id="updateBtn">수정</button>
-          <button id="deleteBtn">삭제</button>
-          <button id="goToListBtn">목록으로</button>
+          <!-- 로그인 + 작성자 본인일 때만 수정/삭제 -->
+          <th:block
+            th:if="${session.loginMember != null and session.loginMember.memberNo == board.memberNo}"
+          >
+            <button id="updateBtn" type="button">수정</button>
+            <button id="deleteBtn" type="button">삭제</button>
+          </th:block>
+
+          <button
+            id="goToListBtn"
+            type="button"
+            th:onclick="|location.href='@{/board/{boardCode}(boardCode=${boardCode})}'|"
+          >
+            목록으로
+          </button>
         </div>
       </section>
+      <th:block th:replace="~{board/freeboard/freeboardComment}"></th:block>
     </main>
+
+    <th:block th:replace="~{common/footer}"></th:block>
+    <script th:inline="javascript">
+      // 수정된 코드
+      const loginMemberNo = [[${session.loginMember != null ? session.loginMember.memberNo : ''}]];
+      const memberNickname = [[${session.loginMember != null ? session.loginMember.memberNickname : ''}]];
+      const boardNo = [[${board != null ? board.boardNo : 0}]];
+      const boardCode = [[${boardCode != null ? boardCode : 0}]];
+      const boardTitle = [[${board != null ? board.boardTitle : ''}]];
+
+      // 디버깅
+      console.log("loginMemberNo:", loginMemberNo);
+      console.log("memberNickname:", memberNickname);
+      console.log("boardNo:", boardNo);
+    </script>
+
+    <script th:src="@{/js/board/freeboard/freeboardDetail.js}"></script>
+    <script th:src="@{/js/board/freeboard/freeboardComment.js}"></script>
   </body>
 </html>

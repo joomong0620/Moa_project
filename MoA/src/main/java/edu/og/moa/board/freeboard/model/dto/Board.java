@@ -21,7 +21,7 @@ public class Board {
     private int communityCode;    // 게시판 종류
     private int qCode;            // 문의 코드
     private int boardCode;   // boardCode 필드 추가
-
+    private String boardTypeName;
     // 서브쿼리용
     private int commentCount;     // 댓글 수
     private int likeCount;        // 좋아요 수 (있다면)

@@ -1,132 +1,145 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>자유게시판</title>
-    <link rel="stylesheet" th:href="@{/css/freeboardList.css}" />
+    <link
+      rel="stylesheet"
+      th:href="@{/css/board/freeboard/freeboardWrite.css}"
+    />
   </head>
 
   <body>
-    <!-- header.html 조각 포함 -->
-    <th:block th:replace="~{common/header}"></th:block>
+    <main>
+      <!-- <th:block th:replace="~{common/header}"></th:block> -->
 
-    <main th:with="pagination=${map.pagination}, boardList=${map.boardList}">
       <div class="free-container">
-        <div class="free1">
-          <h1 class="title">자유게시판</h1>
-          <p class="subtitle">
-            자유롭게 공연/전시에 대한 이야기를 함께 나누어보아요!
-          </p>
-        </div>
+        <h1>자유게시판</h1>
       </div>
 
-      <section class="free-category">
-        <!-- 게시글이 없는 경우 -->
-        <th:block th:if="${#lists.size(boardList) == 0}">
-          <p>게시글이 존재하지 않습니다.</p>
-        </th:block>
+      <!-- @PathVariable로 얻어온 boardCode -->
+      <form
+        th:action="@{insert}"
+        method="POST"
+        class="board-write"
+        id="boardWriteFrm"
+        enctype="multipart/form-data"
+      >
+        <!-- enctype="multipart/form-data" : 제출 시 데이터 인코딩 X 
+        -> 파일 제출 가능 -> MultiPartResolver가 문자열, 파일 구분
+        
+        문자열 -> String, int, DTO, Map (HttpMessageConverter)
+        파일 -> MultiPartFile 객체 -> transferTo() (파일을 서버에 저장)
+        -->
 
-        <!-- 게시글이 있는 경우 -->
-        <div class="card" th:each="board : ${boardList}">
-          <!-- 썸네일 -->
-          <img
-            th:if="${board.thumbnail}"
-            th:src="${board.thumbnail}"
-            alt="thumbnail"
+        <!-- 제목 -->
+        <div class="Title-container">
+          <div class="Title">제목</div>
+          <input
+            type="text"
+            name="boardTitle"
+            class="subTitle"
+            placeholder="제목을 입력해주세요"
           />
-          <img
-            th:unless="${board.thumbnail}"
-            th:src="@{/images/default.jpg}"
-            alt="default"
-          />
+        </div>
 
-          <div class="card-content">
-            <!-- 제목 (상세보기 링크) -->
-            <h3 class="card-title">
-              <a
-                th:href="@{/freeboard/{code}/{no}(code=${boardCode}, no=${board.boardNo}, cp=${pagination.currentPage})}"
-                th:text="${board.boardTitle}"
-                >게시글 제목</a
-              >
-            </h3>
-
-            <!-- 내용 미리보기 -->
-            <p class="card-text" th:text="${board.boardContent}">
-              내용 미리보기
-            </p>
-
-            <!-- 작성자 / 작성일 -->
-            <div class="card-info">
-              <span th:text="${board.memberNickname}">작성자</span> |
-              <span th:text="${board.boardCreateDate}">작성일</span> | 조회수
-              <span th:text="${board.readCount}">0</span>
-            </div>
+        <!-- 썸네일 영역 -->
+        <h5>썸네일</h5>
+        <div class="img-box">
+          <div class="boardImg thumbnail">
+            <label for="img0">
+              <img class="preview" src="" />
+            </label>
+            <input
+              type="file"
+              name="images"
+              class="inputImage"
+              id="img0"
+              accept="image/*"
+            />
+            <span class="delete-image">&times;</span>
           </div>
         </div>
-      </section>
 
-      <!-- 페이지네이션 -->
-      <div class="pagination-area" th:if="${#lists.size(boardList) > 0}">
-        <ul class="pagination">
-          <!-- 처음으로 -->
-          <li>
-            <a th:href="@{/freeboard/{code}(code=${boardCode}, cp=1)}"
-              >&lt;&lt;</a
-            >
-          </li>
+        <!-- 업로드 이미지 영역 -->
+        <h5>업로드 이미지</h5>
+        <div class="img-box">
+          <div class="boardImg">
+            <label for="img1">
+              <img class="preview" src="" />
+            </label>
+            <input
+              type="file"
+              name="images"
+              class="inputImage"
+              id="img1"
+              accept="image/*"
+            />
+            <span class="delete-image">&times;</span>
+          </div>
 
-          <!-- 이전 -->
-          <li>
-            <a
-              th:href="@{/freeboard/{code}(code=${boardCode}, cp=${pagination.prevPage})}"
-              >&lt;</a
-            >
-          </li>
+          <div class="boardImg">
+            <label for="img2">
+              <img class="preview" src="" />
+            </label>
+            <input
+              type="file"
+              name="images"
+              class="inputImage"
+              id="img2"
+              accept="image/*"
+            />
+            <span class="delete-image">&times;</span>
+          </div>
 
-          <!-- 숫자 페이지 -->
-          <th:block
-            th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage)}"
-          >
-            <li th:if="${pagination.currentPage == i}">
-              <a class="current" th:text="${i}">현재</a>
-            </li>
-            <li th:unless="${pagination.currentPage == i}">
-              <a
-                th:href="@{/freeboard/{code}(code=${boardCode}, cp=${i})}"
-                th:text="${i}"
-                >페이지</a
-              >
-            </li>
-          </th:block>
+          <div class="boardImg">
+            <label for="img3">
+              <img class="preview" src="" />
+            </label>
+            <input
+              type="file"
+              name="images"
+              class="inputImage"
+              id="img3"
+              accept="image/*"
+            />
+            <span class="delete-image">&times;</span>
+          </div>
 
-          <!-- 다음 -->
-          <li>
-            <a
-              th:href="@{/freeboard/{code}(code=${boardCode}, cp=${pagination.nextPage})}"
-              >&gt;</a
-            >
-          </li>
+          <div class="boardImg">
+            <label for="img4">
+              <img class="preview" src="" />
+            </label>
+            <input
+              type="file"
+              name="images"
+              class="inputImage"
+              id="img4"
+              accept="image/*"
+            />
+            <span class="delete-image">&times;</span>
+          </div>
+        </div>
 
-          <!-- 마지막 -->
-          <li>
-            <a
-              th:href="@{/freeboard/{code}(code=${boardCode}, cp=${pagination.maxPage})}"
-              >&gt;&gt;</a
-            >
-          </li>
-        </ul>
-      </div>
+        <!-- 내용 -->
+        <div class="board-content">
+          <textarea
+            name="boardContent"
+            placeholder="내용을 입력해주세요."
+          ></textarea>
+        </div>
 
-      <!-- 글쓰기 버튼 -->
-      <div class="btn-area">
-        <button th:if="${session.loginMember}" class="free-write">
-          글쓰기
-        </button>
-      </div>
+        <!-- 버튼 영역 -->
+        <div class="board-btn-area">
+          <button type="submit" id="writebtn">등록</button>
+        </div>
+      </form>
     </main>
 
-    <!-- footer.html 조각 포함 -->
-    <th:block th:replace="~{common/footer}"></th:block>
+    <!-- <th:block th:replace="~{common/footer}"></th:block> -->
+
+    <script th:src="@{/js/board/freeboard/freeboardWrite.js}"></script>
   </body>
 </html>

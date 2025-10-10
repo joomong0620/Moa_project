@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.og.moa.board.exhibition.model.dao.JsonExhibitionMapper;
 import edu.og.moa.board.exhibition.model.dto.BoardDB;
-import edu.og.moa.common.utillity.Util;
+import edu.og.moa.common.utility.Util;
 
 @Service
 public class JsonExhibitionServiceImpl implements JsonExhibitionService {

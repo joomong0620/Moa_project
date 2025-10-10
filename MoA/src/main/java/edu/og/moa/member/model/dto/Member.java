@@ -10,16 +10,16 @@ import lombok.ToString;
 public class Member {
 	
 	
-	private String MemberNo;
-	private String MemberId;
-	private String MemberPw;
-	private String MemberEmail;
-	private String MemberNickname;
-	private String MemberTel;
-	private String MemberAddr;
-	private String MemberAdmin;
-	private String ProfileImg;
-	private String MemberDelFl;
+	private int memberNo;
+	private String memberId;
+	private String memberEmail;
+	private String memberPw;
+	private String memberNickname;
+	private String memberTel;
+	private String memberAddr;
+	private String memberAdmin;
+	private String profileImg;
+	private String memberDelFl;
 	
 	
 

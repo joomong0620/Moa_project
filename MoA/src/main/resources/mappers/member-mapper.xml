@@ -1,19 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="edu.og.moa.model.dao.MemberMapper">
-
-	<insert id="signUp">
+<mapper namespace="edu.og.moa.member.model.dao.MemberMapper">
 	
-		INSERT INTO "MEMBER" VALUES(
+	<resultMap type="Member" id="member_rm">
+		<id property="memberNo" column="MEMBER_NO" />
+		<result property="memberId" column="MEMBER_Id" />
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPw" column="MEMBER_PW" />
+		<result property="memberNickname" column="MEMBER_NICKNAME" />
+		<result property="memberTel" column="MEMBER_TEL" />
+		<result property="memberAddr" column="MEMBER_ADDR" />
+		<result property="memberAdmin" column="MEMBER_ADMIN" />
+		<result property="profileImg" column="PROFILE_IMG" />
+		<result property="memberDelFl" column="MEMBER_DEL_FL" />
+	</resultMap>
+
+	<insert id="signUp" parameterType="Member">
+	
+		INSERT INTO "MEMBER" (
+		
+			MEMBER_NO, 
+			MEMBER_Id, 
+			MEMBER_EMAIL, 
+			MEMBER_PW, 
+			MEMBER_NICKNAME, 
+			MEMBER_TEL,
+			MEMBER_ADDR,
+			MEMBER_ADMIN,
+			PROFILE_IMG,
+			MEMBER_DEL_FL
+			
+		
+		)
+		
+		
+		
+		 VALUES(
     
 		    SEQ_MEMBER_NO.NEXTVAL,
-		    MEMBER_ID, MEMBER_EMAIL, 
-		    MEMBER_PW, MEMBER_NICKNAME,
-		    MEMBER_TEL, MEMBER_ADDR, 
-		    DEFAULT, DEFAULT, DEFAULT
+		    #{memberId},
+		    #{memberEmail},
+		    #{memberPw},
+		    #{memberNickname},
+		    #{memberTel},
+		    #{memberAddr},
+		    'N',
+		    DEFAULT,
+		    DEFAULT
 		    
 
-)
+		)
 	
 	
 	</insert>

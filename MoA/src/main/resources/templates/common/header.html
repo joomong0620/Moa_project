@@ -1,72 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/main/resources/static/css/main-style.css">
-    <script src="/src/main/resources/static/js/main.js"></script>
-    <title>Document</title>
-</head>
-
-<body>
-    <header class="header">
-        <section>
-            <a href=""><img src="/src/main/resources/static/images/moa_logo.png"
-            alt="이미지 준비중" id="logo-image"></a>
-        </section>
-
-        <nav class="nav">
-            <ul>
-                <li><a href="#" id="dfdfdf">공연</a></li>
-                <li><a href="#">전시</a></li>
-                <li><a href="#">커뮤니티</a></li>
-                <li><a href="#">고객센터</a></li>
-            </ul>
-        </nav>
-        <div class="signin">
-            <a href="#"><img src="/src/main/resources/static/images/user.svg"
-                alt="이미지 준비중" id="signin-image"><span id="signin-text">sign in</span></a>
-            
-        </div>
-    </header>
-
-    <main class="main"> 
-        <h3>메인 컨텐츠 영역</h3>
-    </main>
-
-
-    <footer class="footer">
-        <div class="footer-left">
-            <div class="logo"><img src="/src/main/resources/static/images/moa_logo.png"
-            alt="이미지 준비중" id="logo-image"></div>
-            <p>
-                상호 : (주) 모아컴퍼니 | 대표 팀 : Ctrl F5<br>
-                사업자등록번호 : 000-00-00000 | 영업신고번호 : 제1234-서울 종로-0093호<br>
-                연락처 : 02-0123-4567 | 팩스 : 001-0032-0000 | 이메일 : moa_00@naver.com<br>
-                주소 : 서울특별시 종로구 관철동 중앙빌딩 9F
-            </p>
-            <p>Copyright ⓒ 모아컴퍼니</p>
-        </div>
-        <div class="footer-right">
-            <ul>
-                <li><a href="#">Team</a></li>
-                <li><a href="#">Vision</a></li>
-                <li><a href="#">Performance</a></li>
-                <li><a href="#">Exhibitions</a></li>
-                <li><a href="#">Follow Us</a></li>
-            </ul>
-            <div class="sns">
-                <a href="#"><img src="/src/main/resources/static/images/instagram-logo.svg"
-            alt="이미지 준비중" ></a>
-                <a href="#"><img src="/src/main/resources/static/images/Facebook-logo.svg"
-            alt="이미지 준비중" ></a>
-                <a href="#"><img src="/src/main/resources/static/images/message.svg"
-            alt="이미지 준비중" ></a>
+<header th:fragment="header" class="header">
+    <section>
+      <a th:href="@{/}">
+        <img th:src="@{/images/common/moa_logo.png}" alt="이미지 준비중" id="logo-image" />
+      </a>
+    </section>
+  
+    <nav class="nav">
+      <ul>
+        <!-- 공연 -->
+        <li class="menu-item">
+          <a href="#">공연</a>
+          <div class="submenu">
+            <div class="submenu-left">
+              <h2>공연</h2>
+              <span>performance</span>
             </div>
-        </div>
-    </footer>
-
-</body>
-
-</html>
+            <div class="submenu-right">
+              <ul>
+                <li><a href="#">전체 공연목록 조회</a></li>
+                <li><a href="#">통합 검색</a></li>
+                <li><a href="#">지도 검색</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+  
+        <!-- 전시 -->
+        <li class="menu-item">
+          <a href="#">전시</a>
+          <div class="submenu">
+            <div class="submenu-left">
+              <h2>전시</h2>
+              <span>exhibition</span>
+            </div>
+            <div class="submenu-right">
+              <ul>
+                <li><a href="/board/exhibition/jsonExhibitionList">전체 전시목록 조회</a></li>
+                <li><a href="#">전시 일정</a></li>
+                <li><a href="#">전시 지도 검색</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+  
+        <!-- 커뮤니티 -->
+        <li class="menu-item">
+          <a href="#">커뮤니티</a>
+          <div class="submenu">
+            <div class="submenu-left">
+              <h2>커뮤니티</h2>
+              <span>community</span>
+            </div>
+            <div class="submenu-right">
+              <ul>
+                <li><a href="#">자유게시판</a></li>
+                <li><a th:href="@{/review/list}">리뷰게시판</a></li>
+                <li><a href="#">만남의 광장</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+  
+        <!-- 고객센터 -->
+        <li class="menu-item">
+          <a href="#">고객센터</a>
+          <div class="submenu">
+            <div class="submenu-left">
+              <h2>고객센터</h2>
+              <span>support</span>
+            </div>
+            <div class="submenu-right">
+              <ul>
+                <li><a href="#">공지사항</a></li>
+                <li><a href="#">문의하기</a></li>
+                <li><a href="#">이용안내</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  
+    <div class="signin">
+      <a th:href="@{/login}">
+        <img th:src="@{/images/common/user.svg}" alt="이미지 준비중" id="signin-image" />
+        <span id="signin-text" th:text="${name} ?: 'sign in'"></span>
+      </a>
+    </div>
+  </header>

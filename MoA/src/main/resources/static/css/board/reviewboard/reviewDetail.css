@@ -1,0 +1,214 @@
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: #f8f9fb;
+  margin: 0;
+}
+
+.review-detail {
+  background: #ffffff;
+  width: 100%;
+  margin: 60px auto;
+  padding: 40px 60px;
+}
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #27374d;
+  text-align: center;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
+}
+
+.review-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.poster {
+  width: 120px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.review-text {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.review-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+}
+
+.stars {
+  color: gold;
+  font-size: 20px;
+  margin-top: 8px;
+}
+
+.review-stats {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #666;
+}
+
+.user-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.review-box {
+  background-color: #f9fafc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 30px;
+  border: 1px solid #ddd;
+}
+
+.review-user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: 600;
+  color: #27374d;
+}
+
+.date {
+  font-size: 13px;
+  color: #888;
+}
+
+.review-text-content {
+  color: #444;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.review-images {
+  margin-top: 40px;
+}
+
+.sub-title {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.image-list {
+  display: flex;
+  gap: 10px;
+}
+
+.image-list img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* 버튼 */
+.btn-area {
+  text-align: right;
+  margin-top: 25px;
+}
+
+.back-btn {
+  background-color: #27374d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.back-btn:hover {
+  background-color: #435b7d;
+}
+
+/* 댓글 섹션 */
+.comment-section {
+  margin-top: 40px;
+}
+
+.comment-section h3 {
+  font-size: 18px;
+  color: #27374d;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+  margin-bottom: 20px;
+}
+
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.comment-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.comment-box {
+  flex: 1;
+}
+
+.comment-user {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #27374d;
+}
+
+.comment-text {
+  font-size: 14px;
+  color: #444;
+}
+
+.comment-input {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.comment-input textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
+.submit-btn {
+  background-color: #27374d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  width: fit-content;
+  align-self: flex-end;
+  margin-top: 10px;
+  cursor: pointer;
+}

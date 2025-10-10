@@ -25,7 +25,7 @@ import edu.og.moa.board.exhibition.model.dto.ContributorDB;
 import edu.og.moa.board.exhibition.model.dto.ExhibitionDB;
 import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 import edu.og.moa.board.exhibition.model.dto.JsonExhibition;
-import edu.og.moa.board.exhibition.model.dto.JsonPagination;
+import edu.og.moa.board.exhibition.model.dto.Pagination;
 import edu.og.moa.board.exhibition.model.dto.JsonMember;
 import edu.og.moa.board.exhibition.model.dto.LikeDB;
 import edu.og.moa.board.exhibition.model.service.JsonExhibitionService;
@@ -71,7 +71,7 @@ public class JsonExhibitionController {
         	
         	int listCount = 209; 	// fixed 1 for mockSM230 json 데이터
         	int cp = 1; 			// fixed 1 for mockSM230 json 데이터
-        	JsonPagination pagination = new JsonPagination(cp, listCount);
+        	Pagination pagination = new Pagination(cp, listCount);
         	int paginationLimit = pagination.getLimit();
         	
         	// frontend로 전달: 

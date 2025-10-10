@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.og.moa.board.exhibition.model.dto.BoardImage;
-import edu.og.moa.board.exhibition.model.dto.Exhibition;
-import edu.og.moa.board.exhibition.model.dto.Pagination;
-import edu.og.moa.board.exhibition.model.dto.Member;
+import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
+import edu.og.moa.board.exhibition.model.dto.JsonExhibition;
+import edu.og.moa.board.exhibition.model.dto.JsonPagination;
+import edu.og.moa.board.exhibition.model.dto.JsonMember;
 import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/board/exhibition")
@@ -43,28 +43,28 @@ public class ExhibitionController {
 
         log.info("타겟 파일 이름 : {}", targetFileName);
         
-        List<Exhibition> exhibitionDtoItems = new ArrayList<>();
+        List<JsonExhibition> exhibitionDtoItems = new ArrayList<>();
         
         ObjectMapper mapper = new ObjectMapper();
         
         try {
 
-        	Map<String,  List<Exhibition>> map = mapper.readValue(inputStream, 
-        			new TypeReference<Map<String, List<Exhibition>>>() {}
+        	Map<String,  List<JsonExhibition>> map = mapper.readValue(inputStream, 
+        			new TypeReference<Map<String, List<JsonExhibition>>>() {}
         	); 
         	
         	// 데이터 접근
-        	List<Exhibition> itemsList = map.get("itemsList"); 
+        	List<JsonExhibition> itemsList = map.get("itemsList"); 
 
         	Map<String, Object> mapExhibitionServiceImpl = new HashMap<>();
         	
         	int listCount = 209; 	// fixed 1 for mockSM230 json 데이터
         	int cp = 1; 			// fixed 1 for mockSM230 json 데이터
-        	Pagination pagination = new Pagination(cp, listCount);
+        	JsonPagination pagination = new JsonPagination(cp, listCount);
         	int paginationLimit = pagination.getLimit();
         	
         	// frontend로 전달: 
-        	List<Exhibition> itemsListPageLimit10 = new ArrayList<>(itemsList.subList(0, paginationLimit));
+        	List<JsonExhibition> itemsListPageLimit10 = new ArrayList<>(itemsList.subList(0, paginationLimit));
         	
 			mapExhibitionServiceImpl.put("exhibitionList", itemsListPageLimit10);
 			
@@ -74,7 +74,7 @@ public class ExhibitionController {
 			model.addAttribute("map", mapExhibitionServiceImpl); //model : spring에서 사용하는 데이터 전달 객체 => js에서 이걸 받아 사용 (@PathVariable에 담긴 boardCode와 cp도 담겨져 넘어감)
 
 			// 로그인 서비스 mock:		
-			Member loginMember = new Member();
+			JsonMember loginMember = new JsonMember();
 			loginMember.setMemberNickname("한국문화정보원");
 			loginMember.setProfileImage("/images/board/exhibition/member/penguin.jpeg"); 
 			
@@ -108,18 +108,18 @@ public class ExhibitionController {
 
         log.info("타겟 파일 이름 : {}", targetFileName);
         
-        List<Exhibition> exhibitionDtoItems = new ArrayList<>();
+        List<JsonExhibition> exhibitionDtoItems = new ArrayList<>();
         
         ObjectMapper mapper = new ObjectMapper();
         
         try {
-        	Map<String,  List<Exhibition>> map = mapper.readValue(inputStream, 
-        			new TypeReference<Map<String, List<Exhibition>>>() {}
+        	Map<String,  List<JsonExhibition>> map = mapper.readValue(inputStream, 
+        			new TypeReference<Map<String, List<JsonExhibition>>>() {}
         	); 
         	
-        	List<Exhibition> itemsList = map.get("itemsList");
+        	List<JsonExhibition> itemsList = map.get("itemsList");
 
-			Exhibition exhibition = null;
+			JsonExhibition exhibition = null;
 			//int index = 0; // 0번째 게시글: exhibitTitle=관동팔경 Ⅱ, 양양 낙산사
 			int index = 201; // 221번째 게시글: exhibitTitle=만세불후萬世不朽-돌에 새긴 영원
 			if (index < 0 || index >= itemsList.size()) {
@@ -133,7 +133,7 @@ public class ExhibitionController {
 			model.addAttribute("exhibition", exhibition); 
 			
 			// 로그인 서비스 mock:		
-			Member loginMember = new Member();
+			JsonMember loginMember = new JsonMember();
 			loginMember.setMemberNickname("한국문화정보원");
 			loginMember.setProfileImage("/images/board/exhibition/member/penguin.jpeg"); 
 			loginMember.setMemberNo(3); 
@@ -143,7 +143,7 @@ public class ExhibitionController {
 			model.addAttribute("exhibitionCode", 3);  
 			model.addAttribute("exhibitionName", "전시게시판");  
 			
- 			BoardImage thumbnail = null; 
+ 			JsonBoardImage thumbnail = null; 
  			if(!exhibition.getImageList().isEmpty()) {
 				
  				// 썸네일 == 0번 인덱스 이미지의 순서가 0인 경우
@@ -180,19 +180,19 @@ public class ExhibitionController {
         
         log.info("타겟 파일 이름 : {}", targetFileName);
         
-        List<Exhibition> exhibitionDtoItems = new ArrayList<>();
+        List<JsonExhibition> exhibitionDtoItems = new ArrayList<>();
         
         ObjectMapper mapper = new ObjectMapper();
         
         try {
         	
-        	Map<String,  List<Exhibition>> map = mapper.readValue(inputStream, 
-        			new TypeReference<Map<String, List<Exhibition>>>() {}
+        	Map<String,  List<JsonExhibition>> map = mapper.readValue(inputStream, 
+        			new TypeReference<Map<String, List<JsonExhibition>>>() {}
         	); 
         	
-        	List<Exhibition> itemsList = map.get("itemsList"); 
+        	List<JsonExhibition> itemsList = map.get("itemsList"); 
 
-			Exhibition exhibition = null;
+        	JsonExhibition exhibition = null;
 			//int index = 0; // 0번째 게시글: exhibitTitle=관동팔경 Ⅱ, 양양 낙산사
 			int index = 201; // 221번째 게시글: exhibitTitle=만세불후萬世不朽-돌에 새긴 영원
 			if (index < 0 || index >= itemsList.size()) {
@@ -206,7 +206,7 @@ public class ExhibitionController {
 			model.addAttribute("exhibition", exhibition); 
 			
 			// 로그인 서비스 mock:		
-			Member loginMember = new Member();
+			JsonMember loginMember = new JsonMember();
 			loginMember.setMemberNickname("한국문화정보원");
 			loginMember.setProfileImage("/images/board/exhibition/member/penguin.jpeg"); 			
 			loginMember.setMemberNo(3); 
@@ -217,7 +217,7 @@ public class ExhibitionController {
 			model.addAttribute("exhibitionName", "전시게시판");  
 			
  			// 게시글 이미지가 있는 경우
- 			BoardImage thumbnail = null; 
+ 			JsonBoardImage thumbnail = null; 
  			if(!exhibition.getImageList().isEmpty()) {
 				
  				// 썸네일 == 0번 인덱스 이미지의 순서가 0인 경우
@@ -258,19 +258,19 @@ public class ExhibitionController {
         log.info("타겟 파일 이름 : {}", targetFileName);
         
         
-        List<Exhibition> exhibitionDtoItems = new ArrayList<>();
+        List<JsonExhibition> exhibitionDtoItems = new ArrayList<>();
         
         ObjectMapper mapper = new ObjectMapper();
         
         try {
 
-        	Map<String,  List<Exhibition>> map = mapper.readValue(inputStream, 
-        			new TypeReference<Map<String, List<Exhibition>>>() {}
+        	Map<String,  List<JsonExhibition>> map = mapper.readValue(inputStream, 
+        			new TypeReference<Map<String, List<JsonExhibition>>>() {}
         	); 
         	
-        	List<Exhibition> itemsList = map.get("itemsList"); 
+        	List<JsonExhibition> itemsList = map.get("itemsList"); 
 
-			Exhibition exhibition = null;
+        	JsonExhibition exhibition = null;
 			//int index = 0; // 0번째 게시글: exhibitTitle=관동팔경 Ⅱ, 양양 낙산사
 			int index = 201; // 221번째 게시글: exhibitTitle=만세불후萬世不朽-돌에 새긴 영원
 			if (index < 0 || index >= itemsList.size()) {
@@ -281,7 +281,7 @@ public class ExhibitionController {
 
         	// frontend로 전달
 			// 로그인 서비스 mock:		
-			Member loginMember = new Member();
+			JsonMember loginMember = new JsonMember();
 			loginMember.setMemberNickname("한국문화정보원");
 			loginMember.setProfileImage("/images/board/exhibition/member/penguin.jpeg"); 
 			loginMember.setMemberNo(3); 
@@ -293,7 +293,7 @@ public class ExhibitionController {
 			
 
  			// 게시글 이미지가 있는 경우
- 			BoardImage thumbnail = null; 
+ 			JsonBoardImage thumbnail = null; 
  			if(!exhibition.getImageList().isEmpty()) {
 				
  				// 썸네일 == 0번 인덱스 이미지의 순서가 0인 경우
@@ -309,8 +309,8 @@ public class ExhibitionController {
         	e.printStackTrace();
         }
 	    
-	    BoardImage boardImage = new BoardImage();
-	    List<BoardImage> imageList = new ArrayList<>();
+	    JsonBoardImage boardImage = new JsonBoardImage();
+	    List<JsonBoardImage> imageList = new ArrayList<>();
 	    imageList.add(boardImage);
 	    model.addAttribute("imageList", imageList);
 	    

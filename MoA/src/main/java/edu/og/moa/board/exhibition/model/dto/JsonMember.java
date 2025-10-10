@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Member {
+public class JsonMember {
 
 	private int memberNo;
 	private String memberEmail;

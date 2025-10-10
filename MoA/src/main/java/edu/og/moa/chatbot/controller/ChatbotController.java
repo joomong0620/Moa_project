@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import edu.og.moa.chatbot.model.dto.ChattingRoom;
 import edu.og.moa.chatbot.model.dto.Message;
-import edu.og.moa.board.exhibition.model.dto.Member;
+import edu.og.moa.board.exhibition.model.dto.JsonMember;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -36,7 +36,7 @@ public class ChatbotController {
 		
 		
 		// 1) 기본적으로 테스트를 위해 프론트로 넘겨줄 loginMember mock 기본값
-		Member loginMember = new Member();
+		JsonMember loginMember = new JsonMember();
 		loginMember.setMemberNickname("한국문화정보원");
 		loginMember.setProfileImage("/images/board/exhibition/member/penguin.jpeg"); 
 		loginMember.setMemberNo(3); // 임의할당 for testing

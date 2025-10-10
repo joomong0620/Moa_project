@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BoardImage {
+public class JsonBoardImage {
 
 	private int imageNo;
 	private String imagePath;

@@ -27,7 +27,7 @@ function selectCommentList() {
         if (comment.profileImage != null) {
           profileImage.setAttribute("src", comment.profileImage);
         } else {
-          profileImage.setAttribute("src", "/resources/images/user.png");
+          profileImage.setAttribute("src", "/images/board/freeboard/user.png");
         }
 
         // 작성자 닉네임
@@ -229,3 +229,9 @@ function updateComment(commentNo, btn) {
     })
     .catch((err) => console.log(err));
 }
+
+// 페이지 로드 완료 시 댓글 목록 조회
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("페이지 로드 완료 - 댓글 목록 조회 시작");
+  selectCommentList();
+});

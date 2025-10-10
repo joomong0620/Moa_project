@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="edu.og.moa.board.model.dao.CommentMapper">
+<mapper namespace="edu.og.moa.board.freeboard.model.dao.FreeBoardCommentMapper">
 
 	<!-- Comment resultMap -->
 	<resultMap type="Comment" id="comment_rm">
@@ -48,9 +48,9 @@
 	        C_CREATE_DATE,
 	        COMMENT_CONTENT,
 	        COMMENT_DEL_FL,
-	        PARENT_NO)
+	        P_COMMENT)
 	    VALUES
-	        (#{commentNo}, #{commentContent}, DEFAULT, DEFAULT, #{boardNo}, #{memberNo}, NULL)
+			(#{commentNo}, #{memberNo}, #{boardNo}, DEFAULT, #{commentContent}, DEFAULT, NULL)
 	</insert>
 
 	

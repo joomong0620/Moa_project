@@ -15,9 +15,6 @@ public class PerformanceBoard {
 	private String boardTitle;
 	private String boardContent;
 	private int boardCount;
-	// 삭제 여부
-	// 작성자(없음)
-	// 커뮤코드
 	
 	// 공연
 	private int pmStartTime;

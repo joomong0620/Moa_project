@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>자유게시판</title>
+    <title>자유게시판 수정</title>
     <link
       rel="stylesheet"
       th:href="@{/css/board/freeboard/freeboardWrite.css}"
@@ -16,24 +16,17 @@
       <!-- <th:block th:replace="~{common/header}"></th:block> -->
 
       <div class="free-container">
-        <h1>자유게시판</h1>
+        <h1>자유게시판 수정</h1>
       </div>
 
-      <!-- @PathVariable로 얻어온 boardCode -->
+      <!-- @PathVariable로 얻어온 boardCode, boardNo -->
       <form
-        th:action="@{insert}"
+        th:action="@{update}"
         method="POST"
         class="board-write"
-        id="boardWriteFrm"
+        id="boardUpdateFrm"
         enctype="multipart/form-data"
       >
-        <!-- enctype="multipart/form-data" : 제출 시 데이터 인코딩 X 
-        -> 파일 제출 가능 -> MultiPartResolver가 문자열, 파일 구분
-        
-        문자열 -> String, int, DTO, Map (HttpMessageConverter)
-        파일 -> MultiPartFile 객체 -> transferTo() (파일을 서버에 저장)
-        -->
-
         <!-- 제목 -->
         <div class="Title-container">
           <div class="Title">제목</div>
@@ -42,6 +35,7 @@
             name="boardTitle"
             class="subTitle"
             placeholder="제목을 입력해주세요"
+            th:value="${board.boardTitle}"
           />
         </div>
 
@@ -50,7 +44,11 @@
         <div class="img-box">
           <div class="boardImg thumbnail">
             <label for="img0">
-              <img class="preview" src="" />
+              <img
+                class="preview"
+                th:src="${board.imageList != null and board.imageList.size() > 0} ?
+                        ${board.imageList[0].imgPath + board.imageList[0].imgRename} : ''"
+              />
             </label>
             <input
               type="file"
@@ -66,57 +64,24 @@
         <!-- 업로드 이미지 영역 -->
         <h5>업로드 이미지</h5>
         <div class="img-box">
-          <div class="boardImg">
-            <label for="img1">
-              <img class="preview" src="" />
+          <div class="boardImg" th:each="num : ${#numbers.sequence(1,4)}">
+            <label th:for="'img' + ${num}">
+              <img
+                class="preview"
+                th:if="${board.imageList != null and board.imageList.size() > num}"
+                th:src="${board.imageList[num].imgPath + board.imageList[num].imgRename}"
+              />
+              <img
+                class="preview"
+                th:unless="${board.imageList != null and board.imageList.size() > num}"
+                src=""
+              />
             </label>
             <input
               type="file"
               name="images"
               class="inputImage"
-              id="img1"
-              accept="image/*"
-            />
-            <span class="delete-image">&times;</span>
-          </div>
-
-          <div class="boardImg">
-            <label for="img2">
-              <img class="preview" src="" />
-            </label>
-            <input
-              type="file"
-              name="images"
-              class="inputImage"
-              id="img2"
-              accept="image/*"
-            />
-            <span class="delete-image">&times;</span>
-          </div>
-
-          <div class="boardImg">
-            <label for="img3">
-              <img class="preview" src="" />
-            </label>
-            <input
-              type="file"
-              name="images"
-              class="inputImage"
-              id="img3"
-              accept="image/*"
-            />
-            <span class="delete-image">&times;</span>
-          </div>
-
-          <div class="boardImg">
-            <label for="img4">
-              <img class="preview" src="" />
-            </label>
-            <input
-              type="file"
-              name="images"
-              class="inputImage"
-              id="img4"
+              th:id="'img' + ${num}"
               accept="image/*"
             />
             <span class="delete-image">&times;</span>
@@ -128,18 +93,37 @@
           <textarea
             name="boardContent"
             placeholder="내용을 입력해주세요."
+            th:text="${board.boardContent}"
           ></textarea>
         </div>
 
         <!-- 버튼 영역 -->
         <div class="board-btn-area">
-          <button type="submit" id="writebtn">등록</button>
+          <button type="submit" id="writebtn">수정</button>
         </div>
+
+        <!-- 삭제된 이미지 순서 기록용 -->
+        <input type="hidden" name="deleteList" value="" />
+
+        <!-- 수정 성공 시 쿼리스트링 유지용 -->
+        <input type="hidden" name="cp" th:value="${param.cp}" />
       </form>
     </main>
 
     <!-- <th:block th:replace="~{common/footer}"></th:block> -->
 
-    <script th:src="@{/js/board/freeboard/freeboardWrite.js}"></script>
+    <script th:src="@{/js/board/freeboard/freeboardUpdate.js}"></script>
+
+    <!-- 서버에서 넘어온 이미지리스트를 JS에서 미리보기로 표시 -->
+    <script th:inline="javascript">
+      const imageList = /*[[${board.imageList}]]*/ [];
+      const previewList = document.querySelectorAll("img.preview");
+
+      for (let img of imageList) {
+        if (img.imgOrder < previewList.length) {
+          previewList[img.imgOrder].src = img.imgPath + img.imgRename;
+        }
+      }
+    </script>
   </body>
 </html>

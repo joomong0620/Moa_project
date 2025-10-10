@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.og.moa.board.freeboard.model.dao.FreeBoardMapper2">
+
+    <insert id="FreeboardInsert" parameterType="Board" useGeneratedKeys="true">
+        <selectKey order="BEFORE" resultType="_int" keyProperty="boardNo">
+            SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO BOARD (
+            BOARD_NO, BOARD_TITLE, BOARD_CONTENT, B_CREATE_DATE,
+            B_UPDATE_DATE, BOARD_COUNT, BOARD_DEL_FL, MEMBER_NO, 
+            COMMUNITY_CODE, Q_CODE
+        ) VALUES (
+            #{boardNo}, #{boardTitle}, #{boardContent}, SYSDATE,
+            SYSDATE, DEFAULT, DEFAULT, #{memberNo}, #{boardCode}, 2
+        )
+    </insert>
+
+	<!-- 이미지 리스트 삽입 -->
+	<insert id="insertImageList" parameterType="list">
+	    INSERT INTO BOARD_IMG (IMG_NO, BOARD_NO, IMG_PATH, IMG_ORIG, IMG_RENAME, IMG_ORDER)
+	    SELECT SEQ_IMG_NO.NEXTVAL, BOARD_NO, IMG_PATH, IMG_ORIG, IMG_RENAME, IMG_ORDER
+	    FROM (
+	        <foreach collection="list" item="img" separator=" UNION ALL ">
+	            SELECT 
+	                #{img.boardNo} AS BOARD_NO,
+	                #{img.imgPath} AS IMG_PATH,
+	                #{img.imgOrig} AS IMG_ORIG,
+	                #{img.imgRename} AS IMG_RENAME,
+	                #{img.imgOrder} AS IMG_ORDER
+	            FROM DUAL
+	        </foreach>
+	    )
+	</insert>
+
+    <!-- 게시글 수정(제목, 내용) -->
+    <update id="FreeboardUpdate">
+        UPDATE BOARD SET
+            BOARD_TITLE = #{boardTitle},
+            BOARD_CONTENT = #{boardContent},
+            B_UPDATE_DATE = SYSDATE
+        WHERE BOARD_NO = #{boardNo}
+    </update>
+
+    <!-- 삭제할 이미지가 해당 게시글의 이미지인지 확인 -->
+    <select id="FreecheckImage" parameterType="map" resultType="_int">
+        SELECT COUNT(*)
+        FROM BOARD_IMG
+        WHERE BOARD_NO = #{boardNo}
+        AND IMG_ORDER IN (
+            <foreach collection="deleteList" item="order" separator=",">
+                #{order}
+            </foreach>
+        )
+    </select>
+
+    <!-- 게시글 이미지 삭제 -->
+    <delete id="FreeimageDelete">
+        DELETE FROM BOARD_IMG
+        WHERE BOARD_NO = #{boardNo}
+        AND IMG_ORDER IN (
+            <foreach collection="deleteList" item="order" separator=",">
+                #{order}
+            </foreach>
+        )
+    </delete>
+
+    <!-- 이미지 수정 -->
+    <update id="imageUpdate">
+        UPDATE BOARD_IMG SET
+            IMG_PATH = #{imgPath},
+            IMG_ORIG = #{imgOrig},
+            IMG_RENAME = #{imgRename}
+        WHERE IMG_ORDER = #{imgOrder}
+        AND BOARD_NO = #{boardNo}
+    </update>
+
+    <!-- 이미지 삽입 -->
+    <insert id="imageInsert">
+        INSERT INTO BOARD_IMG (IMG_NO, BOARD_NO, IMG_PATH, IMG_ORIG, IMG_RENAME, IMG_ORDER)
+        VALUES(SEQ_IMG_NO.NEXTVAL, #{boardNo}, #{imgPath}, #{imgOrig}, #{imgRename}, #{imgOrder})
+    </insert>
+
+    <!-- 게시글 삭제 -->
+    <update id="FreeboardDelete">
+        UPDATE BOARD SET
+            BOARD_DEL_FL = 'Y'
+        WHERE BOARD_NO = #{boardNo}
+    </update>
+
+</mapper>

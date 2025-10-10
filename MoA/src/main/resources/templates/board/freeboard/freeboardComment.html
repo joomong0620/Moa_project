@@ -1,0 +1,64 @@
+<div id="commentTitle">
+  <h3>댓글</h3>
+</div>
+
+<div id="commentArea">
+  <!-- 댓글 목록 -->
+  <div class="comment-list-area">
+    <ul id="commentList">
+      <!-- 댓글 1개 -->
+      <li class="comment-row" th:each="comment : ${commentList}">
+        <p class="comment-writer">
+          <!-- 프로필 이미지 -->
+          <img
+            th:if="${comment.profileImage != null}"
+            th:src="@{${comment.profileImage}}"
+          />
+          <img
+            th:unless="${comment.profileImage != null}"
+            th:src="@{/images/board/freeboard/user.png}"
+          />
+
+          <!-- 닉네임 -->
+          <span th:text="${comment.memberNickname}"></span>
+
+          <!-- 작성일 -->
+          <span
+            class="comment-date"
+            th:text="${comment.commentCreateDate}"
+          ></span>
+        </p>
+
+        <!-- 댓글 내용 -->
+        <p class="comment-content" th:text="${comment.commentContent}"></p>
+
+        <!-- 로그인 시 답글 버튼
+        <button
+          th:if="${session.loginMember != null}"
+          th:onclick="|showInsertComment(${comment.commentNo}, this)|"
+        >
+          답글
+        </button> -->
+
+        <!-- 로그인 회원이 작성자일 경우 -->
+        <th:block
+          th:if="${session.loginMember != null and session.loginMember.memberNo == comment.memberNo}"
+        >
+          <button th:onclick="|showUpdateComment(${comment.commentNo}, this)|">
+            수정
+          </button>
+          <button th:onclick="|deleteComment(${comment.commentNo})|">
+            삭제
+          </button>
+        </th:block>
+      </li>
+      <!-- 추가 댓글은 JS에서 동적으로 append 됨 -->
+    </ul>
+  </div>
+
+  <!-- 댓글 작성 -->
+  <div class="comment-write-area">
+    <textarea id="commentContent" placeholder="댓글을 입력하세요"></textarea>
+    <button id="addComment">댓글<br />등록</button>
+  </div>
+</div>

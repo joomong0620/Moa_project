@@ -23,6 +23,8 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	public List<Map<String, Object>> selectBoardTypeList() {
 		return mapper.selectBoardTypeList();
 	}
+	
+	// 게시판 목록 조회
 	@Override
 	public Map<String, Object> selectFreeBoardList(int boardCode, int cp) {
 
@@ -47,6 +49,50 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		
 		return map;
 	}
+
+	// 게시판 상세 조회
+	@Override
+	public Board selectFreeBoardDetail(Map<String, Object> map) {
+		return mapper.selectFreeBoardDetail(map);
+	}
+
+	//좋아요 여부 확인
+	@Override
+	public int boardLikeCheck(Map<String, Object> map) {
+		return mapper.boardLikeCheck(map);
+	}
+	
+	
+	// 좋아요 처리
+	@Override
+	public int like(Map<String, Integer> paramMap) {
+		int result = 0;
+
+		if(paramMap.get("check") == 0) { // 좋아요 X 상태
+			result = mapper.insertBoardLike(paramMap);
+
+		} else { 
+			result = mapper.deleteBoardLike(paramMap);
+		}
+
+		if(result == 0) return -1;
+
+		return mapper.countBoardLike(paramMap.get("boardNo"));
+	}
+
+	//조회수 증가
+	@Override
+	public int updateReadCount(int boardNo) {
+		return mapper.updateReadCount(boardNo);
+	}
+
+	// DB 이미지 파일 목록 조회
+	@Override
+	public List<String> selectImageList() {
+		return mapper.selectImageListAll();
+	}
+
+
 	
 	
 

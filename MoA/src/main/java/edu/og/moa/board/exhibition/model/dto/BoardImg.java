@@ -7,13 +7,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BoardImage {
-
-	private int imageNo;
-	private String imagePath;
-	private String imageReName;
-	private String imageOriginal;
-	private int imageOrder;
+public class BoardImg {
+	private int imgNo;
+	private String imgPath;
+	private String imgOrig;
+	private String imgRename;
+	private int imgOrder;
 	private int boardNo; // boardNo === exhibitNo
 	
 }

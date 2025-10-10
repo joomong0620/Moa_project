@@ -1,0 +1,167 @@
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: #f8f9fb;
+  margin: 0;
+}
+
+.payment-main {
+  width: 90%;
+  max-width: 1100px;
+  margin: 50px auto;
+}
+
+.page-title {
+  text-align: center;
+  color: #27374d;
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 30px;
+}
+
+.back-btn {
+  background-color: #27374d;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.payment-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.payment-left {
+  flex: 3;
+}
+
+.section-block {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 25px;
+  margin-bottom: 20px;
+}
+
+.section-block h3 {
+  color: #27374d;
+  font-size: 17px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 숫자 원형 스타일 */
+.circle-number {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  background-color: #27374d;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.booking-info {
+  display: flex;
+  gap: 15px;
+}
+
+.booking-info img {
+  width: 100px;
+  height: 140px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.info-text p {
+  font-size: 14px;
+  margin: 3px 0;
+}
+
+.info-text .title {
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+#seatSelect {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.payment-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pay-btn {
+  background-color: #fff;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.pay-btn.active {
+  background-color: #27374d;
+  color: #fff;
+  border: 1px solid #27374d;
+}
+
+.payment-summary {
+  flex: 1;
+}
+
+.summary-box {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+.summary-box p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.summary-box h2 {
+  margin: 10px 0;
+  color: #27374d;
+}
+
+#payNowBtn {
+  width: 100%;
+  background-color: #27374d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#payNowBtn:hover {
+  background-color: #435b7d;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}

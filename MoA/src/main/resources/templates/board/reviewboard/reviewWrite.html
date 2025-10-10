@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>리뷰 작성</title>
+  <link rel="stylesheet" href="./reviewWrite.css" />
+</head>
+<body>
+
+  <!-- 메인 멘트 -->
+  <main class="review-write">
+    <h2>리뷰 작성</h2>
+    <p class="guide-text">관람은 즐거우셨나요? 별점을 남겨주세요.</p>
+
+    <!-- 별점 -->
+    <div class="star-rating">
+      <span class="star" data-value="1">☆</span>
+      <span class="star" data-value="2">☆</span>
+      <span class="star" data-value="3">☆</span>
+      <span class="star" data-value="4">☆</span>
+      <span class="star" data-value="5">☆</span>
+    </div>
+
+    <select id="reservationSelect">
+      <option value="">예매 내역 선택</option>
+
+    </select>
+
+    <input type="text" id="titleInput" placeholder="제목을 입력해주세요." maxlength="100">
+
+    <textarea id="contentInput" placeholder="자세한 후기는 다른 고객에게 많은 도움이 됩니다. 
+오해의 소지가 있는 내용이나 비방의 글 작성 시 비공개 처리될 수 있습니다.
+관련 문의는 1:1 문의 게시판을 이용해주세요."
+      minlength="10" maxlength="500"></textarea>
+
+    <div class="char-count"><span id="charCount">0</span> / 500자</div>
+
+    <div class="photo-section">
+      <p class="photo-title">사진 등록</p>
+      <label for="photoInput" class="photo-upload">
+        <span>+</span>
+      </label>
+      <input type="file" id="photoInput" multiple accept="image/*" />
+      <div id="photoPreview" class="photo-preview"></div>
+      <p class="photo-guide">공연/전시와 관련된 사진이 아닐 경우 안내 없이 삭제될 수 있습니다.</p>
+    </div>
+
+    <div class="btn-area">
+      <button id="saveBtn">저장</button>
+    </div>
+  </main>
+
+  <script>
+    const stars = document.querySelectorAll(".star");
+    let rating = 0;
+
+    stars.forEach(star => {
+      star.addEventListener("click", () => {
+        rating = parseInt(star.getAttribute("data-value"));
+        updateStars();
+      });
+    });
+
+    function updateStars() {
+      stars.forEach(star => {
+        star.textContent = star.getAttribute("data-value") <= rating ? "★" : "☆";
+      });
+    }
+
+    const textarea = document.getElementById("contentInput");
+    const charCount = document.getElementById("charCount");
+    textarea.addEventListener("input", () => {
+      charCount.textContent = textarea.value.length;
+    });
+
+    const photoInput = document.getElementById("photoInput");
+    const photoPreview = document.getElementById("photoPreview");
+
+    photoInput.addEventListener("change", () => {
+      photoPreview.innerHTML = "";
+
+      const files = Array.from(photoInput.files).slice(0, 5);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = document.createElement("img");
+          img.src = e.target.result;
+          img.classList.add("preview-img");
+          photoPreview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+  </script>
+</body>
+</html>

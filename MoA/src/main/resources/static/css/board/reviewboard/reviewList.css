@@ -1,0 +1,92 @@
+/* 리뷰게시판 메인 */
+.review-main {
+  background-color: #ffffff;
+  padding: 60px 0 100px;
+  display: flex;
+  justify-content: center;
+}
+
+/* 헤더 영역 (제목 + 글작성 버튼) */
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.review-header h2 {
+  font-size: 24px;
+  color: #27374d;
+  font-weight: 700;
+}
+
+.write-btn {
+  background-color: #27374d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.write-btn:hover {
+  background-color: #435b7d;
+}
+
+/* 테이블 기본 스타일 */
+.review-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.review-table thead {
+  background-color: #f0f3f7;
+}
+
+.review-table th,
+.review-table td {
+  padding: 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+  color: #333;
+}
+
+/* 이미지 */
+.review-table td img {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.review-table th {
+  color: #27374d;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.review-table td:nth-child(2) {
+  width: 80px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.review-table td:nth-child(3) {
+  width: 65%;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #555;
+}
+
+.review-table td:nth-child(4) {
+  text-align: center;
+}
+
+/* 별점 */
+.stars {
+  color: gold;
+  font-size: 18px;
+}

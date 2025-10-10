@@ -1,0 +1,48 @@
+<section class="comment-section">
+
+    <div class="comment-top">
+        <button id="writeBtn" class="write-btn">기대평 작성</button>
+
+        <!-- 정렬 영역 -->
+        <div class="comment-sort">
+            <button class="sort-btn active" id="sort-latest">최신순</button>
+            <button class="sort-btn" id="sort-reply">댓글순</button>
+        </div>
+    </div>
+
+    <!-- 기대평 작성 폼 (기본 숨김) -->
+    <div id="commentForm" class="comment-form hidden">
+        <form th:action="@{/performance/comment/write}" method="post">
+
+            <div class="comment-input-area">
+                <input type="text" name="title" placeholder="제목을 입력해주세요." required />
+                <textarea name="content" rows="6" placeholder="내용을 입력해 주세요." required></textarea>
+            </div>
+
+            <div class="comment-submit">
+                <button type="submit" class="submit-btn">등록하기</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="comment-body">
+
+        <th:block th:if="${#lists.isEmpty(commentList)}">
+            <p class="no-comment">등록된 기대평이 없습니다.</p>
+        </th:block>
+
+        <th:block th:unless="${#lists.isEmpty(commentList)}">
+            <div class="comment-list">
+                <div th:each="comment : ${commentList}" class="comment-box">
+                    <p class="comment-title" th:text="${comment.title}">제목</p>
+                    <p class="comment-content" th:text="${comment.content}">내용</p>
+                    <span class="comment-writer" th:text="${comment.writerName}">작성자</span>
+                    <span class="comment-date" th:text="${#dates.format(comment.createdDate, 'yyyy-MM-dd')}">작성일</span>
+                </div>
+            </div>
+        </th:block>
+
+    </div>
+
+</section>

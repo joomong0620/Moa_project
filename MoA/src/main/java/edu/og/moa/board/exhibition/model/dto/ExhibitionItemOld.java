@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExhibitionFromDbOld {
+public class ExhibitionItemOld {
 	
 	// 0) DTO for our purpose						// "JsonExhibition" 대응 DTO 필드
 	private int boardNo;							// exhibitNo; // BOARD_No, boardNo (게시판 글번호; PK)
@@ -37,7 +37,7 @@ public class ExhibitionFromDbOld {
 								// (<== "exhibitImgObject"이 null이면 기본이미지(monet_pond.jpg), 아니면 "exhibitImgObject"값)
 								// leave as a backup (실제 넣을 DB 필드는  BOARD_IMG테이블에 IMG_ORDER=0경우 
 	// 이미지 목록
-	private List<BoardImg> imageList;				// List<JsonBoardImage> imageList;
+	private List<BoardImgDB> imageList;				// List<JsonBoardImage> imageList;
 								// <= imageList[0] = thumbnail
 	
 	// 4) EXHIBITION JOIN

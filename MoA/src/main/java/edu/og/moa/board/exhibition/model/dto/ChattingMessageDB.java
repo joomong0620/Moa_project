@@ -8,7 +8,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ChatMember {
+public class ChattingMessageDB {
+	private int messageNo;
+	private String messageContent;
+	private String readFl;
+	private String sendTime;
 	private int chattingNo;
 	private int memberNo;
 }

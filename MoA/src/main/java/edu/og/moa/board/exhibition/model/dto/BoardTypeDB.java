@@ -8,8 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ChattingRoom {
-	private int chattingNo;
-	private String chCreateDate;
-	private int openMember; // 개설자 번호 === memberNo
+public class BoardTypeDB {
+	private int commnunityCode;
+	private String communityName;
 }

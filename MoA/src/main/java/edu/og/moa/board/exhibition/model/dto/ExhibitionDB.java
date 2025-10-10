@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Exhibition {
+public class ExhibitionDB {
 	private int boardNo; // 개설글 번호
 	private String exhibitSubTitle;
 	private String exhibitDate;

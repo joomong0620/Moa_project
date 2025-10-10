@@ -1,6 +1,6 @@
 package edu.og.moa.board.exhibition.model.dto;
 
-public class Pagination { //
+public class PaginationDB { //
 	// 페이지네이션(페이징 처리)에 필요한 모든 값을 저장하고 있는 객체
 
 	// fields
@@ -21,7 +21,7 @@ public class Pagination { //
 	
 	// 기본생성자 말고, 매개변수 생성자만 만든다 (컴파일러가 기본생성자 안만들어준다 -> )
 	// 생성자
-	public Pagination(int currentPage, int listCount) {
+	public PaginationDB(int currentPage, int listCount) {
 		this.currentPage = currentPage; // 현재 페이지 <=== 동적 계산에 이것 필요
 		this.listCount = listCount; // 전체 게시글 수 <=== 동적 계산에 이것 필요
 		

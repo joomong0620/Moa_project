@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExhibitionFromDB {
+public class ExhibitionItem {
 	
 	// 0) DTO for our purpose						// "JsonExhibition" 대응 DTO 필드
 	private int boardNo;							// exhibitNo; // BOARD_No, boardNo (게시판 글번호; PK)
@@ -37,7 +37,7 @@ public class ExhibitionFromDB {
 								// (<== "exhibitImgObject"이 null이면 기본이미지(monet_pond.jpg), 아니면 "exhibitImgObject"값)
 								// leave as a backup (실제 넣을 DB 필드는  BOARD_IMG테이블에 IMG_ORDER=0경우 
 	// 이미지 목록
-	private List<BoardImg> imageList;				// List<JsonBoardImage> imageList;
+	private List<BoardImgDB> imageList;				// List<JsonBoardImage> imageList;
 								// <= imageList[0] = thumbnail
 	
 	// 4) EXHIBITION JOIN
@@ -54,7 +54,7 @@ public class ExhibitionFromDB {
 	private String exhibitSubTitle; // 				// exhibitSubTitle;  					subDescription ("SUB_DESCRIPTION")		"EXHIBIT_SUB_TITLE"
 	private String exhibitDate; 	// 				// exhibitDate; 						period ("PERIOD") 						"EXHIBIT_DATE"
 	//private String exhibitGenre;	//		 		// exhibitGenre; 	 					genre ("GENRE")							"EXHIBIT_GENRE"
-	private Genre exhibitGenre;	//		 			// exhibitGenre; 	 					genre ("GENRE")							"EXHIBIT_GENRE"
+	private GenreDB exhibitGenre;	//		 			// exhibitGenre; 	 					genre ("GENRE")							"EXHIBIT_GENRE"
 							// <= GENRE 테이블에서 GENRE_NAME으로 GENRE_NO찾아 genreNo값 삽입 
 							// 우리경우 preset 모두 10개 장르 알고 있으니, 그냥 데이터베이스에 직접 넣는걸로
 							// (최상위 부모 테이블: BOARDTYPE => 독립생성)
@@ -64,7 +64,7 @@ public class ExhibitionFromDB {
 									// <= "exhibitCharge" parsing해서 입장료를 숫자로 ( >= 0) 변환해서 대입
 	// AUTHOR 테이블 JOIN
 	//private String authorName;	// 				// exhibitAuthor; 						author ("AUTHOR")						"AUTHOR_NAME"
-	private List<Author> authorList; //	 		// exhibitAuthor; 						author ("AUTHOR")						"AUTHOR_NAME"
+	private List<AuthorDB> authorList; //	 		// exhibitAuthor; 						author ("AUTHOR")						"AUTHOR_NAME"
 									// <= AUTHOR 테이블 (다수의 authors일 경우: authorName1, authorName2, authorName3, 그외 몇명으로 " exhibitAuthor" 맨앞 3명까지 이름 입력)
 									// SELECT: boardNo로 JOIN 테이블
 									// INSERT/UPDATE/DELETE: 조회해서 있으면(조회 result >0)이면 done, 아니면(조회 result=0) INSERT/UPDATE/DELETE 수행
@@ -81,11 +81,11 @@ public class ExhibitionFromDB {
 									// INSERT/UPDATE/DELETE: 조회해서 있으면(조회 result >0)이면 done, 아니면(조회 result=0) INSERT/UPDATE/DELETE 수행
 	 								// 우리경우 20개 알고 있으니, 그냥 데이터베이스에 직접 넣는걸로
 									// (최상위 부모 테이블: INSTITUTION => 독립생성)
-	private Institution exhibitInstName;
+	private InstitutionDB exhibitInstName;
 	
 	// CONTRIBUTOR 테이블 JOIN
 	//private String exhibitContributor;// exhibitContributor;  							contributor ("CONTRIBUTOR")				"EXHIBIT_HOST" and "EXHIBIT_SUPPORT"
-	private Contributor exhibitContributor;// exhibitContributor; 							contributor ("CONTRIBUTOR")				"EXHIBIT_HOST" and "EXHIBIT_SUPPORT"
+	private ContributorDB exhibitContributor;// exhibitContributor; 							contributor ("CONTRIBUTOR")				"EXHIBIT_HOST" and "EXHIBIT_SUPPORT"
 										// => CONTRIBUTOR 테이블 (EXHIBIT_HOST 와 EXHIBIT_SUPPORT로 나눈다)
 
 }

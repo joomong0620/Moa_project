@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BoardImg {
+public class BoardImgDB {
 	private int imgNo;
 	private String imgPath;
 	private String imgOrig;

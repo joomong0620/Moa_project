@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.og.moa.board.exhibition.model.dao.JsonExhibitionMapper;
-import edu.og.moa.board.exhibition.model.dto.Board;
+import edu.og.moa.board.exhibition.model.dto.BoardDB;
 import edu.og.moa.common.utillity.Util;
 
 @Service
@@ -19,7 +19,7 @@ public class JsonExhibitionServiceImpl implements JsonExhibitionService {
 	// json 데이터 BOARD 테이블에 insert
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int jsonBoardInsert(Board board) throws IllegalStateException, IOException{
+	public int jsonBoardInsert(BoardDB board) throws IllegalStateException, IOException{
 		// 제목만 XSS 방지처리:
 		board.setBoardTitle(Util.XSSHandling(board.getBoardTitle() ) ); // title 변환시킨후 DB에 저장 ==> 타이틀을 읽어야하는 태그가 BoardDetail.html에 있기 때문
 

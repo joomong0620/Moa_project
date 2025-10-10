@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Institution {
+public class InstitutionDB {
 	private int institutionNo; 
 	private String exhibitInstName;
 	private String exhibitInstTel;

@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Like {
-	private int boardNo; 	// 게시글번호
-	private int memberNo; 	// 회원번호
+public class ChatMemberDB {
+	private int chattingNo;
+	private int memberNo;
 }

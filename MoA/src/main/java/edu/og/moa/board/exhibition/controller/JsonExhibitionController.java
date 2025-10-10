@@ -18,16 +18,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.og.moa.board.exhibition.model.dto.Author;
-import edu.og.moa.board.exhibition.model.dto.Board;
-import edu.og.moa.board.exhibition.model.dto.BoardImg;
-import edu.og.moa.board.exhibition.model.dto.Contributor;
-import edu.og.moa.board.exhibition.model.dto.Exhibition;
+import edu.og.moa.board.exhibition.model.dto.AuthorDB;
+import edu.og.moa.board.exhibition.model.dto.BoardDB;
+import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
+import edu.og.moa.board.exhibition.model.dto.ContributorDB;
+import edu.og.moa.board.exhibition.model.dto.ExhibitionDB;
 import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 import edu.og.moa.board.exhibition.model.dto.JsonExhibition;
 import edu.og.moa.board.exhibition.model.dto.JsonPagination;
 import edu.og.moa.board.exhibition.model.dto.JsonMember;
-import edu.og.moa.board.exhibition.model.dto.Like;
+import edu.og.moa.board.exhibition.model.dto.LikeDB;
 import edu.og.moa.board.exhibition.model.service.JsonExhibitionService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -366,7 +366,7 @@ public class JsonExhibitionController {
         		///////////
         		// 1) Board DTO에 맵핑하고, BOARD DB에 insert 
         		// DTO 값 할당
-        		Board board = new Board();
+        		BoardDB board = new BoardDB();
         		board.setBoardNo(idx);
         		board.setBoardTitle(jsonExhibition.getExhibitTitle());
         		board.setBCreateDate(jsonExhibition.getExhibitCreateDate()); // 날짜 형식 맞춰줄 필요 있음, 예시 "2025-06-17 00:10:02"

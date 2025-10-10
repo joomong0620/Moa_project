@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Genre {
+public class GenreDB {
 	private int genreNo; 
 	private String genreName;
 }

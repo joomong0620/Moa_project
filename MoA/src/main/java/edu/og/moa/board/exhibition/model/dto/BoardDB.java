@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Board {
+public class BoardDB {
 	private int boardNo;
 	private String boardTitle;
 	private String boardContent;

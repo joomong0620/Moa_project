@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>리뷰게시판 상세</title>
+  <link rel="stylesheet" href="./reviewDetail.css" />
+  <link rel="stylesheet" href="./main-style.css" />
+</head>
+
+<body>
+
+  <!-- 리뷰 상세 -->
+  <main class="review-detail">
+    <h2 class="title">리뷰게시판</h2>
+    <hr class="divider" />
+
+    <section class="review-content">
+      <div class="review-info">
+        <img src="./images/perf2.jpg" alt="리뷰 이미지" class="poster">
+        <div class="review-text">
+          <p class="review-title" id="reviewTitle">[재즈] 미노와 히로유키 재즈 콘서트</p>
+          <p class="stars" id="reviewStars">★★★★★</p>
+        </div>
+        <div class="review-stats">
+          <img src="/src/main/resources/static/images/user.svg" alt="user" class="user-icon">
+          <span id="viewCount">48</span>
+        </div>
+      </div>
+
+      <div class="review-box">
+        <div class="review-user">
+          <img src="./images/user1.jpg" alt="작성자" class="profile-img">
+          <div class="review-meta">
+            <p class="username" id="username">주연 님</p>
+            <p class="date" id="reviewDate">2025.09.22 16:18:55</p>
+          </div>
+        </div>
+        <p class="review-text-content" id="reviewContent">
+          라이브 밴드 연주가 정말 압권이었습니다. 현장에서 느껴지는 에너지가 엄청났고,
+          아티스트와 관객이 하나가 된 순간이 인상 깊었어요. 저희 집 고양이도 좋아하네요.
+        </p>
+      </div>
+
+      <div class="review-images">
+        <p class="sub-title">함께 나눈 이미지</p>
+        <div class="image-list" id="imageList">
+          <img src="./images/cat1.jpg" alt="cat1">
+          <img src="./images/cat2.jpg" alt="cat2">
+        </div>
+      </div>
+
+      <div class="btn-area">
+        <button class="back-btn" onclick="location.href='review_list.html'">목록으로</button>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- 댓글 -->
+    <section class="comment-section">
+      <h3>댓글</h3>
+
+      <div class="comment-list" id="commentList">
+        <div class="comment-item">
+          <img src="./images/cat1.jpg" alt="프로필" class="comment-img">
+          <div class="comment-box">
+            <p class="comment-user">소연</p>
+            <p class="comment-text">글 잘 봤습니다. ^.^</p>
+          </div>
+        </div>
+
+        <div class="comment-item">
+          <img src="./images/cat2.jpg" alt="프로필" class="comment-img">
+          <div class="comment-box">
+            <p class="comment-user">나는소연</p>
+            <p class="comment-text">글 잘 봤어요 ㅎㅎ</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-input">
+        <textarea id="commentInput" placeholder="댓글을 입력하세요."></textarea>
+        <button class="submit-btn">댓글 등록</button>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

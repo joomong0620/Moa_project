@@ -1,21 +1,69 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MOA Stage</title>
+    <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+  </head>
 
+  <body>
+    <!-- Header -->
+    <!-- header 나 footer 를 불러들일 때, 단순한 경로만이 아닌 header 임을 명시해주는 문법을 쓰는 것이 좋다고 함 -->
+    <div th:replace="common/header :: header"></div>
 
-        <article class="signup-find-area">
-            <a th:href="@{/member/signUp}">회원가입</a>
-            
-        </article>
+    <main class="main">
+      <!-- 배너 -->
+      <section class="banner-container">
+        <div class="banner-slide fade">
+          <img th:src="@{/images/common/banner1.gif}" alt="배너1" />
+        </div>
+        <div class="banner-slide fade">
+          <img th:src="@{/images/common/banner2.gif}" alt="배너2" />
+        </div>
+        <div class="banner-slide fade">
+          <img th:src="@{/images/common/banner3.gif}" alt="배너3" />
+        </div>
 
-  
+        <!-- 기존에 배운 &lt; / &gt; 로도 꺾쇠 표현이 가능하지만, 해당 특수문자는 시각적으로 보기에 명확한 특수문자이기 때문에 이 기호를 사용하였다.-->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a> 
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
+        <div class="dots">
+          <span class="dot" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+      </section>
 
-    
-</body>
+      <!-- 공연 -->
+      <section class="show-section">
+        <h2>공연</h2>
+        <div class="card-list">
+          <div class="card" th:each="show : ${performances}">
+            <img th:src="@{/images/{img}(img=${show.image})}" th:alt="${show.title}" />
+            <p class="card-title" th:text="${show.title}"></p>
+            <p class="card-date" th:text="${show.date}"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 전시 -->
+      <section class="exhibition-section">
+        <h2>전시</h2>
+        <div class="card-list">
+          <div class="card" th:each="exh : ${exhibitions}">
+            <img th:src="@{/images/{img}(img=${exh.image})}" th:alt="${exh.title}" />
+            <p class="card-title" th:text="${exh.title}"></p>
+            <p class="card-date" th:text="${exh.date}"></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <div th:replace="common/footer :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
+  </body>
 </html>

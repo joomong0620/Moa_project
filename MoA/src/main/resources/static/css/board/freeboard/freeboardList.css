@@ -99,10 +99,15 @@ section.free-category {
   -webkit-box-orient: vertical;
 }
 
+.card-title-link {
+  text-decoration: none;
+  color: black;
+}
+
 /* 글쓰기 버튼 */
 .free-write {
-  display: block;
-  margin: 40px auto;
+  display: inline-block;
+  margin-right: 200px;
   padding: 10px 25px;
   background-color: #27374D;
   color: white;
@@ -111,6 +116,7 @@ section.free-category {
   cursor: pointer;
   font-size: 14px;
   transition: background 0.3s;
+  float: right;
 }
 
 .free-write:hover {
@@ -122,6 +128,7 @@ section.free-category {
   display: flex;
   justify-content: center;
   padding: 0;
+  margin-top: 50px;
 }
 
 .pagination li {
@@ -135,6 +142,71 @@ section.free-category {
   width: 100%;
   height: 100%;
 }
+
+
+/* ========== 이미지 모달 ========== */
+.modal {
+  display: none;
+  /* 기본 숨김 */
+  position: fixed;
+  z-index: 9999;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  /* 스크롤 가능 */
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* 모달 이미지 */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #000;
+}
+
+/* 캡션 텍스트 */
+#caption {
+  margin: 15px auto;
+  text-align: center;
+  color: #f1f1f1;
+  font-size: 18px;
+}
+
+/* 닫기 버튼 */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #bbb;
+}
+
+.modal-content {
+  animation: zoom 0.3s ease;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0.5);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
 
 
 /* footer */

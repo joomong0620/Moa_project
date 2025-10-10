@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Exhibition {
+public class JsonExhibition {
 	
 	// 0) DTO for our purpose
 	private int exhibitNo; // BOARD_No, boardNo (게시판 글번호; PK)
@@ -36,7 +36,7 @@ public class Exhibition {
 	private String thumbnail;
 
 	// 이미지 목록
-	private List<BoardImage> imageList;
+	private List<JsonBoardImage> imageList;
 	
 	
 	// 4) EXHIBITION JOIN

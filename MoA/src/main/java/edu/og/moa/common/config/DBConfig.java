@@ -10,12 +10,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
+@PropertySource("classpath:/config.properties")
 public class DBConfig {
 
     @Autowired
@@ -29,19 +31,25 @@ public class DBConfig {
 
     @Bean
     public DataSource dataSource(HikariConfig config) {
-        return new HikariDataSource(config);
+    	
+    	DataSource dataSource = new HikariDataSource(config);
+        
+    	return dataSource;
     }
 
     @Bean
     public SqlSessionFactory sessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
-        factoryBean.setMapperLocations(applicationContext.getResources("classpath:/mappers/**/*.xml"));
-        factoryBean.setTypeAliasesPackage("edu.og.moa");
+        factoryBean.setMapperLocations(applicationContext.getResources("classpath:/mappers/**.xml"));
+        factoryBean.setTypeAliasesPackage("edu.og.moa.member.model.dto, "
+        						+ "edu.og.moa.board.freeboard.model.dto"
+        						
+        		);
         factoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
         return factoryBean.getObject();
     }
-
+  
     @Bean
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sessionFactory) {
         return new SqlSessionTemplate(sessionFactory);

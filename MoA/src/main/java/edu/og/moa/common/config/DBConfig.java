@@ -42,10 +42,7 @@ public class DBConfig {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         factoryBean.setMapperLocations(applicationContext.getResources("classpath:/mappers/**.xml"));
-        factoryBean.setTypeAliasesPackage("edu.og.moa.member.model.dto, "
-        						+ "edu.og.moa.board.freeboard.model.dto"
-        						
-        		);
+        factoryBean.setTypeAliasesPackage("edu.og.moa");
         factoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
         return factoryBean.getObject();
     }

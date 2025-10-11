@@ -18,7 +18,8 @@ import edu.og.moa.board.freeboard.model.dao.FreeBoardMapper2;
 import edu.og.moa.board.freeboard.model.dto.Board;
 import edu.og.moa.board.freeboard.model.dto.BoardImage;
 import edu.og.moa.board.freeboard.model.exception.imageDeleteException;
-import edu.og.moa.common.utility.Util;
+import edu.og.moa.common.utillity.Util;
+
 
 @Service
 @PropertySource("classpath:/config.properties")

@@ -375,31 +375,34 @@ body {
 
 /* 알림 */
 .notification-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
 }
 
 .notification-btn {
   font-size: 20px;
-  position: absolute;
-  top: 7px;
-  left: 20px;
+  position: relative;
   cursor: pointer;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: transparent;
+  /* 투명 */
   border: none;
+  color: white;
+  /* 벨 아이콘 색상 */
+  margin-left: 300px;
 }
 
 /* 읽지 않은 알림이 존재하는 경우 */
 .notification-btn.fa-solid {
-  color: yellow;
+  color: white;
   text-shadow: 1px 1px 3px gray, 2px 2px 5px black;
 }
 
 .notification-count-area {
   position: absolute;
-  bottom: -6px;
-  right: -10px;
+  top: -4px;
+  right: -6px;
   width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -410,12 +413,19 @@ body {
   align-items: center;
   background-color: red;
   color: white;
+  margin-left: 300px;
+}
+
+/* 알림이 0개일 때 숨기기 */
+.notification-count-area:empty,
+.notification-count-area[data-count="0"] {
+  display: none;
 }
 
 .notification-list {
   position: absolute;
-  top: 30px;
-  right: -30px;
+  top: 40px;
+  right: 10px;
   width: 380px;
   height: 400px;
   padding: 10px;

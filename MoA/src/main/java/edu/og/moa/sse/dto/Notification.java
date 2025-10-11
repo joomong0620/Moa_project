@@ -1,5 +1,7 @@
 package edu.og.moa.sse.dto;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Alias("Notification")  
 public class Notification {
 	private int notificationNo;
 	private String notificationContent;

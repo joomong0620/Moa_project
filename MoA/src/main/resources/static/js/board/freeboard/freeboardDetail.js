@@ -49,6 +49,16 @@ boardLike.addEventListener("click", (e) => {
       // 현재 게시글의 좋아요 수를 화면에 출력
       e.target.nextElementSibling.innerText = count;
 
+      if(check == 0){ //기존에 좋아요를 X
+        
+        //게시글 작성자에게 알림 보내기
+        sendNotification(
+          "boardLike",
+          location.pathname, // 게시글 상세 조회 페이지 주소
+          boardNo, // 전역 변수 boardNo
+          `<strong>${memberNickname}</strong>님이 <strong>${boardTitle}</strong> 게시글을 좋아합니다.`
+        );
+      }
 
     })
     .catch((err) => { console.log(err);

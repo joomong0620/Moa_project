@@ -7,6 +7,7 @@
     <title>게시판 상세</title>
 
     <!-- 외부 CSS 연결 -->
+    <link rel="stylesheet" th:href="@{/css/main-style.css}" />
     <link
       rel="stylesheet"
       th:href="@{/css/board/freeboard/freeboardDetail.css}"
@@ -23,6 +24,7 @@
 
   <body>
     <main>
+      <th:block th:replace="~{common/header}"></th:block>
       <section class="board-detail">
         <!-- 카테고리 -->
         <h1 th:text="${board.boardTypeName}">자유게시판</h1>
@@ -123,11 +125,12 @@
     <th:block th:replace="~{common/footer}"></th:block>
     <script th:inline="javascript">
       // 수정된 코드
-      const loginMemberNo = [[${session.loginMember != null ? session.loginMember.memberNo : ''}]];
-      const memberNickname = [[${session.loginMember != null ? session.loginMember.memberNickname : ''}]];
-      const boardNo = [[${board != null ? board.boardNo : 0}]];
-      const boardCode = [[${boardCode != null ? boardCode : 0}]];
-      const boardTitle = [[${board != null ? board.boardTitle : ''}]];
+      const loginMemberNo = /*[[${session.loginMember != null ? session.loginMember.memberNo : 0}]]*/ 0;
+      const memberNickname =
+        /*[[${session.loginMember != null ? session.loginMember.memberNickname : ''}]]*/ "";
+      const boardNo = /*[[${board != null ? board.boardNo : 0}]]*/ 0;
+      const boardCode = /*[[${boardCode != null ? boardCode : 0}]]*/ 0;
+      const boardTitle = /*[[${board != null ? board.boardTitle : ''}]]*/ "";
 
       // 디버깅
       console.log("loginMemberNo:", loginMemberNo);

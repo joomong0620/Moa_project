@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" th:href="@{/css/member/login.css}">
+
+</head>
+<body>
+
+    <main>
+
+        <th:block th:replace="~{/common/header}">header.html</th:block>
+
+
+        <section class="login-container">
+    
+            <section class="login-area">
+    
+                <section class="logo-area">
+                    <a th:href="@{/}">
+                        <img th:src="@{/images/teamLogo.png}" class="logo-img">
+                    </a>
+                </section>
+        
+                <form th:action="@{/member/login}" method="post">
+
+                    <section class="id-section">
+    
+                    
+                        <input type="text" name="memberId" class="input-id" placeholder="아이디" maxlength="20" id="member_Id" value="" required>
+    
+    
+                    </section>
+    
+                    <section class="pw-section">
+    
+                    
+                        <input type="password" name="memberPw" class="input-pw" placeholder="비밀번호" maxlength="500" id="member_Pw" value="" required>
+    
+    
+                    </section>
+            
+            
+                    <section class="checkbox-area">
+                
+                        <input type="checkbox" name="saveId" id="saveId">
+                        <span>아이디 저장</span>
+                
+                    </section>
+    
+                    <section class="login-btn-area"> 
+    
+                        <button id="login-Btn" class="login_btn">로그인</button>
+    
+                    </section>
+            
+                    <section class="signUp-btn-area">
+                        <button type="button" id="signUp-btn" th:onclick="|location.href='@{/member/signUp}'|">회원가입</button>
+            
+                    </section>
+            
+
+                </form>
+    
+    
+            </section>
+    
+    
+
+
+    </main>  
+    
+    <script th:inline="javascript">
+
+        const loginMember = /*[[${loginMember}]]*/ null;
+
+        function getCookie(key){
+
+            const cookies = document.cookie;
+    
+            const cookieList = cookies.split("; ").map(cookie => cookie.split('='))
+            
+            const obj = {};
+    
+            for(let i=0; i< cookieList.length; i++){
+    
+                obj[cookieList[i][0]] = cookieList[i][1];
+    
+            }
+
+            return obj[key];
+
+        }
+
+
+        const saveId = getCookie("saveId");
+
+        const member_Id = document.getElementById("member_Id")
+
+        const saveIdChecked = document.getElementById("saveId");
+
+        if(loginMember != null && saveId != null){
+
+            
+            member_Id.value = saveId;
+
+            saveIdChecked.checked = true;
+        }
+
+
+        
+
+
+
+    </script>
+
+
+
+    
+</body>
+</html>

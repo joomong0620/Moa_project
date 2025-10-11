@@ -43,7 +43,7 @@ section.free-category {
 }
 
 /* 카드 하나 */
-.card {
+.card1 {
   /* width: calc(50% - 20px); ❌ 이거 주석 처리하거나 삭제 */
   /* min-width: 350px; */
   /* 이건 유지 가능 (최소 카드 크기) */
@@ -56,13 +56,13 @@ section.free-category {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.card:hover {
+.card1:hover {
   transform: translateY(-3px);
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* 카드 이미지 */
-.card img {
+.card1 img {
   width: 120px;
   height: 120px;
   margin: 20px 15px;
@@ -71,7 +71,7 @@ section.free-category {
 }
 
 /* 카드 텍스트 부분 */
-.card-content {
+.card1-content {
   flex: 1;
   padding: 15px 10px;
   display: flex;
@@ -80,7 +80,7 @@ section.free-category {
   gap: 6px;
 }
 
-.card-title {
+.card1-title {
   font-size: 16px;
   font-weight: bold;
   color: #27374D;
@@ -89,7 +89,7 @@ section.free-category {
   white-space: nowrap;
 }
 
-.card-text {
+.card1-text {
   font-size: 14px;
   color: #666;
   overflow: hidden;
@@ -99,7 +99,7 @@ section.free-category {
   -webkit-box-orient: vertical;
 }
 
-.card-title-link {
+.card1-title-link {
   text-decoration: none;
   color: black;
 }

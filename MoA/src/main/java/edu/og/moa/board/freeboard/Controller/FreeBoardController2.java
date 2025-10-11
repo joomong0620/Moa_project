@@ -50,13 +50,13 @@ public class FreeBoardController2 {
 	// ======================================================
 
 	// 게시글 작성 화면 전환
-	@GetMapping("/{boardCode:[0-9]+}/insert")
+	@GetMapping("/{boardCode:1}/insert")
 	public String FreeboardInsert(@PathVariable("boardCode") int boardCode) {
 		return "board/freeboard/freeboardWrite";
 	}
 
 	// 게시글 작성
-	@PostMapping("/{boardCode:[0-9]+}/insert")
+	@PostMapping("/{boardCode:1}/insert")
 	public String FreeboardInsert(
 			@PathVariable("boardCode") int boardCode,
 			Board board,
@@ -100,7 +100,7 @@ public class FreeBoardController2 {
 	}
 	
 	// 게시글 수정 화면 전환
-	@GetMapping("/{boardCode}/{boardNo}/update")
+	@GetMapping("/{boardCode:1}/{boardNo}/update")
 	public String FreeboardUpdate(
 			@PathVariable("boardCode") int boardCode,
 			@PathVariable("boardNo") int boardNo,
@@ -116,7 +116,7 @@ public class FreeBoardController2 {
 	}
 	
 	// 게시글 수정
-	@PostMapping("/{boardCode}/{boardNo}/update")
+	@PostMapping("/{boardCode:1}/{boardNo}/update")
 	public String FreeboardUpdate(
 			@PathVariable("boardCode") int boardCode,
 			@PathVariable("boardNo") int boardNo,
@@ -146,7 +146,7 @@ public class FreeBoardController2 {
 	}
 	
 	// 게시글 삭제
-	@GetMapping("/{boardCode}/{boardNo}/delete")
+	@GetMapping("/{boardCode:1}/{boardNo}/delete")
 	public String boardDelete(
 			@PathVariable("boardCode") int boardCode,
 			@PathVariable("boardNo") int boardNo,

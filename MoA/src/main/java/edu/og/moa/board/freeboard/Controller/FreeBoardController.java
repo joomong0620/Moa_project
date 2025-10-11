@@ -39,7 +39,7 @@ public class FreeBoardController {
 	private FreeBoardService service; // 이름은 FreeBoardService지만, 사실상 전체 게시판 조회에 사용
 
 	// 게시글 목록 조회
-	@GetMapping("/{boardCode:[0-9]+}")
+	@GetMapping("/{boardCode:1}")
 	public String selectBoardList(@PathVariable("boardCode") int boardCode,
 			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp, Model model,
 			@RequestParam Map<String, Object> paramMap,
@@ -72,7 +72,7 @@ public class FreeBoardController {
 	}
 
 	// 게시글 상세 조회
-	@GetMapping("/{boardCode:[0-9]+}/{boardNo:[0-9]+}")
+	@GetMapping("/{boardCode:1}/{boardNo:[0-9]+}")
 	public String selectBoardDetail(@PathVariable("boardCode") int boardCode, @PathVariable("boardNo") int boardNo,
 			Model model, @SessionAttribute(value = "loginMember", required = false) Member loginMember,
 			RedirectAttributes ra, HttpServletRequest req, HttpServletResponse resp) throws ParseException {

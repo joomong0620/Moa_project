@@ -1,376 +1,503 @@
 /* 전체 페이지 설정 */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #fff;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  background: #27374d;
+  padding: 15px 40px;
+  height: 100px;
+  position: relative;
+  z-index: 10;
+}
+
+#logo-image {
+  width: 160px;
+  height: auto;
+}
+
+/* Nav */
+.nav ul {
+  display: flex;
+  list-style: none;
+  gap: 150px;
+  margin-left: 150px;
+}
+
+.nav a {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  height: 60px;
+  line-height: 60px;
+  padding: 0 25px;
+  border-radius: 20px 20px 0 0;
+  transition: all 0.3s ease;
+}
+
+.nav a:hover {
+  background-color: #fff;
+  color: #27374d;
+}
+
+/* 서브 메뉴 */
+.submenu {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  overflow: hidden;
+  height: 0;
+  opacity: 0;
+  transition: height 0.4s ease, opacity 0.4s ease;
+  display: flex;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  z-index: 5;
+}
+
+.menu-item:hover .submenu {
+  height: 150px;
+  opacity: 1;
+}
+
+/* 서브메뉴 왼쪽 영역 */
+.submenu-left {
+  width: 25%;
+  height: 100%;
+  background: linear-gradient(to right, #dde6ed 0%, #ffffff 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 60px;
+}
+
+.submenu-left h2 {
+  font-size: 28px;
+  color: #27374d;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.submenu-left span {
+  font-size: 15px;
+  color: #666;
+}
+
+/* 서브메뉴 오른쪽 영역 */
+.submenu-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submenu-right ul {
+  list-style: none;
+  display: flex;
+  gap: 120px;
+  justify-content: center;
+  align-items: center;
+}
+
+.submenu-right li a {
+  color: #000;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.submenu-right li a:hover {
+  color: #27374d;
+  font-weight: 600;
+}
+
+.menu-item:hover>a {
+  background-color: #fff;
+  color: #27374d;
+  border-radius: 20px 20px 0 0;
+}
+
+/* 화면 우측 Signin */
+.signin {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  margin-left: auto;
+}
+
+#signin-image {
+  margin-left: 3px;
+  display: flex;
+  width: 30px;
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg) brightness(103%) contrast(101%);
+}
+
+#signin-text {
+  text-decoration: none;
+  color: white;
+}
+
+/* main */
+.main {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.main>h3 {
+  color: black;
+  justify-content: center;
+}
+
+
+.banner-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: #ddd;
+}
+
+.banner-slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 효과 주기 */
+.fade {
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
   }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    color: #fff;
-  }
-  
-  /* Header */
-  .header {
-    display: flex;
-    align-items: center;
-    background: #27374d;
-    padding: 15px 40px;
-    height: 100px;
-    position: relative;
-    z-index: 10;
-  }
-  
-  #logo-image {
-    width: 160px;
-    height: auto;
-  }
-  
-  /* Nav */
-  .nav ul {
-    display: flex;
-    list-style: none;
-    gap: 150px;
-    margin-left: 150px;
-  }
-  
-  .nav a {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
-    color: #fff;
-    font-size: 20px;
-    font-weight: 600;
-    height: 60px;
-    line-height: 60px;
-    padding: 0 25px;
-    border-radius: 20px 20px 0 0;
-    transition: all 0.3s ease;
-  }
-  
-  .nav a:hover {
-    background-color: #fff;
-    color: #27374d;
-  }
-  
-  /* 서브 메뉴 */
-  .submenu {
-    position: absolute;
-    top: 100px;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    overflow: hidden;
-    height: 0;
-    opacity: 0;
-    transition: height 0.4s ease, opacity 0.4s ease;
-    display: flex;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-    z-index: 5;
-  }
-  
-  .menu-item:hover .submenu {
-    height: 150px;
+
+  to {
     opacity: 1;
   }
-  
-  /* 서브메뉴 왼쪽 영역 */
-  .submenu-left {
-    width: 25%;
-    height: 100%;
-    background: linear-gradient(to right, #dde6ed 0%, #ffffff 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 60px;
-  }
-  
-  .submenu-left h2 {
-    font-size: 28px;
-    color: #27374d;
-    font-weight: 700;
-    margin-bottom: 5px;
-  }
-  
-  .submenu-left span {
-    font-size: 15px;
-    color: #666;
-  }
-  
-  /* 서브메뉴 오른쪽 영역 */
-  .submenu-right {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .submenu-right ul {
-    list-style: none;
-    display: flex;
-    gap: 120px;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .submenu-right li a {
-    color: #000;
-    text-decoration: none;
-    font-size: 17px;
-    font-weight: 500;
-    transition: color 0.2s ease;
-  }
-  
-  .submenu-right li a:hover {
-    color: #27374d;
-    font-weight: 600;
-  }
-  
-  .menu-item:hover > a {
-    background-color: #fff;
-    color: #27374d;
-    border-radius: 20px 20px 0 0;
-  }
-  
-  /* 화면 우측 Signin */
-  .signin {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 14px;
-    margin-left: auto;
-  }
-  
-  #signin-image {
-    margin-left: 3px;
-    display: flex;
-    width: 30px;
-    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg)
-      brightness(103%) contrast(101%);
-  }
-  
-  #signin-text {
-    text-decoration: none;
-    color: white;
-  }
-  
-  /* main */
-  .main {
-      display: block;
-      width: 100%;
-      min-height: 100vh;
-    }
-  
-  .main > h3 {
-    color: black;
-    justify-content: center;
-  }
-  
-  
-  .banner-container {
-    position: relative;
-    width: 100%;
-    height: 400px;
-    margin: 0 auto;
-    overflow: hidden;
-    background-color: #ddd;
-  }
-  
-  .banner-slide {
-    display: none;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .banner-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  /* 효과 주기 */
-  .fade {
-    animation-name: fade;
-    animation-duration: 1s;
-  }
-  
-  @keyframes fade {
-    from {
-      opacity: 0.4;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  /* 좌우 버튼 */
-  .prev,
-  .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    padding: 16px;
-    margin-top: -22px;
-    color: white;
-    font-weight: bold;
-    font-size: 24px;
-    transition: 0.3s;
-    user-select: none;
-    border-radius: 0 3px 3px 0;
-    background: rgba(0, 0, 0, 0.3);
-  }
-  
-  .next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-  }
-  
-  .prev:hover,
-  .next:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  /* 하단 점 */
-  .dots {
-    text-align: center;
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-  }
-  
-  .dot {
-    cursor: pointer;
-    height: 12px;
-    width: 12px;
-    margin: 0 3px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-  }
-  
-  .active,
-  .dot:hover {
-    background-color: #27374d;
-  }
-  
-  /* Footer */
-  .footer {
-    display: flex;
-    justify-content: space-between;
-    background: #27374d;
-    padding: 30px 40px;
-    flex-wrap: wrap;
-  }
-  
-  .footer-left {
-    max-width: 60%;
-  }
-  
-  .footer-left .logo {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .footer-left p {
-    font-size: 13px;
-    line-height: 1.6;
-    margin-top: 5px;
-  }
-  
-  .footer-right {
-    display: flex;
-    align-items: flex-start;
-    margin-top: 30px;
-  }
-  
-  .footer-right ul {
-    list-style: none;
-    margin-bottom: 10px;
-  }
-  
-  .footer-right li {
-    margin-bottom: 6px;
-  }
-  
-  .footer-right a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 14px;
-  }
-  
-  /* svg 파일 특성상 css 설정을 이렇게.. */
-  .sns a {
-    margin-right: 10px;
-    font-size: 20px;
-    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg)
-      brightness(103%) contrast(101%); 
-  }
-  
-  .sns a img {
-    width: 30px;
-  }
-  
-  /* 공연이랑 전시 공통 css */
-  .show-section,
-  .exhibition-section {
-    background-color: #fff;
-    text-align: center;
-    padding: 70px 0;
-  }
-  
-  .show-section h2,
-  .exhibition-section h2 {
-    color: #27374d;
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 40px;
-  }
-  
-  /* 카드 그리드 */
-  .card-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    justify-items: center;
-  }
-  
-  /* 카드 */
-  .card {
-    width: 250px;
-    background-color: #f8f8f8;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-  }
-  
-  .card img {
-    width: 100%;
-    height: 330px;
-    object-fit: cover;
-  }
-  
-  .card-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #27374d;
-    margin-top: 10px;
-  }
-  
-  .card-date {
-    font-size: 13px;
-    color: #555;
-    margin-bottom: 15px;
-  }
-  
+}
+
+/* 좌우 버튼 */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  transition: 0.3s;
+  user-select: none;
+  border-radius: 0 3px 3px 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* 하단 점 */
+.dots {
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+
+.dot {
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  margin: 0 3px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.active,
+.dot:hover {
+  background-color: #27374d;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  background: #27374d;
+  padding: 30px 40px;
+  flex-wrap: wrap;
+}
+
+.footer-left {
+  max-width: 60%;
+}
+
+.footer-left .logo {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.footer-left p {
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 5px;
+}
+
+.footer-right {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+.footer-right ul {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.footer-right li {
+  margin-bottom: 6px;
+}
+
+.footer-right a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* svg 파일 특성상 css 설정을 이렇게.. */
+.sns a {
+  margin-right: 10px;
+  font-size: 20px;
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg) brightness(103%) contrast(101%);
+}
+
+.sns a img {
+  width: 30px;
+}
+
+/* 공연이랑 전시 공통 css */
+.show-section,
+.exhibition-section {
+  background-color: #fff;
+  text-align: center;
+  padding: 70px 0;
+}
+
+.show-section h2,
+.exhibition-section h2 {
+  color: #27374d;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+/* 카드 그리드 */
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-items: center;
+}
+
+/* 카드 */
+.card {
+  width: 250px;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 330px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #27374d;
+  margin-top: 10px;
+}
+
+.card-date {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* 알림 */
+.notification-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.notification-btn {
+  font-size: 20px;
+  position: absolute;
+  top: 7px;
+  left: 20px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 1);
+  border: none;
+}
+
+/* 읽지 않은 알림이 존재하는 경우 */
+.notification-btn.fa-solid {
+  color: yellow;
+  text-shadow: 1px 1px 3px gray, 2px 2px 5px black;
+}
+
+.notification-count-area {
+  position: absolute;
+  bottom: -6px;
+  right: -10px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  color: white;
+}
+
+.notification-list {
+  position: absolute;
+  top: 30px;
+  right: -30px;
+  width: 380px;
+  height: 400px;
+  padding: 10px;
+  list-style: none;
+  z-index: 2000;
+  background: #f0f3fa;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px #eee, 0 4px 8px 0 rgba(0, 0, 0, .3);
+  display: none;
+  /* 처음에 알림 창이 보이지 않게 함 */
+}
+
+/* 알림 창 보이게 하기 */
+.notification-show {
+  display: block;
+}
+
+.notification-item {
+  background-color: white;
+  margin: 15px 0;
+  border-radius: 5px;
+  width: 100%;
+  height: 70px;
+  font-size: 15px;
+  letter-spacing: -1px;
+  position: relative;
+}
+
+.not-read {
+  background-color: rgba(176, 208, 238, 0.7)
+}
+
+.notification-text {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  cursor: pointer;
+}
+
+.notification-text>img {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  flex-shrink: 0;
+}
+
+.notification-content-container {
+  height: 90%;
+}
+
+.notification-date {
+  font-size: 12px;
+  color: gray;
+}
+
+.notification-content {
+  width: 270px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.notification-delete {
+  position: absolute;
+  top: -5px;
+  right: 2px;
+  user-select: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.notification-delete:hover {
+  color: red;
+}
+
+.notification-item:hover>.notification-text {
+  text-decoration: underline;
+}

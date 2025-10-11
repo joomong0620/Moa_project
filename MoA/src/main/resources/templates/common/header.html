@@ -1,90 +1,125 @@
+<!-- 알림 관련 전역 변수 -->
+
+<script th:inline="javascript">
+  // 현재 접속한 클라이언트가 로그인 상태인지 확인하는 변수
+  // -> 알림은 로그인한 회원만 받을 수 있다!
+
+  const notificationLoginCheck = /*[[${session.loginMember} ? true : false]]*/ false;
+  //없을때 기본값 false 일 것이다.
+  // 알림을 보낸 회원의 프로필 이미지가 없을 경우 사용할 기본 이미지
+  // -> messages.properties에서 얻어온 값
+  const notificationDefaultImage = /*[[#{user.default.image}]]*/ "기본이미지";
+  //유저의 기본 이미지를 참조할 때 쓴다.
+</script>
+
+<script th:src="@{/js/header.js}"></script>
+
 <header th:fragment="header" class="header">
-    <section>
-      <a th:href="@{/}">
-        <img th:src="@{/images/common/moa_logo.png}" alt="이미지 준비중" id="logo-image" />
-      </a>
-    </section>
-  
-    <nav class="nav">
-      <ul>
-        <!-- 공연 -->
-        <li class="menu-item">
-          <a href="#">공연</a>
-          <div class="submenu">
-            <div class="submenu-left">
-              <h2>공연</h2>
-              <span>performance</span>
-            </div>
-            <div class="submenu-right">
-              <ul>
-                <li><a href="#">전체 공연목록 조회</a></li>
-                <li><a href="#">통합 검색</a></li>
-                <li><a href="#">지도 검색</a></li>
-              </ul>
-            </div>
+  <section>
+    <a th:href="@{/}">
+      <img
+        th:src="@{/images/common/moa_logo.png}"
+        alt="이미지 준비중"
+        id="logo-image"
+      />
+    </a>
+  </section>
+
+  <nav class="nav">
+    <ul>
+      <!-- 공연 -->
+      <li class="menu-item">
+        <a href="#">공연</a>
+        <div class="submenu">
+          <div class="submenu-left">
+            <h2>공연</h2>
+            <span>performance</span>
           </div>
-        </li>
-  
-        <!-- 전시 -->
-        <li class="menu-item">
-          <a href="#">전시</a>
-          <div class="submenu">
-            <div class="submenu-left">
-              <h2>전시</h2>
-              <span>exhibition</span>
-            </div>
-            <div class="submenu-right">
-              <ul>
-                <li><a href="/board/exhibition/jsonExhibitionList">전체 전시목록 조회</a></li>
-                <li><a href="#">전시 일정</a></li>
-                <li><a href="#">전시 지도 검색</a></li>
-              </ul>
-            </div>
+          <div class="submenu-right">
+            <ul>
+              <li><a href="#">전체 공연목록 조회</a></li>
+              <li><a href="#">통합 검색</a></li>
+              <li><a href="#">지도 검색</a></li>
+            </ul>
           </div>
-        </li>
-  
-        <!-- 커뮤니티 -->
-        <li class="menu-item">
-          <a href="#">커뮤니티</a>
-          <div class="submenu">
-            <div class="submenu-left">
-              <h2>커뮤니티</h2>
-              <span>community</span>
-            </div>
-            <div class="submenu-right">
-              <ul>
-                <li><a href="#">자유게시판</a></li>
-                <li><a th:href="@{/review/list}">리뷰게시판</a></li>
-                <li><a href="#">만남의 광장</a></li>
-              </ul>
-            </div>
+        </div>
+      </li>
+
+      <!-- 전시 -->
+      <li class="menu-item">
+        <a href="#">전시</a>
+        <div class="submenu">
+          <div class="submenu-left">
+            <h2>전시</h2>
+            <span>exhibition</span>
           </div>
-        </li>
-  
-        <!-- 고객센터 -->
-        <li class="menu-item">
-          <a href="#">고객센터</a>
-          <div class="submenu">
-            <div class="submenu-left">
-              <h2>고객센터</h2>
-              <span>support</span>
-            </div>
-            <div class="submenu-right">
-              <ul>
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">문의하기</a></li>
-                <li><a href="#">이용안내</a></li>
-              </ul>
-            </div>
+          <div class="submenu-right">
+            <ul>
+              <li><a href="#">전체 전시목록 조회</a></li>
+              <li><a href="#">전시 일정</a></li>
+              <li><a href="#">전시 지도 검색</a></li>
+            </ul>
           </div>
-        </li>
-      </ul>
-    </nav>
-  
-    <div class="signin">
-      <a th:href="@{/login}">
-        <img th:src="@{/images/common/user.svg}" alt="이미지 준비중" id="signin-image" />
-        <span id="signin-text" th:text="${name} ?: 'sign in'"></span>
-      </a>
-    </div>
-  </header>
+        </div>
+      </li>
+
+      <!-- 커뮤니티 -->
+      <li class="menu-item">
+        <a href="#">커뮤니티</a>
+        <div class="submenu">
+          <div class="submenu-left">
+            <h2>커뮤니티</h2>
+            <span>community</span>
+          </div>
+          <div class="submenu-right">
+            <ul>
+              <li><a href="#">자유게시판</a></li>
+              <li><a th:href="@{/review/list}">리뷰게시판</a></li>
+              <li><a href="#">만남의 광장</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- 고객센터 -->
+      <li class="menu-item">
+        <a href="#">고객센터</a>
+        <div class="submenu">
+          <div class="submenu-left">
+            <h2>고객센터</h2>
+            <span>support</span>
+          </div>
+          <div class="submenu-right">
+            <ul>
+              <li><a href="#">공지사항</a></li>
+              <li><a href="#">문의하기</a></li>
+              <li><a href="#">이용안내</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- 알림 영역 -->
+  <section class="notification-container" th:if="${session.loginMember}">
+    <!-- 알림 버튼 -->
+    <button class="notification-btn fa-regular fa-bell" id="my-element">
+      <!-- 알림 개수 표시 -->
+      <div class="notification-count-area"></div>
+    </button>
+    <!-- 알림 목록 -->
+    <ul class="notification-list"></ul>
+  </section>
+
+  <div class="signin">
+    <a th:href="@{/member/login}">
+      <img
+        th:src="@{/images/common/user.svg}"
+        alt="이미지 준비중"
+        id="signin-image"
+      />
+      <span id="signin-text" th:text="${name} ?: 'sign in'"></span>
+    </a>
+  </div>
+</header>

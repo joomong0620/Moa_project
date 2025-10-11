@@ -42,20 +42,28 @@ public class PerformanceController {
 	// 공연 상세검색 목록 조회
 	@GetMapping("/pmSearchList")
 	public String selectPmSearchList (
-//			@RequestParam(value = "type", required = false, defaultValue = "all") int type,
-//			@RequestParam(value = "price", required = false, defaultValue = "all") String price,
-//			@RequestParam(value = "date", required = false, defaultValue = "all") String date,
-//			@RequestParam(value = "address", required = false, defaultValue = "all") String address,
-//			
+			@RequestParam(value = "type", required = false, defaultValue = "all") int type,
+			@RequestParam(value = "price", required = false, defaultValue = "all") String price,
+			@RequestParam(value = "date", required = false, defaultValue = "all") String date,
+			@RequestParam(value = "address", required = false, defaultValue = "all") String address,
+		
 			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
 			Model model,
 			@RequestParam Map<String, Object> paramMap
 			) {
+		Map<String, Object> map = service.selectPmSearchList(paramMap, type, price, date, address, cp);
 		
 		
 		return "board/performance/pm-search";
 	}
 	
+	
+	// 공연 주변지도 목록 조회
+	@GetMapping("/pmMap")
+	public String selectMap () {
+		
+		return "board/performance/pm-map";
+	}
 	
 	
 	

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>자유게시판</title>
+    <link rel="stylesheet" th:href="@{/css/main-style.css}" />
     <link
       rel="stylesheet"
       th:href="@{/css/board/freeboard/freeboardList.css}"
@@ -15,7 +16,7 @@
     <!-- 타임리프 변수 선언 -->
     <main th:with="pagination=${map.pagination}, boardList=${map.boardList}">
       <!-- header 조각 포함 -->
-      <!-- <th:block th:replace="~{common/header}"></th:block> -->
+      <th:block th:replace="~{common/header}"></th:block>
 
       <div class="free-container">
         <div class="free1">
@@ -37,7 +38,7 @@
 
         <!-- 게시글 목록 -->
         <th:block th:unless="${#lists.size(boardList) == 0}">
-          <div class="card" th:each="board : ${boardList}">
+          <div class="card1" th:each="board : ${boardList}">
             <!-- 썸네일 -->
             <img
               th:if="${board.thumbnail}"
@@ -51,17 +52,17 @@
               alt="기본 이미지"
             />
 
-            <div class="card-content">
-              <h3 class="card-title">
+            <div class="card1-content">
+              <h3 class="card1-title">
                 <!-- 게시글 상세 링크 -->
                 <a
-                  class="card-title-link"
+                  class="card1-title-link"
                   th:href="@{/board/{code}/{no}(code=${boardCode}, no=${board.boardNo}, cp=${pagination.currentPage})}"
                   th:text="${board.boardTitle}"
                   >제목</a
                 >
               </h3>
-              <p class="card-text" th:text="${board.boardContent}">내용</p>
+              <p class="card1-text" th:text="${board.boardContent}">내용</p>
             </div>
           </div>
         </th:block>

@@ -15,4 +15,14 @@ public class AjaxDAO {
 		return mapper.dupCheckId(memberId);
 	}
 
+
+	public int checkEmail(String email) {
+		return mapper.checkEmail(email);
+	}
+
+
+	public int checkNickname(String nickname) {
+		return mapper.checkNickname(nickname);
+	}
+
 }

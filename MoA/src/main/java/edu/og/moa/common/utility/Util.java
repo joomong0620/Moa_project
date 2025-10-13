@@ -1,4 +1,4 @@
-package edu.og.moa.common.utillity;
+package edu.og.moa.common.utility;
 
 import java.text.SimpleDateFormat;
 

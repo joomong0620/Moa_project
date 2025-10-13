@@ -11,8 +11,6 @@
 </head>
 <body>
 
-    <!-- [ [${map.exhibitionList}] ] -->
-    
     <!-- 전체를 감싸는 태그 -->
     <div id="page-wrapper">
       <!-- main-태그 내부에서만 사용하는 변수 (전역변수 선언은 body태그 안에 선언) -->
@@ -27,10 +25,6 @@
         <nav id="main-nav"></nav>
         <!--  ###################################################### -->
 
-        <!-- [ [${exhibtionCode}] ] NA-->
-        <!-- [ [${communityCode}] ]  3 ok -->
-
-        <!-- [ [${exhibitionList}] ] ok -->
         <th:block th:with="boardName='전시게시판'">
             <h1 class="board-name" th:text="${boardName}">게시판 이름</h1> 
         </th:block>
@@ -57,7 +51,7 @@
                                     <div class="slider-wrapper present" id="sliderWrapperPresent">
                                         <div class="slide present" th:each="item : ${exhibitionList}">
                                             <div class="slide-item present">
-                                                <img  th:unless="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{'/images/board/exhibition/'+${item.imageList[0].imgOrig} }" id="exhibitionPosterPresent">
+                                                <img  th:unless="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{'/images/board/exhibition/'+${item.imageList[0].imageOriginal} }" id="exhibitionPosterPresent">
                                                 <img  th:if="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{item.exhibitImgObject}" id="exhibitionPosterPresent">
                                                 <h4 th:text="${item.exhibitTitle}">전시제목</h4>
                                                 <p th:unless="${item.exhibitDate}" th:text=" '전시기간: 전시기관에 문의해주세요' ">기간</p>
@@ -78,7 +72,7 @@
                                     <div class="slider-wrapper future" id="sliderWrapperFuture">
                                         <div class="slide future" th:each="item : ${exhibitionList}">
                                             <div class="slide-item future">
-                                                <img  th:unless="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{'/images/board/exhibition/'+${item.imageList[0].imgOrig} }" id="exhibitionPosterFuture">
+                                                <img  th:unless="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{'/images/board/exhibition/'+${item.imageList[0].imageOriginal} }" id="exhibitionPosterFuture">
                                                 <img  th:if="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{item.exhibitImgObject}" id="exhibitionPosterFuture">
                                                 <h4 th:text="${item.exhibitTitle}">전시제목</h4>
                                                 <p th:text="${item.exhibitDate} + '동안'">기간</p>
@@ -99,7 +93,7 @@
                                         <div class="slide past" th:each="item : ${exhibitionList}">
                                             <div class="slide-item past">
                                                 
-                                                <img  th:unless="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{'/images/board/exhibition/'+${item.imageList[0].imgOrig} }" id="exhibitionPosterPast">
+                                                <img  th:unless="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{'/images/board/exhibition/'+${item.imageList[0].imageOriginal} }" id="exhibitionPosterPast">
                                                 <img  th:if="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{item.exhibitImgObject}" id="exhibitionPosterPast">
 
                                                 <h4 th:text="${item.exhibitTitle}">전시제목</h4>
@@ -157,14 +151,14 @@
                                                 <tr th:each = "exhibition : ${exhibitionList}">
                                                     <td th:text="${exhibition.exhibitNo}">게시글 번호</td>
                                                     <td> 
-                                                        <img th:unless="${session.loginMember.profileImg}" class="list-thumbnail"  th:src="@{/images/board/exhibition/member/user.png}" id="memberProfile">
+                                                        <img th:unless="${session.loginMember.profileImage}" class="list-thumbnail"  th:src="@{/images/board/exhibition/member/user.png}" id="memberProfile">
                                                         <!-- 프로필 이미지가 있는 경우 -->                                                        
-                                                        <img th:if="${session.loginMember.profileImg}" class="list-thumbnail" th:src="@{${session.loginMember.profileImg}}" id="memberProfile">
+                                                        <img th:if="${session.loginMember.profileImage}" class="list-thumbnail" th:src="@{${session.loginMember.profileImage}}" id="memberProfile">
                                                         <!-- 검색 X -->
-                                                        <a th:unless="${param.key}" th:href="@{/board/{communityCode}/{exhibitionNo}(communityCode=${communityCode}, exhibitionNo=${exhibition.exhibitNo}, cp=${pagination.currentPage} )}" th:utext="${exhibition.exhibitTitle}">게시글 제목</a>  <!-- exhibition는 th:each 문에 exhibition 로, 루프돌고 있다 -->
+                                                        <a th:unless="${param.key}" th:href="@{/exhibition/{exhibitionCode}/{exhibitionNo}(exhibitionCode=${exhibitionCode}, exhibitionNo=${exhibition.exhibitNo}, cp=${pagination.currentPage} )}" th:utext="${exhibition.exhibitTitle}">게시글 제목</a>  <!-- exhibition는 th:each 문에 exhibition 로, 루프돌고 있다 -->
                                                         
                                                         <!-- 검색 O -->
-                                                        <a th:if="${param.key}" th:href="@{/board/{communityCode}/{exhibitionNo}(communityCode=${communityCode}, exhibitionNo=${exhibition.exhibitNo}, cp=${pagination.currentPage}) , key=${param.key}, query=${param.query} }"  th:text="${exhibition.exhibitTitle}">게시글 제목</a>  <!-- exhibition는 th:each 문에 exhibition 로, 루프돌고 있다 -->
+                                                        <a th:if="${param.key}" th:href="@{/exhibition/{exhibitionCode}/{exhibitionNo}(exhibitionCode=${exhibitionCode}, exhibitionNo=${exhibition.exhibitNo}, cp=${pagination.currentPage}) , key=${param.key}, query=${param.query} }"  th:text="${exhibition.exhibitTitle}">게시글 제목</a>  <!-- exhibition는 th:each 문에 exhibition 로, 루프돌고 있다 -->
                                                             
                                                     </td>
                                                     <td>[[${exhibition.memberNickname}]]</td>
@@ -192,12 +186,12 @@
                                 <ul th:unless ="${param.query}" class="pagination">
                                 
                                     <!-- 첫 페이지(cp=1)로 이동 -->
-                                    <!-- communityCode : @PathVariable로 request scope에 세팅된 값 -->
-                                    <li><a th:href="@{/board/{code}(code=${communityCode}, cp=1) }">&lt;&lt;</a></li>
+                                    <!-- exhibitionCode : @PathVariable로 request scope에 세팅된 값 -->
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=1) }">&lt;&lt;</a></li>
                                     <!-- 첫페이지는 항상 cp=1로 고정값 -->
                 
                                     <!-- 이전 목록 마지막 번호로 이동 -->
-                                    <li><a th:href="@{/board/{code}(code=${communityCode}, cp=${pagination.prevPage} ) }">&lt;</a></li>
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.prevPage} ) }">&lt;</a></li>
                 
                                     <!-- 특정 페이지로 이동 -->
                                     <!-- #numbers.sequence(시작, 끝, [, step]) : 타임리프 시퀀스(내장)객체  
@@ -212,16 +206,16 @@
                                         
                                         <!-- 현재 페이지를 제외한 나머지 -->
                                         <li th:unless="${pagination.currentPage == i}">
-                                            <a th:href="@{/board/{code}(code=${communityCode}, cp=${i}) }" th:text="${i}"></a>
+                                            <a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${i}) }" th:text="${i}"></a>
                                         </li>
     
                                     </th:block>
                                     
                                     <!-- 다음 목록 시작 번호로 이동 -->
-                                    <li><a th:href="@{/board/{code}(code=${communityCode}, cp=${pagination.prevPage} ) }">&gt;</a></li>
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.prevPage} ) }">&gt;</a></li>
                 
                                     <!-- 끝 페이지로 이동 -->
-                                    <li><a th:href="@{/board/{code}(code=${communityCode}, cp=${pagination.maxPage} ) }">&gt;&gt;</a></li>            
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.maxPage} ) }">&gt;&gt;</a></li>            
                                 </ul>
     
     
@@ -229,12 +223,12 @@
                                 <ul th:if ="${param.query}" class="pagination">
                                 
                                     <!-- 첫 페이지(cp=1)로 이동 -->
-                                    <!-- communityCode : @PathVariable로 request scope에 세팅된 값 -->
-                                    <li><a th:href="@{/board/{code}(code=${communityCode}, cp=1) }">&lt;&lt;</a></li>
+                                    <!-- exhibitionCode : @PathVariable로 request scope에 세팅된 값 -->
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=1) }">&lt;&lt;</a></li>
                                     <!-- 첫페이지는 항상 cp=1로 고정값 -->
                 
                                     <!-- 이전 목록 마지막 번호로 이동 -->
-                                    <li><a th:href="@{/board/{code}(code=${communityCode}, cp=${pagination.prevPage} ) }">&lt;</a></li>
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.prevPage} ) }">&lt;</a></li>
                 
                                     <!-- 특정 페이지로 이동 -->
                                     <!-- #numbers.sequence(시작, 끝, [, step]) : 타임리프 시퀀스(내장)객체  
@@ -249,17 +243,17 @@
                                         
                                         <!-- 현재 페이지를 제외한 나머지 -->
                                         <li th:unless="${pagination.currentPage == i}">
-                                            <a th:href="@{/board/{code}(code=${communityCode}, cp=${i}, key=${param.key}, query=${param.query}) }" th:text="${i}"></a>
+                                            <a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${i}, key=${param.key}, query=${param.query}) }" th:text="${i}"></a>
                                         </li>
     
                                     </th:block>
                 
                                     
                                     <!-- 다음 목록 시작 번호로 이동 -->
-                                    <li><a th:href="@{/board/{code}(code=${communityCode}, cp=${pagination.prevPage}, key=${param.key}, query=${param.query} ) }">&gt;</a></li>
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.prevPage}, key=${param.key}, query=${param.query} ) }">&gt;</a></li>
                 
                                     <!-- 끝 페이지로 이동 -->
-                                    <li><a th:href="@{/board/{code}(code=${communityCode}, cp=${pagination.maxPage}, key=${param.key}, query=${param.query} ) }">&gt;&gt;</a></li>
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.maxPage}, key=${param.key}, query=${param.query} ) }">&gt;&gt;</a></li>
                                 </ul>
     
                             </div>
@@ -279,7 +273,7 @@
                     <!-- 전시 게시판 검색창 -->
                     <section id="section-search">
                         <!-- 검색창 -->
-                        <form th:action="${communityCode}" method="get" id="exhibitionSearch">
+                        <form th:action="${exhibitionCode}" method="get" id="exhibitionSearch">
 
                             <select name="key" id="searchKey">
                                 <option value="g" >주제</option>

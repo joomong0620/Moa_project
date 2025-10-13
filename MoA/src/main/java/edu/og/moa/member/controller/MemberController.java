@@ -72,7 +72,7 @@ public class MemberController {
 			
 		}
 		
-		return "redirect:/login";
+		return "redirect:/";
 		
 		
 		

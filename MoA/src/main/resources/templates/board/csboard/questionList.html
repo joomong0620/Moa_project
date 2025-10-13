@@ -41,12 +41,29 @@
         
                     <!-- 게시글 목록이 조회된 경우 --> 
                     
-                    <tr:block th:each="qCode : ${qCodeList}">
+                    <table>
 
-                        <a th:href="@{/${communityCode}/questionList/${qCode}}" th:text="${qName}"></a>
+                        <tbody>
+
+                            <tr th:each="qCode : ${qCodeList}">
+                                <td>
+
+                                    <a th:href="@{board/{communityCode}/questionList/{qCode}(communityCode=${communityCode}, qCode=${qCode})}" th:text="${qName}"></a>
+            
+                                    
+                                    <a th:href="@{board/{communityCode}/questionList/{qCode}/{boardNo}(boardCode=${boardCode}, qCode=${qCode}, boardNo=${board.boardNo}, 
+                                                    cp=${pagination.currentPage})}" th:utext="${board.boardTitle}"></a>
+                                    
+
+                                </td>
+                            </tr>
 
 
-                    </tr:block>
+                        </tbody>
+
+
+
+                    </table>
                     
             
             

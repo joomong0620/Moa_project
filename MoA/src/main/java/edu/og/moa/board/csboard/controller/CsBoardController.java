@@ -12,7 +12,7 @@ import edu.og.moa.board.csboard.model.service.CsService;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/question")
+@RequestMapping("/board")
 @SessionAttributes("loginMember")
 @Slf4j
 public class CsBoardController {
@@ -22,7 +22,7 @@ public class CsBoardController {
 	
 	
 	// 자주 묻는 질문으로 화면 이동
-	@GetMapping("/board/{communityCode:5}")
+	@GetMapping("/{communityCode:5}")
 	public String question() {
 		
 		return "board/csboard/question";
@@ -30,14 +30,12 @@ public class CsBoardController {
 	}
 	
 	// 내 문의 내역 게시판 조회
-	@GetMapping("/board/{communityCode:5}/questionList/{qCode:[1-3]}")
+	@GetMapping("/{communityCode:5}/questionList/{qCode:[1-3]}")
 	public String questionList(@PathVariable("communityCode") int communityCode,
 			@RequestParam(value="cp", required=false, defaultValue="1") int cp
 			
 			
 			) {
-		
-		
 		
 		
 		return "board/csboard/questionList";

@@ -9,7 +9,8 @@
 </head>
 <body>
 
-    <main th:with="pagination=$(map.pagination), questionList=${map.questionList}, qCodeList=${questionList.qCode}">
+    <main th:with="pagination=${map.pagination}, communityCode=${map.communityCode},
+     questionList=${map.questionList}, qCodeList=${map.qCodeList}, qCode=${map.qCode}">
 
 
     
@@ -40,15 +41,22 @@
                     </section>
         
                     <!-- 게시글 목록이 조회된 경우 --> 
+
+                    <nav>
+                        <a th:each="q : ${qCodeList}" 
+                            th:href="@{/board/{communityCode}/questionList/{qCode}
+                            (communityCode=${communityCode}, qCode=${q}, cp=${pagination.currentPage})}"
+                            th:text="${q.qName}"></a>
+
+
+                    </nav>
                     
                     <table>
 
                         <tbody>
 
-                            <tr th:each="qCode : ${qCodeList}">
+                            <tr th:each="board : ${questionList}">
                                 <td>
-
-                                    <a th:href="@{board/{communityCode}/questionList/{qCode}(communityCode=${communityCode}, qCode=${qCode})}" th:text="${qName}"></a>
             
                                     
                                     <a th:href="@{board/{communityCode}/questionList/{qCode}/{boardNo}(boardCode=${boardCode}, qCode=${qCode}, boardNo=${board.boardNo}, 
@@ -56,6 +64,8 @@
                                     
 
                                 </td>
+
+                                <td th:text="${#dates.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
                             </tr>
 
 

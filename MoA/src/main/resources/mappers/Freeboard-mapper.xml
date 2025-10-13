@@ -17,7 +17,7 @@
 		<result property="memberNickname" column="MEMBER_NICKNAME" />
 
 		<result property="memberNo" column="MEMBER_NO" />
-		<result property="profileImage" column="PROFILE_IMG" />
+		<result property="profileImg" column="PROFILE_IMG" />
 		<result property="thumbnail" column="THUMBNAIL" />
 
 		<result property="boardCode" column="COMMUNITY_CODE" />

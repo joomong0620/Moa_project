@@ -1,128 +1,219 @@
 <!DOCTYPE html>
-<html lang="ko" color-theme="light" xmlns="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>채팅방</title>
 
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/main-style.css}" />
+    <link rel="stylesheet" th:href="@{/css/chatting/chatting.css}" />
 
-    <link rel="stylesheet" th:href="@{/css/main-style.css}">
-    <link rel="stylesheet" th:href="@{/css/board/boardDetail-style.css}">
-    <!--  <link rel="stylesheet" th:href="@{/css/chatting/chatting-style.css}"> -->
-    <link rel="stylesheet" th:href="@{/css/chatting/chattingTheme-style.css}">
+    <!-- Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/a2e8ca0ae3.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
+  <body>
+    <!-- header -->
+    <th:block th:replace="~{/common/header}"></th:block>
 
-    <script src="https://kit.fontawesome.com/a2e8ca0ae3.js" crossorigin="anonymous"></script>
-</head>
+    <div class="chat-layout">
+      <!-- ================= 왼쪽 사이드바 ================= -->
+      <aside class="sidebar1">
+        <span class="sub_title">팀 또는 개인으로 만남을 이루어 보세요!</span>
+        <h2>만남의 광장</h2>
 
-
-<body>
-    <main>
-
-        <!-- header.html 조각을 얻어와서 추가하기 -->
-        <th:block th:replace="~{/common/header}">header.html</th:block> 
-
-
-        <button id="addTarget">추가</button>
-        <label for="changeTheme">테마변경</label>
-        <input type="checkbox" id="changeTheme">
-
-
-        <div id="addTargetPopupLayer" class="popup-layer-close">  
-            <span id="closeBtn">&times</span>
-
-
-            <div class="target-input-area">
-                <input type="search" id="targetInput" placeholder="닉네임 또는 이메일을 입력하세요" autocomplete="off">
-            </div>
-
-
-            <ul id="resultArea">
-               <!--  <li class="result-row" data-id="1">
-                    <img class="result-row-img" src="/images/user.png">
-                    <span> <mark>유저</mark>일</span>
-                </li>
-                <li class="result-row"  data-id="2">
-                    <img class="result-row-img" src="/images/user.png">
-                    <span><mark>유저</mark>이</span>
-                </li>
-
-
-                <li class="result-row">일치하는 회원이 없습니다</li> -->
-            </ul>
-        </div>
-   
-        <div class="chatting-area">
-            <ul class="chatting-list">
-
-                <th:block th:each="room : ${roomList}">
-
-                    <li class="chatting-item" th:chat-no="${room.chattingNo}" th:target-no="${room.targetNo}">
-                        <div class="item-header">
-
-                            <img th:unless="${room.targetProfile}" class="list-profile" th:src="@{/images/user.png}">
-
-                            <img th:if="${room.targetProfile}" class="list-profile" th:src="${room.targetProfile}">
-
-                        </div>
-                        <div class="item-body">
-                            <p>
-                                <span class="target-name" th:text="${room.targetNickName}">상대방 이름</span>
-                                <span class="recent-send-time">[[${room.sendTime}]]</span>
-                            </p>
-                            <div>
-                                <p class="recent-message" th:text="${room.lastMessage}">메세지 내용</p>
-    
-                                <p th:if="${room.notReadCount > 0}" class="not-read-count">[[${room.notReadCount}]]</p>
-                            </div>
-                        </div>
-                    </li>
-                </th:block>
-            </ul>
-
-
-            <div class="chatting-content">
-                <ul class="display-chatting">
-                    <!-- <li class="my-chat">
-                        <span class="chatDate">12:11</span>
-                        <p class="chat">오늘 수업 어땠어?</p>
-                    </li>
-
-
-                    <li class="target-chat">
-                        <img src="/images/user.png">
-
-
-                        <div>
-                            <b>유저이</b>  <br>
-                            <p class="chat">채팅 배웠는데 너무 재밌어!<br>혜선쌤 강의는 최고야! 짜릿해~</p>
-                            <span class="chatDate">14:05</span>
-                        </div>
-                    </li> -->
-                </ul>  
-           
-                <div class="input-area">
-                    <textarea id="inputChatting" rows="3"></textarea>
-                    <button id="send">보내기</button>
+        <!-- TEAM 채팅방 목록 -->
+        <section class="chat-section">
+          <div class="section-header">
+            <h3>TEAM</h3>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png"
+              alt="추가"
+              class="plusIcon teamPlus"
+            />
+          </div>
+          <ul class="chat-room-list">
+            <th:block
+              th:each="room : ${roomList}"
+              th:if="${room['memberCount'] >= 3}"
+            >
+              <li
+                class="chat-room"
+                th:attr="data-chat-no=${room['chattingNo']}, data-member-count=${room['memberCount']}"
+              >
+                <!-- 팀 이미지: 마지막 메시지 보낸 사람 프로필 또는 기본 이미지 -->
+                <img
+                  th:src="${room['roomImage']} ?: '/images/common/user.svg'"
+                  alt="team"
+                />
+                <div>
+                  <!-- 팀 이름: targetNickName 사용 -->
+                  <p
+                    class="room-name"
+                    th:text="${room['targetNickName']} ?: '팀 채팅방'"
+                  >
+                    유저일, 유저이, 유저삼
+                  </p>
+                  <!-- 마지막 메시지 또는 멤버 수 -->
+                  <p
+                    class="room-desc"
+                    th:text="${room['lastMessage']} ?: ${room['memberCount'] + '명'}"
+                  >
+                    마지막 대화 내용
+                  </p>
                 </div>
-            </div>
+                <span
+                  th:if="${room['notReadCount'] > 0}"
+                  class="badge"
+                  th:text="${room['notReadCount']}"
+                ></span>
+              </li>
+            </th:block>
+          </ul>
+        </section>
+
+        <!-- PERSONAL 채팅방 목록 -->
+        <section class="chat-section">
+          <div class="section-header">
+            <h3>PERSONAL</h3>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png"
+              alt="추가"
+              class="plusIcon personalPlus"
+            />
+          </div>
+          <ul class="chat-person-list">
+            <th:block
+              th:each="room : ${roomList}"
+              th:if="${room['memberCount'] == 2}"
+            >
+              <li
+                class="person-chat"
+                th:attr="data-chat-no=${room['chattingNo']}, data-target-no=${room['targetNo']}, data-member-count=${room['memberCount']}"
+              >
+                <img
+                  th:src="${room['targetProfile']} ?: '/images/common/user.svg'"
+                  alt="profile"
+                />
+                <div>
+                  <p class="person-name" th:text="${room['targetNickName']}">
+                    사용자
+                  </p>
+                  <p class="last-msg" th:text="${room['lastMessage']}">
+                    최근 메시지
+                  </p>
+                </div>
+                <span
+                  th:if="${room['notReadCount'] > 0}"
+                  class="badge"
+                  th:text="${room['notReadCount']}"
+                ></span>
+              </li>
+            </th:block>
+          </ul>
+        </section>
+      </aside>
+
+      <!-- ================= 오른쪽 채팅 영역 ================= -->
+      <div class="chat-room-area">
+        <!-- 빈 상태 화면 -->
+        <div id="emptyState" class="empty-state">
+          <img
+            th:src="@{/images/common/moa_logo.png}"
+            alt="MoA 로고"
+            class="moa-logo"
+          />
+          <p class="welcome-text">
+            MoA의 만남의 광장에 오신 여러분 환영합니다!
+          </p>
         </div>
-    </main>
 
+        <!-- 채팅방 헤더 -->
+        <header class="chat-room-header" style="display: none">
+          <div class="room-info">
+            <img id="currentRoomImage" src="" alt="room" />
+            <h3 id="currentRoomName">채팅방 이름</h3>
+          </div>
+          <button class="exit-btn">나가기</button>
+        </header>
 
-    <!-- footer.html 조각 얻어와 추가하기 -->
-    <th:block th:replace="~{/common/footer}">footer.html</th:block>
+        <!-- 메시지 목록 -->
+        <ul class="chat-messages" style="display: none"></ul>
 
-    <!--------------------------------------- sockjs를 이용한 WebSocket 구현을 위해 라이브러리 추가 ---------------------------------------------->
+        <!-- 입력 영역 -->
+        <div class="chat-input-area" style="display: none">
+          <textarea
+            id="messageInput"
+            rows="3"
+            placeholder="메시지를 입력하세요"
+          ></textarea>
+          <button class="send-btn" id="sendBtn">보내기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 팀 채팅방 생성 모달 ================= -->
+    <div id="teamModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>팀 채팅방 만들기</h2>
+
+        <!-- 검색창 -->
+        <input
+          type="text"
+          id="targetSearchInput"
+          placeholder="닉네임 검색"
+          style="width: 100%; padding: 6px; margin-bottom: 10px"
+        />
+
+        <form id="teamForm">
+          <ul class="friend-list" id="teamMemberList">
+            <!-- 검색 결과로 동적으로 채워짐 -->
+          </ul>
+          <button type="submit" id="submit_btn">생성하기</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= 개인 채팅 모달 ================= -->
+    <div id="personalModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>개인 채팅 시작</h2>
+
+        <!-- 검색창 -->
+        <input
+          type="text"
+          id="personalSearchInput"
+          placeholder="닉네임 검색"
+          style="width: 100%; padding: 6px; margin-bottom: 10px"
+        />
+
+        <form id="personalForm">
+          <ul class="friend-list" id="personalMemberList">
+            <!-- 검색 결과로 동적으로 채워짐 -->
+          </ul>
+          <button type="button" id="personalStart">대화 시작</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <th:block th:replace="~{/common/footer}"></th:block>
+
+    <!-- SockJS -->
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
+    <!-- 로그인한 회원 번호 -->
     <script th:inline="javascript">
-
-        const loginMemberNo = /*[[${session.loginMember.memberNo}]]*/ "로그인한 회원 번호";
+      const loginMemberNo = /*[[${session.loginMember.memberNo}]]*/ 0;
     </script>
 
+    <!-- JS -->
     <script th:src="@{/js/chatting/chatting.js}"></script>
-</body>
+  </body>
 </html>

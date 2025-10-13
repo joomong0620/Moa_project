@@ -36,27 +36,14 @@ public class FreeBoardController2 {
 	@Autowired
 	private FreeBoardService FreeBoardService;
 
-	// ========== 모든 메서드 실행 전에 자동으로 실행됨 ==========
-	@ModelAttribute
-	public void ensureLoginMember(HttpSession session) {
-		// 테스트용 로그인 회원 세션 생성 (세션이 없을 때만 생성)
-		if (session.getAttribute("loginMember") == null) {
-			Member fakeMember = new Member();
-			fakeMember.setMemberNo(3);  // 실제 존재하는 회원 번호로 변경!
-			fakeMember.setMemberNickname("유저일");
-			session.setAttribute("loginMember", fakeMember);
-		}
-	}
-	// ======================================================
-
 	// 게시글 작성 화면 전환
-	@GetMapping("/{boardCode:[0-9]+}/insert")
+	@GetMapping("/{boardCode:1}/insert")
 	public String FreeboardInsert(@PathVariable("boardCode") int boardCode) {
 		return "board/freeboard/freeboardWrite";
 	}
 
 	// 게시글 작성
-	@PostMapping("/{boardCode:[0-9]+}/insert")
+	@PostMapping("/{boardCode:1}/insert")
 	public String FreeboardInsert(
 			@PathVariable("boardCode") int boardCode,
 			Board board,
@@ -100,7 +87,7 @@ public class FreeBoardController2 {
 	}
 	
 	// 게시글 수정 화면 전환
-	@GetMapping("/{boardCode}/{boardNo}/update")
+	@GetMapping("/{boardCode:1}/{boardNo}/update")
 	public String FreeboardUpdate(
 			@PathVariable("boardCode") int boardCode,
 			@PathVariable("boardNo") int boardNo,
@@ -116,7 +103,7 @@ public class FreeBoardController2 {
 	}
 	
 	// 게시글 수정
-	@PostMapping("/{boardCode}/{boardNo}/update")
+	@PostMapping("/{boardCode:1}/{boardNo}/update")
 	public String FreeboardUpdate(
 			@PathVariable("boardCode") int boardCode,
 			@PathVariable("boardNo") int boardNo,
@@ -146,7 +133,7 @@ public class FreeBoardController2 {
 	}
 	
 	// 게시글 삭제
-	@GetMapping("/{boardCode}/{boardNo}/delete")
+	@GetMapping("/{boardCode:1}/{boardNo}/delete")
 	public String boardDelete(
 			@PathVariable("boardCode") int boardCode,
 			@PathVariable("boardNo") int boardNo,

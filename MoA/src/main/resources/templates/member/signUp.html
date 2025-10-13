@@ -12,6 +12,8 @@
 
     
     <main>
+
+        <th:block th:replace="~{/common/header}">header.html</th:block>
         
         <section class="signUp-content">
 
@@ -26,9 +28,9 @@
     
                     <div class="id-top">아이디 <span>*</span></div>
         
-                    <input type="text" class="id-input" placeholder="아이디를 입력해주세요" maxlength="30" autocomplete="off" name="memberId">
+                    <input type="text" name="memberId" id="memberId" class="id-input" placeholder="아이디를 입력해주세요" maxlength="30" autocomplete="off" required>
         
-                    <div class="id-bottom">유효한 아이디를 입력해주세요</div>
+                    <div class="id-bottom" id="idMessage">유효한 아이디를 입력해주세요</div>
     
                 </section>
     
@@ -38,9 +40,9 @@
                     
                     <div class="pw-top">비밀번호 <span>*</span></div>
         
-                    <input type="text" class="pw-input" placeholder="비밀번호를 입력해주세요" maxlength="500" autocomplete="off" name="memberPw">
+                    <input type="password" name="memberPw" id="memberPw" class="pw-input" placeholder="비밀번호를 입력해주세요" maxlength="500" autocomplete="off" required>
         
-                    <div class="pw-bottom">유효한 비밀번호를 입력해주세요</div>
+                    <div class="pw-bottom" id="pwMessage">유효한 비밀번호를 입력해주세요</div>
     
                 </section>
     
@@ -50,9 +52,9 @@
     
                     <div class="pwcon-top">비밀번호 확인 <span>*</span></div>
         
-                    <input type="text" class="pwcon-input" placeholder="비밀번호 확인을 입력해주세요" maxlength="500" autocomplete="off" name="memberPwCon">
+                    <input type="password" name="memberPwConfirm" id="memberPwConfirm" class="pwcon-input" placeholder="비밀번호 확인을 입력해주세요" maxlength="500" autocomplete="off" required>
         
-                    <div class="pwcon-bottom">유효한 비밀번호 확인을 입력해주세요</div>
+                    <div class="pwcon-bottom" id="pwConfirmMessage">유효한 비밀번호 확인을 입력해주세요</div>
     
                 </section>
     
@@ -62,9 +64,9 @@
     
                     <div class="email-top">이메일 <span>*</span></div>
         
-                    <input type="text" class="email-input" placeholder="이메일을 입력해주세요" maxlength="50" autocomplete="off" name="memberEmail">
+                    <input type="text" name="memberEmail" id="memberEmail" class="email-input" placeholder="이메일을 입력해주세요" maxlength="50" autocomplete="off" required>
         
-                    <div class="email-bottom">유효한 이메일을 입력해주세요</div>
+                    <div class="email-bottom" id="emailMessage">유효한 이메일을 입력해주세요</div>
     
                 </section>
     
@@ -73,9 +75,9 @@
     
                     <div class="nick-top">닉네임 <span>*</span></div>
         
-                    <input type="text" class="nick-input" placeholder="닉네임을 입력해주세요" maxlength="30" autocomplete="off" name="memberNickname">
+                    <input type="text" name="memberNickname" id="memberNickname" class="nick-input" placeholder="닉네임을 입력해주세요" maxlength="30" autocomplete="off" required>
         
-                    <div class="nick-bottom">유효한 닉네임을 입력해주세요</div>
+                    <div class="nick-bottom" id="nickMessage">유효한 닉네임을 입력해주세요</div>
     
                 </section>
     
@@ -84,20 +86,20 @@
     
                     <div class="tel-top">전화번호 <span>*</span></div>
         
-                    <input type="text" class="tel-input" placeholder="전화번호를 입력해주세요" maxlength="30" autocomplete="off" name="memberTel">
+                    <input type="text" name="memberTel" id="memberTel" class="tel-input" placeholder="전화번호를 입력해주세요" maxlength="30" autocomplete="off">
         
-                    <div class="tel-bottom">유효한 전화번호를 입력해주세요</div>
+                    <div class="tel-bottom" id="telMessage">유효한 전화번호를 입력해주세요</div>
     
                 </section>
     
                 <section>
     
-                    <div class="addr-top">주소 <span>*</span> <button class="addr-Btn">주소 찾기</button></div>
+                    <div class="addr-top">주소 <input type="button" class="addr-Btn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></div>
         
-                    <input type="text" name="memberAdress" id="sample6_postcode" placeholder="우편번호">
-                    <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-                    <input type="text" name="memberAdress" id="sample6_address" placeholder="주소"><br>
-                    <input type="text" name="memberAdress" id="sample6_detailAddress" placeholder="상세주소">
+                    <input type="text" class="addr-input" name="memberAddr" id="sample6_postcode" placeholder="우편번호">
+                    <br>
+                    <input type="text" class="addr-input" name="memberAddr" id="sample6_address" placeholder="주소"><br>
+                    <input type="text" class="addr-input" name="memberAddr" id="sample6_detailAddress" placeholder="상세주소">
 
     
 
@@ -107,7 +109,7 @@
     
                 <div>
     
-                    <button id="sign-Btn">가입하기</button>
+                    <button type="submit" id="sign-Btn">가입하기</button>
     
                 </div>
 
@@ -159,11 +161,22 @@
     }
 </script>
 
-        
-
-
+<script th:inline="javascript">
 
     
+    const message = /*[[${message}]]*/ "전달 받은 message";
+    
+    if(message != null) alert(message);
+
+  
+
+</script>
+
+        
+
+    <div th:replace="common/footer :: footer"></div>
+
+    <script th:src="@{/js/member/signUp.js}"></script>
 
 
 

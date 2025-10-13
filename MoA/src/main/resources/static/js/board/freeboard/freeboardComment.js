@@ -27,7 +27,7 @@ function selectCommentList() {
         if (comment.profileImage != null) {
           profileImage.setAttribute("src", comment.profileImage);
         } else {
-          profileImage.setAttribute("src", "/resources/images/user.png");
+          profileImage.setAttribute("src", "/images/board/freeboard/user.png");
         }
 
         // 작성자 닉네임
@@ -119,8 +119,20 @@ addComment.addEventListener("click", (e) => {
       if (commentNo > 0) {
         alert("댓글이 등록되었습니다.");
         console.log(commentNo);
-        commentContent.value = "";
-        selectCommentList();
+        
+        commentContent.value = ""; // 작성했던 댓글 삭제
+
+        selectCommentList(); // 비동기 댓글 목록 조회 함수 호출
+        // -> 새로운 댓글이 추가되어짐
+        // 댓글을 작성한 경우
+        // -> {닉네임}님이 {게시글 제목} 게시글에 댓글을 작성했습니다.
+        sendNotification(
+            "insertComment",
+            location.pathname + "?cn=" + commentNo, 
+            boardNo,
+             `<strong>${memberNickname}</strong>님이 <strong>${boardTitle}</strong> 게시글에 댓글을 작성했습니다.`
+
+        );
       } else {
         alert("댓글 등록에 실패했습니다...");
       }
@@ -229,3 +241,9 @@ function updateComment(commentNo, btn) {
     })
     .catch((err) => console.log(err));
 }
+
+// 페이지 로드 완료 시 댓글 목록 조회
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("페이지 로드 완료 - 댓글 목록 조회 시작");
+  selectCommentList();
+});

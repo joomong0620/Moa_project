@@ -10,6 +10,13 @@ public interface MemberService {
 	 * @return result
 	 */
 	int signUp(Member inputMember);
+
+	
+	/** 로그인
+	 * @param inputMember
+	 * @return id, pw가 일치하는 회원 정보 또는 null
+	 */
+	Member login(Member inputMember);
 	
 	
 

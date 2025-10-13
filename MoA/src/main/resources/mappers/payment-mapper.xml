@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.og.moa.pay.model.dao.PaymentMapper">
+
+    <!-- 결제 정보 저장 -->
+    <insert id="insertPayment" parameterType="edu.og.moa.pay.model.dto.Payment">
+        INSERT INTO PAY (
+            PORTONE_NO,
+            MEMBER_NO,
+            BOARD_NO,
+            PAY_MUCH,
+            PAY_WHAT,
+            PAY_DATE,
+            PAY_OK
+        ) VALUES (
+            #{impUid},
+            #{memberNo},
+            #{boardNo},
+            #{payMuch},
+            #{payWhat},
+            SYSDATE,
+            #{payOk}
+        )
+    </insert>
+
+    <!-- 결제 내역 조회 (검증용) -->
+    <select id="selectPaymentByImpUid" parameterType="String"
+            resultType="edu.og.moa.pay.model.dto.Payment">
+        SELECT *
+        FROM PAY
+        WHERE PORTONE_NO = #{impUid}
+    </select>
+
+</mapper>

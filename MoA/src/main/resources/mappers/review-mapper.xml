@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.og.moa.board.review.model.dao.ReviewBoardMapper">
+
+  <!-- 결과 매핑 -->
+  <resultMap id="reviewBoardResultMap" type="edu.og.moa.board.review.model.dto.ReviewBoard">
+    <id property="boardNo" column="BOARD_NO"/>
+    <result property="boardTitle" column="BOARD_TITLE"/>
+    <result property="boardContent" column="BOARD_CONTENT"/>
+    <result property="createDate" column="B_CREATE_DATE"/>
+    <result property="boardCount" column="BOARD_COUNT"/>
+    <result property="memberNickname" column="MEMBER_NICKNAME"/>
+    <result property="star" column="STAR"/>
+    <result property="categoryName" column="CATEGORY_NAME"/>
+    <result property="thumbnailPath" column="THUMBNAIL_PATH"/>
+  </resultMap>
+
+  <!-- 게시글 개수 -->
+  <select id="getListCount" parameterType="int" resultType="int">
+    SELECT COUNT(*)
+    FROM BOARD
+    WHERE COMMUNITY_CODE = #{boardCode}
+      AND BOARD_DEL_FL = 'N'
+  </select>
+
+  <!-- 리뷰 목록 -->
+	<select id="selectReviewList" parameterType="int" resultMap="reviewBoardResultMap">
+	  SELECT 
+	      B.BOARD_NO,
+	      B.BOARD_TITLE,
+	      B.BOARD_CONTENT,
+	      B.B_CREATE_DATE AS B_CREATE_DATE,
+	      B.BOARD_COUNT,
+	      M.MEMBER_NICKNAME,
+	      NVL(S.STAR, 0) AS STAR,
+	      (SELECT IMG_PATH || IMG_RENAME 
+	         FROM BOARD_IMG 
+	        WHERE BOARD_NO = B.BOARD_NO 
+	          AND IMG_ORDER = 0) AS THUMBNAIL_PATH,
+	      DECODE(B.COMMUNITY_CODE,
+	             3, '전시 게시판',
+	             4, '공연 게시판',
+	             '기타') AS CATEGORY_NAME
+	  FROM BOARD B
+	  JOIN MEMBER M ON B.MEMBER_NO = M.MEMBER_NO
+	  LEFT JOIN STAR S ON B.BOARD_NO = S.BOARD_NO
+	  WHERE B.COMMUNITY_CODE = #{boardCode}
+	    AND B.BOARD_DEL_FL = 'N'
+	  ORDER BY B.BOARD_NO DESC
+	</select>
+
+  <!-- 리뷰 상세 -->
+  <select id="selectReviewDetail" parameterType="int" resultType="edu.og.moa.board.review.model.dto.ReviewBoard">
+    SELECT 
+      B.BOARD_NO,
+      B.BOARD_TITLE,
+      B.BOARD_CONTENT,
+      B.MEMBER_NO,
+      B.B_CREATE_DATE AS createDate,
+      B.BOARD_COUNT,
+      M.MEMBER_NICKNAME,
+      B.COMMUNITY_CODE AS communityCode,
+      NVL(S.STAR, 0) AS STAR,
+      (SELECT IMG_PATH || IMG_RENAME 
+         FROM BOARD_IMG 
+        WHERE BOARD_NO = B.BOARD_NO 
+          AND IMG_ORDER = 0) AS THUMBNAIL_PATH,
+      DECODE(B.COMMUNITY_CODE,
+             3, '전시 게시판',
+             4, '공연 게시판',
+             '기타') AS CATEGORY_NAME
+    FROM BOARD B
+    JOIN MEMBER M ON B.MEMBER_NO = M.MEMBER_NO
+    LEFT JOIN STAR S ON B.BOARD_NO = S.BOARD_NO
+    WHERE B.BOARD_NO = #{boardNo}
+      AND B.BOARD_DEL_FL = 'N'
+  </select>
+
+  <!-- 게시글 등록 -->
+  <insert id="insertReviewBoard" parameterType="edu.og.moa.board.review.model.dto.ReviewBoard">
+    <selectKey order="BEFORE" keyProperty="boardNo" resultType="int">
+      SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+    </selectKey>
+    
+    INSERT INTO BOARD (
+      BOARD_NO, BOARD_TITLE, BOARD_CONTENT, MEMBER_NO, COMMUNITY_CODE, Q_CODE
+    ) VALUES (
+      #{boardNo}, #{boardTitle}, #{boardContent}, #{memberNo}, #{communityCode}, NULL
+    )
+  </insert>
+
+  <!-- 게시글 수정 -->
+  <update id="updateReviewBoard" parameterType="edu.og.moa.board.review.model.dto.ReviewBoard">
+    UPDATE BOARD
+    SET BOARD_TITLE = #{boardTitle},
+        BOARD_CONTENT = #{boardContent},
+        B_UPDATE_DATE = SYSDATE
+    WHERE BOARD_NO = #{boardNo}
+      AND BOARD_DEL_FL = 'N'
+  </update>
+
+  <!-- 게시글 삭제 -->
+  <update id="deleteReviewBoard" parameterType="int">
+    UPDATE BOARD
+    SET BOARD_DEL_FL = 'Y'
+    WHERE BOARD_NO = #{boardNo}
+  </update>
+
+  <!-- 댓글 목록 -->
+  <select id="selectCommentList" parameterType="int" resultType="edu.og.moa.board.review.model.dto.ReviewComment">
+    SELECT 
+      C.COMMENT_NO,
+      C.BOARD_NO,
+      C.MEMBER_NO,
+      C.COMMENT_CONTENT,
+      TO_CHAR(C.C_CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS C_CREATE_DATE,
+      M.MEMBER_NICKNAME,
+      M.PROFILE_IMG
+    FROM "COMMENT" C
+    JOIN MEMBER M ON C.MEMBER_NO = M.MEMBER_NO
+    WHERE C.BOARD_NO = #{boardNo}
+      AND C.COMMENT_DEL_FL = 'N'
+    ORDER BY C.COMMENT_NO ASC
+  </select>
+
+  <!-- 댓글 등록 -->
+  <insert id="insertComment" parameterType="edu.og.moa.board.review.model.dto.ReviewComment" useGeneratedKeys="true" keyProperty="commentNo">
+    INSERT INTO "COMMENT" (
+      COMMENT_NO, MEMBER_NO, BOARD_NO, COMMENT_CONTENT
+    ) VALUES (
+      SEQ_COMMENT_NO.NEXTVAL, #{memberNo}, #{boardNo}, #{commentContent}
+    )
+  </insert>
+  
+  <!-- 이미지 삽입 -->
+	<insert id="insertReviewImage" parameterType="edu.og.moa.board.review.model.dto.ReviewImage">
+	  INSERT INTO BOARD_IMG
+	    (IMG_NO, BOARD_NO, IMG_PATH, IMG_ORIG, IMG_RENAME, IMG_ORDER)
+	  VALUES
+	    (SEQ_BOARD_IMG_NO.NEXTVAL,
+	     #{reviewNo},
+	     #{imgPath},
+	     #{imgOrig},
+	     #{imgRename},
+	     #{imgOrder})
+	</insert>
+
+  <!-- 댓글 삭제 -->
+  <update id="deleteComment" parameterType="int">
+    UPDATE "COMMENT"
+    SET COMMENT_DEL_FL = 'Y'
+    WHERE COMMENT_NO = #{commentNo}
+  </update>
+
+  <!-- 별점 등록/수정 -->
+	<update id="upsertStar" parameterType="map">
+	  MERGE INTO STAR T
+	  USING (SELECT #{boardNo} AS BOARD_NO, #{memberNo} AS MEMBER_NO FROM DUAL) S
+	  ON (T.BOARD_NO = S.BOARD_NO AND T.MEMBER_NO = S.MEMBER_NO)
+	  WHEN MATCHED THEN 
+	    UPDATE SET STAR = #{starValue}
+	  WHEN NOT MATCHED THEN 
+	    INSERT (BOARD_NO, MEMBER_NO, STAR)
+	    VALUES (#{boardNo}, #{memberNo}, #{starValue})
+	</update>
+
+  <!-- 평균 별점 -->
+  <select id="selectAverageStar" resultType="double">
+    SELECT ROUND(AVG(STAR), 1)
+    FROM STAR
+    WHERE BOARD_NO = #{boardNo}
+  </select>
+
+  <!-- 조회수 증가 -->
+  <update id="updateReviewReadCount" parameterType="int">
+    UPDATE BOARD
+    SET BOARD_COUNT = BOARD_COUNT + 1
+    WHERE BOARD_NO = #{reviewNo}
+  </update>
+
+</mapper>

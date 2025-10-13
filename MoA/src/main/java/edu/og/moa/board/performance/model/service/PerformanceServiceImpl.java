@@ -21,19 +21,24 @@ public class PerformanceServiceImpl implements PerformanceService{
 	
 	// 공연 장르별 목록 조회
 	@Override
-	public Map<String, Object> selectPmTypeList(int type, int cp) {
+	public Map<String, Object> selectPmTypeList(String type, int cp) {
 		
 		// 게시글 중에서 커뮤니티 코드가 4인 삭제되지 않은 게시글 수 조회
 		int pmListCount = mapper.getPmListCount(type);
 		
+		// Pagination 객체 생성
 		Pagination pagination = new Pagination(cp, pmListCount);
 		
+		// 1) offset 계산
 		int offset = (pagination.getCurrentPage() - 1) * pagination.getLimit();
 		
+		// 2) RowBounds 객체 생성
 		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
 		
+		// 목록으로 가져오기
 		List<PerformanceBoard> pmTypeList = mapper.selectPmTypeList(type, rowBounds);
 		
+		// 4. pagination, pmTypeList를 Map 담아서 반환
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pagination", pagination);
 		map.put("pmTypeList", pmTypeList);

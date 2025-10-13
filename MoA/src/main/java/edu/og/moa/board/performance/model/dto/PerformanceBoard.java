@@ -39,6 +39,8 @@ public class PerformanceBoard {
 	private String pmPriceType;
 	private String pmPrice;
 	
+	private String poster;
+	
 	
 	private List<PerformanceBoardImage> pmImageList;
 	

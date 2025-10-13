@@ -2,9 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="edu.og.moa.board.performance.model.dao.PerformanceMapper">
 
+	<!-- 특정 게시판의 삭제되지 않은 게시글 수 조회 --> 
+	<select id="getPmListCount" resultType="_int">
+		SELECT COUNT(*) FROM BOARD
+		JOIN PM USING(BOARD_NO)
+		WHERE COMMUNITY_CODE = 4
+		AND BOARD_DEL_FL = 'N'
+		
+		<if test="type != null and type != 'all'">
+			AND GENRE_NO = #{type}
+		</if>
+	</select>
+	
+	<select id="selectPmTypeList" resultType="PerformanceBoard">
+		SELECT BOARD_NO, BOARD_TITLE, B_CREATE_DATE, BOARD_COUNT,
+		
+			(SELECT COUNT(*) FROM "LIKE" L WHERE L.BOARD_NO = B.BOARD_NO) LIKE_COUNT,
+			(SELECT IMG_PATH FROM BOARD_IMG I WHERE I.BOARD_NO = B.BOARD_NO AND IMG_ORDER = 0) POSTER
+		
+		FROM "BOARD" B
+		WHERE BOARD_DEL_FL = 'N'
+		AND COMMUNITY_CODE = 4
+		ORDER BY B_CREATE_DATE DESC
+	</select>
 
-
-
+	
 
 
 

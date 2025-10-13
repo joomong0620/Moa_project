@@ -27,13 +27,15 @@ public class PerformanceController {
 	// 공연 장르별 목록 조회
 	@GetMapping("/pmTypeList")
 	public String selectPmTypeList (
-			@RequestParam(value = "type", required = false, defaultValue = "all") int type,
+			@RequestParam(value = "type", required = false, defaultValue = "all") String type,
 			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
 			Model model
 			) {
 		
+		// 게시글 목록 조회 서비스 호출
 		Map<String, Object> map = service.selectPmTypeList(type, cp);
 		
+		// 조회 결과를 request scope 에 세팅 후 forward
 		model.addAttribute("map", map);
 		
 		return "board/performance/pm-list";
@@ -51,7 +53,7 @@ public class PerformanceController {
 			Model model,
 			@RequestParam Map<String, Object> paramMap
 			) {
-		Map<String, Object> map = service.selectPmSearchList(paramMap, type, price, date, address, cp);
+		// Map<String, Object> map = service.selectPmSearchList(paramMap, type, price, date, address, cp);
 		
 		
 		return "board/performance/pm-search";

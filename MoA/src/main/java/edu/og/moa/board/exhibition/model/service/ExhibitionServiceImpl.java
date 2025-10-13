@@ -53,38 +53,9 @@ public class ExhibitionServiceImpl implements ExhibitionService{
 	      // (exhibitionListCurrent, exhibitionListFuture, exhibitionListPast) => 카드목록 조회에 사용
 	      // to-do
 	      return map;
-	   }
-
-	
-	// 검색용 전시게시글 목록조회
-	@Override
-	public Map<String, Object> selectExhibitionList(Map<String, Object> paramMap, int cp) {
-	      // 1. 특정 게시판의 삭제되지 않고 검색 조건이 일치하는 게시글 수 조회
-	      //int listCount = mapper.getListCount(paramMap);
-	      int listCount = mapper.getSearchListCount(paramMap);
-
-	      // 2. 1번의 조회 결과 + cp를 이용해서 Pagination 객체 생성
-	      // -> 내부 필드에 계산된 값이 초기화됨 
-	      PaginationDB pagination = new PaginationDB(cp, listCount);
-
-	      // 3. 특정 게시판에서 현재 페이지에 해당하는 부분에 대한 게시글 목록 조회
-	      // + 검색 조건이 일치하는 글만 조회
-
-	      int offset = (pagination.getCurrentPage() - 1) * pagination.getLimit();
-
-	      RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
-
-
-	      List<BoardDB> exhibitionList = mapper.selectSearchExhibitionList(paramMap, rowBounds);
-
-	      // 4. pagination, boardList를 Map에 담아서 반환
-	      Map<String, Object> map = new HashMap<String, Object>();
-	      map.put("pagination", pagination);
-	      map.put("exhibitionList", exhibitionList);
-
-	      return map;
 	}
 
+	
 
 	// 전시게시글 상세조회
 	@Override
@@ -141,6 +112,35 @@ public class ExhibitionServiceImpl implements ExhibitionService{
 		return mapper.updateReadCount(boardNo);
 	}	
 			
+	// 검색용 전시게시글 목록조회
+	@Override
+	public Map<String, Object> selectExhibitionList(Map<String, Object> paramMap, int cp) {
+	      // 1. 특정 게시판의 삭제되지 않고 검색 조건이 일치하는 게시글 수 조회
+	      //int listCount = mapper.getListCount(paramMap);
+	      int listCount = mapper.getSearchListCount(paramMap);
+
+	      // 2. 1번의 조회 결과 + cp를 이용해서 Pagination 객체 생성
+	      // -> 내부 필드에 계산된 값이 초기화됨 
+	      PaginationDB pagination = new PaginationDB(cp, listCount);
+
+	      // 3. 특정 게시판에서 현재 페이지에 해당하는 부분에 대한 게시글 목록 조회
+	      // + 검색 조건이 일치하는 글만 조회
+
+	      int offset = (pagination.getCurrentPage() - 1) * pagination.getLimit();
+
+	      RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+
+
+	      List<BoardDB> exhibitionList = mapper.selectSearchExhibitionList(paramMap, rowBounds);
+
+	      // 4. pagination, boardList를 Map에 담아서 반환
+	      Map<String, Object> map = new HashMap<String, Object>();
+	      map.put("pagination", pagination);
+	      map.put("exhibitionList", exhibitionList);
+
+	      return map;
+	}
+
 	
 	
 }

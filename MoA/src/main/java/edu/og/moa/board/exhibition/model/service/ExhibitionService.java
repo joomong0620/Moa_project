@@ -54,7 +54,7 @@ public interface ExhibitionService {
 	 * @param cp
 	 * @return map
 	 */
-	Map<String, Object> selectExhibitionList(Map<String, Object> paramMap, int cp);
+	Map<String, Object> selectExhibitionList(Map<String, Object> paramMap, int cp); // overloading
 
 
 	/** 좋아요 여부 확인

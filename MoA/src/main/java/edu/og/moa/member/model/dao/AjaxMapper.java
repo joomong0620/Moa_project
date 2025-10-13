@@ -7,6 +7,10 @@ public interface AjaxMapper {
 
 	int dupCheckId(String memberId);
 
+	int checkEmail(String email);
+
+	int checkNickname(String nickname);
+
 	
 
 	

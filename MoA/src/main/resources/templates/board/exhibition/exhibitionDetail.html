@@ -8,24 +8,18 @@
     <title th:text="${exhibitionName}">게시판 이름</title>
 
     <link rel="stylesheet" th:href="@{/css/board/exhibition/exhibitionDetail-style.css}">
+    <link rel="stylesheet" th:href="@{/css/main-style.css}">
 
     <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script>
 
 </head>
+
 <body>
     <!-- [ [${exhibition}] ]  ok -->
+    <div th:replace="common/header :: header"></div>
     <div id="page-wrapper">
 
         <main>
-
-            <!-- 헤더 -->
-            <header class="main-header">header</header>
-            <!-- header.html 조각(fragment)을 얻어와서 추가하기 -->
-            <!-- <th:block th:replace="~{/common/header}">header.html</th:block> -->
-
-            <!-- 네비케이션 -->
-            <nav class="main-nav"></nav>
-            <!--  ###################################################### -->
 
             <!-- 본문: -->
             <div class="content-wrapper"> 
@@ -73,14 +67,14 @@
                                         <!-- 이미지가 있을 경우: 우선 thumbnail이미지가 있는 경우 => 전시의 경우는 이거 무시 -->
                                         <th:block th:if="${#lists.size(exhibition.imageList) > 0 }">
                                             <th:block th:if="${thumbnail}">
-                                                <!-- [ [|${thumbnail.imagePath}${thumbnail.imageOriginal}|] ] -->
+                                                <!-- [ [|${thumbnail.imgPath}${thumbnail.imgOrig}|] ] -->
 
                                                 <h5>썸네일</h5>
                                                 <div class="img-box">
                                                     <div class="exhibitionImg thumbnail">
-                                                        <img th:src="|${thumbnail.imagePath}${thumbnail.imageOriginal}|">
-                                                        <a th:href="|${thumbnail.imagePath}${thumbnail.imageOriginal}|" 
-                                                            th:download="${thumbnail.imageOriginal}">포스터 이미지 저장</a> 
+                                                        <img th:src="|${thumbnail.imgPath}${thumbnail.imgOrig}|">
+                                                        <a th:href="|${thumbnail.imgPath}${thumbnail.imgOrig}|" 
+                                                            th:download="${thumbnail.imgOrig}">포스터 이미지 저장</a> 
                                                                 <!-- 다운로드할때 이미지 원본명으로 받자  -->
                                                     </div>
                                                 </div>
@@ -91,11 +85,11 @@
                                             <h5>업로드 이미지</h5>
                                             <div class="img-box">
                                                 <th:block th:each="i : ${#numbers.sequence(0, #lists.size(exhibition.imageList)-1, 1)}">
-                                                    <div class="exhibitionImg" th:with="path=|${exhibition.imageList[i].imagePath}${exhibition.imageList[i].imageOriginal}|"> <!-- 변수에 담아두고 div태그 안에서 쓴다  -->
+                                                    <div class="exhibitionImg" th:with="path=|${exhibition.imageList[i].imgPath}${exhibition.imageList[i].imgOrig}|"> <!-- 변수에 담아두고 div태그 안에서 쓴다  -->
                                                         <!-- [ [${path}] ] -->
                                                         <img th:src="${path}">
                                                         <a th:href="${path}"
-                                                        th:download="${exhibition.imageList[i].imageOriginal}">다운로드</a>                
+                                                        th:download="${exhibition.imageList[i].imgOrig}">다운로드</a>                
                                                     </div>
                             
                                                 </th:block>
@@ -219,8 +213,8 @@
         </main>
 
     </div>
-
-    <footer class="main-footer">footer</footer>
+    
+    <div th:replace="common/footer :: footer"></div>
     <!-- footer.html 추가 -->
     <!-- <th:block th:replace="~{common/footer}">footer.html</th:block> -->
 

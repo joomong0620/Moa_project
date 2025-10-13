@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>결제창</title>
+    <link rel="stylesheet" href="./pay.css" />
+  </head>
+  <body>
+    <main class="payment-main">
+      <button class="back-btn" onclick="history.back()">이전으로</button>
+      <h2 class="page-title">결제</h2>
+
+      <section class="payment-container">
+        <div class="payment-left">
+          <div class="section-block">
+            <h3><span class="circle-number">1</span> 예매 정보</h3>
+            <div class="booking-info">
+              <img src="./images/perf1.jpg" alt="포스터" />
+              <div class="info-text">
+                <p class="title" id="showTitle">&lt;뮤지컬&gt; 렌트</p>
+                <p>공연/전시명 : <span id="showName">뮤지컬 렌트</span></p>
+                <p>
+                  일시 : <span id="showDate">2025년 10월 5일 (토) 19:00</span>
+                </p>
+                <p>장소 : <span id="showPlace">○○아트센터 대극장</span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h3><span class="circle-number">2</span> 결제 옵션</h3>
+            <select id="seatSelect">
+              <option value="">좌석을 선택해주세요.</option>
+              <option value="VIP석" data-price="150000">
+                VIP석, 150,000원
+              </option>
+              <option value="R석" data-price="100">R석, 100원</option>
+              <option value="S석" data-price="80000">S석, 80,000원</option>
+            </select>
+          </div>
+
+          <div class="section-block">
+            <h3><span class="circle-number">3</span> 구매자 정보</h3>
+            <p>이름 : <span id="buyerName">홍길동</span></p>
+            <p>연락처 : <span id="buyerPhone">010-1234-5678</span></p>
+            <p>이메일 : <span id="buyerEmail">user123@example.com</span></p>
+          </div>
+
+          <div class="section-block">
+            <h3><span class="circle-number">4</span> 결제 수단</h3>
+            <div class="payment-methods">
+              <button class="pay-btn active" data-method="card">
+                신용/체크카드
+              </button>
+              <button class="pay-btn" data-method="account">계좌이체</button>
+              <button class="pay-btn" data-method="transfer">무통장입금</button>
+              <button class="pay-btn" data-method="phone">휴대폰 결제</button>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h3><span class="circle-number">5</span> 약관 동의</h3>
+            <label
+              ><input type="checkbox" id="agreeTerms" /> 모아 이용 약관에
+              동의합니다.</label
+            ><br />
+            <label
+              ><input type="checkbox" id="agreePrivacy" /> 개인정보 수집 및
+              이용에 동의합니다.</label
+            >
+          </div>
+        </div>
+
+        <div class="payment-summary">
+          <h3><span class="circle-number">6</span> 총 결제금액</h3>
+          <div class="summary-box">
+            <p>총 결제금액</p>
+            <h2 id="totalPrice">0원</h2>
+            <hr />
+            <p>총 1건 <span id="itemPrice">0원</span></p>
+            <button id="payNowBtn">결제하기</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+    <script src="./pay.js"></script>
+  </body>
+</html>

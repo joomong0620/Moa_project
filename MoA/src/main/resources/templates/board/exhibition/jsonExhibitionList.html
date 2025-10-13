@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.thymeleaf.org"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${exhibitionName}">전시 게시판: 전체 목록</title>    
+
+    <link rel="stylesheet" th:href="@{/css/board/exhibition/exhibitionList-style.css}">
+
+
+</head>
+<body>
+
+    <!-- 전체를 감싸는 태그 -->
+    <div id="page-wrapper">
+      <!-- main-태그 내부에서만 사용하는 변수 (전역변수 선언은 body태그 안에 선언) -->
+      <main th:with="pagination=${map.pagination}, exhibitionList=${map.exhibitionList}">
+        <!-- 헤더: header.html -->
+        <header id="main-header"></header>
+
+        <!-- 타임리프 조각을 이용한 변경 -->
+        <!-- <th:block th:replace="~{/common/header}">header.html</th:block> -->
+
+        <!-- 네비케이션 -->
+        <nav id="main-nav"></nav>
+        <!--  ###################################################### -->
+
+        <th:block th:with="boardName='전시게시판'">
+            <h1 class="board-name" th:text="${boardName}">게시판 이름</h1> 
+        </th:block>
+
+        <!-- 본문:  -->
+        <div id="content-wrapper">
+            <!-- 본문 상단 영역 -->
+            <div id="content-top">
+                <div id="contop-sub1"></div>
+            </div>
+
+            <!-- 본문 중앙 영역 -->
+            <div id="content-middle">
+
+                <!-- 본문 중앙-Center: 실제 모든 내용 여기에 -->
+                    
+                    <div id="section-container">
+                        <!-- 카드목록 브라우징 영역 -->
+                        <section id="section-card-list">
+                            <div class="card present"  id="card-present">
+                                <div class="card-title present" id="card-title-present" >현재 진행중인 전시</div>
+                                <div class="slider-container">
+                                    <button class="slider-button left present" id="leftBtnPresent" onclick="slideLeftPresent()">&lt;</button>
+                                    <div class="slider-wrapper present" id="sliderWrapperPresent">
+                                        <div class="slide present" th:each="item : ${exhibitionList}">
+                                            <div class="slide-item present">
+                                                <img  th:unless="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{'/images/board/exhibition/'+${item.imageList[0].imageOriginal} }" id="exhibitionPosterPresent">
+                                                <img  th:if="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{item.exhibitImgObject}" id="exhibitionPosterPresent">
+                                                <h4 th:text="${item.exhibitTitle}">전시제목</h4>
+                                                <p th:unless="${item.exhibitDate}" th:text=" '전시기간: 전시기관에 문의해주세요' ">기간</p>
+                                                <p th:if="${item.exhibitDate}" th:text="'전시기간: ' + ${item.exhibitDate}">기간</p>
+                                                <p th:text="${item.exhibitInstitution}">전시기관</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="slider-button right present" id="rightBtnPresent" onclick="slideRightPresent()">&gt;</button>
+                                </div>
+
+                            </div>
+                            <div class="card future" id="card-future">
+                                <div class="card-title future" id="card-title-future">예정 전시</div>
+                                <!-- placeholder -->
+                                <div class="slider-container">
+                                    <button class="slider-button future left" id="leftBtnFuture" onclick="slideLeftFuture()">&lt;</button>
+                                    <div class="slider-wrapper future" id="sliderWrapperFuture">
+                                        <div class="slide future" th:each="item : ${exhibitionList}">
+                                            <div class="slide-item future">
+                                                <img  th:unless="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{'/images/board/exhibition/'+${item.imageList[0].imageOriginal} }" id="exhibitionPosterFuture">
+                                                <img  th:if="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{item.exhibitImgObject}" id="exhibitionPosterFuture">
+                                                <h4 th:text="${item.exhibitTitle}">전시제목</h4>
+                                                <p th:text="${item.exhibitDate} + '동안'">기간</p>
+                                                <p th:text="${item.exhibitInstitution}">전시기관</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="slider-button future right" id="rightBtnFuture" onclick="slideRightFuture()">&gt;</button>
+                                </div>
+
+                            </div>
+                            <div class="card previous" id="card-previous">
+                                <div class="card-title past" id="card-title-past" >지난 전시</div>
+                                <!-- placeholder -->
+                                <div class="slider-container">
+                                    <button class="slider-button past left" id="leftBtnPast" onclick="slideLeftPast()">&lt;</button>
+                                    <div class="slider-wrapper past" id="sliderWrapperPast">
+                                        <div class="slide past" th:each="item : ${exhibitionList}">
+                                            <div class="slide-item past">
+                                                
+                                                <img  th:unless="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{'/images/board/exhibition/'+${item.imageList[0].imageOriginal} }" id="exhibitionPosterPast">
+                                                <img  th:if="${item.exhibitImgObject}" class="slider-thumbnail"  th:src="@{item.exhibitImgObject}" id="exhibitionPosterPast">
+
+                                                <h4 th:text="${item.exhibitTitle}">전시제목</h4>
+                                                <p th:text="${item.exhibitDate} + '동안'">기간</p>
+                                                <p th:text="${item.exhibitInstitution}">전시기관</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="slider-button past right" id="rightBtnPast" onclick="slideRightPast()">&gt;</button>
+                                </div>
+                            </div>
+                        </section>
+    
+                        <!-- Exhibition Table 영역 -->
+                        <section id="section-table">
+                            <div id="table-top-area">
+                                <!-- 로그인 멤버 전시글 작성 -->
+                                <div class="btn-area">
+                                    <button th:if="${session.loginMember}" id="insertBtn">새전시 등록</button>    
+                                </div>
+                            </div>
+    
+                            <div id="table-list-exhibition">
+                                <!-- 검색한 안한 경우 -->
+                                <h3 th:unless="${param.query}" th:text='|전시 게시판 : 전체 목록|'></h3>                            
+                                <!-- 검색한 경우 -->
+                                <h3 th:if="${param.query}" th:text='|전시 게시판 : "${param.query}"  검색 결과|'></h3>
+    
+                                <!-- Exhibition List -->
+                                <div class="list-table-wrapper">
+                                    <table class="list-table">
+                                        
+                                        <thead>
+                                            <tr>
+                                                <th>글번호</th>
+                                                <th>제목</th>
+                                                <th>작성자</th>
+                                                <th>작성일</th>
+                                                <th>조회수</th>
+                                                <th>좋아요</th>
+                                            </tr>
+                                        </thead>
+    
+                                        <tbody>
+                                            <!-- 게시글 목록 조회 결과가 비어있다면 (즉 반환받은 exhibitionList가 null)-->
+                                            <th:block th:if="${#lists.size(exhibitionList) == 0}">
+                                                <tr>
+                                                    <th colspan="6">게시글이 존재하지 않습니다.</th>
+                                                </tr>
+                                            </th:block>
+    
+    
+                                            <!-- 게시글 목록 조회 결과가 있는 경우 -->
+                                            <th:block th:unless="${#lists.size(exhibitionList) == 0}">
+                                                <tr th:each = "exhibition : ${exhibitionList}">
+                                                    <td th:text="${exhibition.exhibitNo}">게시글 번호</td>
+                                                    <td> 
+                                                        <img th:unless="${session.loginMember.profileImage}" class="list-thumbnail"  th:src="@{/images/board/exhibition/member/user.png}" id="memberProfile">
+                                                        <!-- 프로필 이미지가 있는 경우 -->                                                        
+                                                        <img th:if="${session.loginMember.profileImage}" class="list-thumbnail" th:src="@{${session.loginMember.profileImage}}" id="memberProfile">
+                                                        <!-- 검색 X -->
+                                                        <a th:unless="${param.key}" th:href="@{/exhibition/{exhibitionCode}/{exhibitionNo}(exhibitionCode=${exhibitionCode}, exhibitionNo=${exhibition.exhibitNo}, cp=${pagination.currentPage} )}" th:utext="${exhibition.exhibitTitle}">게시글 제목</a>  <!-- exhibition는 th:each 문에 exhibition 로, 루프돌고 있다 -->
+                                                        
+                                                        <!-- 검색 O -->
+                                                        <a th:if="${param.key}" th:href="@{/exhibition/{exhibitionCode}/{exhibitionNo}(exhibitionCode=${exhibitionCode}, exhibitionNo=${exhibition.exhibitNo}, cp=${pagination.currentPage}) , key=${param.key}, query=${param.query} }"  th:text="${exhibition.exhibitTitle}">게시글 제목</a>  <!-- exhibition는 th:each 문에 exhibition 로, 루프돌고 있다 -->
+                                                            
+                                                    </td>
+                                                    <td>[[${exhibition.memberNickname}]]</td>
+                                                    <td>[[${exhibition.exhibitCreateDate}]]</td>
+                                                    <td>[[${exhibition.readCount}]]</td>
+                                                    <td>[[${exhibition.likeCount}]]</td>
+                                                </tr>
+                                            </th:block>
+    
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                            </div>
+    
+                            <div id="table-bottom-area"></div>
+                        </section>
+    
+                        <!-- 전시게시판 데이블 pagination -->
+                        <section id="section-pagination">
+                            <!-- 게시글이 있을 때만 페이지네이션 보이기 -->
+                            <div th:if="${#lists.size(exhibitionList) > 0}" class="pagination-area">
+    
+                                <!-- 검색을 하지 않은 경우 -->
+                                <ul th:unless ="${param.query}" class="pagination">
+                                
+                                    <!-- 첫 페이지(cp=1)로 이동 -->
+                                    <!-- exhibitionCode : @PathVariable로 request scope에 세팅된 값 -->
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=1) }">&lt;&lt;</a></li>
+                                    <!-- 첫페이지는 항상 cp=1로 고정값 -->
+                
+                                    <!-- 이전 목록 마지막 번호로 이동 -->
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.prevPage} ) }">&lt;</a></li>
+                
+                                    <!-- 특정 페이지로 이동 -->
+                                    <!-- #numbers.sequence(시작, 끝, [, step]) : 타임리프 시퀀스(내장)객체  
+                                            -> 시작 이상, 끝 이하 까지 step만큼 증가하는 숫자를 발생시켜 리스트로 반환 
+                                    -->
+                                    <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage, 1)}">
+    
+                                        <!-- 현재 보고있는 페이지 -->
+                                        <li th:if="${pagination.currentPage == i}">
+                                            <a class="current" th:text="${i}">현재 페이지</a>
+                                        </li>
+                                        
+                                        <!-- 현재 페이지를 제외한 나머지 -->
+                                        <li th:unless="${pagination.currentPage == i}">
+                                            <a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${i}) }" th:text="${i}"></a>
+                                        </li>
+    
+                                    </th:block>
+                                    
+                                    <!-- 다음 목록 시작 번호로 이동 -->
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.prevPage} ) }">&gt;</a></li>
+                
+                                    <!-- 끝 페이지로 이동 -->
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.maxPage} ) }">&gt;&gt;</a></li>            
+                                </ul>
+    
+    
+                                <!-- 검색을 한 경우 -->
+                                <ul th:if ="${param.query}" class="pagination">
+                                
+                                    <!-- 첫 페이지(cp=1)로 이동 -->
+                                    <!-- exhibitionCode : @PathVariable로 request scope에 세팅된 값 -->
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=1) }">&lt;&lt;</a></li>
+                                    <!-- 첫페이지는 항상 cp=1로 고정값 -->
+                
+                                    <!-- 이전 목록 마지막 번호로 이동 -->
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.prevPage} ) }">&lt;</a></li>
+                
+                                    <!-- 특정 페이지로 이동 -->
+                                    <!-- #numbers.sequence(시작, 끝, [, step]) : 타임리프 시퀀스(내장)객체  
+                                            -> 시작 이상, 끝 이하 까지 step만큼 증가하는 숫자를 발생시켜 리스트로 반환 
+                                    -->
+                                    <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage, 1)}">
+    
+                                        <!-- 현재 보고있는 페이지 -->
+                                        <li th:if="${pagination.currentPage == i}">
+                                            <a class="present" th:text="${i}">현재 페이지</a>
+                                        </li>
+                                        
+                                        <!-- 현재 페이지를 제외한 나머지 -->
+                                        <li th:unless="${pagination.currentPage == i}">
+                                            <a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${i}, key=${param.key}, query=${param.query}) }" th:text="${i}"></a>
+                                        </li>
+    
+                                    </th:block>
+                
+                                    
+                                    <!-- 다음 목록 시작 번호로 이동 -->
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.prevPage}, key=${param.key}, query=${param.query} ) }">&gt;</a></li>
+                
+                                    <!-- 끝 페이지로 이동 -->
+                                    <li><a th:href="@{/exhibition/{code}(code=${exhibitionCode}, cp=${pagination.maxPage}, key=${param.key}, query=${param.query} ) }">&gt;&gt;</a></li>
+                                </ul>
+    
+                            </div>
+    
+                        </section>
+
+                    </div>
+                    
+
+
+            </div>
+
+            <!-- 본문 하단 영역 -->
+            <div id="content-bottom">
+                <div id="conbot-sub1">
+
+                    <!-- 전시 게시판 검색창 -->
+                    <section id="section-search">
+                        <!-- 검색창 -->
+                        <form th:action="${exhibitionCode}" method="get" id="exhibitionSearch">
+
+                            <select name="key" id="searchKey">
+                                <option value="g" >주제</option>
+                                <option value="a" >작가</option> 
+                                <option value="t">제목</tion>
+                                <option value="i">기관명</option>
+                                <option value="e">기타</option>
+                            </select>
+
+                            <input type="text" name="query"  id="searchQuery" placeholder="검색어를 입력해주세요.">
+                            
+                            <button>검색</button>
+                        </form>
+
+                    </section>
+
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- ######################################################## -->
+        <!-- 푸터 : footer.html -->
+        <footer id="main-footer"></footer>
+
+        
+        <script th:src="@{/js/board/exhibition/exhibitionList.js}"></script>
+
+
+      </main>
+    </div>
+    
+</body>
+</html>

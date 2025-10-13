@@ -23,5 +23,23 @@ public class AjaxController {
 		return service.dupCheckId(memberId);
 		
 	}
+	
+	// 이메일 중복 검사
+	@GetMapping("/dupCheck/email")
+	@ResponseBody
+	// int 반환 시 : pom.xml에 jackson-databind 추가.  이거 이유 질문하기
+	public int checkEmail(String email /* vscode 에서 키 값 email 이다 */) {
+			
+		return service.checkEmail(email);
+	}
+		
+	// 닉네임 중복검사
+	@GetMapping("/dupCheck/nickname")
+	@ResponseBody
+	public int checkNickname(String nickname) {
+			
+		return service.checkNickname(nickname);
+	}
+
 
 }

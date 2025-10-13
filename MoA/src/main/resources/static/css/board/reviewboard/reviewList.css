@@ -1,92 +1,182 @@
-/* 리뷰게시판 메인 */
-.review-main {
-  background-color: #ffffff;
-  padding: 60px 0 100px;
-  display: flex;
-  justify-content: center;
+/* 리뷰게시판 전체 레이아웃 */
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: #f8f9fc;
+  margin: 0;
+  padding: 0;
+  color: #333;
 }
 
-/* 헤더 영역 (제목 + 글작성 버튼) */
+.review-main {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 80px 0;
+  min-height: calc(100vh - 160px); /* header/footer 제외 높이 */
+}
+
+
+/* 게시판 영역 */
+
+.review-section {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  padding: 40px 50px 60px 50px;
+}
+
+
+/* 헤더 영역 (제목 + 작성 버튼) */
+
 .review-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  border-bottom: 2px solid #1c2c44;
+  padding-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .review-header h2 {
-  font-size: 24px;
-  color: #27374d;
+  font-size: 28px;
   font-weight: 700;
+  color: #1c2c44;
+  margin: 0;
 }
 
+/* 글 작성 버튼 */
 .write-btn {
-  background-color: #27374d;
+  background-color: #1c2c44;
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 10px 20px;
-  font-size: 15px;
+  padding: 10px 22px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.2s;
 }
 
 .write-btn:hover {
-  background-color: #435b7d;
+  background-color: #2a3a5e;
+  transform: translateY(-1px);
 }
 
-/* 테이블 기본 스타일 */
+
+/* 리뷰 테이블 */
+
 .review-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
+  border-spacing: 0;
 }
 
 .review-table thead {
-  background-color: #f0f3f7;
-}
-
-.review-table th,
-.review-table td {
-  padding: 16px;
-  vertical-align: middle;
-  border-bottom: 1px solid #ddd;
-  color: #333;
-}
-
-/* 이미지 */
-.review-table td img {
-  width: 80px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 6px;
+  background-color: #f0f3f8;
 }
 
 .review-table th {
-  color: #27374d;
+  padding: 14px 10px;
   font-size: 16px;
-  font-weight: 600;
-}
-
-.review-table td:nth-child(2) {
-  width: 80px;
+  color: #1c2c44;
+  border-bottom: 2px solid #1c2c44;
   text-align: center;
-  font-weight: 600;
 }
 
-.review-table td:nth-child(3) {
-  width: 65%;
-  font-size: 14px;
-  line-height: 1.5;
+.review-table td {
+  text-align: center;
+  padding: 18px 12px;
+  font-size: 15px;
+  border-bottom: 1px solid #e5e8ed;
   color: #555;
+  word-break: keep-all;
 }
 
-.review-table td:nth-child(4) {
+.review-table tr:hover {
+  background-color: #f9fbff;
+  cursor: pointer;
+}
+
+
+/* 썸네일 이미지 */
+
+.thumb-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+
+/* 별점 표시 */
+
+.stars {
+  color: #f5a623;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+
+/* "등록된 리뷰가 없습니다" 문구 */
+
+#no-review {
+  color: #999;
+  font-size: 16px;
+  text-align: center;
+  padding: 40px 0;
+}
+
+
+/* 페이지네이션 */
+
+.pagination-area {
+  margin-top: 50px;
   text-align: center;
 }
 
-/* 별점 */
-.stars {
-  color: gold;
-  font-size: 18px;
+.pagination {
+  list-style: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  gap: 10px;
+}
+
+.pagination li {
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+}
+
+.pagination a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  color: #1c2c44;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid #d3d8e0;
+  background-color: #fff;
+}
+
+.pagination a:hover {
+  background-color: #1c2c44;
+  color: #fff;
+  border-color: #1c2c44;
+}
+
+/* 현재 페이지 */
+.pagination a.current {
+  background-color: #1c2c44;
+  color: #fff;
+  border: 1px solid #1c2c44;
 }

@@ -74,7 +74,7 @@ public class ExhibitionItem {
 									// => INSTITUTION 테이블																			("EXHIBIT_INST_TEL" -> 22개 기관에 문의전화번호 수동수집) 	==> NOT-NULL
 									// SELECT: boardNo로 JOIN 테이블
 									// INSERT/UPDATE/DELETE: 조회해서 있으면(조회 result >0)이면 done, 아니면(조회 result=0) INSERT/UPDATE/DELETE 수행
-	//private String exhibitLocation; // 			// exhibitLocation; 					eventSite ("EVENT_SITE")				"EXHIBIT_LOCATION"
+	private String exhibitLocation; // 			// exhibitLocation; 					eventSite ("EVENT_SITE")				"EXHIBIT_LOCATION"
 									// => INSTITUTION 테이블에서 JOIN으로 얻어오는 값? (최상위 부모 테이블: INSTITUTION => 독립생성)
 									// => 위 exhibitInstName에 따라 처리 
 									// SELECT: boardNo로 JOIN 테이블

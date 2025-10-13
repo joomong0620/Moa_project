@@ -9,8 +9,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ExhibitionDB {
-	private int boardNo; // 개설글 번호
+	private int boardNo; // 개시글 번호
 	private String exhibitSubTitle;
+	private String exhibitSite;
 	private String exhibitDate;
 	private String exhibitContact;
 	private String exhibitAudience;

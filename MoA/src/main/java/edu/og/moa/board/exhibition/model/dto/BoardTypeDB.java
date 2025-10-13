@@ -9,6 +9,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BoardTypeDB {
-	private int commnunityCode;
+	private int communityCode;
 	private String communityName;
 }

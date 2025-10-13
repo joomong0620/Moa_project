@@ -8,11 +8,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BoardImgDB {
+	
 	private int imgNo;
+	private int boardNo; // boardNo === exhibitNo
 	private String imgPath;
 	private String imgOrig;
 	private String imgRename;
 	private int imgOrder;
-	private int boardNo; // boardNo === exhibitNo
 	
 }

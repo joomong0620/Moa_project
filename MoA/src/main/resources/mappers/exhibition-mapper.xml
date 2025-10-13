@@ -70,7 +70,9 @@
 		<result property="imgRename" column="IMG_RENAME" />
 		<result property="imgOrder" column="IMG_ORDER" />
 	</resultMap>
-	
+
+
+
 	<!-- Author DTO에 대한 resultMap -->
 	<resultMap type="AuthorDB" id="author_rm">
 		<id property="authorNo" column="AUTHOR_NO" />
@@ -78,7 +80,8 @@
 		<result property="authorName" column="AUTHOR_NAME" />
 		<result property="boardNo" column="BOARD_NO" />
 	</resultMap>
-		
+
+
 <!-- ###################################################################### -->
 
 	<!-- 특정 게시판의 삭제되지 않은 게시글 수 조회 -->

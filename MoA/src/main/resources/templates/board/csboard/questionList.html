@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" th:href="@{/css/board/csboard/questionList.css}">
+</head>
+<body>
+
+    <main th:with="pagination=$(map.pagination), questionList=${map.questionList}, qCodeList=${questionList.qCode}">
+
+
+    
+
+        <th:block th:replace="~{common/header}"></th:block>
+        
+
+        <!-- 게시글 목록 조회 결과가 비어있는 경우 -->
+        <th:block th:if="${#lists.size(questionList) == 0}">
+            
+            <tr>
+                문의내역이 없어요
+            </tr>
+            
+        </th:block>
+        
+
+        <th:block th:unless="${#lists.size(questionList) == 0}">
+        
+            <section class="questionList-container">
+    
+                <section class="questionList-area">
+    
+                    <section class="top-title">
+        
+                        <p>내 문의 내역</p>
+        
+                    </section>
+        
+                    <!-- 게시글 목록이 조회된 경우 --> 
+                    
+                    <tr:block th:each="qCode : ${qCodeList}">
+
+                        <a th:href="@{/${communityCode}/questionList/${qCode}}" th:text="${qName}"></a>
+
+
+                    </tr:block>
+                    
+            
+            
+                    <section>
+                        
+        
+                        <tr>
+        
+        
+                        </tr>
+                        <span>답변대기</span><a href="" text="수수료">수수료</a> <br>
+                        <div>작성일시</div>
+                        
+                    </section>
+    
+                </section>
+    
+    
+            </section>    
+
+        </th:block>
+        
+
+
+
+    </main>
+    
+</body>
+</html>

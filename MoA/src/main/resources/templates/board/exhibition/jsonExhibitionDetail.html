@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.thymeleaf.org"> 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${exhibitionName}">게시판 이름</title>
+
+    <link rel="stylesheet" th:href="@{/css/board/exhibition/exhibitionDetail-style.css}">
+
+    <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <!-- [ [${exhibition}] ]  ok -->
+    <div id="page-wrapper">
+
+        <main>
+
+            <!-- 헤더 -->
+            <header class="main-header">header</header>
+            <!-- header.html 조각(fragment)을 얻어와서 추가하기 -->
+            <!-- <th:block th:replace="~{/common/header}">header.html</th:block> -->
+
+            <!-- 네비케이션 -->
+            <nav class="main-nav"></nav>
+            <!--  ###################################################### -->
+
+            <!-- 본문: -->
+            <div class="content-wrapper"> 
+                <!-- 본문 상단 영역 -->
+                <div class="content-top">
+                    <div class="content-top-container">
+                        <div class="exhibition-detail-btn-chatbot">
+                            <button id="chatbotBtn">전시에 관해 AI에게 물어볼게 있어요</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 본문 중앙 영역 -->
+                <div class="content-middle">
+                        
+                    <!-- 본문 중앙-Center: 실제 모든 내용 여기에 -->
+                    <div class="content-middle-container" th:object="${exhibition}">                       
+                        <div class="section-container left"   id="sectionContainerLeft">
+                            <div class="section-container-left top">
+
+                                <!-- 프로필 이미지 -->
+                                <!-- 프로필 이미지가 없는 경우 기본 이미지 -->
+                                <img th:unless="*{profileImage}" th:src="@{/images/board/exhibition/member/user.png}">
+                                <!-- 프로필 이미지가 있는 경우 회원 프로필이미지에서 꺼내오기 -->
+                                <img th:if="*{profileImage}" th:src="@{*{profileImage}}">  <!-- 위에서  th:object="${exhibition} 으로 선언한 exhibition변수에서 가져온다 -->
+                                <!-- [ [*{profileImage}] ]   ok -->
+
+                                <span class="exhibition-detail-writer" th:text="*{memberNickname}">
+                                    회원닉네임
+                                </span>
+                                <!-- 좋아요 하트 -->
+                                <span class="exhibition-detail-like-area">
+                                    <span class="heart-wrapper">
+                                        <i class="fa-heart" th:classappend="${likeCheck} ? 'fa-solid' : 'fa-regular'" id="exhibitionLike"></i>                                 
+                                    </span>
+                                    <span  class="like-count"  th:text="*{likeCount}">좋아요 수</span>
+                                </span>
+                            </div>
+
+                            <section class="section left">
+                                <div class="sec-left-div1 exhibition-image">
+                                    <!-- 전시의 경우, thumbnail을 placeholder로 지정해놓았음. 
+                                    실제 default/포스터(있는경우)는 imageList에 path + originalName으로 들어가있음 -->
+                                    <div class="image-wrapper"> 
+                                        <!-- 이미지가 있을 경우: 우선 thumbnail이미지가 있는 경우 => 전시의 경우는 이거 무시 -->
+                                        <th:block th:if="${#lists.size(exhibition.imageList) > 0 }">
+                                            <th:block th:if="${thumbnail}">
+                                                <!-- [ [|${thumbnail.imagePath}${thumbnail.imageOriginal}|] ] -->
+
+                                                <h5>썸네일</h5>
+                                                <div class="img-box">
+                                                    <div class="exhibitionImg thumbnail">
+                                                        <img th:src="|${thumbnail.imagePath}${thumbnail.imageOriginal}|">
+                                                        <a th:href="|${thumbnail.imagePath}${thumbnail.imageOriginal}|" 
+                                                            th:download="${thumbnail.imageOriginal}">포스터 이미지 저장</a> 
+                                                                <!-- 다운로드할때 이미지 원본명으로 받자  -->
+                                                    </div>
+                                                </div>
+                                            </th:block>
+                                        </th:block>
+                            
+                                        <th:block c:if="${#lists.size(exhibition.imageList) >= start}"> <!-- 썸네일 없는 경우 -->
+                                            <h5>업로드 이미지</h5>
+                                            <div class="img-box">
+                                                <th:block th:each="i : ${#numbers.sequence(0, #lists.size(exhibition.imageList)-1, 1)}">
+                                                    <div class="exhibitionImg" th:with="path=|${exhibition.imageList[i].imagePath}${exhibition.imageList[i].imageOriginal}|"> <!-- 변수에 담아두고 div태그 안에서 쓴다  -->
+                                                        <!-- [ [${path}] ] -->
+                                                        <img th:src="${path}">
+                                                        <a th:href="${path}"
+                                                        th:download="${exhibition.imageList[i].imageOriginal}">다운로드</a>                
+                                                    </div>
+                            
+                                                </th:block>
+                                            </div>
+                                        </th:block>
+                                    </div>
+
+
+                                </div>
+
+                                <!-- 내용 -->
+                                <div class="sec-left-div2 exhibition-description" >
+                                    <div class="exhibition-description-title">전시설명</div>
+                                    <div class="exhibition-description-text-wrapper">
+                                        <div class="exhibition-description-text">[[${exhibition.exhibitContent}]]</div>
+                                    </div>
+                                </div>
+                            </section>
+                            
+                        </div>                             
+
+                        <div class="section-container right" id="sectionContainerRight">
+                            <div class="section-container-right top">
+                                <span class="exhibition-detail-create-date">
+                                    <p> <span>작성일</span> [[*{exhibitCreateDate}]] </p>     
+                    
+                                    <!-- 수정한 게시글인 경우 -->
+                                    <p th:if="*{exhibitUpdateDate}"> 
+                                        <span>마지막 수정일</span> [[*{exhibitUpdateDate}]] </p>   
+                                </span>
+                                <span class="exhibition-detail-click">
+                                    <p> <span>조회수</span>[[*{readCount}]] </p> 
+                                </span>                   
+                            </div>
+                            <section class="section right">
+                                <div class="sec-right-div1 exhibition-lines">
+                                    <!-- 제목 -->
+                                    <div class="exhibition-title" th:utext="|전시제목: *{exhibitTitle} <span> - ${communityName}</span>|">전시제목</div>
+                                    <!-- 전시부제목 -->
+                                    <div class="exhibition-subtitle"><span th:if="*{exhibitSubTitle}" th:text="|전시부제목: *{exhibitSubTitle}|">전시부제목</span><span th:unless="*{exhibitSubTitle}" th:text="'전시부제목:TBA'">전시부제목: TBA</span>
+                                    </div>
+
+                                    <!-- 전시기관명 -->
+                                    <div class="exhibition-info institution">
+                                        <span th:if="*{exhibitInstitution}" th:text="|전시기관: *{exhibitInstitution}|">전시기관명</span><span th:unless="*{exhibitInstitution}" th:text="'전시기관:TBA'">전시기관: TBA</span>
+                                    </div>
+                                    <!-- 장소 -->
+                                    <div class="exhibition-info location">
+                                        <span th:if="*{exhibitLocation}" th:text="|전시장소: *{exhibitLocation}|">전시장소</span><span th:unless="*{exhibitLocation}" th:text="'전시장소:TBA'">전시장소: TBA</span>
+                                    </div>
+                                    <!-- 전시기간 -->
+                                    <div class="exhibition-info date">
+                                        <span th:if="*{exhibitDate}" th:text="|전시기간: *{exhibitDate}|">전시기간</span><span th:unless="*{exhibitDate}" th:text="'전시기간:TBA'">전시기간: TBA</span>                                        
+                                    </div>
+                                    <!-- 장르 -->
+                                    <div class="exhibition-info genre">
+                                        <span th:if="*{exhibitGenre}" th:text="|장르: *{exhibitGenre}|">장르</span><span th:unless="*{exhibitGenre}" th:text="'장르:TBA'">장르: TBA</span>
+                                    </div>
+                                    <!-- 참여작가 -->
+                                    <div class="exhibition-info author">
+                                        <span th:if="*{exhibitAuthor}" th:text="|참여작가: *{exhibitAuthor}|">참여작가</span><span th:unless="*{exhibitAuthor}" th:text="'참여작가:TBA'">참여작가: TBA</span>
+                                    </div>
+                                    <!-- 주최후원 -->
+                                    <div class="exhibition-info contributor">
+                                        <span th:if="*{exhibitContributor}" th:text="|주최후원: *{exhibitContributor}|">주최후원</span><span th:unless="*{exhibitContributor}" th:text="'주최후원:TBA'">주최후원: TBA</span>
+                                    </div>
+                                    <!-- 문의 -->
+                                    <div class="exhibition-info contact">
+                                        <span th:if="*{exhibitContact}" th:text="|문의: *{exhibitContact}|">문의</span><span th:unless="*{exhibitContact}" th:text="'문의:TBA'">문의: TBA</span>
+                                    </div>
+                                    <!-- 대상연령 -->
+                                    <div class="exhibition-info audience">
+                                        <span th:if="*{exhibitAudience}" th:text="|대상연령: *{exhibitAudience}|">대상연령</span><span th:unless="*{exhibitAudience}" th:text="'대상연령:TBA'">대상연령: TBA</span>
+                                    </div>
+                                    <!-- 입장료 -->
+                                    <div class="exhibition-info charge">
+                                        <span th:if="*{exhibitCharge}" th:text="|입장료: *{exhibitCharge}|">입장료</span><span th:unless="*{exhibitCharge}" th:text="'입장료:TBA'">입장료: TBA</span>
+                                    </div>
+
+                                    <div class="sec-right-div2 btn-wrapper">
+                                        <div class="exhibition-detail-btn-purchase">
+                                            <button id="purchaseBtn">예매하기</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="sec-right-div3 exhibition-placeholder">
+                                    <div class="placeholder-area1">placeholder1</div>
+                                    <div class="placeholder-area2">placeholder2</div>
+                                </div>
+                            </section>
+                        </div> 
+                    </div>
+                </div>
+
+
+                <!-- 본문 하단 영역 -->
+                <div class="content-bottom">
+                    <div class="content-bottom-btn-wrapper">
+                        <th:block th:if="${session.loginMember?.memberNo == exhibition.memberNo}">
+                            <div class="exhibition-detail-btn-update">
+                                <button id="updateBtn">수정</button>
+                            </div>
+                            <div class="exhibition-detail-btn-delete">
+                                <button id="deleteBtn">삭제</button>
+                            </div>              
+                        </th:block>
+                        
+                        <div class="exhibition-detail-btn-goList">
+                            <button id="goToListBtn">목록으로</button>
+                        </div>
+                    </div>
+
+                    <div class="content-bottom-section-wrapper">
+                        <section class="section-bottom">
+                            <div class="section-bottom-div1">test</div>
+                        </section>
+                    </div>
+                </div>
+            </div>   
+        </main>
+
+    </div>
+
+    <footer class="main-footer">footer</footer>
+    <!-- footer.html 추가 -->
+    <!-- <th:block th:replace="~{common/footer}">footer.html</th:block> -->
+
+
+    <script th:inline="javascript"> // exhibitionDetail.js처럼 JS에서 사용할 전역 변수들을 선언~~
+
+
+        const loginMemberNo = /*[[${session.loginMember.memberNo}]]*/ "로그인한 회원 번호"; 
+        const memberNickname = /*[[${session.loginMember.memberNickname}]]*/ "로그인한 회원 닉네임"; 
+
+        if(loginMemberNo == null) loginMemberNo = ""; // 들어가는 값이 없으면 대신 빈칸을 넣어준다 (아래 exhibitionDetail.js에서 ""로 받아서 처리)
+
+        const exhibitNo =  /*[[${exhibition.exhibitNo}]]*/ "게시글 번호";
+
+        const exhibitionCode =  /*[[${exhibitionCode}]]*/ "게시글 코드"; // exhibitionCode === boardCode === communityCode 우리경우
+
+        const exhibitTitle =  /*[[${exhibition.exhibitTitle}]]*/ "게시글 제목";
+        
+    </script>
+
+    <script th:src="@{/js/board/exhibition/exhibitionDetail.js}"></script>
+
+</body>
+</html>

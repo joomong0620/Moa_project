@@ -1,188 +1,110 @@
-.login-container {
-
-    box-sizing: border-box;
-
-    margin-left: 10%;
-    margin-right: 10%;
-    width: 80%;
-
-
-    border: 1px solid pink;
-    
-}
-
-
-
-.login-area {
-
+/* 전체 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans KR", sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* 중앙에 있는 로그인 컨테이너 */
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: 1500px;
-
-    border: 1px solid black;
-
-    
-
-}
-
-
-.logo-area {
-
+  }
+  
+  /* 로그인 박스 */
+  .login-area {
+    width: 420px;
+    background-color: #ffffff;
+    padding: 50px 45px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  /* 로고 */
+  .logo-area {
     display: flex;
-
-    flex-direction: row;
     justify-content: center;
-    align-items: center;
-
-    margin-top: 25%;
-    margin-bottom: 5%;
-
-}
-
-.logo-img{
-
-    display: flex;
-
-    flex-direction: row;
-    align-items: center;
-
-    flex-direction: column;
-
-    width: 288px;
-    
-
-}
-
-.input-id{
-
-    width: 465px;
-    height: 54px;
-    display: flex;
-    font-size: 24px;
+    margin-bottom: 35px;
+  }
+  
+  .logo-img {
+    width: 240px;
+  }
+  
+  /* 공통 스타일 */
+  .input-id,
+  .input-pw {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    padding: 0 14px;
     border-radius: 10px;
-    border: 1px solid gainsboro;
-
-}
-
-.id-section {
-
+    border: 1px solid #d6d6d6;
+    outline: none;
+    transition: all 0.25s ease;
+  }
+  
+  .input-id:focus,
+  .input-pw:focus {
+    border-color: #1c2c44;
+    box-shadow: 0 0 6px rgba(28, 44, 68, 0.3);
+  }
+  
+  /* 입력창 영역 */
+  .id-section,
+  .pw-section {
     display: flex;
     justify-content: center;
-    position: relative;
-    margin-bottom: 50px;
-
-}
-
-.input-pw{
-
-    width: 465px;
-    height: 54px;
+    margin-bottom: 20px;
+  }
+  
+  /* 체크박스 영역 */
+  .checkbox-area {
     display: flex;
-    font-size: 24px;
-    border-radius: 10px;
-    border: 1px solid gainsboro;
-
-}
-
-.pw-section {
-
-    display: flex;
-    justify-content: center;
-    position: relative;
-
-}
-
-.checkbox-area {
-
-    display: flex;
-
-    justify-content: center;
-
-    position: relative;
-
     align-items: center;
+    justify-content: flex-start;
+    margin: 10px 0 30px 5px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* 로그인 버튼 */
+  #login-Btn {
+    width: 100%;
+    height: 52px;
+    background-color: #1c2c44;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+  }
 
-    align-content: center;
-
-    margin-right: 347px;
-
+  /* 회원가입 버튼 */
+  #signUp-btn {
+    width: 100%;
+    height: 48px;
     margin-top: 15px;
-
-    
-    
-}
-
-
-
-
-
-#login-Btn{
-
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
-
-    align-items: center;
-    
-
-    margin-top: 50px;
-    width: 465px;
-    height: 54px;
-    justify-content: center;
-    font-size: 24px;
     border-radius: 10px;
-    border: 1px solid gainsboro;
-
-    border-color: gainsboro;
-
-    color: gainsboro;
-
+    color: #1c2c44;
     background-color: white;
-
-    
-
-}
-
-.login-btn-area {
-
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    position: relative;
-    
-
-    
-}
-
-
-
-#signUp-btn {
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin-top: 50px;
-
-    width: 114px;
-    height: 35px;
-    border-radius: 10px;
-    color: gainsboro;
-
-    border: 1px solid gainsboro;
-    background-color: white;
-
-    font-size: 24px;
-
+    border: 1.5px solid #1c2c44;
+    font-size: 17px;
+    font-weight: 500;
     cursor: pointer;
-
-}
-
-
-.signUp-btn-area{
-
+  }
+  
+  /* 버튼 (똑같이 생겨서 공통으로 관리) */
+  .login-btn-area,
+  .signUp-btn-area {
     display: flex;
     justify-content: center;
-    position: relative;
-}
+    align-items: center;
+  }

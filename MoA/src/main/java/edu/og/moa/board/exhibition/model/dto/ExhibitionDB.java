@@ -1,0 +1,21 @@
+package edu.og.moa.board.exhibition.model.dto;
+
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class ExhibitionDB {
+	private int boardNo; // 개시글 번호
+	private String exhibitSubTitle;
+	private String exhibitSite;
+	private String exhibitDate;
+	private String exhibitContact;
+	private String exhibitAudience;
+	private int exhibitCharge;
+	private int institutionNo;
+	private int genreNo;
+}

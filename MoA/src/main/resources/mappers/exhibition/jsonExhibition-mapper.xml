@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.og.moa.board.exhibition.model.dao.JsonExhibitionMapper">
+
+	<!-- Board DTO에 대한 resultMap -->
+	<resultMap type="BoardDB" id="board_rm">
+		<id property="boardNo" column="BOARD_NO" />
+
+		<result property="boardTitle" column="BOARD_TITLE" />
+		<result property="boardContent" column="BOARD_CONTENT" />
+		<result property="bCreateDate" column="B_CREATE_DATE" />
+		<result property="bUpdateDate" column="B_UPDATE_DATE" />
+		<result property="boardCount" column="BOARD_COUNT" />
+		<result property="boardDelFl" column="BOARD_DEL_FL" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="communityCode" column="COMMUNITY_CODE"/>
+		<result property="qCode" column="Q_CODE"/>
+	</resultMap>
+	
+
+	<!-- BoardImg DTO에 대한 resultMap -->
+	<resultMap type="BoardImgDB" id="boardImg_rm">
+		<id property="imgNo" column="IMG_NO" />
+
+		<result property="boardNo" column="BOARD_NO" />
+		<result property="imgPath" column="IMG_PATH" />
+		<result property="imgOrig" column="IMG_ORIG" />
+		<result property="imgRename" column="IMG_RENAME" />
+		<result property="imgOrder" column="IMG_ORDER" />
+	</resultMap>
+
+	<!-- Institution DTO에 대한 resultMap -->
+	<resultMap type="InstitutionDB" id="institution_rm">
+		<id property="institutionNo" column="INSTITUTION_NO" />
+
+		<result property="exhibitInstName" column="EXHIBIT_INST_NAME" />
+		<result property="exhibitInstTel" column="EXHIBIT_INST_TEL" />
+		<result property="exhibitLocation" column="EXHIBIT_LOCATION" />
+	</resultMap>
+
+
+	<!-- GENRE DTO에 대한 resultMap -->
+	<resultMap type="GenreDB" id="genre_rm">
+		<id property="genreNo" column="GENRE_NO" />
+
+		<result property="genreName" column="GENRE_NAME" />
+	</resultMap>
+	
+	
+	<!-- Exhibition DTO에 대한 resultMap -->
+	<resultMap type="ExhibitionDB" id="exhibition_rm">
+		<id property="boardNo" column="BOARD_NO" />
+
+		<result property="exhibitSubTitle" column="EXHIBIT_SUB_TITLE" />
+		<result property="exhibitSite" column="EXHIBIT_SITE" />
+		<result property="exhibitDate" column="EXHIBIT_DATE" />
+		<result property="exhibitContact" column="EXHIBIT_CONTACT" />
+		<result property="exhibitAudience" column="EXHIBIT_AUDIENCE" />
+		<result property="exhibitCharge" column="EXHIBIT_CHARGE" />
+		<result property="institutionNo" column="INSTITUTION_NO" />
+		<result property="genreNo" column="GENRE_NO" />
+	</resultMap>
+	
+		
+	<!-- Author DTO에 대한 resultMap -->
+	<resultMap type="AuthorDB" id="author_rm">
+		<id property="authorNo" column="AUTHOR_NO" />
+
+		<result property="authorName" column="AUTHOR_NAME" />
+		<result property="boardNo" column="BOARD_NO" />
+	</resultMap>
+	
+	
+	<!-- Like DTO에 대한 resultMap -->
+	<!-- 2개 이상의 <id> 태그를 쓰는 경우, 복합키(composite key) 로 해석.
+		복합키는 2개 이상의 컬럼을 합쳐서 하나의 고유한 식별자로 사용하는 경우를 말함.
+		예: boardNo + memberNo 조합이 테이블 내에서 유일하다면, 이 둘을 복합키로 간주
+	-->
+	<resultMap type="LikeDB" id="like_rm">
+		<id property="boardNo" column="BOARD_NO" />
+		<id property="memberNo" column="MEMBER_NO" />
+	</resultMap>
+	
+	
+	<!-- Contributor DTO에 대한 resultMap -->
+	<resultMap type="ContributorDB" id="contributor_rm">
+		<id property="contributorNo" column="CONTRIBUTOR_NO" />
+
+		<result property="exhibitHost" column="EXHIBIT_HOST" />
+		<result property="exhibitSupport" column="EXHIBIT_SUPPORT" />
+		<result property="boardNo" column="BOARD_NO" />
+	</resultMap>
+			
+
+<!-- ###################################################################### -->
+
+	<!-- json 데이터 BOARD 테이블에 insert: boardNo는 SEQ_BOARD_NO 않쓰고 직접 입력 -->
+	<insert id="jsonBoardInsert" parameterType="BoardDB">
+		INSERT INTO BOARD (
+        	BOARD_NO, BOARD_TITLE, BOARD_CONTENT, 
+        	B_CREATE_DATE, B_UPDATE_DATE, 
+        	BOARD_COUNT, BOARD_DEL_FL, MEMBER_NO, COMMUNITY_CODE, Q_CODE
+    	) VALUES(#{boardNo}, #{boardTitle}, #{boardContent},
+			TO_DATE(#{bCreateDate}, 'YYYY-MM-DD HH24:MI:SS'), NULL,
+			#{boardCount}, DEFAULT, #{memberNo}, #{communityCode}, DEFAULT)
+	</insert>
+
+
+	<!-- json 데이터 BOARD 테이블에 insert: boardNo는 SEQ_BOARD_NO 써서 입력, sql문으로 CREATE SEQUENCE SEQ_IMG_NO START WITH 700 NOCACHE; 시퀀스생성 필수  -->
+	<insert id="jsonBoardInsertViaSelectKey" parameterType="BoardDB">
+	    <selectKey resultType="int" keyProperty="boardNo" order="BEFORE">
+	        SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+	    </selectKey>		
+		INSERT INTO BOARD (
+        	BOARD_NO, BOARD_TITLE, BOARD_CONTENT, 
+        	B_CREATE_DATE, B_UPDATE_DATE, 
+        	BOARD_COUNT, BOARD_DEL_FL, MEMBER_NO, COMMUNITY_CODE, Q_CODE
+    	) VALUES(#{boardNo}, #{boardTitle}, #{boardContent},
+		TO_DATE(#{bCreateDate}, 'YYYY-MM-DD HH24:MI:SS'), NULL,
+		DEFAULT, DEFAULT, #{memberNo}, #{communityCode}, DEFAULT)
+	</insert>
+	
+	
+	<!-- json 데이터 BOARD_IMG 테이블에 insert -->
+	<insert id="jsonBoardImgInsert" parameterType="list"> <!-- 전달받은 파라미터 타입은 "list" -->
+		INSERT INTO BOARD_IMG (IMG_NO, IMG_PATH, IMG_RENAME, IMG_ORIG, IMG_ORDER, BOARD_NO)
+		SELECT SEQ_IMG_NO.NEXTVAL, A.*
+		FROM (
+		<foreach collection="list" item="img" separator=" UNION ALL ">
+			SELECT
+			#{img.imgPath} IMG_PATH,
+			#{img.imgRename} IMG_RENAME,
+			#{img.imgOrig} IMG_ORIG,
+			#{img.imgOrder} IMG_ORDER,
+			#{img.boardNo} BOARD_NO
+			FROM DUAL
+		</foreach>
+
+		) A
+	</insert>
+	
+	
+	<!-- json 데이터 EXHIBITION 테이블에 insert하기위해, InstitutionNo를 INSTITUTION 테이블에서 조회 -->
+	<!-- <select id="jsonInstitutionSelect" resultType="map"> resultType="map"으로 되어있으면 Map을 return함-->
+	<select id="jsonInstitutionSelect" resultType="int">
+		SELECT INSTITUTION_NO 
+		FROM INSTITUTION
+		WHERE EXHIBIT_INST_NAME = #{exhibitInstName}
+	</select>
+
+	<!-- json 데이터 EXHIBITION 테이블에 insert하기위해, genreNo를 GENRE 테이블에서 조회 -->
+	<!-- <select id="jsonGenreSelect" resultType="map"> resultType="map"으로 되어있으면 Map을 return함 -->
+	<select id="jsonGenreSelect" resultType="int">
+		SELECT GENRE_NO 
+		FROM GENRE
+		WHERE GENRE_NAME = #{genreName}
+	</select>
+	
+	
+	<!-- json 데이터 EXHIBITION 테이블에 insert: boardNo가 identifying relationship PK임 -->
+	<insert id="jsonExhibitionInsert" parameterType="ExhibitionDB">
+		INSERT INTO EXHIBITION (
+        	BOARD_NO, EXHIBIT_SUB_TITLE, EXHIBIT_SITE, EXHIBIT_DATE, 
+        	EXHIBIT_CONTACT, EXHIBIT_AUDIENCE, 
+        	EXHIBIT_CHARGE, INSTITUTION_NO, GENRE_NO
+    	) VALUES( #{boardNo}, #{exhibitSubTitle}, #{exhibitSite}, #{exhibitDate},
+			#{exhibitContact}, #{exhibitAudience},
+			#{exhibitCharge}, #{institutionNo}, #{genreNo} )
+	</insert>
+
+
+	<!-- json 데이터 AUTHOR 테이블에 insert -->
+	<insert id="jsonAuthorInsert" parameterType="list"> <!-- 전달받은 파라미터 타입은 "list" -->
+		INSERT INTO AUTHOR (AUTHOR_NO, AUTHOR_NAME, BOARD_NO)
+		SELECT SEQ_AUTHOR_NO.NEXTVAL, A.*
+		FROM (
+		<foreach collection="list" item="author" separator=" UNION ALL ">
+			SELECT
+			#{author.authorName} AUTHOR_NAME,
+			#{author.boardNo} BOARD_NO
+			FROM DUAL
+		</foreach>
+		
+		) A
+	</insert>
+	
+
+	<!-- json 데이터 LIKE 테이블에 insert -->
+	<insert id="jsonLikeInsert" parameterType="list"> <!-- 전달받은 파라미터 타입은 "list" -->
+		INSERT INTO "LIKE" (BOARD_NO, MEMBER_NO)
+		SELECT A.*
+		FROM (
+		<foreach collection="list" item="like" separator=" UNION ALL ">
+			SELECT
+			#{like.boardNo} BOARD_NO,
+			#{like.memberNo} MEMBER_NO
+			FROM DUAL
+		</foreach>
+		
+		) A
+	</insert>	
+	
+	<!-- 
+	<insert id="jsonLikeInsert">
+    	INSERT INTO "LIKE" (BOARD_NO, MEMBER_NO)
+    		VALUES
+    		<foreach collection="list" item="like" separator=",">
+        		(#{like.boardNo}, #{like.memberNo})
+    		</foreach>
+	</insert>
+	-->
+	
+	<!-- json 데이터 CONTRIBUTOR 테이블에 insert -->
+	<insert id="jsonContributorInsert" parameterType="ContributorDB">
+		INSERT INTO "CONTRIBUTOR" (
+        	CONTRIBUTOR_NO, EXHIBIT_HOST, 
+        	EXHIBIT_SUPPORT, BOARD_NO
+    	) VALUES( SEQ_CONTRIBUTOR_NO.NEXTVAL, #{exhibitHost}, 
+    			#{exhibitSupport}, #{boardNo} )
+	</insert>	
+	
+
+</mapper>

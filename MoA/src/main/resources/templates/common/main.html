@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MOA Stage</title>
     <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
   </head>
 
   <body>
@@ -26,7 +30,7 @@
         </div>
 
         <!-- 기존에 배운 &lt; / &gt; 로도 꺾쇠 표현이 가능하지만, 해당 특수문자는 시각적으로 보기에 명확한 특수문자이기 때문에 이 기호를 사용하였다.-->
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a> 
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
         <div class="dots">
@@ -41,7 +45,10 @@
         <h2>공연</h2>
         <div class="card-list">
           <div class="card" th:each="show : ${performances}">
-            <img th:src="@{/images/{img}(img=${show.image})}" th:alt="${show.title}" />
+            <img
+              th:src="@{/images/{img}(img=${show.image})}"
+              th:alt="${show.title}"
+            />
             <p class="card-title" th:text="${show.title}"></p>
             <p class="card-date" th:text="${show.date}"></p>
           </div>
@@ -53,7 +60,10 @@
         <h2>전시</h2>
         <div class="card-list">
           <div class="card" th:each="exh : ${exhibitions}">
-            <img th:src="@{/images/{img}(img=${exh.image})}" th:alt="${exh.title}" />
+            <img
+              th:src="@{/images/{img}(img=${exh.image})}"
+              th:alt="${exh.title}"
+            />
             <p class="card-title" th:text="${exh.title}"></p>
             <p class="card-date" th:text="${exh.date}"></p>
           </div>

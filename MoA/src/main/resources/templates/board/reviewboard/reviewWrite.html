@@ -1,98 +1,80 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>리뷰 작성</title>
-  <link rel="stylesheet" href="./reviewWrite.css" />
+  <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+  <link th:href="@{/css/board/reviewboard/reviewWrite.css}" rel="stylesheet" />
 </head>
-<body>
 
-  <!-- 메인 멘트 -->
+<body>
+  <div th:replace="common/header :: header"></div>
   <main class="review-write">
     <h2>리뷰 작성</h2>
     <p class="guide-text">관람은 즐거우셨나요? 별점을 남겨주세요.</p>
 
-    <!-- 별점 -->
-    <div class="star-rating">
-      <span class="star" data-value="1">☆</span>
-      <span class="star" data-value="2">☆</span>
-      <span class="star" data-value="3">☆</span>
-      <span class="star" data-value="4">☆</span>
-      <span class="star" data-value="5">☆</span>
-    </div>
+    <!-- 작성 폼 -->
+    <form th:action="@{/reviewboard/write}" method="post" enctype="multipart/form-data">
 
-    <select id="reservationSelect">
-      <option value="">예매 내역 선택</option>
+      <!-- 커뮤니티 코드 (공연/전시 구분) -->
+      <input type="hidden" name="communityCode" th:value="${boardCode}" />
 
-    </select>
+      <!-- 별점 입력 -->
+      <div class="star-rating">
+        <input type="hidden" id="starValue" name="star" value="0" />
+        <span class="star" data-value="1">☆</span>
+        <span class="star" data-value="2">☆</span>
+        <span class="star" data-value="3">☆</span>
+        <span class="star" data-value="4">☆</span>
+        <span class="star" data-value="5">☆</span>
+      </div>
 
-    <input type="text" id="titleInput" placeholder="제목을 입력해주세요." maxlength="100">
+      <!-- 예매 내역 선택 -->
+      <select id="reservationSelect" name="reservationNo">
+        <option value="">예매 내역 선택</option>
+        <option th:each="item : ${reservationList}"
+                th:value="${item.reservationNo}"
+                th:text="${item.title}">예시 공연</option>
+      </select>
 
-    <textarea id="contentInput" placeholder="자세한 후기는 다른 고객에게 많은 도움이 됩니다. 
+      <!-- 제목 -->
+      <input type="text" id="titleInput" name="boardTitle"
+             placeholder="제목을 입력해주세요." maxlength="100" required />
+
+      <!-- 내용 -->
+      <textarea id="contentInput" name="boardContent" minlength="10" maxlength="500"
+        placeholder="자세한 후기는 다른 고객에게 많은 도움이 됩니다. 
 오해의 소지가 있는 내용이나 비방의 글 작성 시 비공개 처리될 수 있습니다.
-관련 문의는 1:1 문의 게시판을 이용해주세요."
-      minlength="10" maxlength="500"></textarea>
+관련 문의는 1:1 문의 게시판을 이용해주세요." required></textarea>
 
-    <div class="char-count"><span id="charCount">0</span> / 500자</div>
+      <div class="char-count">
+        <span id="charCount">0</span> / 500자
+      </div>
 
-    <div class="photo-section">
-      <p class="photo-title">사진 등록</p>
-      <label for="photoInput" class="photo-upload">
-        <span>+</span>
-      </label>
-      <input type="file" id="photoInput" multiple accept="image/*" />
-      <div id="photoPreview" class="photo-preview"></div>
-      <p class="photo-guide">공연/전시와 관련된 사진이 아닐 경우 안내 없이 삭제될 수 있습니다.</p>
-    </div>
+      <!-- 사진 등록 -->
+      <div class="photo-section">
+        <p class="photo-title">사진 등록</p>
+        <label for="photoInput" class="photo-upload">
+          <span>+</span>
+        </label>
+        <input type="file" id="photoInput" name="images" multiple accept="image/*" />
+        <div id="photoPreview" class="photo-preview"></div>
+        <p class="photo-guide">공연/전시와 관련된 사진이 아닐 경우 안내 없이 삭제될 수 있습니다.</p>
+      </div>
 
-    <div class="btn-area">
-      <button id="saveBtn">저장</button>
-    </div>
+      <!-- 버튼 영역 -->
+      <div class="btn-area">
+        <button type="submit" id="saveBtn">저장</button>
+        <button type="button" class="cancel-btn"
+                th:onclick="|location.href='@{/reviewboard/{boardCode}(boardCode=${boardCode})}'|">
+          취소
+        </button>
+      </div>
+    </form>
   </main>
 
-  <script>
-    const stars = document.querySelectorAll(".star");
-    let rating = 0;
-
-    stars.forEach(star => {
-      star.addEventListener("click", () => {
-        rating = parseInt(star.getAttribute("data-value"));
-        updateStars();
-      });
-    });
-
-    function updateStars() {
-      stars.forEach(star => {
-        star.textContent = star.getAttribute("data-value") <= rating ? "★" : "☆";
-      });
-    }
-
-    const textarea = document.getElementById("contentInput");
-    const charCount = document.getElementById("charCount");
-    textarea.addEventListener("input", () => {
-      charCount.textContent = textarea.value.length;
-    });
-
-    const photoInput = document.getElementById("photoInput");
-    const photoPreview = document.getElementById("photoPreview");
-
-    photoInput.addEventListener("change", () => {
-      photoPreview.innerHTML = "";
-
-      const files = Array.from(photoInput.files).slice(0, 5);
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = e => {
-          const img = document.createElement("img");
-          img.src = e.target.result;
-          img.classList.add("preview-img");
-          photoPreview.appendChild(img);
-        };
-        reader.readAsDataURL(file);
-      });
-    });
-
-  </script>
+  <div th:replace="common/footer :: footer"></div>
+  <script th:src="@{/js/board/reviewboard/reviewWrite.js}"></script>
 </body>
 </html>

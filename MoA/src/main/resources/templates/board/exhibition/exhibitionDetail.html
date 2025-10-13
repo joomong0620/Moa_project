@@ -8,24 +8,18 @@
     <title th:text="${exhibitionName}">게시판 이름</title>
 
     <link rel="stylesheet" th:href="@{/css/board/exhibition/exhibitionDetail-style.css}">
+    <link rel="stylesheet" th:href="@{/css/main-style.css}">
 
     <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script>
 
 </head>
+
 <body>
     <!-- [ [${exhibition}] ]  ok -->
+    <div th:replace="common/header :: header"></div>
     <div id="page-wrapper">
 
         <main>
-
-            <!-- 헤더 -->
-            <header class="main-header">header</header>
-            <!-- header.html 조각(fragment)을 얻어와서 추가하기 -->
-            <!-- <th:block th:replace="~{/common/header}">header.html</th:block> -->
-
-            <!-- 네비케이션 -->
-            <nav class="main-nav"></nav>
-            <!--  ###################################################### -->
 
             <!-- 본문: -->
             <div class="content-wrapper"> 
@@ -219,8 +213,8 @@
         </main>
 
     </div>
-
-    <footer class="main-footer">footer</footer>
+    
+    <div th:replace="common/footer :: footer"></div>
     <!-- footer.html 추가 -->
     <!-- <th:block th:replace="~{common/footer}">footer.html</th:block> -->
 

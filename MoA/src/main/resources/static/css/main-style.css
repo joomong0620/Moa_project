@@ -127,7 +127,7 @@ body {
   font-weight: 600;
 }
 
-.menu-item:hover>a {
+.menu-item:hover > a {
   background-color: #fff;
   color: #27374d;
   border-radius: 20px 20px 0 0;
@@ -146,7 +146,8 @@ body {
   margin-left: 3px;
   display: flex;
   width: 30px;
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg) brightness(103%) contrast(101%);
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg)
+    brightness(103%) contrast(101%);
 }
 
 #signin-text {
@@ -156,12 +157,12 @@ body {
 
 /* main */
 .main {
-  display: block;
-  width: 100%;
-  min-height: 100vh;
-}
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+  }
 
-.main>h3 {
+.main > h3 {
   color: black;
   justify-content: center;
 }
@@ -170,7 +171,7 @@ body {
 .banner-container {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: auto;
   margin: 0 auto;
   overflow: hidden;
   background-color: #ddd;
@@ -198,7 +199,6 @@ body {
   from {
     opacity: 0.4;
   }
-
   to {
     opacity: 1;
   }
@@ -306,7 +306,8 @@ body {
 .sns a {
   margin-right: 10px;
   font-size: 20px;
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg) brightness(103%) contrast(101%);
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg)
+    brightness(103%) contrast(101%); 
 }
 
 .sns a img {
@@ -345,7 +346,7 @@ body {
   background-color: #f8f8f8;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -375,10 +376,10 @@ body {
 
 /* 알림 */
 .notification-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-right: 15px;
+  position: absolute;
+  top: 50%;
+  right: 100px;
+  transform: translateY(-50%);
 }
 
 .notification-btn {
@@ -510,4 +511,31 @@ body {
 
 .notification-item:hover>.notification-text {
   text-decoration: underline;
+}
+
+.pagination li {
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+}
+
+.pagination a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  color: #1c2c44;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid #d3d8e0;
+  background-color: #fff;
+}
+
+.pagination a:hover {
+  background-color: #1c2c44;
+  color: #fff;
+  border-color: #1c2c44;
 }

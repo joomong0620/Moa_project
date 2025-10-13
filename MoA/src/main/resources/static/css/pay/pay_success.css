@@ -1,0 +1,27 @@
+main {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+p {
+  font-size: 1.1rem;
+  color: #666;
+}
+.home-btn {
+  margin-top: 30px;
+  background: #1c2c44;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}

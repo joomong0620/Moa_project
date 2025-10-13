@@ -55,7 +55,7 @@
           </div>
           <div class="submenu-right">
             <ul>
-              <li><a href="#">전체 전시목록 조회</a></li>
+              <li><a th:href="@{/exhibition/board/3}">전체 전시목록 조회</a></li>
               <li><a href="#">전시 일정</a></li>
               <li><a href="#">전시 지도 검색</a></li>
             </ul>
@@ -73,9 +73,9 @@
           </div>
           <div class="submenu-right">
             <ul>
-              <li><a href="#">자유게시판</a></li>
-              <li><a th:href="@{/review/list}">리뷰게시판</a></li>
-              <li><a href="#">만남의 광장</a></li>
+              <li><a th:href="@{/board/1}">자유게시판</a></li>
+              <li><a th:href="@{/reviewboard/2}">리뷰게시판</a></li>
+              <li><a th:href="@{/chatting}">만남의 광장</a></li>
             </ul>
           </div>
         </div>

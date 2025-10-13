@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>결제 완료</title>
+  <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+  <link th:href="@{/css/pay/pay_success.css}" rel="stylesheet" />
+
+</head>
+
+<body>
+  <!-- Header -->
+  <div th:replace="common/header :: header"></div>
+
+  <main>
+    <h2>결제가 완료되었습니다.</h2>
+    <p>예매하신 공연/전시 정보를 마이페이지에서 확인하실 수 있습니다.</p>
+    <button class="home-btn" onclick="location.href='/'">메인으로</button>
+  </main>
+
+  <!-- Footer -->
+  <div th:replace="common/footer :: footer"></div>
+</body>
+</html>

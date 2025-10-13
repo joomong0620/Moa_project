@@ -1,118 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./main-style.css" />
-  <link rel="stylesheet" href="./reviewList.css" />
-  <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>리뷰게시판</title>
+  <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+  <link th:href="@{/css/board/reviewboard/reviewList.css}" rel="stylesheet" />
 </head>
+
 <body>
-  <header class="header">
-    <section>
-      <a href="#">
-        <img
-          src="/src/main/resources/static/images/moa_logo.png"
-          alt="이미지 준비중"
-          id="logo-image"/>
-      </a>
-    </section>
+  <div th:replace="common/header :: header"></div>
 
-    <nav class="nav">
-      <ul>
-        <!-- 공연 -->
-        <li class="menu-item">
-          <a href="#">공연</a>
-          <div class="submenu">
-            <div class="submenu-left">
-              <h2>공연</h2>
-              <span>performance</span>
-            </div>
-            <div class="submenu-right">
-              <ul>
-                <li><a href="#">전체 공연목록 조회</a></li>
-                <li><a href="#">통합 검색</a></li>
-                <li><a href="#">지도 검색</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-        <!-- 전시 -->
-        <li class="menu-item">
-          <a href="#">전시</a>
-          <div class="submenu">
-            <div class="submenu-left">
-              <h2>전시</h2>
-              <span>exhibition</span>
-            </div>
-            <div class="submenu-right">
-              <ul>
-                <li><a href="#">전체 전시목록 조회</a></li>
-                <li><a href="#">전시 일정</a></li>
-                <li><a href="#">전시 지도 검색</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-        <!-- 커뮤니티 -->
-        <li class="menu-item">
-          <a href="#">커뮤니티</a>
-          <div class="submenu">
-            <div class="submenu-left">
-              <h2>커뮤니티</h2>
-              <span>community</span>
-            </div>
-            <div class="submenu-right">
-              <ul>
-                <li><a href="#">자유게시판</a></li>
-                <li><a href="#">리뷰게시판</a></li>
-                <li><a href="#">만남의 광장</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-        <!-- 고객센터 -->
-        <li class="menu-item">
-          <a href="#">고객센터</a>
-          <div class="submenu">
-            <div class="submenu-left">
-              <h2>고객센터</h2>
-              <span>support</span>
-            </div>
-            <div class="submenu-right">
-              <ul>
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">문의하기</a></li>
-                <li><a href="#">이용안내</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="signin">
-      <a href="#">
-        <img
-          src="/src/main/resources/static/images/user.svg"
-          alt="이미지 준비중"
-          id="signin-image"
-        />
-        <span id="signin-text">sign in</span>
-      </a>
-    </div>
-  </header>
-
-  <main class="review-main">
+  <main th:with="pagination=${map.pagination}, boardList=${map.boardList}">
     <section class="review-section">
       <div class="review-header">
         <h2>리뷰게시판</h2>
-        <button class="write-btn">글 작성</button>
+        <button class="write-btn"
+                th:onclick="|location.href='@{/reviewboard/write/{boardCode}(boardCode=${boardCode})}'|">
+          글 작성
+        </button>
       </div>
-  
+
       <table class="review-table">
         <thead>
           <tr>
@@ -123,50 +31,58 @@
           </tr>
         </thead>
         <tbody>
-          <!-- 리뷰 1 -->
-          <tr onclick="location.href='review_detail.html?id=1'">
-            <td><img src="./images/perf2.jpg" alt="JAZZ CONCERT"></td>
-            <td>전시</td>
-            <td>전시 구성 동선이 잘 짜여 있어서 편하게 관람할 수 있었어요. 작품 설명도 알기 쉽게 되어 있어서 초보자도 즐겁게 볼 수 있었어요.</td>
-            <td><span class="stars">★★★★★</span></td>
+          <!-- 등록된 리뷰가 없는 경우 -->
+          <tr th:if="${#lists.size(boardList) == 0}">
+            <td colspan="4" style="text-align:center; padding:30px;">등록된 리뷰가 없습니다.</td>
           </tr>
-  
-          <!-- 리뷰 2 -->
-          <tr onclick="location.href='review_detail.html?id=2'">
-            <td><img src="./images/perf1.jpg" alt="RENT"></td>
-            <td>공연</td>
-            <td>무대 연출이 정말 화려했어요. 특히 조명과 음악이 어우러지는 장면은 아직도 기억에 남습니다. 다만 좌석이 조금 좁았어요.</td>
-            <td><span class="stars">★★★★☆</span></td>
-          </tr>
-  
-          <!-- 리뷰 3 -->
-          <tr onclick="location.href='review_detail.html?id=3'">
-            <td><img src="./images/perf3.jpg" alt="명가의 품격"></td>
-            <td>공연</td>
-            <td>가족 단위로 방문했는데 아이들도 좋아했어요. 주차장이 협소해서 조금 불편했습니다. 공연 자체는 훌륭했어요.</td>
-            <td><span class="stars">★★★★☆</span></td>
-          </tr>
-  
-          <!-- 리뷰 4 -->
-          <tr onclick="location.href='review_detail.html?id=4'">
-            <td><img src="./images/perf4.jpg" alt="MAD HATTER"></td>
-            <td>전시</td>
-            <td>기대했던 것보다는 규모가 작았지만, 아기자기한 전시물들이 매력적이었어요. 기념품샵이 조금 더 다양했으면 좋겠어요.</td>
-            <td><span class="stars">★★★☆☆</span></td>
-          </tr>
-  
-          <!-- 리뷰 5 -->
-          <tr onclick="location.href='review_detail.html?id=5'">
-            <td><img src="./images/exh1.jpg" alt="Moulin Rouge"></td>
-            <td>공연</td>
-            <td>라이브 밴드 연주가 정말 압권이었습니다. 현장에서 느껴지는 에너지가 엄청났고, 아티스트와 관객이 하나가 되는 순간이었어요.</td>
-            <td><span class="stars">★★★★★</span></td>
+
+          <!-- 리뷰 목록 반복 출력 -->
+          <tr th:each="board : ${boardList}" class="review-row"
+              th:onclick="|location.href='@{/reviewboard/{code}/{no}(code=${board.communityCode}, no=${board.boardNo}, cp=${pagination.currentPage})}'|">
+            <td>
+              <img th:if="${board.thumbnailPath}" th:src="${board.thumbnailPath}" alt="리뷰 이미지" class="thumb-img" />
+              <img th:unless="${board.thumbnailPath}" th:src="@{/images/default-thumb.jpg}" alt="기본 이미지" class="thumb-img" />
+            </td>
+            <td th:text="${board.categoryName}">전시</td>
+            <td th:text="${board.boardContent}">리뷰 내용</td>
+            <td>
+              <span class="stars" 
+                    th:text="${'★'.repeat(board.star)} + ${'☆'.repeat(5 - board.star)}">
+              </span>
+            </td>
           </tr>
         </tbody>
       </table>
+
+      <!-- 페이지네이션 -->
+      <div th:if="${#lists.size(boardList) > 0}" class="pagination-area">
+        <ul class="pagination">
+          <!-- 처음으로 -->
+          <li><a th:href="@{/reviewboard/{code}(code=${boardCode}, cp=1)}">&lt;&lt;</a></li>
+
+          <!-- 이전 페이지 -->
+          <li><a th:href="@{/reviewboard/{code}(code=${boardCode}, cp=${pagination.prevPage})}">&lt;</a></li>
+
+          <!-- 페이지 번호 -->
+          <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage, 1)}">
+            <li th:if="${pagination.currentPage == i}">
+              <a class="current" th:text="${i}">현재</a>
+            </li>
+            <li th:unless="${pagination.currentPage == i}">
+              <a th:href="@{/reviewboard/{code}(code=${boardCode}, cp=${i})}" th:text="${i}">페이지</a>
+            </li>
+          </th:block>
+
+          <!-- 다음 페이지 -->
+          <li><a th:href="@{/reviewboard/{code}(code=${boardCode}, cp=${pagination.nextPage})}">&gt;</a></li>
+
+          <!-- 마지막 페이지 -->
+          <li><a th:href="@{/reviewboard/{code}(code=${boardCode}, cp=${pagination.maxPage})}">&gt;&gt;</a></li>
+        </ul>
+      </div>
     </section>
   </main>
-  
-  
+
+  <div th:replace="common/footer :: footer"></div>
 </body>
 </html>

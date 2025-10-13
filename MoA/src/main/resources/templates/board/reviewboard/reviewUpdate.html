@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>리뷰 수정</title>
+  <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+  <link th:href="@{/css/board/reviewboard/reviewWrite.css}" rel="stylesheet" />
+</head>
+
+<body>
+  <div th:replace="common/header :: header"></div>
+
+  <main class="review-write">
+    <h2>리뷰 수정</h2>
+    <p class="guide-text">수정할 내용을 입력해주세요.</p>
+
+    <!-- 수정 폼 -->
+    <form th:action="@{/reviewboard/update}" method="post" enctype="multipart/form-data">
+
+      <!-- 필수 hidden 데이터 -->
+      <input type="hidden" name="boardNo" th:value="${board.boardNo}" />
+      <input type="hidden" name="communityCode" th:value="${board.communityCode}" />
+
+      <!-- 별점 -->
+      <div class="star-rating">
+        <input type="hidden" id="starValue" name="star" th:value="${board.star}" />
+        <span class="star" data-value="1">☆</span>
+        <span class="star" data-value="2">☆</span>
+        <span class="star" data-value="3">☆</span>
+        <span class="star" data-value="4">☆</span>
+        <span class="star" data-value="5">☆</span>
+      </div>
+
+      <!-- 제목 -->
+      <input type="text" id="titleInput" name="boardTitle"
+             th:value="${board.boardTitle}"
+             placeholder="제목을 입력해주세요." maxlength="100" required />
+
+      <!-- 내용 -->
+      <textarea id="contentInput" name="boardContent"
+                minlength="10" maxlength="500" required
+                th:text="${board.boardContent}"></textarea>
+
+      <div class="char-count">
+        <span id="charCount" th:text="${#strings.length(board.boardContent)}">0</span> / 500자
+      </div>
+
+      <!-- 기존 이미지 미리보기 -->
+      <div class="photo-section" th:if="${board.imageList != null and !board.imageList.isEmpty()}">
+        <p class="photo-title">기존 등록된 사진</p>
+        <div class="photo-preview">
+          <img th:each="img : ${board.imageList}"
+               th:src="@{${img.imgPath} + ${img.imgRename}}"
+               th:alt="${img.imgOrig}"
+               class="preview-image"/>
+        </div>
+      </div>
+
+      <!-- 새 이미지 업로드 -->
+      <div class="photo-section">
+        <p class="photo-title">새 사진 등록 (선택)</p>
+        <label for="photoInput" class="photo-upload"><span>+</span></label>
+        <input type="file" id="photoInput" name="images" multiple accept="image/*" />
+        <div id="photoPreview" class="photo-preview"></div>
+      </div>
+
+      <!-- 버튼 -->
+      <div class="btn-area">
+        <button type="submit" id="saveBtn">수정 완료</button>
+        <button type="button" class="cancel-btn"
+                th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">
+          취소
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <div th:replace="common/footer :: footer"></div>
+  <script th:src="@{/js/board/reviewboard/reviewWrite.js}"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      /** 별점 초기화 **/
+      const stars = document.querySelectorAll(".star");
+      const starValueInput = document.getElementById("starValue");
+      const currentValue = parseInt(starValueInput.value) || 0;
+
+      // 기존 별점 반영
+      stars.forEach((s, i) => {
+        s.textContent = i < currentValue ? "★" : "☆";
+      });
+
+      // 클릭 이벤트
+      stars.forEach((star) => {
+        star.addEventListener("click", () => {
+          const value = parseInt(star.dataset.value);
+          starValueInput.value = value;
+          stars.forEach((s, i) => {
+            s.textContent = i < value ? "★" : "☆";
+          });
+        });
+
+        // 호버 효과
+        star.addEventListener("mouseover", () => {
+          const value = parseInt(star.dataset.value);
+          stars.forEach((s, i) => {
+            s.textContent = i < value ? "★" : "☆";
+          });
+        });
+
+        star.addEventListener("mouseleave", () => {
+          const value = parseInt(starValueInput.value);
+          stars.forEach((s, i) => {
+            s.textContent = i < value ? "★" : "☆";
+          });
+        });
+      });
+
+      /** 글자 수 카운트 **/
+      const textarea = document.getElementById("contentInput");
+      const charCount = document.getElementById("charCount");
+
+      textarea.addEventListener("input", () => {
+        const length = textarea.value.length;
+        charCount.textContent = length > 500 ? 500 : length;
+        if (length > 500) textarea.value = textarea.value.substring(0, 500);
+      });
+
+      /** 새 이미지 미리보기 **/
+      const photoInput = document.getElementById("photoInput");
+      const photoPreview = document.getElementById("photoPreview");
+
+      photoInput.addEventListener("change", (e) => {
+        const files = Array.from(e.target.files);
+        photoPreview.innerHTML = "";
+
+        if (files.length > 5) {
+          alert("사진은 최대 5장까지만 등록 가능합니다.");
+          photoInput.value = "";
+          return;
+        }
+
+        files.forEach((file) => {
+          if (!file.type.startsWith("image/")) return;
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const img = document.createElement("img");
+            img.src = event.target.result;
+            img.alt = "사진 미리보기";
+            img.classList.add("preview-image");
+            photoPreview.appendChild(img);
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

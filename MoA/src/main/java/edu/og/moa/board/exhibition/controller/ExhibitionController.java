@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 //import java.text.ParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
 import edu.og.moa.board.exhibition.model.dto.Exhibition;
+import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 import edu.og.moa.board.exhibition.model.dto.JsonMember;
 import edu.og.moa.board.exhibition.model.dto.MemberDB;
 import edu.og.moa.board.exhibition.model.service.ExhibitionService;
@@ -322,5 +324,6 @@ public class ExhibitionController {
 //		//return 0; // 반환값 0가 에러발생시킴 java.lang.IllegalArgumentException: Unknown return value type: java.lang.Integer
 //		return service.like(paramMap);
 //	}	
+	
 	
 }

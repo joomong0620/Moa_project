@@ -13,6 +13,7 @@ import edu.og.moa.board.exhibition.model.dto.AuthorDB;
 import edu.og.moa.board.exhibition.model.dto.BoardDB;
 import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
 import edu.og.moa.board.exhibition.model.dto.Exhibition;
+import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 import edu.og.moa.board.exhibition.model.dto.PaginationDB;
 
 @Service
@@ -139,8 +140,6 @@ public class ExhibitionServiceImpl implements ExhibitionService{
 	public int updateReadCount(int boardNo) {
 		// 
 		return mapper.updateReadCount(boardNo);
-	}	
-			
-	
+	}
 	
 }

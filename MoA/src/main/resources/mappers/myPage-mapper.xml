@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.og.moa.mypage.model.dao.MyPageMapper">
+
+	<!-- 회원 정보 수정 -->
+	<update id="updateInfo">
+		UPDATE MEMBER SET
+		MEMBER_NICKNAME = #{memberNickname},
+		MEMBER_ADDR = #{memberAddr}
+		WHERE MEMBER_NO = ${memberNo}
+	</update>
+	
+	<!-- 프로필 이미지 수정 -->
+	<update id="updateProfile">
+		UPDATE MEMBER SET
+		PROFILE_IMG = #{profileImg}
+		WHERE MEMBER_NO = ${memberNo}
+	</update>
+	
+	<!--비밀번호 조회-->
+	<select id="selectEncPw" parameterType="_int" resultType="string">
+		SELECT MEMBER_PW FROM MEMBER
+		WHERE MEMBER_NO = ${memberNo}
+	</select>
+	
+	<!-- 회원 탈퇴 -->
+	<update id="secession" parameterType="_int">
+		UPDATE MEMBER SET
+		MEMBER_DEL_FL = 'Y'
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	
+	
+	
+	
+</mapper>

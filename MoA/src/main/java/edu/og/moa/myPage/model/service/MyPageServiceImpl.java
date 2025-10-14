@@ -14,6 +14,7 @@ import edu.og.moa.common.utility.Util;
 import edu.og.moa.member.model.dto.Member;
 import edu.og.moa.myPage.model.dao.MyPageMapper;
 
+
 @Service
 @PropertySource("classpath:/config.properties")
 public class MyPageServiceImpl implements MyPageService {

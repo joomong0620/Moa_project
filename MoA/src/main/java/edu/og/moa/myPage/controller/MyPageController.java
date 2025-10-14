@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import edu.og.moa.member.model.dto.Member;
 import edu.og.moa.myPage.model.service.MyPageService;
 import jakarta.servlet.http.Cookie;

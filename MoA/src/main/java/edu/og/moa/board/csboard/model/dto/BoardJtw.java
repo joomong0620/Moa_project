@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Board {
+public class BoardJtw {
 	
 	private int boardNo;
 	private String boardTitle;

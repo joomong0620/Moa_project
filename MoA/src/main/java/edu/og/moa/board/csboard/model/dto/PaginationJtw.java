@@ -1,6 +1,6 @@
 package edu.og.moa.board.csboard.model.dto;
 
-public class Pagination {
+public class PaginationJtw {
 	// 페이지네이션(페이징 처리)에 필요한 모든 값을 저장하고 있는 객체
 
 	private int currentPage;      // 현재 페이지
@@ -17,7 +17,7 @@ public class Pagination {
 	private int nextPage;         // 목록 하단에 노출된 번호의 다음 목록 시작 번호
 
 	// 생성자
-	public Pagination(int currentPage, int listCount) {
+	public PaginationJtw(int currentPage, int listCount) {
 		this.currentPage = currentPage;
 		this.listCount = listCount;
 		

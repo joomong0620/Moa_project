@@ -8,9 +8,13 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <script src="https://kit.fontawesome.com/ce1a8d8e36.js" crossorigin="anonymous"></script>
-
+    <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="../../../static/css/main-style.css"> -->
     <!-- 임시 -->
-    <link rel="stylesheet" href="../../static/css/performance/performance-type-list-style.css">
+    <link rel="stylesheet" th:href="@{/css/board/performance/performance-type-list-style.css}">
+
+    <link rel="stylesheet" href="../../../static/css/board/performance/performance-type-list-style.css">
+    <link rel="stylesheet" th:href="@{/css/board/performance/pm-nav.css}">
 
 
 </head>
@@ -18,10 +22,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
     
-    <main>
+    <main th:with="pagination=${map.pagination}, pmTypeList=${map.pmTypeList}">
+
+
         <th:block th:replace="~{/common/header}">header.html</th:block>
 
-        <th:block th:replace="~{performance-nav}">공연 상단 네비게이션바</th:block>
+        <th:block th:replace="~{board/performance/pm-nav}"></th:block>
         
         <!-- 목록 메인 화면 -->
         <section class="pm-view-main">
@@ -31,25 +37,25 @@
                 <!-- 장르 선택 네비게이션 바-->
                 <ul class="nav nav-pills justify-content-center" id="typeList">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" th:href="@{/4/pmTypeList(type='all')}">전체</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/board/4/pmTypeList(type='all')}">전체</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/4/pmTypeList(type='theater')}">연극</a>
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='1')}">연극</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/4/pmTypeList(type='musical')}">뮤지컬</a>
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='2')}">뮤지컬</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/4/pmTypeList(type='music')}">음악</a>
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='3')}">음악</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/4/pmTypeList(type='dancing')}">무용</a>
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='4')}">무용</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/4/pmTypeList(type='magic')}">서커스/마술</a>
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='5')}">서커스/마술</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/4/pmTypeList(type='etc')}">기타</a>
+                        <a class="nav-link" th:href="@{/board/4/pmTypeList(type='6')}">복합</a>
                     </li>
                 </ul>
             </form>
@@ -70,36 +76,90 @@
 
             </section>
 
-            <!-- 수정 예정 -->
-            <!-- 게시글이 있을 때만 페이지네이션 보이기 -->
-            <div th:if="${#lists.size(boardList) > 0}" class="pagination-area">
-                <ul class="pagination">
+            <!-- 게시글 목록 조회 결과가 비어있다면 -->
+            <th:block th:if="${#lists.size(pmTypeList) == 0}">
+                <tr>
+                    <th colspan="6">게시글이 존재하지 않습니다.</th>
+                </tr>
+            </th:block>
+            
+            <section class="pm-list">
+                <article class="pm-item">
+                    <img src="http://www.kopis.or.kr/upload/pfmPoster/PF_PF275265_250929_145553.gif" alt="포스터" class="poster" />
+                    <div class="pm-info">
+                        <h3 class="title">[재즈] 미노와 히로유키 재즈 콘서트</h3>
+                            <div class="pm-info-detail">
+                                <p class="city">서울특별시</p>
+                                <p class="place">예술의전당</p>
+                                <p class="date">2025.10.01 ~ 2025.10.19</p>
+                                <p class="count">170,000 회</p>
+                            </div>
+                    </div>
+                </article>
                 
-                    <!-- 첫 페이지로 이동 -->
-                    <li><a th:href="@{/board/{code}(code=${boardCode}, cp=1)}">&lt;&lt;</a></li>
+                <article class="pm-item" th:each=" board : ${pmTypeList}">
+                    <img th:if="${board.poster}" th:src="${board.poster}" class="poster" />
+                    <div class="pm-info">
+                        <h3 class="title" th:utext="${board.boardTitle}">[재즈] 미노와 히로유키 재즈 콘서트</h3>
+                            <div class="pm-info-detail">
+                                <p class="city" >서울특별시</p>
+                                <p class="place" th:text="${board.pmHouseName}">예술의전당</p>
+                                <p class="date" th:text="|${board.pmStartTime} ~ ${board.pmEndTime}|">2025.10.01 ~ 2025.10.19</p>
+                                <p class="count" th:text="${board.boardContent}">170,000 회</p>
+                            </div>
+                    </div>
+                </article>
+            </section>
 
-                    <!-- 이전 목록 마지막 번호로 이동 -->
-                    <li><a th:href="@{/board/{code}(code=${boardCode}, cp=${pagination.prevPage})}">&lt;</a></li>
+            
 
+
+            <!-- 게시글 목록 조회 결과가 있는 경우 -->
+            <th:block th:unless="${#lists.size(pmTypeList) == 0}">
+
+                <!-- ==> <c:forEach items="${boardList}" var="board"> -->
+                <tr th:each=" board : ${pmTypeList}"><!-- ==> tr 태그 자체가 반복됨, 향상된 for문과 비슷함 -->
+                    <td th:text="${board.boardNo}">게시글 번호</td>
+                    <td> 
+                        <!-- 썸네일이 있는 경우 -->
+                        <img th:if="${board.poster}" class="list-thumbnail" th:src="${board.poster}">
+
+                        <a th:href="@{/board/4/{boardNo}(boardNo=${board.boardNo},type=${param.type != null ? param.type : 'all'},cp=${pagination.currentPage != 1 ? pagination.currentPage : null})}"
+                            th:utext="${board.boardTitle}">게시글 제목</a>
+                    </td>
+                    <td th:text="${board.boardCount}">좋아요 수</td>
+
+                </tr>        	
+            </th:block>
+
+
+
+
+
+            <!-- 페이지네이션 -->
+            <div th:if="${#lists.size(pmTypeList) > 0}" class="pagination-area">
+                <ul class="pagination">
+                    <!-- 처음으로 -->
+                    <li><a th:href="@{/board/4/pmTypeList(type=${param.type}, cp=1)}">&lt;&lt;</a></li>
+
+                    <!-- 이전 페이지 -->
+                    <li><a th:href="@{/board/4/pmTypeList(type=${param.type}, cp=${pagination.prevPage})}">&lt;</a></li>
+
+                    <!-- 페이지 번호 -->
                     <th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage, 1)}">
-                        <!-- 현재 보고있는 페이지 -->
-                        <li th:if="${pagination.currentPage == i}">
-                            <a class="current" th:text="${i}">현재 페이지</a>
-                        </li>
-                    
-                        <!-- 현재 페이지를 제외한 나머지 -->
-                        <li th:unless="${pagination.currentPage == i}" >
-                            <a th:href="@{/board/{code}(code=${boardCode}, cp=${i})}" th:text="${i}">나머지 페이지</a>
-                        </li>
-
+                    <li th:if="${pagination.currentPage == i}">
+                        <a class="current" th:text="${i}">현재</a>
+                    </li>
+                    <li th:unless="${pagination.currentPage == i}">
+                        <a th:href="@{/board/4/pmTypeList(type=${param.type}, cp=${i})}" th:text="${i}">페이지</a>
+                    </li>
                     </th:block>
 
-                    <!-- 다음 목록 시작 번호로 이동 -->
-                    <li><a th:href="@{/board/{code}(code=${boardCode}, cp=${pagination.nextPage})}">&gt;</a></li>
+                    <!-- 다음 페이지 -->
+                    <li><a th:href="@{/board/4/pmTypeList/(type=${param.type}, cp=${pagination.nextPage})}">&gt;</a></li>
 
-                    <!-- 끝 페이지로 이동 -->
-                    <li><a th:href="@{/board/{code}(code=${boardCode}, cp=${pagination.maxPage})}">&gt;&gt;</a></li>
-
+                    <!-- 마지막 페이지 -->
+                    <li><a th:href="@{/board/4/pmTypeList/(type=${param.type}, cp=${pagination.maxPage})}">&gt;&gt;</a></li>
                 </ul>
             </div>
         
@@ -117,6 +177,6 @@
 <!-- 푸터 -->           <!-- 분리 -->
 
     <!-- 임시 -->
-    <script src="../../static/js/performance/performance-type-list.js"></script>
+    <script th:src="@{/js/board/performance/performance-type-list.js}"></script>
 </body>
 </html>

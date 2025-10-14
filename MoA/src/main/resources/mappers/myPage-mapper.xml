@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="edu.og.moa.mypage.model.dao.MyPageMapper">
+<mapper namespace="edu.og.moa.myPage.model.dao.MyPageMapper">
 
 	<!-- 회원 정보 수정 -->
 	<update id="updateInfo">

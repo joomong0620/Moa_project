@@ -1,11 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="edu.og.moa.board.performance.model.dao.PerformanceMapper">
+	
+	<resultMap type="PerformanceBoard" id="board_rm">
+		
+		<collection property="pmImageList"
+    				select="selectImageList"
+    				column="BOARD_NO"
+    				javaType="java.util.ArrayList"
+    				ofType="PerformanceBoardImage">
+		</collection>
+
+		<collection property="pmPriceList"
+    				select="selectPriceList"
+    				column="BOARD_NO"
+    				javaType="java.util.ArrayList"
+    				ofType="PerformanceBoardPrice">
+		</collection>
+		
+		<collection property="pmCommentList"
+    				select="selectCommentList"
+    				column="BOARD_NO"
+    				javaType="java.util.ArrayList"
+    				ofType="PerformanceComment">
+    	</collection>
+		
+	</resultMap>
 
 
-
-
-
+	<!-- 특정 게시판의 삭제되지 않은 게시글 수 조회 --> 
+	<select id="getPmListCount" resultType="_int">
+		SELECT COUNT(*) FROM BOARD
+		JOIN PM USING(BOARD_NO)
+		WHERE COMMUNITY_CODE = 4
+		AND BOARD_DEL_FL = 'N'
+		
+		<if test="type != null and type != 'all'">
+			AND GENRE_NO = #{type}
+		</if>
+	</select>
+	
+	<select id="selectPmTypeList" resultType="PerformanceBoard">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.B_CREATE_DATE, B.BOARD_COUNT,
+			P.PM_HOUSE_NAME, P.PM_HOUSE_ADDRESS,
+			TO_CHAR(P.PM_START_TIME, 'YYYY.MM.DD') PM_START_TIME,
+			TO_CHAR(P.PM_END_TIME, 'YYYY.MM.DD') PM_END_TIME,
+			(SELECT IMG_PATH FROM BOARD_IMG I WHERE I.BOARD_NO = B.BOARD_NO AND IMG_ORDER = 0) POSTER
+		
+		FROM "BOARD" B
+		JOIN PM P ON(B.BOARD_NO = P.BOARD_NO)
+		JOIN PM_HOUSE H ON(P.PM_HOUSE_NO = H.PM_HOUSE_NO)
+		WHERE BOARD_DEL_FL = 'N'
+		AND COMMUNITY_CODE = 4
+		ORDER BY B_CREATE_DATE DESC
+	</select>
+	
+	<!-- 특정 게시글 이미지 조회 -->
+	<select id="selectImageList" resultType="PerformanceBoardImage">
+		SELECT *
+		FROM BOARD_IMG
+		WHERE BOARD_NO = #{boardNo}
+		ORDER BY IMG_ORDER
+	</select>
+	
+	<!-- 특정 게시글 가격 조회 -->
+	<select id="selectPriceList" resultType="PerformanceBoardPrice">
+		SELECT *
+		FROM PM_PRICE_LIST
+		WHERE BOARD_NO = #{boardNo}
+		ORDER BY PM_PRICE
+	</select>
+	
+	<!-- 특정 게시글 댓글(기대평) 조회 -->
+	<select id="selectCommentList" resultType="PerformanceComment">
+		SELECT LEVEL, C.* FROM (
+		    SELECT COMMENT_NO, COMMENT_CONTENT, 
+		           TO_CHAR(C_CREATE_DATE, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"') C_CREATE_DATE,
+		           BOARD_NO, MEMBER_NO, MEMBER_NICKNAME, PROFILE_IMG, P_COMMENT, COMMENT_DEL_FL
+		    FROM "COMMENT"
+		    JOIN MEMBER USING(MEMBER_NO)
+		    WHERE BOARD_NO = #{boardNo}
+		    ) C
+		WHERE COMMENT_DEL_FL = 'N'
+		START WITH P_COMMENT IS NULL
+		CONNECT BY PRIOR COMMENT_NO = P_COMMENT
+		ORDER SIBLINGS BY COMMENT_NO
+	</select>
+	
+	<select id="selectPmDetail" resultMap="board_rm">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.B_CREATE_DATE, B.BOARD_COUNT, G.GENRE_NAME,
+			   
+			   TO_CHAR(P.PM_START_TIME, 'YYYY.MM.DD') PM_START_TIME,
+			   TO_CHAR(P.PM_END_TIME, 'YYYY.MM.DD') PM_END_TIME,
+			   P.PM_PLAYTIME, H.PM_HOUSE_NAME, H.PM_HOUSE_ADDRESS, H.PM_HOUSE_LAT, H.PM_HOUSE_LONG,
+			   H.PM_HOUSE_WEBSITE, H.PM_HOUSE_HOME,
+		
+			   (SELECT COUNT(*) FROM "LIKE" L WHERE L.BOARD_NO = B.BOARD_NO) LIKE_COUNT,
+			   (SELECT COUNT(*) FROM "COMMENT" C WHERE C.BOARD_NO = B.BOARD_NO AND COMMENT_DEL_FL = 'N') COMMENT_COUNT
+		FROM "BOARD" B
+		JOIN PM P ON(B.BOARD_NO = P.BOARD_NO)
+		JOIN PM_HOUSE H ON(P.PM_HOUSE_NO = H.PM_HOUSE_NO)		
+		JOIN GENRE G ON(P.GENRE_NO = G.GENRE_NO)
+		WHERE B.BOARD_DEL_FL = 'N'
+		AND B.COMMUNITY_CODE = 4
+		AND B.BOARD_NO = #{boardNo}
+	</select>
+	
+	<!-- 좋아요 테이블 추가 -->
+	<insert id="insertBoardLike">
+		INSERT INTO "LIKE"
+		VALUES(#{boardNo}, #{memberNo})
+	</insert>
+	
+	<!-- 좋아요 테이블 삭제 -->
+	<delete id="deleteBoardLike">
+		DELETE FROM "LIKE"
+		WHERE BOARD_NO = #{boardNo}
+		AND MEMBER_NO = #{memberNo}
+	</delete>
+	
+	<!-- 좋아요 수 조회 -->
+	<select id="countBoardLike" resultType="_int">
+		SELECT COUNT(*) FROM "LIKE"
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateReadCount">
+		UPDATE BOARD
+		SET BOARD_COUNT = BOARD_COUNT + 1
+		WHERE BOARD_NO = #{boardNo}
+	</update>
 
 
 </mapper>

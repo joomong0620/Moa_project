@@ -9,8 +9,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <script src="https://kit.fontawesome.com/ce1a8d8e36.js" crossorigin="anonymous"></script>
     <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="../../../static/css/main-style.css"> -->
     <!-- 임시 -->
     <link rel="stylesheet" th:href="@{/css/board/performance/performance-type-list-style.css}">
+
+    <link rel="stylesheet" href="../../../static/css/board/performance/performance-type-list-style.css">
     <link rel="stylesheet" th:href="@{/css/board/performance/pm-nav.css}">
 
 
@@ -79,6 +82,17 @@
                     <th colspan="6">게시글이 존재하지 않습니다.</th>
                 </tr>
             </th:block>
+            
+
+            <article class="pm-item">
+                <img src="http://www.kopis.or.kr/upload/pfmPoster/PF_PF275265_250929_145553.gif" alt="포스터" class="poster" />
+                <div class="pm-info">
+                    <h3 class="title">[재즈] 미노와 히로유키 재즈 콘서트</h3>
+                    <p class="place">예술의전당</p>
+                    <p class="date">2025.10.01 ~ 2025.10.19</p>
+                    <p class="price">₩70,000</p>
+                </div>
+            </article>
 
             <!-- 게시글 목록 조회 결과가 있는 경우 -->
             <th:block th:unless="${#lists.size(pmTypeList) == 0}">

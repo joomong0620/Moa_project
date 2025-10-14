@@ -11,6 +11,7 @@
     <link th:href="@{/css/main-style.css}" rel="stylesheet" />
     <!-- 임시 -->
     <link rel="stylesheet" th:href="@{/css/board/performance/performance-type-list-style.css}">
+    <link rel="stylesheet" th:href="@{/css/board/performance/pm-nav.css}">
 
 
 </head>
@@ -89,7 +90,7 @@
                         <!-- 썸네일이 있는 경우 -->
                         <img th:if="${board.poster}" class="list-thumbnail" th:src="${board.poster}">
 
-                        <a th:href="@{/board/4/{boardNo}(boardNo=${board.boardNo},type=${param.type != null ? param.type : 'all'},  cp=${pagination.currentPage})}"
+                        <a th:href="@{/board/4/{boardNo}(boardNo=${board.boardNo},type=${param.type != null ? param.type : 'all'},cp=${pagination.currentPage != 1 ? pagination.currentPage : null})}"
                             th:utext="${board.boardTitle}">게시글 제목</a>
                     </td>
                     <td th:text="${board.boardCount}">좋아요 수</td>

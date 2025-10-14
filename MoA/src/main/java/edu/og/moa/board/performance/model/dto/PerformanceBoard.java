@@ -17,9 +17,9 @@ public class PerformanceBoard {
 	private int boardCount;
 	
 	// 공연
-	private int pmStartTime;
-	private int pmEndTime;
-	private int pmPlaytime;
+	private String pmStartTime;
+	private String pmEndTime;
+	private String pmPlaytime;
 	private int pmHouseNo;
 	private int pmTypeNo;
 	
@@ -29,7 +29,7 @@ public class PerformanceBoard {
 	private double pmHouseLat;
 	private double pmHouseLong;
 	private String pmHouseWebsite;
-	private int pmHouseHome;
+	private String pmHouseHome;
 
 	// 장르
 	private int GenreNo;
@@ -40,9 +40,13 @@ public class PerformanceBoard {
 	private String pmPrice;
 	
 	private String poster;
+	private int commentCount;
 	
+	private List<PerformanceBoardPrice> pmPriceList;
 	
 	private List<PerformanceBoardImage> pmImageList;
 	
 	private List<PerformanceComment> pmCommentList;
+	
+	
 }

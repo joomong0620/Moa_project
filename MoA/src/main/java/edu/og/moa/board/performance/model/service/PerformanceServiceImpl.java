@@ -45,5 +45,47 @@ public class PerformanceServiceImpl implements PerformanceService{
 		
 		return map;
 	}
+
+
+	// 상세 페이지
+	@Override
+	public PerformanceBoard selectPmDetail(Map<String, Object> map) {
+		return mapper.selectPmDetail(map);
+	}
+
+	// 좋아요 여부
+	@Override
+	public int boardLikeCheck(Map<String, Object> map) {
+		return mapper.boardLikeCheck(map);
+	}
+
+	
+	// 조회수 증가 서비스
+	@Override
+	public int updateReadCount(int boardNo) {
+		return mapper.updateReadCount(boardNo);
+	}
+
+	
+	// 좋아요 처리
+	@Override
+	public int like(Map<String, Integer> paramMap) {
+		
+		int result = 0;
+		
+		if (paramMap.get("check") == 0) {
+			// 좋아요 한 적이 없을 때
+			
+			result = mapper.insertBoardLike(paramMap);
+		} else {
+			// 좋아요 한 적이 있을 때
+			result = mapper.deleteBoardLike(paramMap);
+		}
+		
+		// 에러날 경우
+		if(result == 0) return -1;
+		
+		return 0;
+	}
 	
 }

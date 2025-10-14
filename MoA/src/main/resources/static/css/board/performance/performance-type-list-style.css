@@ -1,8 +1,24 @@
+body{
+    color: black;
+    
+}
+a{
+    color: #000;
+    text-decoration: none;
+}
+
+
+.seeType{
+    display: block;
+    float: right;
+}
 
 /* ===== 공연 리스트 ===== */
 .pm-list {
+    color: #27374d;
     margin: 0 auto 60px;
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 18px;
     padding-left: 10%;
@@ -30,16 +46,17 @@
 .pm-info{
     display: block;
     width: 500px;
+    height: 200px;
 }
 
 .pm-info .title {
     align-items: center;
     height: 50%;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 600;
     text-align: center;
     margin: 0;
-    padding-top: 0;         
+    padding-top: 5px;         
     line-height: 1.2;        
 }
 
@@ -76,9 +93,16 @@
     transition: opacity 0.2s;
 }
 
+#pmListSearch{
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
 .nav-pills {
+    margin-top: 10px;
     border: 1px solid black;
-    width: max-content;
+    width: fit-content;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -89,4 +113,12 @@
 .nav-item {
     border: 1px solid black;
     cursor: pointer;
+}
+
+
+.pagination{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
 }

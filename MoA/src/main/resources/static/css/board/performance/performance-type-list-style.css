@@ -1,3 +1,72 @@
+
+/* ===== 공연 리스트 ===== */
+.pm-list {
+    margin: 0 auto 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.pm-item {
+    display: flex;
+    width: 800px;
+    gap: 20px;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+}
+
+
+.poster {
+    width: 150px;
+    height: 214px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.pm-info{
+    display: block;
+    width: 500px;
+}
+
+.pm-info .title {
+    align-items: center;
+    height: 50%;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    padding-top: 0;         
+    line-height: 1.2;        
+}
+
+.pm-info-detail{
+    display: block;
+}
+
+.pm-info .city{
+    width: 50%;
+    height: 25%;
+    float: left;
+}
+.pm-info .place{
+    width: 50%;
+    float: right;
+    text-align: end;
+}
+.pm-info .date{
+    width: 50%;
+    float: left;
+}
+.pm-info .count{
+    width: 50%;
+    float: right;
+    text-align: end;
+}
+
 .view-mode {
     cursor: pointer;
     font-size: 20px;
@@ -7,18 +76,17 @@
     transition: opacity 0.2s;
 }
 
-.nav-pills{
+.nav-pills {
     border: 1px solid black;
     width: max-content;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    
+
 
 }
 
-.nav-item{
+.nav-item {
     border: 1px solid black;
     cursor: pointer;
 }
-

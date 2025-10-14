@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/board/csboard/question.css}">
+
+</head>
+<body>
+
+    <main>
+
+        <section class="section-container">
+
+            <section class="question-area">
+
+
+
+                <section class="section-first">
+                    <p class="section-top">고객님 무엇을 도와드릴까요?</p>
+        
+                </section>
+        
+        
+                <section class="section-second">
+
+                    <p>자주 묻는 질문</p>
+
+        
+        
+                </section>
+                
+                
+                <section class="type-btn-area">
+                    
+                    <button id="type" class="type-btn">공연</button>
+                    <div>
+                        <ul>
+                            <li>
+                                공연은 어디서 하나요?
+                            </li>
+                        </ul>
+                    
+                    </div>
+                    <button class="type-btn">전시</button>
+                    <button class="type-btn">예약</button>
+                    <button class="type-btn">이용편의</button>
+                    
+                    
+                    
+                </section>
+                
+                
+                <section>
+                    
+                    <label class="type" for="type">type</label>
+                    <input id="type" type="checkbox">
+                    
+                    <nav id="type-nav">
+                        <ul>
+                            <li>dddd</li>
+                            <li>dddd</li>
+                            <li>dddd</li>
+    
+                        </ul>
+    
+                    </nav>
+        
+                </section>
+                
+                
+                <section>
+        
+        
+                </section>
+                
+                
+                <section class="help">
+
+                    <p>다른 도움이 필요하신가요?</p>
+        
+        
+                </section>
+
+
+                <section>
+                
+                    <a th:href="@{onequestion}">
+                    
+                        <button id="one-question">
+                        
+                            <img th:src="@{/uploadImg/quest.png}" class="quest-img">
+
+                            <div class="q-text">
+                            
+
+
+                            
+                                <span class="tex">
+                                    <a th:href="@{questionList}"></a>
+                                    더 자세한 문의를 할 수 있어요!
+                                </span>
+                            </div>
+                        
+                        </button>
+                    </a>1:1문의 하기
+
+
+                </section>
+
+
+                <section>
+                
+
+                    <button id="question-confirm">
+                        
+                        <img th:src="@{/uploadImg/write.png}" class="quest-img">
+
+                        <div class="c-text">
+                            <span class="tex-d">
+                                내 문의내역 보기
+                            </span>
+                            
+                            <span class="tex-c">
+                                문의한 내용을 확인해보세요
+                            </span>
+                        </div>
+                        
+                            </button>
+
+
+                </section>
+
+
+                <section>
+
+                    <button class="custom-button">
+                        <img th:src="@{logo.png}" alt="Logo" class="logo">
+                        <div class="text">
+                            <span>첫 번째 텍스트</span>
+                            <span>두 번째 텍스트</span>
+                        </div>
+                    </button>
+
+                </section>
+
+            </section>
+
+
+
+        </section>
+
+
+
+    </main>
+    
+</body>
+</html>

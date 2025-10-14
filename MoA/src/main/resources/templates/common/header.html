@@ -113,13 +113,16 @@
   </section>
 
   <div class="signin">
-    <a th:href="@{/member/login}">
-      <img
-        th:src="@{/images/common/user.svg}"
-        alt="이미지 준비중"
-        id="signin-image"
-      />
-      <span id="signin-text" th:text="${name} ?: 'sign in'"></span>
+    <!-- 로그인 안 된 경우 -->
+    <a th:if="${session.loginMember == null}" th:href="@{/member/login}">
+      <img th:src="@{/images/common/user.svg}" alt="이미지 준비중" id="signin-image" />
+      <span id="signin-text">sign in</span>
+    </a>
+
+    <!-- 로그인 된 경우 -->
+    <a th:if="${session.loginMember != null}" th:href="@{/mypage/info}">
+      <img th:src="@{/images/common/user.svg}" alt="프로필 이미지" id="signin-image" />
+      <span id="signin-text" th:text="${session.loginMember.memberNickname}">유저닉네임</span>
     </a>
   </div>
 </header>

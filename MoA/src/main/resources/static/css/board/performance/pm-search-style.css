@@ -1,10 +1,73 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fb;
-    margin: 0;
-    padding: 0;
+/* ✅ 전체 필터 박스를 표처럼 만들기 */
+.filter-section {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 장르/가격/기간/지역 4열 */
+    align-items: start;
+    justify-items: start;
+    gap: 10px 20px;
 }
 
+/* 각 그룹은 독립된 셀 */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+/* 제목 */
+.filter-group h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+    margin: 0 0 4px 0;
+}
+
+/* 내부 체크박스 묶음 */
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+/* 체크박스 라벨 */
+.filter-options label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.filter-options input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+/* 반영하기 버튼 */
+.apply-btn {
+    grid-column: 4 / 5;
+    /* 오른쪽 끝 셀에 배치 */
+    justify-self: end;
+    align-self: end;
+    margin-top: 8px;
+    padding: 7px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    background: #33425b;
+    color: white;
+    cursor: pointer;
+}
+
+/*
 .search-container {
     width: 90%;
     max-width: 900px;
@@ -83,3 +146,4 @@ body {
 .apply-btn:hover {
     background-color: #3c5368;
 }
+*/

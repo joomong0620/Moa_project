@@ -713,5 +713,4 @@ public class JsonExhibitionController {
 	    }
 	    return new String(bytes, 0, endIndex, StandardCharsets.UTF_8);
 	}	
-	
 }

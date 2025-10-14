@@ -197,6 +197,35 @@
 		WHERE
 		BOARD_NO = ${boardNo}
 	</update>
+	
+	  <!-- 전시 대표 이미지 목록 조회 -->
+	<select id="selectExhibitionThumbnailList"
+	        resultType="edu.og.moa.board.exhibition.model.dto.JsonBoardImage">
+	  SELECT 
+	      B.BOARD_NO AS boardNo,
+	      (SELECT I.IMG_PATH || I.IMG_ORIG 
+	       FROM BOARD_IMG I 
+	       WHERE I.BOARD_NO = B.BOARD_NO 
+	         AND I.IMG_ORDER = 0
+	         AND ROWNUM = 1) AS imagePath
+	  FROM BOARD B
+	  WHERE EXISTS (
+	      SELECT 1 
+	      FROM BOARD_IMG I 
+	      WHERE I.BOARD_NO = B.BOARD_NO
+	        AND I.IMG_ORDER = 0
+	        AND (
+	             I.IMG_PATH LIKE '/images/%'
+	          OR I.IMG_PATH LIKE 'http%'
+	        )
+	  )
+	</select>
+
+
+
+
+
+
 
 
 

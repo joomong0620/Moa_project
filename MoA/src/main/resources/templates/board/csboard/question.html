@@ -88,22 +88,25 @@
 
                 <section>
                 
-
-                    <button id="one-question">
+                    <a th:href="@{onequestion}">
+                    
+                        <button id="one-question">
                         
-                        <img th:src="@{/uploadImg/quest.png}" class="quest-img">
+                            <img th:src="@{/uploadImg/quest.png}" class="quest-img">
 
-                        <div class="q-text">
+                            <div class="q-text">
                             
-                            <a th:href="@{onequestion}"></a>1:1문의 하기
+
+
                             
-                            <span class="tex">
-                                <a th:href="@{questionList}"></a>
-                                더 자세한 문의를 할 수 있어요!
-                            </span>
-                        </div>
+                                <span class="tex">
+                                    <a th:href="@{questionList}"></a>
+                                    더 자세한 문의를 할 수 있어요!
+                                </span>
+                            </div>
                         
-                            </button>
+                        </button>
+                    </a>1:1문의 하기
 
 
                 </section>

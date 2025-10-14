@@ -13,6 +13,7 @@ import edu.og.moa.board.exhibition.model.dto.BoardDB;
 import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
 import edu.og.moa.board.exhibition.model.dto.ContributorDB;
 import edu.og.moa.board.exhibition.model.dto.ExhibitionDB;
+import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 import edu.og.moa.board.exhibition.model.dto.LikeDB;
 import edu.og.moa.common.utility.Util;
 
@@ -237,6 +238,11 @@ public class JsonExhibitionServiceImpl implements JsonExhibitionService {
 //		return boardNo;
 //	}
 
+
+    @Override
+    public List<JsonBoardImage> selectExhibitionThumbnailList() {
+        return mapper.selectExhibitionThumbnailList();
+    }
 	
 	
 

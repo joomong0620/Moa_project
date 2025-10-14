@@ -539,3 +539,42 @@ body {
   color: #fff;
   border-color: #1c2c44;
 }
+
+/* 전시 슬라이드 */
+.exhibition-slider-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* 카드 묶음 */
+.exhibition-slide-wrapper {
+  display: flex;
+  animation: scrollExhibition 60s linear infinite; /* infinite 부드러운 슬라이드 효과를 줄 수 있음 */
+}
+
+/* 카드 */
+.exhibition-slide {
+  flex: 0 0 16.66%; /* 6개씩 보이게 */
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.exhibition-slide img {
+  width: 100%;
+  height: 280px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* 부드러운 흐름을 줄 수 있는 애니메이션 구글 참조 */
+@keyframes scrollExhibition {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

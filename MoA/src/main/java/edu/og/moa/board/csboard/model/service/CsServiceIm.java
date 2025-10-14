@@ -1,12 +1,14 @@
 package edu.og.moa.board.csboard.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.og.moa.board.csboard.model.dao.CsMapper;
+import edu.og.moa.board.csboard.model.dto.BoardJtw;
 import edu.og.moa.board.csboard.model.dto.PaginationJtw;
 
 @Service
@@ -37,7 +39,7 @@ public class CsServiceIm implements CsService{
 		paramMap.put("limit", pagination.getLimit());
 		paramMap.put("offset", offset);
 		
-		Map<String, Object> questionList = mapper.selectQuestionList(paramMap);
+		List<BoardJtw> questionList = mapper.selectQuestionList(paramMap);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		

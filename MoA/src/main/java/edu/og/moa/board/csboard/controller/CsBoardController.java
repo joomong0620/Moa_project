@@ -26,10 +26,10 @@ public class CsBoardController {
 	
 	// 자주 묻는 질문으로 화면 이동
 	@GetMapping("/{communityCode:5}")
-	public String question() {
-		
-		return "board/csboard/question";
-				
+	public String question(Model model, @PathVariable("communityCode") int communityCode) {
+	    model.addAttribute("communityCode", communityCode); // 변수 추가
+	    model.addAttribute("qCode", 1); // 기본 문의 유형 지정 (예시)
+	    return "board/csboard/question";
 	}
 	
 	// 내 문의 내역 게시판 조회
@@ -41,12 +41,16 @@ public class CsBoardController {
 			
 			) {
 		
-		Map<String, Object> questionList = service.selectQuestionList(communityCode, qCode, cp);
+		Map<String, Object> map = service.selectQuestionList(communityCode, qCode, cp);
 		
 		model.addAttribute("communityCode", communityCode);
+		model.addAttribute("qCode", qCode);
+		
+		model.addAttribute("questionList", map.get("questionList"));
+		model.addAttribute("pagination", map.get("pagination"));
+
 		
 		
-		model.addAttribute("questionList", questionList);
 		
 		
 		return "board/csboard/questionList";

@@ -43,7 +43,8 @@ public class ChatbotController {
 		model.addAttribute("loginMember", loginMember); 
     	
     	// 2) boardCode 값 mock
-		model.addAttribute("exhibitionCode", 3);  //boardCode === exhibitionCode === communityCode
+		//model.addAttribute("exhibitionCode", 3);  //boardCode === exhibitionCode === communityCode
+		model.addAttribute("communityCode", 3);  //boardCode === exhibitionCode === communityCode
 		model.addAttribute("exhibitionName", "전시게시판");  //boardName === exhibitionName === communityName
 		
 		

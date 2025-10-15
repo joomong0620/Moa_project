@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const keyword = searchInput.value.trim();
         if (keyword) newParams.set('query', keyword);
 
-        window.location.href = form.getAttribute('action') + '?' + newParams.toString();
+        window.location.href = '/board/4/pmSearchList?' + newParams.toString();
+
     });
 });

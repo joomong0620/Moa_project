@@ -106,6 +106,15 @@
 		AND B.BOARD_NO = #{boardNo}
 	</select>
 	
+		<!-- 좋아요 여부 확인 -->
+	<select id="boardLikeCheck" resultType="_int">
+		SELECT COUNT(*) 
+		FROM "LIKE"
+		WHERE BOARD_NO = ${boardNo}
+		AND MEMBER_NO = ${memberNo}
+	</select>
+	
+	
 	<!-- 좋아요 테이블 추가 -->
 	<insert id="insertBoardLike">
 		INSERT INTO "LIKE"

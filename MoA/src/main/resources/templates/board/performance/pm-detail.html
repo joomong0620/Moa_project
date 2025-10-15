@@ -175,14 +175,14 @@
 
             <!-- 결재할 때 넘어갈 정보들 -->
             <form th:action="@{/payment/pay}" method="post">
-                <input type="hidden" name="boardNo" th:value="*{boardNo}" />
-                <input type="hidden" name="showTitle" th:value="*{boardTitle}" />
-                <input type="hidden" name="showName" th:value="*{boardTitle}" />
+                <input type="hidden" name="boardNo" th:value="${board.boardNo}" />
+                <input type="hidden" name="showTitle" th:value="${board.boardTitle}" />
+                <input type="hidden" name="showName" th:value="${board.boardTitle}" />
 
                 <!-- 임시 공연 날짜 -->
                 <input type="hidden" id="showDate" name="showDate" th:value="${board.pmStartTime}" />
 
-                <input type="hidden" name="showPlace" th:value="*{pmHouseName}" />
+                <input type="hidden" name="showPlace" th:value="${board.pmHouseName}" />
                 <input type="hidden" name="memberNo" th:value="${session.loginMember?.memberNo}" />
                 <input type="hidden" name="memberNickname" th:value="${session.loginMember?.memberNickname}" />
                 <input type="hidden" name="memberTel" th:value="${session.loginMember?.memberTel}" />

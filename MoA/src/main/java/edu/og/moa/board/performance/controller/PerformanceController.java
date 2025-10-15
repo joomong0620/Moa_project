@@ -233,11 +233,11 @@ public class PerformanceController {
 	    List<String> address = params.get("address");
 	    List<String> text = params.get("text");
 		
-	    log.debug("type", type);
-	    log.debug("type", price);
-	    log.debug("type", date);
-	    log.debug("type", address);
-	    log.debug("type", text);
+	    log.info("type = {}", type);
+	    log.info("price = {}", price);
+	    log.info("date = {}", date);
+	    log.info("address = {}", address);
+	    log.info("text = {}", text);
 		
 		
 		return "board/performance/pm-search";

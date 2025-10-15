@@ -1,5 +1,7 @@
 package edu.og.moa.pay.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,7 @@ public class PaymentController {
         // 로그인된 회원 정보 모델에 담기
         model.addAttribute("member", loginMember);
         model.addAttribute("ticketingInfo", ticketingInfo);
+        
         System.out.println("넘어온 데이터 : " + ticketingInfo);
 
         return "pay/pay";
@@ -64,4 +67,5 @@ public class PaymentController {
     public String paymentSuccess() {
         return "pay/pay_success";
     }
+
 }

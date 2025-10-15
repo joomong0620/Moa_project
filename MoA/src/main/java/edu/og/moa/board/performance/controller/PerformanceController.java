@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,12 @@ import edu.og.moa.member.model.dto.Member;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/board/4")
 @SessionAttributes("loginMember")
+@Slf4j
 public class PerformanceController {
 
 	
@@ -220,11 +223,21 @@ public class PerformanceController {
 	// 공연 상세검색 목록 조회
 	@GetMapping("/pmSearchList")
 	public String selectPmSearchList (
-			@RequestParam MultiValueMap<String, String> map,
+			@RequestParam MultiValueMap<String, String> params,
 			Model model
 			
 			) {
-		// Map<String, Object> map = service.selectPmSearchList(paramMap, type, price, date, address, cp);
+		List<String> type = params.get("type");
+	    List<String> price = params.get("price");
+	    List<String> date = params.get("date");
+	    List<String> address = params.get("address");
+	    List<String> text = params.get("text");
+		
+	    log.debug("type", type);
+	    log.debug("type", price);
+	    log.debug("type", date);
+	    log.debug("type", address);
+	    log.debug("type", text);
 		
 		
 		return "board/performance/pm-search";

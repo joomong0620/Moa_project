@@ -175,6 +175,7 @@
 
             <!-- 결재할 때 넘어갈 정보들 -->
             <form th:action="@{/payment/pay}" method="post">
+                <input type="hidden" name="boardNo" th:value="*{boardNo}" />
                 <input type="hidden" name="showTitle" th:value="*{boardTitle}" />
                 <input type="hidden" name="showName" th:value="*{boardTitle}" />
 
@@ -182,9 +183,10 @@
                 <input type="hidden" id="showDate" name="showDate" th:value="${board.pmStartTime}" />
 
                 <input type="hidden" name="showPlace" th:value="*{pmHouseName}" />
-                <input type="hidden" name="memberNickname" th:value="*{memberNickname}" />
-                <input type="hidden" name="memberTel" th:value="*{memberTel}" />
-                <input type="hidden" name="memberEmail" th:value="*{memberEmail}" />
+                <input type="hidden" name="memberNo" th:value="${session.loginMember?.memberNo}" />
+                <input type="hidden" name="memberNickname" th:value="${session.loginMember?.memberNickname}" />
+                <input type="hidden" name="memberTel" th:value="${session.loginMember?.memberTel}" />
+                <input type="hidden" name="memberEmail" th:value="${session.loginMember?.memberEmail}" />
                 <input type="hidden" name="eventType" th:value="'performance'" />
 
                 <!-- 좌석 분류 및 가격 반복문 -->
@@ -278,6 +280,9 @@
                 }
             });
         });
+
+
+        const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인한 회원 번호";
     </script>
 
 </body>

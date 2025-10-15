@@ -220,4 +220,28 @@
 	</insert>	
 	
 
+    <resultMap id="JsonBoardImageMap" type="edu.og.moa.board.exhibition.model.dto.JsonBoardImage">
+        <result property="boardNo" column="BOARD_NO"/>
+        <result property="imagePath" column="IMAGE_PATH"/>
+    </resultMap>
+
+    <!-- 전시 썸네일 리스트 조회 -->
+    <select id="selectExhibitionThumbnailList" resultMap="JsonBoardImageMap">
+        SELECT 
+            B.BOARD_NO,
+            (
+                SELECT I.IMG_PATH || I.IMG_ORIG 
+                FROM BOARD_IMG I
+                WHERE I.BOARD_NO = B.BOARD_NO
+                  AND I.IMG_ORDER = 0
+                  AND ROWNUM = 1
+            ) AS IMAGE_PATH
+        FROM BOARD B
+        WHERE EXISTS (
+            SELECT 1 FROM BOARD_IMG I
+             WHERE I.BOARD_NO = B.BOARD_NO
+        )
+        ORDER BY B.BOARD_NO DESC
+    </select>
+    
 </mapper>

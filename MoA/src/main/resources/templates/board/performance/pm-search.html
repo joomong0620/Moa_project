@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+
+    <link rel="stylesheet" th:href="@{/css/board/performance/pm-search-style.css}">
 </head>
 
 <body>
     <main>
         <th:block th:replace="~{/common/header}">header.html</th:block>
+
+        <th:block th:replace="~{board/performance/pm-nav}"></th:block>
 
         <div class="search-container">
 
@@ -30,6 +36,7 @@
                         <label><input type="checkbox" data-value="3"> 음악</label>
                         <label><input type="checkbox" data-value="4"> 무용</label>
                         <label><input type="checkbox" data-value="5"> 서커스/마술</label>
+                        <label><input type="checkbox" data-value="5"> 복합/기타</label>
                     </div>
                 </div>
 

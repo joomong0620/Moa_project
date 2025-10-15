@@ -1,0 +1,464 @@
+/* ===== 기본 설정 ===== */
+body {
+    background-color: #f5f7fa;
+    font-family: "Noto Sans KR", sans-serif;
+    color: #27374d;
+}
+
+/* ===== 컨테이너 ===== */
+.myPage-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 60px auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.myPage-container .active {
+    background-color: initial !important;
+}
+
+/* ===== 사이드 메뉴 ===== */
+.myPage-sideMenu {
+    flex: 0 0 320px;
+    background: #fff;
+    border-right: 1px solid #e0e0e0;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.myPage-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #27374d;
+}
+
+/* ===== 프로필 ===== */
+.profile {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.profile-image-area {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    border: 3px solid #dde6ed;
+    background-color: #f4f7fa;
+}
+
+#profileImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#deleteImage {
+    position: absolute;
+    top: 5px;
+    right: 75px;
+    color: #999;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.profile-btn-area {
+    margin-top: 10px;
+}
+
+.profile-btn-area label {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #dde6ed;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #27374d;
+    border: 1px solid #ccc;
+    transition: 0.2s;
+}
+
+.profile-btn-area label:hover {
+    background-color: #cfd8e3;
+}
+
+.profile-btn-area button {
+    padding: 5px 12px;
+    background-color: #27374d;
+    color: white;
+    border-radius: 20px;
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* ===== 유저 정보 ===== */
+.userinfo {
+    background-color: #f8fafc;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 6px 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.info-row span {
+    font-size: 16px;
+    color: #27374d;
+}
+
+/* ===== 주소 입력 ===== */
+.address-display {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.address-inputs {
+    display: none;
+}
+
+.address-inputs.active {
+    display: block;
+}
+
+.myPage-row.info-address {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.myPage-row.info-address input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.myPage-row.info-address button {
+    margin-left: 10px;
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.myPage-row.info-address button:hover {
+    background-color: #0056b3;
+}
+
+/* ===== 메뉴 ===== */
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #27374d;
+    background-color: #f5f7fa;
+    border: 1px solid #d0d6de;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.menu-btn:hover,
+.menu-btn.active {
+    background-color: #27374d;
+    color: #fff;
+}
+
+/* ===== 메인 콘텐츠 ===== */
+.myPage-main {
+    flex: 1;
+    padding: 40px;
+    background-color: #f9fbfd;
+    overflow-y: auto;
+}
+
+.content-section {
+    margin-bottom: 60px;
+}
+
+.content-section h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    border-left: 6px solid #27374d;
+    padding-left: 10px;
+    color: #27374d;
+}
+
+.empty {
+    color: #777;
+    text-align: center;
+    padding: 60px 0;
+    border: 1px dashed #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+/* ===== 카드 ===== */
+.rsv-list,
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.rsv-card,
+.post-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 280px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.rsv-card:hover,
+.post-card:hover {
+    transform: translateY(-3px);
+}
+
+.rsv-card img,
+.post-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.rsv-card p,
+.post-card p {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #27374d;
+}
+
+/* ===== 버튼 ===== */
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.btn.small {
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: #dde6ed;
+    color: #27374d;
+    transition: 0.2s;
+}
+
+.btn.small:hover {
+    background-color: #27374d;
+    color: #fff;
+}
+
+.btn.small.gray {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+/* ===== 숨김 ===== */
+.hidden {
+    display: none;
+}
+
+.nickname-box,
+.addr-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#memberNickname,
+#memberAddr {
+    flex: 1;
+    word-break: keep-all;
+    font-size: 15px;
+    color: #27374d;
+    line-height: 1.4;
+}
+
+.mini-btn {
+    padding: 5px 10px;
+    margin-left: 8px;
+    background-color: #27374d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.mini-btn:hover {
+    background-color: #1c2a3a;
+}
+
+.hidden {
+    display: none;
+}
+
+#nicknameInput {
+    flex: 1;
+    font-size: 15px;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+
+/* 주소 변경 관련 추가 스타일 */
+.addr-btn {
+    padding: 5px 10px;
+    background-color: #27374d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.addr-btn:hover {
+    background-color: #1c2a3a;
+}
+
+.addr-save-btn {
+    background-color: #27374d;
+    color: white;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.addr-save-btn:hover {
+    background-color: #1c2a3a;
+}
+
+.address-inputs {
+    display: none;
+    margin-top: 10px;
+}
+
+.address-inputs.active {
+    display: block;
+}
+
+/* ===== 회원 탈퇴 섹션 스타일 ===== */
+#secession-section {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    color: #27374d;
+}
+
+#secession-section h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #27374d;
+    margin-bottom: 10px;
+}
+
+.myPage-subject {
+    display: block;
+    margin-bottom: 20px;
+    color: #555;
+    font-size: 16px;
+}
+
+/* 비밀번호 입력 */
+#secession-section input[type="password"] {
+    width: 250px;
+    padding: 8px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* 약관 */
+#secession-terms-container {
+    margin-top: 20px;
+    background: #f5f7fa;
+    border: 1px solid #dde6ed;
+    padding: 15px;
+    border-radius: 10px;
+    height: 220px;
+    overflow-y: auto;
+}
+
+.secession-terms {
+    white-space: pre-wrap;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    background: transparent;
+}
+
+/* 동의 체크박스 */
+.agree-box {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.agree-box label {
+    color: #27374d;
+    font-size: 15px;
+}
+
+/* 버튼 */
+.myPage-submit {
+    margin-top: 25px;
+    padding: 10px 18px;
+    background-color: #27374d;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.myPage-submit:hover {
+    background-color: #1d2a3a;
+}

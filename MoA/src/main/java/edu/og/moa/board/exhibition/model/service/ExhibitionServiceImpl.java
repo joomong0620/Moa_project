@@ -20,6 +20,7 @@ import edu.og.moa.board.exhibition.model.dto.BoardDB;
 import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
 import edu.og.moa.board.exhibition.model.dto.EventPeriod;
 import edu.og.moa.board.exhibition.model.dto.Exhibition;
+import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 import edu.og.moa.board.exhibition.model.dto.PaginationDB;
 import lombok.extern.slf4j.Slf4j;
 
@@ -301,7 +302,5 @@ public class ExhibitionServiceImpl implements ExhibitionService{
 		return map;
 	}
 
-	
-	
 	
 }

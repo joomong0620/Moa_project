@@ -1,0 +1,197 @@
+
+.section-container {
+
+    box-sizing: border-box;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+
+    display: flex;
+    justify-content: center;
+
+    position: relative;
+
+    height: 1500px;
+
+    border: 1px solid pink;
+
+}
+
+.question-area{
+
+    min-width: 1400px;
+    height: 1500px;
+
+    border: 1px solid black;
+
+}
+
+.section-top {
+
+    font-size: 64px;
+    width: 790px;
+    height: 147px;
+    font-weight: bold;
+
+}
+
+.section-first {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 100px;
+    
+
+}
+
+.section-second {
+
+    display: flex;
+
+    width: 250px;
+    height: 100px;
+    font-size: 35px;
+    font-weight: bold;
+    
+}
+
+.type-btn-area {
+
+    display: flex;
+
+    
+    justify-content: center;
+
+    align-content: center;
+    align-items: center;
+
+    flex-direction: row;
+
+    justify-content: space-around;
+
+
+}
+
+.type-btn {
+
+    width: 189px;
+    height: 124px;
+    background-color: #27374d;
+    color: white;
+    border-radius: 50px;
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 100px;
+
+    
+}
+
+
+label.type{
+
+    border: 1px solid black;
+    padding: 4px;
+}
+
+input#type{
+
+    display: none;
+
+}
+
+nav#type-nav{
+
+    display: none;
+
+}
+
+input#type:checked + nav#type-nav{
+
+    display: block;
+
+}
+
+
+.help{
+
+    font-size: 35px;
+    font-weight: bold;
+
+    margin-top: 100px;
+}
+
+#one-question{
+
+    width: 1234px;
+    height: 109px;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 35px;
+    
+    
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+
+
+.q-text {
+
+    display: flex;
+    flex-direction: column;
+}
+
+.tex {
+
+    font-size: 24px;
+
+    margin-left: 120px;
+}
+
+
+#question-confirm{
+
+    width: 1234px;
+    height: 109px;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 35px;
+
+    margin-top: 80px;
+    
+    
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+
+.c-text {
+
+    display: flex;
+    flex-direction: column;
+}
+
+.tex-c {
+
+    font-size: 24px;
+
+    margin-left: 90px;
+}
+
+.tex-d{
+
+    margin-left: 55px;
+}
+
+
+

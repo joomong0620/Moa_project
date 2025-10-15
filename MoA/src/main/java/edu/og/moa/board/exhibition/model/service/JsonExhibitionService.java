@@ -8,6 +8,7 @@ import edu.og.moa.board.exhibition.model.dto.BoardDB;
 import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
 import edu.og.moa.board.exhibition.model.dto.ContributorDB;
 import edu.og.moa.board.exhibition.model.dto.ExhibitionDB;
+import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 import edu.og.moa.board.exhibition.model.dto.LikeDB;
 
 public interface JsonExhibitionService {
@@ -94,6 +95,10 @@ public interface JsonExhibitionService {
 	 * @throws IOException
 	 */
 	int jsonContributorInsert(ContributorDB contributor) throws IllegalStateException, IOException;
+	
+	// 메인화면 전시 썸네일 조회
+	List<JsonBoardImage> selectExhibitionThumbnailList();
+
 
 
 

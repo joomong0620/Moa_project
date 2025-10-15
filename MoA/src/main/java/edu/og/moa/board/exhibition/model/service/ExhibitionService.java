@@ -6,6 +6,7 @@ import java.util.Map;
 import edu.og.moa.board.exhibition.model.dto.AuthorDB;
 import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
 import edu.og.moa.board.exhibition.model.dto.Exhibition;
+import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 
 public interface ExhibitionService {
 	
@@ -69,9 +70,5 @@ public interface ExhibitionService {
 	 * @return
 	 */
 	int updateReadCount(int boardNo);
-
-
-
-
 
 }

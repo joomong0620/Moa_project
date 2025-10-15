@@ -10,6 +10,7 @@ import edu.og.moa.board.exhibition.model.dto.AuthorDB;
 import edu.og.moa.board.exhibition.model.dto.BoardDB;
 import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
 import edu.og.moa.board.exhibition.model.dto.Exhibition;
+import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 
 @Mapper
 public interface ExhibitionMapper {
@@ -52,9 +53,9 @@ public interface ExhibitionMapper {
 
 	// 조회수 증가
 	public int updateReadCount(int boardNo);
-
-
-
+	
+	// 메인화면 전시 이미지 썸네일 조회 (KSY)
+	public List<JsonBoardImage> selectExhibitionThumbnailList();
 
 	                 
 

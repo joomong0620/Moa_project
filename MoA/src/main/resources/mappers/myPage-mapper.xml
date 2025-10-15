@@ -79,7 +79,7 @@
   <!-- 예매 내역 조회 -->
     <select id="selectPaymentList" resultType="Payment">
 			SELECT 
-			    p.PORTONE_NO AS portoneNo,
+			    p.PORTONE_NO AS impUid,
 			    p.MEMBER_NO AS memberNo,
 			    p.BOARD_NO AS boardNo,
 			    p.SEE_DATE AS seeDate,

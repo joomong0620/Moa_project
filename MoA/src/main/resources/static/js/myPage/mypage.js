@@ -236,27 +236,33 @@ if(imageInput != null){
 // 예매 취소 버튼 클릭 시
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("cancel-btn")) {
-    const payNo = e.target.dataset.rsvno;
+    const impUid = e.target.dataset.impuid;
+
+    if (!impUid) {
+      alert("결제 정보를 찾을 수 없습니다.");
+      return;
+    }
 
     if (!confirm("정말 예매를 취소하시겠습니까?")) return;
 
-    fetch("/mypage/cancel", {
+    fetch("/payment/cancel", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ payNo: payNo }),
+      body: JSON.stringify({ impUid: impUid, reason: "사용자 요청" }),
     })
-      .then(resp => resp.text())
-      .then(result => {
-        if (result > 0) {
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result === "success") {
           alert("예매가 취소되었습니다.");
-          location.reload();
+          window.location.href = "/payment/cancel/success";
         } else {
           alert("취소에 실패했습니다.");
         }
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error("취소 요청 중 오류:", err));
   }
 });
+
 
 
   // 리뷰 작성 버튼 (예시)

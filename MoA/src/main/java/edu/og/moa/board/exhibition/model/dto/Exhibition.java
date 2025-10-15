@@ -33,6 +33,9 @@ public class Exhibition { // 일단은 JsonExhibtion과 Exhibition을 같게 두
 	// 3) 회원 JOIN
 	private String memberNickname; 
 	//private int memberNo;
+	private String memberTel; 	 // for 예매/결제
+	private String memberEmail;  // for 예매/결제 
+	
 	private String profileImage;
 	private String thumbnail;
 
@@ -70,5 +73,9 @@ public class Exhibition { // 일단은 JsonExhibtion과 Exhibition을 같게 두
 	 
 	// CONTRIBUTOR 테이블 JOIN
 	private String exhibitContributor; // 			contributor ("CONTRIBUTOR")				exhibitContributor("HOST_SUPPORT") EXHIBITION DB에서 exhibitNo(=boardNo)로 CONTRIBUTOR DB JOIN 조회해서"EXHIBIT_HOST" and "EXHIBIT_SUPPORT" String으로 합치기 (DB간 관계는 ERD봐라) 
+
+
+	// Exhibition이 현 전시관련 status체크 (현재진행중 전시, 예정전시, 지난전시) => 이건 myBatis mapper에 resultMap에 포함되지 않는 DTO 필드
+	private String eventStatus;    // 분류 결과: pastEvent, futureEvent, currentEvent
 }
 

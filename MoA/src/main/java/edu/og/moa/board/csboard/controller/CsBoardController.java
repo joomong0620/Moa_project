@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import edu.og.moa.board.csboard.model.dto.BoardJtw;
 import edu.og.moa.board.csboard.model.service.CsService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,12 +37,18 @@ public class CsBoardController {
 	@GetMapping("/{communityCode:5}/questionList/{qCode:[1-3]}")
 	public String questionList(@PathVariable("communityCode") int communityCode,
 			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
-			@PathVariable("qCode") int qCode, Model model
+			@PathVariable("qCode") int qCode, Model model, BoardJtw boardJtw
 			
 			
 			) {
 		
-		Map<String, Object> map = service.selectQuestionList(communityCode, qCode, cp);
+		boardJtw.setCommunityCode(communityCode);
+		boardJtw.setQCode(qCode);
+		System.out.println(communityCode);
+		
+		
+		
+		Map<String, Object> map = service.selectQuestionList(communityCode, qCode, boardJtw, cp);
 		
 		model.addAttribute("communityCode", communityCode);
 		model.addAttribute("qCode", qCode);

@@ -8,9 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
-import edu.og.moa.board.exhibition.model.service.ExhibitionService;
 import edu.og.moa.board.exhibition.model.service.JsonExhibitionService;
 import edu.og.moa.member.model.dto.Member;
 
@@ -49,5 +49,37 @@ public class MainController {
         return "common/main"; // templates/common/main.html
     }
 
+
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @GetMapping("/loginError")
+    public String loginError(RedirectAttributes ra) {
+    	ra.addFlashAttribute("message", "로그인 후 이용해주세요.");
+    	// boot에선 필터에선 메세지를 못 보낸다. 그래서 우회했음
+    	
+    	return "redirect:/";
+    }
+    
+    
+    
     
 }
+
+
+

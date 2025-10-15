@@ -19,7 +19,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int signUp(Member inputMember) {
 		
+		System.out.println("inputMember2 : " + inputMember);
+		
 		int result = dao.signUp(inputMember);
+		
+		System.out.println("inputMember3 : " + inputMember);
 		
 		return result;
 	}
@@ -29,6 +33,16 @@ public class MemberServiceImpl implements MemberService{
 	public Member login(Member inputMember) {
 		
 		Member loginMember = dao.login(inputMember);
+		
+		if(loginMember != null) {// 로그인 성공 시
+			
+			if(inputMember.getMemberPw().equals(loginMember.getMemberPw())) {
+				
+				loginMember.setMemberPw(null);
+			}else {
+				loginMember = null;
+			}
+		}
 		
 		return loginMember;
 	}

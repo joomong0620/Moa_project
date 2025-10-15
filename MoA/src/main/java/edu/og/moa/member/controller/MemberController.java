@@ -70,9 +70,9 @@ public class MemberController {
 			
 			ra.addFlashAttribute("message", "입력 정보가 올바르지 않습니다.");
 			
+			return "member/login";
 		}
 		
-		return "redirect:/";
 		
 		
 		
@@ -121,7 +121,7 @@ public class MemberController {
 //	       inputMember.setMemberAddr(addr);
 //	    }
 		
-		
+		System.out.println("inputMember : " + inputMember);
 		
 		if(memberAddr != null && memberAddr.length > 0) { 
 		    String addr = String.join("^^^", memberAddr);
@@ -151,9 +151,11 @@ public class MemberController {
 	        System.out.println("회원가입 실패...");
 	    }
 		
-		
+		System.out.println("inputMember : " + inputMember);
 		
 		ra.addFlashAttribute("message", message);
+		
+		System.out.println("message :" + message);
 
 	    return path;
 		

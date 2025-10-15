@@ -27,6 +27,8 @@ public class BoardJtw {
 	// Question join
 	private String qName;
 	
+
+	
 	
 	
 

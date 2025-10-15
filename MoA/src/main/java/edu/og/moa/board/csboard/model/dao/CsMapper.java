@@ -12,7 +12,7 @@ public interface CsMapper {
 
 		int getListCount(Map<String, Object> paramMap); 
 		
-		List<BoardJtw> selectQuestionList(Map<String, Object> paramMap);
+		List<BoardJtw> selectQuestionList(BoardJtw boardJtw);
 	
 
 }

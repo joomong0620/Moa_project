@@ -20,14 +20,18 @@ public class CsServiceIm implements CsService{
 
 	// 삭제되지 않은 게시글 목록 조회
 	@Override
-	public Map<String, Object> selectQuestionList(int communityCode, int qCode, int cp) {
+	public Map<String, Object> selectQuestionList(int communityCode, int qCode, BoardJtw boardJtw, int cp) {
 		
 		Map<String, Object> paramMap = new HashMap();
 		
 		paramMap.put("communityCode", communityCode);
 		paramMap.put("qCode", qCode);
 		
+		System.out.println("communityCode1 :" + communityCode);
+		
 		int listCount = mapper.getListCount(paramMap);
+		
+		System.out.println("communityCode2 :" + communityCode);
 		
 		PaginationJtw pagination = new PaginationJtw(cp, listCount);
 		
@@ -39,7 +43,17 @@ public class CsServiceIm implements CsService{
 		paramMap.put("limit", pagination.getLimit());
 		paramMap.put("offset", offset);
 		
-		List<BoardJtw> questionList = mapper.selectQuestionList(paramMap);
+		boardJtw.setCommunityCode(communityCode);
+		boardJtw.setQCode(qCode);
+		System.out.println("communityCode3 :" + communityCode);
+		
+		
+		List<BoardJtw> questionList = mapper.selectQuestionList(boardJtw);
+		
+		System.out.println("boardJtw :" + boardJtw);
+		System.out.println("communityCode4 :" + communityCode);
+		
+
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		

@@ -14,7 +14,7 @@
 
 
 
-
+    ${questionList}
         <th:block th:replace="~{common/header}"></th:block>
         
 
@@ -44,10 +44,10 @@
                         <!-- 게시글 목록이 조회된 경우 --> 
         
                         <nav>
-                            <a th:each="board : ${questionList}" 
+                            <a th:each="boardJtw : ${questionList}" 
                                 th:href="@{/board/{communityCode}/questionList/{qCode}
                                 (communityCode=${communityCode}, qCode=${qCode}, cp=${pagination.currentPage})}"
-                                th:text="${board.qName}"></a>
+                                th:text="${boardJtw.qName}"></a>
         
         
                         </nav>
@@ -56,17 +56,17 @@
         
                             <tbody>
         
-                                <tr th:each="board : ${questionList}">
+                                <tr th:each="boardJtw : ${questionList}">
                                     <td>
                 
                                         
                                         <a th:href="@{board/{communityCode}/questionList/{qCode}/{boardNo}(boardCode=${boardCode}, qCode=${qCode}, boardNo=${board.boardNo}, 
-                                                        cp=${pagination.currentPage})}" th:utext="${board.boardTitle}"></a>
+                                                        cp=${pagination.currentPage})}" th:utext="${boardJtw.boardTitle}"></a>
                                         
         
                                     </td>
         
-                                    <td th:text="${#dates.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td th:text="${#dates.format(boardJtw.createDate, 'yyyy-MM-dd HH:mm')}"></td>
                                 </tr>
         
         

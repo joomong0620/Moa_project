@@ -466,3 +466,16 @@ body {
 .myPage-submit:hover {
     background-color: #1d2a3a;
 }
+
+
+.rsv-card .rsv-status.status-ok {
+    color: #007bff !important;
+    /* 파란색 */
+    font-weight: bold;
+}
+
+.rsv-card .rsv-status.status-cancel {
+    color: #dc3545 !important;
+    /* 빨간색 */
+    font-weight: bold;
+}

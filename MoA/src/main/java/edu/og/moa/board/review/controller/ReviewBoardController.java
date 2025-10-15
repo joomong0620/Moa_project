@@ -62,14 +62,6 @@ public class ReviewBoardController {
             Model model,
             HttpSession session) {
 
-        // 테스트용 임시 세션
-        if (session.getAttribute("loginMember") == null) {
-            Member fakeMember = new Member();
-            fakeMember.setMemberNo(3);
-            fakeMember.setMemberNickname("유저일");
-            model.addAttribute("loginMember", fakeMember);
-        }
-
         Map<String, Object> map = service.selectReviewList(boardCode, cp);
         model.addAttribute("map", map);
         model.addAttribute("boardCode", boardCode);
@@ -89,16 +81,6 @@ public class ReviewBoardController {
             HttpServletResponse resp,
             HttpSession session) throws ParseException {
 
-
-        // 테스트를 위해 로그인한 회원 없을 경우 임시 계정 생성
-        if (loginMember == null) {
-            Member fakeMember = new Member();
-            fakeMember.setMemberNo(3); // 테스트용 임의 번호
-            fakeMember.setMemberNickname("테스트유저");
-            model.addAttribute("loginMember", fakeMember);
-            loginMember = fakeMember;
-        }
-        
         Map<String, Object> map = new HashMap<>();
         map.put("boardCode", boardCode);
         map.put("boardNo", reviewNo);

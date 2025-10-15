@@ -26,6 +26,7 @@ import edu.og.moa.board.exhibition.model.dto.Exhibition;
 import edu.og.moa.board.exhibition.model.dto.MemberDB;
 import edu.og.moa.board.exhibition.model.dto.TicketingInfo;
 import edu.og.moa.board.exhibition.model.service.ExhibitionService;
+import edu.og.moa.member.model.dto.Member;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -74,7 +75,7 @@ public class ExhibitionController {
 			
 			
 			// 로그인 서비스 mock:		
-			MemberDB loginMember = new MemberDB();
+			Member loginMember = new Member();
 			loginMember.setMemberNickname("한국문화정보원");
 			loginMember.setProfileImg("/images/board/exhibition/member/penguin.jpeg"); 
 			loginMember.setMemberNo(10); // 임의할당 for testing (cf:  전시 exhibitionCode === boarcCode ===  communityCode = 3)
@@ -93,7 +94,7 @@ public class ExhibitionController {
 			model.addAttribute("map", map);
 			
 			// 로그인 서비스 mock:		
-			MemberDB loginMember = new MemberDB();
+			Member loginMember = new Member();
 			loginMember.setMemberNickname("한국문화정보원");
 			loginMember.setProfileImg("/images/board/exhibition/member/penguin.jpeg"); 
 			loginMember.setMemberNo(10); // 임의할당 for testing (cf:  전시 exhibitionCode === boarcCode ===  communityCode = 3)
@@ -116,7 +117,7 @@ public class ExhibitionController {
 			, @PathVariable("boardNo") int boardNo
 			, Model model // 데이터 전달용 객체 
 			, RedirectAttributes ra // 리다이렉트 시 데이터 전달용 객체
-			//, @SessionAttribute(value = "loginMember", required=false) MemberDB loginMember
+			//, @SessionAttribute(value = "loginMember", required=false) Member loginMember
 			// 세션에서 loginMember를 얻어오는데 없으면 null, 있으면 회원 정보 저장 (로그인 안하고 하트누를 수도 있으므로 required=false)
 			
 			// 쿠키를 이용한 조회수 증가 시 사용
@@ -133,7 +134,7 @@ public class ExhibitionController {
 		
 		
 		// 로그인 서비스 mock:		
-		MemberDB loginMember = new MemberDB();
+		Member loginMember = new Member();
 		loginMember.setMemberNickname("한국문화정보원");
 		loginMember.setProfileImg("/images/board/exhibition/member/penguin.jpeg"); 
 		loginMember.setMemberNo(10); // 임의할당 for testing (cf:  전시 exhibitionCode === boarcCode ===  communityCode = 3)

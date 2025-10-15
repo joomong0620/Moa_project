@@ -8,11 +8,16 @@
   </head>
 
   <body>
+    
     <main class="payment-main">
       <button class="back-btn" onclick="history.back()">이전으로</button>
       <h2 class="page-title">결제</h2>
 
       <section class="payment-container">
+        <input type="hidden" id="eventType" th:value="${ticketingInfo.eventType}" />
+        <input type="hidden" id="boardNo" th:value="${ticketingInfo.boardNo}" />
+        <input type="hidden" id="memberNo" th:value="${ticketingInfo.memberNo}" />
+
         <div class="payment-left">
           <!-- 예매 정보 -->
           <div class="section-block">
@@ -20,10 +25,10 @@
             <div class="booking-info">
               <img th:src="@{/images/common/perf1.jpg}" alt="포스터" />
               <div class="info-text">
-                <p class="title" id="showTitle" th:text="${showTitle}">뮤지컬 렌트</p>
-                <p>공연/전시명 : <span id="showName" th:text="${showName}">뮤지컬 렌트</span></p>
-                <p>일시 : <span id="showDate" th:text="${showDate}">2025년 10월 5일 (토) 19:00</span></p>
-                <p>장소 : <span id="showPlace" th:text="${showPlace}">○○아트센터 대극장</span></p>
+                <p class="title" id="showTitle" th:text="${ticketingInfo.showTitle}">뮤지컬 렌트</p>
+                <p>공연/전시명 : <span id="showName" th:text="${ticketingInfo.showName}">뮤지컬 렌트</span></p>
+                <p>일시 : <span id="showDate" th:text="${ticketingInfo.showDate}">2025년 10월 5일 (토) 19:00</span></p>
+                <p>장소 : <span id="showPlace" th:text="${ticketingInfo.showPlace}">○○아트센터 대극장</span></p>
               </div>
             </div>
           </div>
@@ -32,19 +37,22 @@
           <div class="section-block">
             <h3><span class="circle-number">2</span> 결제 옵션</h3>
             <select id="seatSelect">
-              <option value="">좌석을 선택해주세요.</option>
-              <option value="VIP석" data-price="150000">VIP석, 150,000원</option>
-              <option value="R석" data-price="100000">R석, 100,000원</option>
-              <option value="S석" data-price="1">S석, 1원</option>
+              <option value="0">좌석을 선택해주세요.</option>
+              <option value="0" data-price="0" th:if="${ticketingInfo.eventType == 'exhibition'}">무료</option>
+              <option th:each="p : ${priceList}"
+                      th:value="${p.pmPriceType}"
+                      th:data-price="${p.pmPrice}"
+                      th:text="|${p.pmPriceType}석, ${#numbers.formatInteger(p.pmPrice, 3, 'COMMA')}원|">
+              </option>
             </select>
           </div>
 
           <!-- 구매자 정보 -->
           <div class="section-block">
             <h3><span class="circle-number">3</span> 구매자 정보</h3>
-            <p>이름 : <span id="buyerName" th:text="${member.memberNickname}">홍길동</span></p>
-            <p>연락처 : <span id="buyerPhone" th:text="${member.memberTel}">01012345678</span></p>
-            <p>이메일 : <span id="buyerEmail" th:text="${member.memberEmail}">user123@example.com</span></p>
+            <p>이름 : <span id="buyerName" th:text="${member.memberNickname}">이름</span></p>
+            <p>연락처 : <span id="buyerPhone" th:text="${member.memberTel}">전화번호</span></p>
+            <p>이메일 : <span id="buyerEmail" th:text="${member.memberEmail}">이메일</span></p>
           </div>
 
           <!-- 결제 수단 -->

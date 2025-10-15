@@ -173,7 +173,11 @@
 
                                     <div class="sec-right-div2 btn-wrapper">
                                         <div class="exhibition-detail-btn-purchase">
-                                            <form th:action="@{/board/exhibition/submitTicketingInfo}" method="post">
+                                            <form th:action="@{/payment/pay}" method="post">
+
+                                                <input type="hidden" name="boardNo" th:value="*{exhibitNo}" />
+                                                <input type="hidden" name="memberNo" th:value="*{memberNo}" />
+                                                <input type="hidden" name="showTitle" th:value="'showTitle info not available'" />
                                                 <input type="hidden" name="showName" th:value="*{exhibitTitle}" />
                                                 
                                                 <input th:unless="*{exhibitDate}" type="hidden" name="showDate" th:value="'showDate info not available'" />

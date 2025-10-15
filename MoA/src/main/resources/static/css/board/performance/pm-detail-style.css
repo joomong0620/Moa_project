@@ -435,16 +435,64 @@ main {
 
 /* -------------------------------------------------------------------------------------- */
 /* 비활성 탭 내용 숨기기 */
-.tab-content > .tab-pane {
+.tab-content>.tab-pane {
     display: none !important;
     visibility: hidden;
     height: 0;
     overflow: hidden;
 }
 
-.tab-content > .active {
+.tab-content>.active {
     display: block !important;
     visibility: visible;
     height: auto;
     overflow: visible;
+}
+
+
+
+
+/* ----------------------------------------------------------------- */
+/* ----------------------------------------------------------------- */
+/* ----------------------------------------------------------------- */
+
+/* 달력 스타일 살짝 정리 */
+#calendar-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#calendar {
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+#pm-buy-btn {
+    background-color: #526D82;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 25px;
+    cursor: pointer;
+}
+
+#pm-buy-btn:hover {
+    background-color: #3c5368;
+}
+
+/* flatpickr 기본 크기 보장 */
+#calendar-container .calendar {
+    width: 220px;
+    height: auto;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.flatpickr-calendar {
+    width: 100% !important;
+    font-size: 14px;
 }

@@ -99,48 +99,114 @@
 
     <!-- 메인 콘텐츠 -->
     <main class="myPage-main">
-      <!-- 예매 내역 -->
+      <!-- ===================== 내 예매 내역 ===================== -->
       <section id="rsv-section" class="content-section">
         <h3>내 예매 내역</h3>
-        <div th:if="${#lists.isEmpty(reservationList)}" class="empty">예매 내역이 없습니다.</div>
 
-        <div class="rsv-list" th:each="rsv : ${reservationList}">
-          <div class="rsv-card">
-            <img th:src="@{${rsv.thumbnail}}" alt="포스터" />
-            <p th:text="${rsv.title}">전시 제목</p>
-            <p th:text="${rsv.date}">2025.10.19~2025.11.18</p>
-            <p th:text="${rsv.place}">예술의 전당</p>
+        <!-- 예매 내역이 없을 때 -->
+        <div th:if="${#lists.isEmpty(reservationList)}" class="empty">
+          예매 내역이 없습니다.
+        </div>
 
+        <!-- 예매 내역 있을 때 -->
+        <div th:unless="${#lists.isEmpty(reservationList)}" class="rsv-list">
+
+          <!-- 각 예매 카드 -->
+          <div class="rsv-card" th:each="rsv : ${reservationList}">
+            <!-- 썸네일 -->
+            <img th:src="@{${rsv.thumbnail != null ? rsv.thumbnail : '/images/common/moa_logo.png'}}" alt="포스터" />
+
+            <!-- 제목 -->
+            <p class="rsv-title" th:text="${rsv.title}">공연/전시 제목</p>
+
+            <!-- 기간 -->
+            <p class="rsv-period" th:text="'기간: ' + ${rsv.period}">2025.10.19~2025.11.18</p>
+
+            <!-- 관람일자 -->
+            <p class="rsv-see" th:text="'관람일자: ' + ${#dates.format(rsv.seeDate, 'yyyy.MM.dd')}">2025.10.25</p>
+
+            <!-- 장소 -->
+            <p class="rsv-place" th:text="'장소: ' + ${rsv.place}">예술의 전당</p>
+
+            <!-- 금액 -->
+            <p class="rsv-price" th:text="'결제 금액: ' + ${#numbers.formatInteger(rsv.payMuch, 3, 'COMMA')} + '원'">10,000원
+            </p>
+
+            <!-- 상태 -->
+            <p class="rsv-status" th:text="${rsv.payOk == 'Y'} ? '예매 완료' : '취소됨'"
+              th:classappend="${rsv.payOk == 'Y'} ? 'status-ok' : 'status-cancel'">
+              예매 완료
+            </p>
+
+            <!-- 버튼 그룹 -->
             <div class="btn-group">
-              <button class="btn small">해당 페이지 바로가기</button>
-              <button class="btn small">예매 취소</button>
-              <button class="btn small gray">리뷰 작성하기</button>
+              <a th:href="@{/board/{code}/{no}(code=${rsv.boardCode}, no=${rsv.boardNo})}" class="btn small blue">
+                해당 페이지 바로가기</a>
+              <button class="btn small gray cancel-btn" th:data-rsvno="${rsv.impUid}">예매 취소</button>
+              <button class="btn small light review-btn" th:data-boardno="${rsv.boardNo}">리뷰 작성하기</button>
             </div>
           </div>
         </div>
       </section>
 
+
       <!-- 좋아요한 게시물 -->
       <section id="like-section" class="content-section hidden">
         <h3>좋아요한 게시물</h3>
-        <div class="card-list" th:each="post : ${likedList}">
-          <div class="post-card">
-            <img th:src="@{${post.thumbnail}}" alt="게시물 썸네일" />
-            <p th:text="${post.title}">뮤지컬 제목</p>
+
+        <!-- 게시물이 없을 때 -->
+        <div th:if="${#lists.isEmpty(likedList)}" class="empty">
+          좋아요한 게시물이 없습니다.
+        </div>
+
+        <!-- 게시물 목록 -->
+        <div th:unless="${#lists.isEmpty(likedList)}" class="card-list">
+          <div class="post-card" th:each="post : ${likedList}">
+
+            <!-- 썸네일 -->
+            <a th:href="@{/board/{code}/{no}(code=${post.boardCode}, no=${post.boardNo})}">
+              <img th:if="${post.thumbnail}" th:src="${post.thumbnail}" th:alt="${post.boardTitle}" />
+              <img th:unless="${post.thumbnail}" th:src="@{/images/board/freeboard/logo.png}" alt="기본 이미지" />
+            </a>
+
+            <!-- 제목 -->
+            <p class="post-title">
+              <a th:href="@{/board/{code}/{no}(code=${post.boardCode}, no=${post.boardNo})}"
+                th:text="${post.boardTitle}">게시물 제목</a>
+            </p>
           </div>
         </div>
       </section>
 
+
       <!-- 내가 쓴 게시물 -->
       <section id="post-section" class="content-section hidden">
         <h3>내가 쓴 게시물</h3>
-        <div class="card-list" th:each="post : ${myPostList}">
-          <div class="post-card">
-            <img th:src="@{${post.thumbnail}}" alt="게시물 썸네일" />
-            <p th:text="${post.title}">내 게시물 제목</p>
+
+        <!-- 게시물이 없을 때 -->
+        <div th:if="${#lists.isEmpty(myPostList)}" class="empty">
+          작성한 게시물이 없습니다.
+        </div>
+
+        <!-- 게시물 목록 -->
+        <div th:unless="${#lists.isEmpty(myPostList)}" class="card-list">
+          <div class="post-card" th:each="post : ${myPostList}">
+
+            <!-- 썸네일 -->
+            <a th:href="@{/board/{code}/{no}(code=${post.boardCode}, no=${post.boardNo})}">
+              <img th:if="${post.thumbnail}" th:src="${post.thumbnail}" th:alt="${post.boardTitle}" />
+              <img th:unless="${post.thumbnail}" th:src="@{/images/board/freeboard/logo.png}" alt="기본 이미지" />
+            </a>
+
+            <!-- 제목 -->
+            <p class="post-title">
+              <a th:href="@{/board/{code}/{no}(code=${post.boardCode}, no=${post.boardNo})}"
+                th:text="${post.boardTitle}">게시물 제목</a>
+            </p>
           </div>
         </div>
       </section>
+
 
 
       <!-- 회원 탈퇴 -->

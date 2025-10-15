@@ -9,4 +9,6 @@ public interface PaymentService {
 
     /** PortOne imp_uid로 결제 조회 */
     Payment selectPaymentByImpUid(String impUid);
+
+   
 }

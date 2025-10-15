@@ -1,6 +1,5 @@
 console.log("pay.js loaded");
 
-// DOM 요소 참조
 const seatSelect = document.getElementById("seatSelect");
 const totalPrice = document.getElementById("totalPrice");
 const itemPrice = document.getElementById("itemPrice");
@@ -10,7 +9,7 @@ const eventType = document.getElementById("eventType")?.value || "performance";
 const boardNo = document.getElementById("boardNo")?.value;
 const memberNo = document.getElementById("memberNo")?.value;
 
-// 전시(무료)라면 자동 선택
+// 무료 전시일 경우
 if (eventType === "exhibition") {
   const freeOption = [...seatSelect.options].find((opt) => opt.value === "무료");
   if (freeOption) {
@@ -55,7 +54,7 @@ function requestPay(amount, eventType) {
   const IMP = window.IMP;
   IMP.init("imp80522717"); // PortOne 테스트용 가맹점 코드
 
-  // ✅ 무료 전시는 1원으로 결제창 호출 (PortOne은 0원 불가)
+  // 결제창 호출은 일단 100원
   const payAmount = eventType === "exhibition" && amount === 0 ? 100 : amount;
 
   IMP.request_pay(
@@ -88,7 +87,7 @@ function requestPay(amount, eventType) {
           body: JSON.stringify({
             impUid: rsp.imp_uid,
             merchantUid: rsp.merchant_uid,
-            payMuch: eventType === "exhibition" ? 0 : rsp.paid_amount, // ✅ DB에는 0원으로 저장
+            payMuch: eventType === "exhibition" ? 0 : rsp.paid_amount,
             payWhat: rsp.pay_method,
             payOk: "Y",
             boardNo: boardNo,

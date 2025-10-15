@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 //import java.text.ParseException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +18,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
 import edu.og.moa.board.exhibition.model.dto.Exhibition;
-import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
-import edu.og.moa.board.exhibition.model.dto.JsonMember;
 import edu.og.moa.board.exhibition.model.dto.MemberDB;
 import edu.og.moa.board.exhibition.model.dto.TicketingInfo;
 import edu.og.moa.board.exhibition.model.service.ExhibitionService;
-import edu.og.moa.board.exhibition.model.service.JsonExhibitionService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -331,9 +326,7 @@ public class ExhibitionController {
 //	}	
 	
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
 	// 게시글 통합 검색 목록 조회(모든 게시판) // 요청주소예시) http://localhost/board/search?query=100&key=all
 	@GetMapping("/search")
 	public String selectBoardList(
@@ -352,28 +345,5 @@ public class ExhibitionController {
 		
 		return "board/boardSearchList";
 	}	
-=======
-//	// 게시글 통합 검색 목록 조회(모든 게시판) // 요청주소예시) http://localhost/board/search?query=100&key=all
-//	@GetMapping("/search")
-//	public String selectBoardList(
-//			@RequestParam(value="cp", required=false, defaultValue="1") int cp
-//			, @RequestParam Map<String, Object> paramMap
-//			, Model model // 데이터 전달용 모델 객체	
-//			) {
-//		
-//		// 여기서 boardCode
-//		
-//		
-//		// 게시글 통합 검색 목록 조회 서비스 호출
-//		Map<String, Object> map = exhibitionService.selectExhibitionList(paramMap, cp); // key=all임을 전제 => mapper.xml에 <if test='key != "all"'>  WHERE B.COMMUNITY_CODE = #{communityCode} </if> 조건 염두  
-//		log.info("search result map: {}", map);
-//		model.addAttribute("map", map);
-//		
-//		return "board/exhibition/exhibitionSearchList"; // 모든 게시판 통합의 경우만 여기 요청주소로(여기서는 구현안함)
-//		//return "board/exhibitionList";
-//	}	
->>>>>>> 4ad0aa4 (FEAT. 전시목록 카드조회, 전시게시판검색, 게시판정보전달)
-	
-	
->>>>>>> c701832 (minor change)
+
 }

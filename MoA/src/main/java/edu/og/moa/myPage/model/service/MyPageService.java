@@ -1,4 +1,4 @@
-package edu.og.moa.myPage.model.service;
+package edu.og.moa.mypage.model.service;
 
 import java.io.IOException;
 import java.util.List;

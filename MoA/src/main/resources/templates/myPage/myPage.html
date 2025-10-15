@@ -142,8 +142,14 @@
             <div class="btn-group">
               <a th:href="@{/board/{code}/{no}(code=${rsv.boardCode}, no=${rsv.boardNo})}" class="btn small blue">
                 해당 페이지 바로가기</a>
-                <button class="btn small gray cancel-btn" th:data-impuid="${rsv.impUid}">예매 취소</button>
-              <button class="btn small light review-btn" th:data-boardno="${rsv.boardNo}">리뷰 작성하기</button>
+
+              <button class="btn small gray cancel-btn" th:if="${rsv.payOk == 'Y'}"
+                th:data-impuid=" ${rsv.impUid}">예매취소</button>
+
+              <button class="btn small light review-btn" th:if="${rsv.payOk == 'Y'}" th:data-boardno=" ${rsv.boardNo}">
+                &nbsp; &nbsp; &nbsp; 리뷰
+                &nbsp; &nbsp; &nbsp;
+                작성하기</button>
             </div>
           </div>
         </div>

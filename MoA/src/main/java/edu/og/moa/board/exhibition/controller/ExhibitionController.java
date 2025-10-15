@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -26,6 +28,7 @@ import edu.og.moa.board.exhibition.model.dto.Exhibition;
 import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 import edu.og.moa.board.exhibition.model.dto.JsonMember;
 import edu.og.moa.board.exhibition.model.dto.MemberDB;
+import edu.og.moa.board.exhibition.model.dto.TicketingInfo;
 import edu.og.moa.board.exhibition.model.service.ExhibitionService;
 import edu.og.moa.board.exhibition.model.service.JsonExhibitionService;
 import jakarta.servlet.http.Cookie;
@@ -35,8 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-//@RequestMapping("/board")
-@RequestMapping("/exhibition")
+@RequestMapping("/board")
+//@RequestMapping("/exhibition") // prefiex-bypass
 @SessionAttributes("loginMember") 
 public class ExhibitionController {
 
@@ -48,8 +51,8 @@ public class ExhibitionController {
 	//boardName === exhibitionName === communityName
 	
 	//게시글 목록 조회 ==> "/board/3" 요청주소 처리 // GET-화면전환, forward
-	@GetMapping("/board/{communityCode:[3]+}")   // 임의의 변수이름 지정: communityCode ex) ==>  /board/1(자유게시판),  /board/2(리뷰게시판), /board/3(전시게시판)  ==> /board/like면 boardCode="like"가 들어가며 맵핑되어버린다.  
-	//@GetMapping("/{communityCode:[3]+}")   // 임의의 변수이름 지정: communityCode ex) ==>  /board/1(자유게시판),  /board/2(리뷰게시판), /board/3(전시게시판)  ==> /board/like면 boardCode="like"가 들어가며 맵핑되어버린다.  
+	//@GetMapping("/board/{communityCode:[3]+}")   // 임의의 변수이름 지정: communityCode ex) ==>  /board/1(자유게시판),  /board/2(리뷰게시판), /board/3(전시게시판)  ==> /board/like면 boardCode="like"가 들어가며 맵핑되어버린다.  
+	@GetMapping("/{communityCode:[3]+}")   // 임의의 변수이름 지정: communityCode ex) ==>  /board/1(자유게시판),  /board/2(리뷰게시판), /board/3(전시게시판)  ==> /board/like면 boardCode="like"가 들어가며 맵핑되어버린다.  
 	                              // communityCode 는 int 인지 String인지 모르고, 끝에 하나를 무조건 받아오는 변수
 	public String selectExhibitionList(@PathVariable("communityCode") int communityCode
 			, @RequestParam(value="cp", required=false, defaultValue ="1") int cp // required = false ==> cp값 없을수도 있다, 그때 default값은 "1"
@@ -86,7 +89,8 @@ public class ExhibitionController {
 			// 검색어가 있을 경우
 			
 			// 필요한 값 : key, query, communityCode
-			paramMap.put("boardCode", communityCode); // @RequestParam에 의해 paramMap에 key, query입력 파라미터는 이미 담겨져 있다.
+			//paramMap.put("boardCode", communityCode); // @RequestParam에 의해 paramMap에 key, query입력 파라미터는 이미 담겨져 있다.
+			paramMap.put("communityCode", communityCode); // @RequestParam에 의해 paramMap에 key, query입력 파라미터는 이미 담겨져 있다.
 			
 			// 검색용 게시글 목록 조회 서비스 호출
 			Map<String, Object> map = exhibitionService.selectExhibitionList(paramMap, cp); // overloading; 따라서 넘겨주는 파라미터들 = paramMap(key, query, communityCode) + cp
@@ -111,8 +115,8 @@ public class ExhibitionController {
 	
 	// 게시글 상세 조회 (Get방식)  -> /board/3/1500
 	// @PathVariable : 주소에 지정된 부분을 변수에 저장 + request scope 세팅
-	@GetMapping("/board/{communityCode}/{boardNo}")
-	//@GetMapping("/{communityCode}/{boardNo}")
+	//@GetMapping("/board/{communityCode}/{boardNo}")
+	@GetMapping("/{communityCode:[3]+}/{boardNo}")
 	public String exhibitionDetail(@PathVariable("communityCode") int communityCode
 			, @PathVariable("boardNo") int boardNo
 			, Model model // 데이터 전달용 객체 
@@ -148,9 +152,7 @@ public class ExhibitionController {
 		
 		String path = null;
 		if(exhibition != null) { // 조회 결과가 있는 경우 (게시글 목록에서 제목 클릭한 상태에서)
-			
-			
-		
+
 			
 			//---------------------------------------------------------
 			//좋아요 "하트" -> BOARD_LIKE 테이블에 있는것이 하트 누른것(또누르면 해제 -> DB삭제)
@@ -264,13 +266,9 @@ public class ExhibitionController {
 					c.setMaxAge((int)diff); //.setMaxAge 파라미터는 int이므로 강제 형변환
 					
 					// [ 쿠키를 resp에 담아서 보낸다 ]
-					resp.addCookie(c); // 응답 객체를 이용하여 클라이언트에게 전달
-					
+					resp.addCookie(c); // 응답 객체를 이용하여 클라이언트에게 전달		
 				}
-			
-				
 			}
-			
 			
 			//---------------------------------------------------------
 			//path = "board/3/exhibitionDetail"; // exhibitionDetail 페이지로 forward 위임 (jsp에게 화면 만들라고 위임 b/c jsp(html에서 java사용)가 servlet(java에서 html구성)보다 화면만들기 쉬움)
@@ -315,6 +313,13 @@ public class ExhibitionController {
 	}	
 	
 	
+	//@PostMapping("/{communityCode:[3]+}/submitTicketingInfo")
+	@PostMapping("/exhibition/submitTicketingInfo")
+	public String submitInfo(@ModelAttribute TicketingInfo ticketingInfo, Model model) {
+	    model.addAttribute("ticketingInfo", ticketingInfo);
+	    return "/board/exhibition/submitTicketingInfo"; // 값 넘어가는지 확인용
+	}	
+	
 //	// 좋아요 처리
 //	@PostMapping("/like")
 //	@ResponseBody // 반환되는 값이 비동기 요청한 곳으로 돌아가게 함; AJAX 처리
@@ -326,6 +331,7 @@ public class ExhibitionController {
 //	}	
 	
 	
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	// 게시글 통합 검색 목록 조회(모든 게시판) // 요청주소예시) http://localhost/board/search?query=100&key=all
@@ -346,6 +352,27 @@ public class ExhibitionController {
 		
 		return "board/boardSearchList";
 	}	
+=======
+//	// 게시글 통합 검색 목록 조회(모든 게시판) // 요청주소예시) http://localhost/board/search?query=100&key=all
+//	@GetMapping("/search")
+//	public String selectBoardList(
+//			@RequestParam(value="cp", required=false, defaultValue="1") int cp
+//			, @RequestParam Map<String, Object> paramMap
+//			, Model model // 데이터 전달용 모델 객체	
+//			) {
+//		
+//		// 여기서 boardCode
+//		
+//		
+//		// 게시글 통합 검색 목록 조회 서비스 호출
+//		Map<String, Object> map = exhibitionService.selectExhibitionList(paramMap, cp); // key=all임을 전제 => mapper.xml에 <if test='key != "all"'>  WHERE B.COMMUNITY_CODE = #{communityCode} </if> 조건 염두  
+//		log.info("search result map: {}", map);
+//		model.addAttribute("map", map);
+//		
+//		return "board/exhibition/exhibitionSearchList"; // 모든 게시판 통합의 경우만 여기 요청주소로(여기서는 구현안함)
+//		//return "board/exhibitionList";
+//	}	
+>>>>>>> 4ad0aa4 (FEAT. 전시목록 카드조회, 전시게시판검색, 게시판정보전달)
 	
 	
 >>>>>>> c701832 (minor change)

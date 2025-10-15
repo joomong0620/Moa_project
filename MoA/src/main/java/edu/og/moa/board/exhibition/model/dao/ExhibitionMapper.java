@@ -20,7 +20,8 @@ public interface ExhibitionMapper {
 	public int getListCount(int communityCode);
 
 	// 특정 게시판에서 현재 페이지에 해당하는 부분에 대한 게시글 목록 조회
-	public List<BoardDB> selectExhibitionList(int communityCode, RowBounds rowBounds);
+	//public List<BoardDB> selectExhibitionList(int communityCode, RowBounds rowBounds);
+	public List<Exhibition> selectExhibitionList(int communityCode, RowBounds rowBounds);
 
 	// 전시게시글 상세조회 
 	public Exhibition selectExhibition(Map<String, Object> map);
@@ -47,7 +48,7 @@ public interface ExhibitionMapper {
 	public int getSearchListCount(Map<String, Object> paramMap);
 
 	// 게시글 목록 조회(검색) 
-	public List<BoardDB> selectSearchExhibitionList(Map<String, Object> paramMap, RowBounds rowBounds);
+	public List<Exhibition> selectSearchExhibitionList(Map<String, Object> paramMap, RowBounds rowBounds);
 	
 
 	// 조회수 증가

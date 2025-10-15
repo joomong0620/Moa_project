@@ -1,4 +1,4 @@
-package edu.og.moa.myPage.model.service;
+package edu.og.moa.mypage.model.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import edu.og.moa.board.freeboard.model.dto.Board;
 import edu.og.moa.common.utility.Util;
 import edu.og.moa.member.model.dto.Member;
-import edu.og.moa.myPage.model.dao.MyPageMapper;
+import edu.og.moa.mypage.model.dao.MyPageMapper;
 import edu.og.moa.pay.model.dto.Payment;
 
 @Service

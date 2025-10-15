@@ -1,4 +1,4 @@
-package edu.og.moa.myPage.controller;
+package edu.og.moa.mypage.controller;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.og.moa.board.freeboard.model.dto.Board;
 import edu.og.moa.member.model.dto.Member;
-import edu.og.moa.myPage.model.service.MyPageService;
+import edu.og.moa.mypage.model.service.MyPageService;
 import edu.og.moa.pay.model.dto.Payment;
 import edu.og.moa.pay.model.service.PaymentService;
 import jakarta.servlet.http.Cookie;

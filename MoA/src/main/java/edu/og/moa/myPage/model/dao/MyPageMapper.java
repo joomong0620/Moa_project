@@ -1,4 +1,4 @@
-package edu.og.moa.myPage.model.dao;
+package edu.og.moa.mypage.model.dao;
 
 import java.util.List;
 

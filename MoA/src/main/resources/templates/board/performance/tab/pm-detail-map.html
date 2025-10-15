@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td colspan="2">
-            <div id="map" style="width:800px;height:800px;"></div>
+                <div id="map" style="width:800px;height:800px;"></div>
             </td>
         </tr>
     </table>
@@ -28,8 +28,8 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2c471704b06af9ff6269bd341c9f1dd"></script>
 <script th:inline="javascript">
 
-    const lat = /*[[${board.pmHouseLat}]]*/ "위도";
-    const long = /*[[${board.pmHouseLong}]]*/ "위도";
+    var lat = /*[[${board.pmHouseLat}]]*/ "위도";
+    var long = /*[[${board.pmHouseLong}]]*/ "위도";
     console.log(lat);
     
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -39,6 +39,25 @@
         };
 
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+    // 지도를 표시하는 div 크기를 변경하는 함수입니다
+        function resizeMap() {
+            var mapContainer = document.getElementById('map');
+            mapContainer.style.width = '800px';
+            mapContainer.style.height = '800px'; 
+        }
+
+        function relayout() {    
+            
+            // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+            // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
+            // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+            map.relayout();
+        }
+    map.setLevel(2);
+    map.relayout();
+    map.setLevel(3);
+    map.relayout();
 
     // 마커가 표시될 위치입니다 
     var markerPosition  = new kakao.maps.LatLng(lat, long); 

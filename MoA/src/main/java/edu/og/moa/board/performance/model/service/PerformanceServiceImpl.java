@@ -42,7 +42,7 @@ public class PerformanceServiceImpl implements PerformanceService{
 		// 4. pagination, pmTypeList를 Map 담아서 반환
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pagination", pagination);
-		map.put("pmTypeList", pmTypeList);
+		map.put("pmList", pmTypeList);
 		
 		return map;
 	}

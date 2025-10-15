@@ -157,6 +157,7 @@ public class ReviewBoardController {
     public String insertReview(
             ReviewBoard board,
             @RequestParam("images") List<MultipartFile> imageFiles,
+            @RequestParam("payNo") int payNo,
             RedirectAttributes ra,
             HttpSession session) throws IOException {
 
@@ -284,24 +285,6 @@ public class ReviewBoardController {
             ra.addFlashAttribute("message", "리뷰 삭제 실패");
 
         return "redirect:/reviewboard/" + communityCode;
-    }
-
-    // 댓글 등록
-    @PostMapping("/comment")
-    @ResponseBody
-    public int insertComment(
-            @RequestBody ReviewComment comment,
-            @SessionAttribute("loginMember") Member loginMember) {
-        comment.setMemberNo(loginMember.getMemberNo());
-        return service.insertComment(comment);
-    }
-
-    // 댓글 삭제
-    @PostMapping("/comment/delete")
-    @ResponseBody
-    public int deleteComment(@RequestBody Map<String, Integer> map) {
-        int commentNo = map.get("commentNo");
-        return service.deleteComment(commentNo);
     }
 
     // 별점 등록/수정

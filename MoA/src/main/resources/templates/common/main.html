@@ -32,7 +32,7 @@
           <img th:src="@{/images/common/banner4.gif}" alt="배너4" />
         </div>
         <div class="banner-slide fade">
-          <img th:src="@{/images/common/banner5.gif}" alt="배너5" />
+          <img th:src="@{/images/common/banner5.gif}" alt="배너" />
         </div>
 
         <!-- 기존에 배운 &lt; / &gt; 로도 꺾쇠 표현이 가능하지만, 해당 특수문자는 시각적으로 보기에 명확한 특수문자이기 때문에 이 기호를 사용하였다.-->
@@ -66,14 +66,12 @@
       <!-- 전시 -->
       <section class="exhibition-section">
         <h2>전시</h2>
-        <div class="card-list">
-          <div class="card" th:each="exh : ${exhibitions}">
-            <img
-              th:src="@{/images/{img}(img=${exh.image})}"
-              th:alt="${exh.title}"
-            />
-            <p class="card-title" th:text="${exh.title}"></p>
-            <p class="card-date" th:text="${exh.date}"></p>
+      
+        <div class="exhibition-slider-container">
+          <div class="exhibition-slide-wrapper">
+            <div class="exhibition-slide" th:each="exh : ${exhibitionList}">
+              <img th:src="@{${exh.imagePath}}" alt="전시 이미지" class="exhibition-image" />
+            </div>
           </div>
         </div>
       </section>

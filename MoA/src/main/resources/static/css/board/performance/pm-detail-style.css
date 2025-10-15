@@ -313,12 +313,16 @@ main {
     padding: 8px 20px;
     cursor: pointer;
 }
-.write-btn:hover { background-color: #3c5368; }
+
+.write-btn:hover {
+    background-color: #3c5368;
+}
 
 .comment-sort {
     display: flex;
     gap: 8px;
 }
+
 .sort-btn {
     background: none;
     border: none;
@@ -326,12 +330,16 @@ main {
     color: #9DB2BF;
     cursor: pointer;
 }
+
 .sort-btn.active {
     color: #000;
     font-weight: bold;
     text-decoration: underline;
 }
-.sort-btn:hover { color: #27374D; }
+
+.sort-btn:hover {
+    color: #27374D;
+}
 
 /* 3) 작성 폼 */
 .comment-form {
@@ -340,7 +348,10 @@ main {
     padding: 20px;
     background-color: #fff;
 }
-.comment-form.hidden { display: none; }
+
+.comment-form.hidden {
+    display: none;
+}
 
 .comment-input-area input[type="text"],
 .comment-input-area textarea {
@@ -353,7 +364,10 @@ main {
     resize: none;
 }
 
-.comment-submit { text-align: right; }
+.comment-submit {
+    text-align: right;
+}
+
 .comment-submit .submit-btn {
     background-color: #526D82;
     color: white;
@@ -363,10 +377,15 @@ main {
     font-size: 16px;
     cursor: pointer;
 }
-.comment-submit .submit-btn:hover { background-color: #3c5368; }
+
+.comment-submit .submit-btn:hover {
+    background-color: #3c5368;
+}
 
 /* 4) 본문(없음/목록) */
-.comment-body { margin-top: 10px; }
+.comment-body {
+    margin-top: 10px;
+}
 
 /* (추가) 비어있을 때 문구 — 빠져있던 부분 */
 .no-comment {
@@ -393,20 +412,25 @@ main {
     padding: 15px;
     background-color: #fff;
 }
+
 .comment-title {
     font-weight: bold;
     font-size: 17px;
     margin-bottom: 8px;
 }
+
 .comment-content {
     font-size: 15px;
     color: #333;
     line-height: 1.5;
     margin-bottom: 8px;
 }
+
 .comment-writer,
 .comment-date {
     font-size: 13px;
     color: #999;
     margin-right: 10px;
 }
+
+/* -------------------------------------------------------------------------------------- */

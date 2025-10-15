@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>마이페이지</title>
+
+  <link rel="stylesheet" th:href="@{/css/mypage/mypage.css}" />
+  <link rel="stylesheet" th:href="@{/css/main-style.css}" />
+</head>
+
+<body>
+  <!-- Header -->
+  <th:block th:replace="~{common/header}"></th:block>
+
+  <div class="myPage-container">
+    <!-- 사이드 영역 -->
+    <aside class="myPage-sideMenu">
+      <h2 class="myPage-title">마이페이지</h2>
+
+      <!-- 프로필 변경 Form -->
+      <form th:action="@{/mypage/profile}" th:object="${loginMember}" method="POST" enctype="multipart/form-data"
+        id="profileFrm">
+        <div class="profile">
+          <div class="profile-image-area">
+            <img id="profileImg"
+              th:src="${loginMember.profileImg != null ? loginMember.profileImg : '/images/common/user.svg'}"
+              alt="프로필 이미지" />
+
+          </div>
+
+          <span id="deleteImage">x</span>
+
+          <div class="profile-btn-area">
+            <label for="imageInput">이미지 선택</label>
+            <input type="file" name="profileImg" id="imageInput" accept="image/*" style="display: none" />
+            <button type="submit">변경하기</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- 회원정보 수정 Form -->
+      <form th:action="@{/mypage/info}" th:object="${session.loginMember}" method="POST" id="updateInfo">
+        <div class="userinfo">
+
+          <!-- 닉네임 표시 -->
+          <div class="info-row nickname-row">
+            <div class="nickname-box">
+              <span id="memberNickname" th:text="*{memberNickname}">닉네임</span>
+              <input type="text" id="nicknameInput" name="memberNickname" maxlength="10" th:value="*{memberNickname}"
+                class="hidden" />
+              <button type="button" id="changeNicknameBtn" class="mini-btn">변경</button>
+            </div>
+          </div>
+
+          <!-- 이메일 -->
+          <div class="info-row">
+            <span id="memberEmail" th:text="*{memberEmail}">email@example.com</span>
+          </div>
+
+          <!-- 주소 표시 영역 -->
+          <div class="info-row address-display" id="addressDisplay">
+            <div class="addr-box">
+              <span id="memberAddr"
+                th:text="${#strings.replace(loginMember.memberAddr, '^^^', ' ')} ?: '주소를 등록해주세요'"></span>
+              <button type="button" id="changeAddrBtn" class="mini-btn">변경</button>
+            </div>
+          </div>
+
+          <!-- 주소 입력 영역 -->
+          <div class="address-inputs" id="addressInputs">
+            <div class="myPage-row info-address">
+              <input type="text" name="memberAddr" placeholder="우편번호" id="sample6_postcode" readonly />
+              <button type="button" id="searchAddrBtn">검색</button>
+            </div>
+
+            <div class="myPage-row info-address">
+              <input type="text" name="memberAddr" placeholder="도로명/지번 주소" id="sample6_address" readonly />
+            </div>
+
+            <div class="myPage-row info-address">
+              <input type="text" name="memberAddr" placeholder="상세 주소" id="sample6_detailAddress" />
+            </div>
+
+            <button type="submit" class="addr-save-btn">저장</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- 메뉴 -->
+      <nav class="menu">
+        <button class="menu-btn" data-target="rsv-section">내 예매 내역</button>
+        <button class="menu-btn" data-target="like-section">좋아요한 게시물</button>
+        <button class="menu-btn" data-target="post-section">내가 쓴 게시물</button>
+        <button class="menu-btn danger" data-target="secession-section">회원 탈퇴</button>
+
+      </nav>
+    </aside>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="myPage-main">
+      <!-- 예매 내역 -->
+      <section id="rsv-section" class="content-section">
+        <h3>내 예매 내역</h3>
+        <div th:if="${#lists.isEmpty(reservationList)}" class="empty">예매 내역이 없습니다.</div>
+
+        <div class="rsv-list" th:each="rsv : ${reservationList}">
+          <div class="rsv-card">
+            <img th:src="@{${rsv.thumbnail}}" alt="포스터" />
+            <p th:text="${rsv.title}">전시 제목</p>
+            <p th:text="${rsv.date}">2025.10.19~2025.11.18</p>
+            <p th:text="${rsv.place}">예술의 전당</p>
+
+            <div class="btn-group">
+              <button class="btn small">해당 페이지 바로가기</button>
+              <button class="btn small">예매 취소</button>
+              <button class="btn small gray">리뷰 작성하기</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 좋아요한 게시물 -->
+      <section id="like-section" class="content-section hidden">
+        <h3>좋아요한 게시물</h3>
+        <div class="card-list" th:each="post : ${likedList}">
+          <div class="post-card">
+            <img th:src="@{${post.thumbnail}}" alt="게시물 썸네일" />
+            <p th:text="${post.title}">뮤지컬 제목</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 내가 쓴 게시물 -->
+      <section id="post-section" class="content-section hidden">
+        <h3>내가 쓴 게시물</h3>
+        <div class="card-list" th:each="post : ${myPostList}">
+          <div class="post-card">
+            <img th:src="@{${post.thumbnail}}" alt="게시물 썸네일" />
+            <p th:text="${post.title}">내 게시물 제목</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- 회원 탈퇴 -->
+      <section id="secession-section" class="content-section hidden">
+        <h3>회원 탈퇴</h3>
+        <span class="myPage-subject">탈퇴 시 회원님의 비밀번호가 일치해야 합니다.</span>
+
+        <form th:action="@{/mypage/secession}" method="POST" id="secessionFrm">
+          <div class="myPage-row">
+            <label>비밀번호</label>
+            <input type="password" name="memberPw" id="memberPw" maxlength="30" required>
+          </div>
+
+          <div id="secession-terms-container">
+            <h4 class="myPage-row info-title">MoA 사이트 회원 탈퇴 약관</h4>
+            <pre class="secession-terms">
+            제1조 (목적)
+            
+                ① 회원은 사이트 내 제공되는 절차를 통해 언제든지 탈퇴를 신청할 수 있습니다.
+                ② 탈퇴 신청 완료 시 즉시 회원 자격이 상실됩니다.
+                ③ 탈퇴는 본인 확인 후 진행되며, 제3자에 의한 대리 신청은 불가합니다.
+                ④ 사이트는 탈퇴 처리 결과를 회원에게 안내합니다.을 규정합니다.
+            
+            제2조 (회원가입)
+            
+                ① 탈퇴 시 회원의 개인정보는 관련 법령에 따라 일정 기간 보관 후 삭제됩니다.
+                ② 탈퇴 이전에 완료된 예매, 결제 내역은 탈퇴 후에도 효력이 유지됩니다.
+                ③ 회원이 작성한 게시물, 댓글 등은 탈퇴 후에도 사이트에 남을 수 있습니다.
+                ④ 탈퇴 후 동일한 계정으로의 복구는 불가능합니다.
+            
+            제3조 (서비스 제공)
+             
+               ① 탈퇴한 회원은 언제든지 신규 회원으로 재가입할 수 있습니다.
+               ② 단, 사이트 운영을 고의로 방해하거나 부정 이용한 경우 일정 기간 재가입이 제한됩니다. 
+               ③ 동일한 개인정보로 재가입 시 기존 이용 기록은 복원되지 않습니다. 
+               ④ 재가입 시 신규 회원으로 간주되며, 기존 혜택이나 포인트는 승계되지 않습니다. 
+            
+            제4조 (이용자의 의무)
+             
+               ① 회원 탈퇴로 인한 서비스 이용 종료에 대하여 사이트는 별도의 책임을 지지 않습니다. 
+               ② 단, 법령상 의무에 따른 사항은 예외로 합니다. 
+               ③ 회원이 탈퇴 전에 발생한 손해나 분쟁에 대해서는 본 약관에 따라 책임이 존속합니다. 
+               ④ 사이트는 불가항력적인 사유로 인한 데이터 삭제나 이용 불가에 대해 책임을 지지 않습니다.
+            
+            
+      </pre>
+          </div>
+
+          <div class="agree-box">
+            <input type="checkbox" name="agree" id="agree">
+            <label for="agree">위 약관에 동의합니다.</label>
+          </div>
+
+          <button class="myPage-submit">탈퇴</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+
+
+  <!-- Footer -->
+  <th:block th:replace="~{common/footer}"></th:block>
+
+  <!-- 다음 주소 api -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const changeBtn = document.getElementById("changeAddrBtn");
+      const addressInputs = document.getElementById("addressInputs");
+      const addrSpan = document.getElementById("memberAddr");
+      const addrForm = document.getElementById("updateInfo");
+      const searchBtn = document.getElementById("searchAddrBtn");
+
+      // 주소 변경창 토글
+      changeBtn.addEventListener("click", () => {
+        addressInputs.classList.toggle("active");
+      });
+
+      // 주소 검색 API
+      searchBtn.addEventListener("click", () => {
+        new daum.Postcode({
+          oncomplete: function (data) {
+            const addr = data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
+            document.getElementById("sample6_postcode").value = data.zonecode;
+            document.getElementById("sample6_address").value = addr;
+            document.getElementById("sample6_detailAddress").focus();
+          },
+        }).open();
+      });
+
+      // 주소 저장
+      addrForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const postcode = document.getElementById("sample6_postcode").value;
+        const mainAddr = document.getElementById("sample6_address").value;
+        const detailAddr = document.getElementById("sample6_detailAddress").value;
+
+        if (!mainAddr) {
+          alert("주소를 먼저 선택해주세요.");
+          return;
+        }
+
+        const formData = new FormData(addrForm);
+
+        fetch("/mypage/info", {
+          method: "POST",
+          body: formData,
+        })
+          .then((resp) => resp.ok ? resp.text() : Promise.reject("요청 실패"))
+          .then(() => {
+            addrSpan.textContent = `${postcode} ${mainAddr} ${detailAddr}`.trim();
+            addressInputs.classList.remove("active");
+            alert("주소가 변경되었습니다.");
+          })
+          .catch((err) => console.error(err));
+      });
+    });
+  </script>
+
+
+  <script th:src="@{/js/mypage/mypage.js}"></script>
+</body>
+
+</html>

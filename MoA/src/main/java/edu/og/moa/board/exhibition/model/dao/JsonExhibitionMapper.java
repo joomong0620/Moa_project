@@ -9,6 +9,7 @@ import edu.og.moa.board.exhibition.model.dto.BoardDB;
 import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
 import edu.og.moa.board.exhibition.model.dto.ContributorDB;
 import edu.og.moa.board.exhibition.model.dto.ExhibitionDB;
+import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 import edu.og.moa.board.exhibition.model.dto.LikeDB;
 
 
@@ -41,6 +42,9 @@ public interface JsonExhibitionMapper {
 
 	// json 데이터 CONTRIBUTOR 테이블에 insert
 	public int jsonContributorInsert(ContributorDB contributor);
+
+	// 메인화면 점시 썸네일 조회(KSY)
+	public List<JsonBoardImage> selectExhibitionThumbnailList();
 
 
 

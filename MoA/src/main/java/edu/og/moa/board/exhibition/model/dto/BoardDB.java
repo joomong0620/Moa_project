@@ -22,5 +22,8 @@ public class BoardDB {
 	private int communityCode;
 	private int qCode;
 	
+	// Exhibition이 현 전시관련 status 체크 2025/10/14
+	// (현재진행중 전시, 예정전시, 지난전시) => 이건 myBatis mapper에 resultMap에 포함되지 않는 DTO 필드
+	private String eventStatus;    // 분류 결과: pastEvent, futureEvent, currentEvent
 }
 

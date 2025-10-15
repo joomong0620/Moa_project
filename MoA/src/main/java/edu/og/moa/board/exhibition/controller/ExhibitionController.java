@@ -327,23 +327,24 @@ public class ExhibitionController {
 	
 	
 
-	// 게시글 통합 검색 목록 조회(모든 게시판) // 요청주소예시) http://localhost/board/search?query=100&key=all
-	@GetMapping("/search")
-	public String selectBoardList(
-			@RequestParam(value="cp", required=false, defaultValue="1") int cp
-			, @RequestParam Map<String, Object> paramMap
-			, Model model // 데이터 전달용 모델 객체	
-			) {
-		
-		// 여기서 boardCode
-		
-		
-		// 게시글 통합 검색 목록 조회 서비스 호출
-		Map<String, Object> map = exhibitionService.selectExhibitionList(paramMap, cp);
-		
-		model.addAttribute("map", map);
-		
-		return "board/boardSearchList";
-	}	
+//	// 게시글 통합 검색 목록 조회(모든 게시판) // 요청주소예시) http://localhost/board/search?query=100&key=all
+//	@GetMapping("/search")
+//	public String selectBoardList(
+//			@RequestParam(value="cp", required=false, defaultValue="1") int cp
+//			, @RequestParam Map<String, Object> paramMap
+//			, Model model // 데이터 전달용 모델 객체	
+//			) {
+//		
+//		// 여기서 boardCode
+//		
+//		
+//		// 게시글 통합 검색 목록 조회 서비스 호출
+//		Map<String, Object> map = exhibitionService.selectExhibitionList(paramMap, cp); // key=all임을 전제 => mapper.xml에 <if test='key != "all"'>  WHERE B.COMMUNITY_CODE = #{communityCode} </if> 조건 염두  
+//		log.info("search result map: {}", map);
+//		model.addAttribute("map", map);
+//		
+//		return "board/exhibition/exhibitionSearchList"; // 모든 게시판 통합의 경우만 여기 요청주소로(여기서는 구현안함)
+//		//return "board/exhibitionList";
+//	}	
 
 }

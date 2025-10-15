@@ -578,3 +578,39 @@ body {
     transform: translateX(-50%);
   }
 }
+
+/* 공연 슬라이드 */
+.show-slider-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.show-slide-wrapper {
+  display: flex;
+  animation: scrollShow 60s linear infinite;
+}
+
+.show-slide {
+  flex: 0 0 16.66%; /* 한 번에 6개씩 보이게 */
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.show-slide img {
+  width: 100%;
+  height: 280px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+@keyframes scrollShow {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

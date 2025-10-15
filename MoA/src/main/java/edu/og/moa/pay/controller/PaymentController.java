@@ -22,27 +22,32 @@ public class PaymentController {
     @GetMapping("/pay")
     public String paymentPage(Model model, HttpSession session) {
 
-        // 임시 로그인 회원으로 하기
-        if (session.getAttribute("loginMember") == null) {
-            Member fake = new Member();
-            fake.setMemberNo(3);
-            fake.setMemberNickname("유저일");
-            fake.setMemberEmail("test@example.com");
-            fake.setMemberTel("01012345678");
+        Member loginMember = (Member) session.getAttribute("loginMember");
 
-            model.addAttribute("member", fake);
-        } else {
-            Member loginMember = (Member) session.getAttribute("loginMember");
-            model.addAttribute("member", loginMember);
+        // 로그인하지 않은 경우 로그인 페이지로
+        if (loginMember == null) {
+            return "redirect:/member/login"; 
         }
+
+        // 로그인된 회원 정보 모델에 담기
+        model.addAttribute("member", loginMember);
 
         return "pay/pay";
     }
 
     // 결제 완료 후
     @PostMapping("/complete")
-    @ResponseBody  // 여기만 JSON 응답하도록 유지
-    public ResponseEntity<?> completePayment(@RequestBody Payment payment) {
+    @ResponseBody
+    public ResponseEntity<?> completePayment(@RequestBody Payment payment, HttpSession session) {
+
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        if (loginMember == null) {
+            return ResponseEntity.status(401).body("로그인이 필요합니다.");
+        }
+
+        // 결제한 회원 번호 세팅
+        payment.setMemberNo(loginMember.getMemberNo());
+
         System.out.println("결제 데이터 : " + payment);
 
         int result = service.insertPayment(payment);
@@ -52,9 +57,9 @@ public class PaymentController {
         );
     }
 
-    // 결제 성공 시 
+    // 결제 성공 시
     @GetMapping("/success")
-      public String paymentSuccess() {
+    public String paymentSuccess() {
         return "pay/pay_success";
     }
 }

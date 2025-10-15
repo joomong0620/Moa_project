@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import edu.og.moa.board.performance.model.dto.PerformanceBoard;
+import edu.og.moa.board.performance.model.dto.PerformanceBoardImage;
 
 @Mapper
 public interface PerformanceMapper {
@@ -31,7 +32,7 @@ public interface PerformanceMapper {
 
 	// 좋아요 삭제
 	public int deleteBoardLike(Map<String, Integer> paramMap);
-	
-	
 
+	// 공연 이미지 썸네일 조회(KSY)
+	public List<PerformanceBoardImage> selectPerformanceList();
 }

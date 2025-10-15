@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import edu.og.moa.board.freeboard.model.dto.Pagination;
 import edu.og.moa.board.performance.model.dao.PerformanceMapper;
 import edu.og.moa.board.performance.model.dto.PerformanceBoard;
+import edu.og.moa.board.performance.model.dto.PerformanceBoardImage;
 
 @Service
 public class PerformanceServiceImpl implements PerformanceService{
@@ -87,5 +88,12 @@ public class PerformanceServiceImpl implements PerformanceService{
 		
 		return 0;
 	}
+
+
+    // 공연 썸네일 목록 조회 (KSY)
+    @Override
+    public List<PerformanceBoardImage> selectPerformanceList() {
+        return mapper.selectPerformanceList();
+    }
 	
 }

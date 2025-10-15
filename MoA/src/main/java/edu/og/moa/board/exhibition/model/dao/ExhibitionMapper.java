@@ -48,6 +48,7 @@ public interface ExhibitionMapper {
 
 	// 게시글 목록 조회(검색) 
 	public List<BoardDB> selectSearchExhibitionList(Map<String, Object> paramMap, RowBounds rowBounds);
+	
 
 	// 조회수 증가
 	public int updateReadCount(int boardNo);

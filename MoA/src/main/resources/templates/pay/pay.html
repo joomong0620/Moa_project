@@ -37,8 +37,8 @@
           <div class="section-block">
             <h3><span class="circle-number">2</span> 결제 옵션</h3>
             <select id="seatSelect">
-              <option value="0">좌석을 선택해주세요.</option>
-              <option value="0" data-price="0" th:if="${ticketingInfo.eventType == 'exhibition'}">무료</option>
+              <option value="">좌석을 선택해주세요.</option>
+              <option value="무료" data-price="0" th:if="${ticketingInfo.eventType == 'exhibition'}">무료</option>
               <option th:each="p : ${priceList}"
                       th:value="${p.pmPriceType}"
                       th:data-price="${p.pmPrice}"

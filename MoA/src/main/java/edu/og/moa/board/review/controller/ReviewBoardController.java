@@ -68,7 +68,6 @@ public class ReviewBoardController {
 
         return "board/reviewboard/reviewList";
     }
-
     // 리뷰 상세
     @GetMapping("/{boardCode:[0-9]+}/{reviewNo:[0-9]+}")
     public String selectReviewDetail(

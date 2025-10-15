@@ -8,5 +8,9 @@ public interface PaymentMapper {
 
     int insertPayment(Payment payment);
 
+    // 결제
     Payment selectPaymentByImpUid(String impUid);
+
+    // 결제 취소
+	int deletePaymentByImpUid(String impUid, int memberNo);
 }

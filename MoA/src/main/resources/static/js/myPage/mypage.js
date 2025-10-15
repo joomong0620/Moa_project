@@ -226,17 +226,43 @@ if(imageInput != null){
 
                 // 추가된 이벤트 초기화
                 document.body.onfocus = null;
-
             }
-
-
         }
-
-
-
     })
 
-
-
-
 }
+
+
+// 예매 취소 버튼 클릭 시
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("cancel-btn")) {
+    const payNo = e.target.dataset.rsvno;
+
+    if (!confirm("정말 예매를 취소하시겠습니까?")) return;
+
+    fetch("/mypage/cancel", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ payNo: payNo }),
+    })
+      .then(resp => resp.text())
+      .then(result => {
+        if (result > 0) {
+          alert("예매가 취소되었습니다.");
+          location.reload();
+        } else {
+          alert("취소에 실패했습니다.");
+        }
+      })
+      .catch(err => console.error(err));
+  }
+});
+
+
+  // 리뷰 작성 버튼 (예시)
+  document.querySelectorAll(".review-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const boardNo = btn.dataset.boardno;
+      location.href = `/review/write?boardNo=${boardNo}`;
+    });
+  });

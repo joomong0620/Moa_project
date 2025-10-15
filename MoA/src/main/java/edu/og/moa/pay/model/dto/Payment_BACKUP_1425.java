@@ -22,6 +22,7 @@ public class Payment {
     private String payDate;     // 결제 날짜 (SYSDATE)
     
     
+<<<<<<< HEAD
     
     // fields to be filled by performance or exhibition side
     private String showTitle;    // ${showTitle}   결제창 상단 표시용 제목
@@ -53,3 +54,19 @@ public class Payment {
         return this.impUid;
     }
 }
+=======
+    // fields to be filled by performance or exhibition side
+   private String showTitle;    // ${showTitle}   결제창 상단 표시용 제목
+   private String showName;     // ${showName} 공연/전시 이름      
+   private String showDate;   // ${showDate}   공연/전시 일시
+   private String showPlace;   // ${showPlace}   공연장 또는 전시장 이름
+   private String memberNickname; // ${member.memberNickname} 구매자 이름
+   private String memberTel;     // ${member.memberTel}    연락처
+   private String memberEmail;  //  ${member.memberEmail} 이메일
+
+   private String eventType;   // performance(pm) or exhibition (exhb)
+   private String PriceType; // ${p.pmPriceType} 좌석/분류명 (VIP, R, S 등..)
+   private String Price;    // ${p.pmPrice} 실제 금액 (정수로); // 전시의 경우는 좌석 분류 없이 0원 아니면 금액으로 넘어간다    
+    
+}
+>>>>>>> c0a1946885d150666475be90089a42fdeee3e26d

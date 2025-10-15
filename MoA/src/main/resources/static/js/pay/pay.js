@@ -1,10 +1,26 @@
 console.log("pay.js loaded");
 
-// 총 금액 계산
+// DOM 요소 참조
 const seatSelect = document.getElementById("seatSelect");
 const totalPrice = document.getElementById("totalPrice");
 const itemPrice = document.getElementById("itemPrice");
 
+// 서버에서 전달된 데이터
+const eventType = document.getElementById("eventType")?.value || "performance";
+const boardNo = document.getElementById("boardNo")?.value;
+const memberNo = document.getElementById("memberNo")?.value;
+
+// 전시(무료)라면 자동 선택
+if (eventType === "exhibition") {
+  const freeOption = [...seatSelect.options].find((opt) => opt.value === "무료");
+  if (freeOption) {
+    freeOption.selected = true;
+    totalPrice.textContent = "0원";
+    itemPrice.textContent = "0원";
+  }
+}
+
+// 좌석 변경 시 금액 표시
 seatSelect.addEventListener("change", () => {
   const price = seatSelect.options[seatSelect.selectedIndex].dataset.price;
   const formatted = price ? parseInt(price).toLocaleString() : 0;
@@ -16,8 +32,14 @@ seatSelect.addEventListener("change", () => {
 document.getElementById("payNowBtn").addEventListener("click", () => {
   const selected = seatSelect.options[seatSelect.selectedIndex];
   const price = selected.dataset.price ? parseInt(selected.dataset.price) : 0;
-  if (!price) return alert("좌석을 선택하세요.");
+  const eventTypeNow = document.getElementById("eventType")?.value || "performance";
 
+  // 공연만 좌석 선택 필수
+  if (eventTypeNow === "performance" && (!selected.value || selected.value === "")) {
+    return alert("좌석을 선택하세요.");
+  }
+
+  // 약관 동의 체크
   if (
     !document.getElementById("agreeTerms").checked ||
     !document.getElementById("agreePrivacy").checked
@@ -25,51 +47,65 @@ document.getElementById("payNowBtn").addEventListener("click", () => {
     return alert("약관 및 개인정보 수집에 동의해주세요.");
   }
 
-  requestPay(price);
+  requestPay(price, eventTypeNow);
 });
 
 // 결제 요청
-function requestPay(amount) {
+function requestPay(amount, eventType) {
   const IMP = window.IMP;
-  IMP.init("imp80522717"); // 테스트용 가맹점코드
+  IMP.init("imp80522717"); // PortOne 테스트용 가맹점 코드
+
+  // ✅ 무료 전시는 1원으로 결제창 호출 (PortOne은 0원 불가)
+  const payAmount = eventType === "exhibition" && amount === 0 ? 100 : amount;
 
   IMP.request_pay(
     {
       pg: "html5_inicis",
       pay_method: "card",
       merchant_uid: "order_" + new Date().getTime(),
-      name: document.getElementById("showName")?.innerText || "테스트 결제",
-      amount: amount,
+      name:
+        document.getElementById("showName")?.innerText ||
+        (eventType === "exhibition" ? "무료 전시 예약" : "테스트 결제"),
+      amount: payAmount,
       buyer_email: document.getElementById("buyerEmail").innerText,
       buyer_name: document.getElementById("buyerName").innerText,
       buyer_tel: document.getElementById("buyerPhone").innerText,
     },
     (rsp) => {
       if (rsp.success) {
-        alert("결제가 완료되었습니다!");
+        console.log("결제 성공:", rsp);
 
+        alert(
+          eventType === "exhibition"
+            ? "무료 전시 예약이 완료되었습니다! (0원 처리)"
+            : "결제가 완료되었습니다!"
+        );
+
+        // 서버로 결제 결과 전달
         fetch("/payment/complete", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             impUid: rsp.imp_uid,
             merchantUid: rsp.merchant_uid,
-            payMuch: rsp.paid_amount,
+            payMuch: eventType === "exhibition" ? 0 : rsp.paid_amount, // ✅ DB에는 0원으로 저장
             payWhat: rsp.pay_method,
             payOk: "Y",
-            boardNo: 101, // 테스트용
-            memberNo: 3,
+            boardNo: boardNo,
+            memberNo: memberNo,
           }),
         })
           .then((res) => res.json())
           .then((data) => {
             if (data.result > 0) {
-              // 결제 성공 시 이동
               window.location.href = "/payment/success";
             } else {
               alert("서버 저장 실패");
             }
           });
+      } else {
+        console.error("결제 실패:", rsp);
+        alert("결제 실패: " + rsp.error_msg);
       }
     }
   );

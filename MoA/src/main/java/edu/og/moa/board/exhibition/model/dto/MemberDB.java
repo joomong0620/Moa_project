@@ -14,7 +14,7 @@ public class MemberDB {
 	private String memberPw;
 	private String memberNickname;
 	private String memberTel;
-	private String memberAddress;
+	private String memberAddr;
 	private String memberAdmin;
 	private String profileImg;
 	private String memberDelFl;

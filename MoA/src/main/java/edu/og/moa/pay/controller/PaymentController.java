@@ -19,8 +19,8 @@ public class PaymentController {
     private PaymentService service;
 
     // 결제창
-    @GetMapping("/pay")
-    public String paymentPage(Model model, HttpSession session) {
+    @PostMapping("/pay")
+    public String paymentPage(Model model, HttpSession session, @ModelAttribute Payment ticketingInfo) {
 
         Member loginMember = (Member) session.getAttribute("loginMember");
 
@@ -31,6 +31,8 @@ public class PaymentController {
 
         // 로그인된 회원 정보 모델에 담기
         model.addAttribute("member", loginMember);
+        model.addAttribute("ticketingInfo", ticketingInfo);
+        System.out.println("넘어온 데이터 : " + ticketingInfo);
 
         return "pay/pay";
     }

@@ -256,7 +256,7 @@ main {
 
 /* 포스터 탭 전용 */
 #poster-tab-pane {
-    display: flex;
+
     flex-direction: column;
     align-items: center;
     gap: 25px;
@@ -434,3 +434,17 @@ main {
 }
 
 /* -------------------------------------------------------------------------------------- */
+/* 비활성 탭 내용 숨기기 */
+.tab-content > .tab-pane {
+    display: none !important;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+}
+
+.tab-content > .active {
+    display: block !important;
+    visibility: visible;
+    height: auto;
+    overflow: visible;
+}

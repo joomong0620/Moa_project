@@ -53,6 +53,8 @@ public class MemberController {
 			
 			session.setAttribute("loginMember", loginMember);
 			
+			System.out.println("loginMember : " + loginMember);
+			
 			Cookie cookie = new Cookie("saveId", loginMember.getMemberId());
 			
 			if(saveId != null) {

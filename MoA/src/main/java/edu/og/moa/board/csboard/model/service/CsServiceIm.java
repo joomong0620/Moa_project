@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import edu.og.moa.board.csboard.model.dao.CsMapper;
 import edu.og.moa.board.csboard.model.dto.BoardJtw;
 import edu.og.moa.board.csboard.model.dto.PaginationJtw;
+import edu.og.moa.board.csboard.model.dto.Question;
 
 @Service
 public class CsServiceIm implements CsService{
@@ -47,13 +48,17 @@ public class CsServiceIm implements CsService{
 		boardJtw.setQCode(qCode);
 		System.out.println("communityCode3 :" + communityCode);
 		
+		List<Question> qCodeList = mapper.selectQCodeList(qCode);
+		
+		System.out.println("qCodeList : " + qCodeList);
+		
 		
 		List<BoardJtw> questionList = mapper.selectQuestionList(boardJtw);
 		
 		System.out.println("boardJtw :" + boardJtw);
 		System.out.println("communityCode4 :" + communityCode);
 		
-
+		paramMap.put("qCodeList", qCodeList);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		

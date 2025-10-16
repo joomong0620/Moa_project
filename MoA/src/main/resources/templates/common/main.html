@@ -1,94 +1,99 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MOA Stage</title>
-    <link th:href="@{/css/main-style.css}" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-  </head>
 
-  <body>
-    <!-- Header -->
-    <!-- header 나 footer 를 불러들일 때, 단순한 경로만이 아닌 header 임을 명시해주는 문법을 쓰는 것이 좋다고 함 -->
-    <div th:replace="common/header :: header"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOA Stage</title>
+  <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
 
-    <main class="main">
-      <!-- 배너 -->
-      <section class="banner-container">
-        <div class="banner-slide fade">
-          <img th:src="@{/images/common/banner1.gif}" alt="배너1" />
-        </div>
-        <div class="banner-slide fade">
-          <img th:src="@{/images/common/banner2.gif}" alt="배너2" />
-        </div>
-        <div class="banner-slide fade">
-          <img th:src="@{/images/common/banner3.gif}" alt="배너3" />
-        </div>
-        <div class="banner-slide fade">
-          <img th:src="@{/images/common/banner4.gif}" alt="배너4" />
-        </div>
-        <div class="banner-slide fade">
-          <img th:src="@{/images/common/banner5.gif}" alt="배너" />
-        </div>
+<body>
+  <!-- Header -->
+  <!-- header 나 footer 를 불러들일 때, 단순한 경로만이 아닌 header 임을 명시해주는 문법을 쓰는 것이 좋다고 함 -->
+  <th:block th:replace="~{common/header :: header}"></th:block>
 
-        <!-- 기존에 배운 &lt; / &gt; 로도 꺾쇠 표현이 가능하지만, 해당 특수문자는 시각적으로 보기에 명확한 특수문자이기 때문에 이 기호를 사용하였다.-->
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  <main class="main">
+    <!-- 배너 -->
+    <section class="banner-container">
+      <div class="banner-slide fade">
+        <img th:src="@{/images/common/banner1.gif}" alt="배너1" />
+      </div>
+      <div class="banner-slide fade">
+        <img th:src="@{/images/common/banner2.gif}" alt="배너2" />
+      </div>
+      <div class="banner-slide fade">
+        <img th:src="@{/images/common/banner3.gif}" alt="배너3" />
+      </div>
+      <div class="banner-slide fade">
+        <img th:src="@{/images/common/banner4.gif}" alt="배너4" />
+      </div>
+      <div class="banner-slide fade">
+        <img th:src="@{/images/common/banner5.gif}" alt="배너" />
+      </div>
 
-        <div class="dots">
-          <span class="dot" onclick="currentSlide(1)"></span>
-          <span class="dot" onclick="currentSlide(2)"></span>
-          <span class="dot" onclick="currentSlide(3)"></span>
-          <span class="dot" onclick="currentSlide(4)"></span>
-          <span class="dot" onclick="currentSlide(5)"></span>
-        </div>
-      </section>
+      <!-- 기존에 배운 &lt; / &gt; 로도 꺾쇠 표현이 가능하지만, 해당 특수문자는 시각적으로 보기에 명확한 특수문자이기 때문에 이 기호를 사용하였다.-->
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-      <!-- 공연 -->
-      <section class="show-section">
-        <h2>공연</h2>
+      <div class="dots">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+      </div>
+    </section>
 
-        <div class="show-slider-container">
-          <div class="show-slide-wrapper">
-            <div class="show-slide" th:each="show : ${performanceList}">
-              <img th:src="@{${show.imgPath}}" alt="공연 포스터" class="show-image" />
-            </div>
+    <!-- 공연 -->
+    <section class="show-section">
+      <h2>공연</h2>
+
+      <div class="show-slider-container">
+        <div class="show-slide-wrapper">
+          <div class="show-slide" th:each="show : ${performanceList}">
+            <img th:src="@{${show.imgPath}}" alt="공연 포스터" class="show-image" />
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- 전시 -->
-      <section class="exhibition-section">
-        <h2>전시</h2>
-      
-        <div class="exhibition-slider-container">
-          <div class="exhibition-slide-wrapper">
-            <div class="exhibition-slide" th:each="exh : ${exhibitionList}">
-              <img th:src="@{${exh.imagePath}}" alt="전시 이미지" class="exhibition-image" />
-            </div>
+    <!-- 전시 -->
+    <section class="exhibition-section">
+      <h2>전시</h2>
+
+      <div class="exhibition-slider-container">
+        <div class="exhibition-slide-wrapper">
+          <div class="exhibition-slide" th:each="exh : ${exhibitionList}">
+            <img th:src="@{${exh.imagePath}}" alt="전시 이미지" class="exhibition-image" />
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+  </main>
 
-    <!-- Footer -->
-    <div th:replace="common/footer :: footer"></div>
+  <!-- Footer -->
+  <div th:replace="common/footer :: footer"></div>
 
-    <script th:inline="javascript">
-      const message = /*[[${message}]]*/ "전달 받은 message";
-    
+  <script th:inline="javascript">
+    const message = /*[[${message}]]*/ "전달 받은 message";
 
-      console.log(message)
 
-      if(message != null) alert(message);
+    console.log(message)
 
-    </script>
+    if (message != null) alert(message);
 
-    <script th:src="@{/js/main.js}"></script>
-    <script th:src="@{/js/header.js}"></script>
-  </body>
+  </script>
+
+  <script th:src="@{/js/main.js}"></script>
+  <!-- 로그인 정보 JS 변수 (모든 페이지에서 공통으로 렌더링됨) -->
+  <script th:inline="javascript">
+    const notificationLoginCheck = /*[[${session.loginMember} ? true : false]]*/ false;
+    const notificationDefaultImage = /*[[@{/images/common/user.svg}]]*/ "/images/common/user.svg";
+  </script>
+
+  <script th:src="@{/js/header.js}"></script>
+</body>
+
 </html>

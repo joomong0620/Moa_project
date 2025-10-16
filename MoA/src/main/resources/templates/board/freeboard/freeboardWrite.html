@@ -1,145 +1,99 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>자유게시판</title>
-    <link
-      rel="stylesheet"
-      th:href="@{/css/board/freeboard/freeboardWrite.css}"
-    />
-  </head>
 
-  <body>
-    <main>
-      <!-- <th:block th:replace="~{common/header}"></th:block> -->
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>자유게시판</title>
+  <link rel="stylesheet" th:href="@{/css/board/freeboard/freeboardWrite.css}" />
 
-      <div class="free-container">
-        <h1>자유게시판</h1>
-      </div>
+  <link rel="stylesheet" th:href="@{/css/main-style.css}" />
+</head>
 
-      <!-- @PathVariable로 얻어온 boardCode -->
-      <form
-        th:action="@{insert}"
-        method="POST"
-        class="board-write"
-        id="boardWriteFrm"
-        enctype="multipart/form-data"
-      >
-        <!-- enctype="multipart/form-data" : 제출 시 데이터 인코딩 X 
+<body>
+  <main>
+    <th:block th:replace="~{common/header}"></th:block>
+    <div class="free-container">
+      <h1>자유게시판</h1>
+    </div>
+    <!-- @PathVariable로 얻어온 boardCode -->
+    <form th:action="@{insert}" method="POST" class="board-write" id="boardWriteFrm" enctype="multipart/form-data">
+      <!-- enctype="multipart/form-data" : 제출 시 데이터 인코딩 X 
         -> 파일 제출 가능 -> MultiPartResolver가 문자열, 파일 구분
         
         문자열 -> String, int, DTO, Map (HttpMessageConverter)
         파일 -> MultiPartFile 객체 -> transferTo() (파일을 서버에 저장)
         -->
 
-        <!-- 제목 -->
-        <div class="Title-container">
-          <div class="Title">제목</div>
-          <input
-            type="text"
-            name="boardTitle"
-            class="subTitle"
-            placeholder="제목을 입력해주세요"
-          />
+      <!-- 제목 -->
+      <div class="Title-container">
+        <div class="Title">제목</div>
+        <input type="text" name="boardTitle" class="subTitle" placeholder="제목을 입력해주세요" />
+      </div>
+
+      <!-- 썸네일 영역 -->
+      <h5>썸네일</h5>
+      <div class="img-box">
+        <div class="boardImg thumbnail">
+          <label for="img0">
+            <img class="preview" src="" />
+          </label>
+          <input type="file" name="images" class="inputImage" id="img0" accept="image/*" />
+          <span class="delete-image">&times;</span>
+        </div>
+      </div>
+
+      <!-- 업로드 이미지 영역 -->
+      <h5>업로드 이미지</h5>
+      <div class="img-box">
+        <div class="boardImg">
+          <label for="img1">
+            <img class="preview" src="" />
+          </label>
+          <input type="file" name="images" class="inputImage" id="img1" accept="image/*" />
+          <span class="delete-image">&times;</span>
         </div>
 
-        <!-- 썸네일 영역 -->
-        <h5>썸네일</h5>
-        <div class="img-box">
-          <div class="boardImg thumbnail">
-            <label for="img0">
-              <img class="preview" src="" />
-            </label>
-            <input
-              type="file"
-              name="images"
-              class="inputImage"
-              id="img0"
-              accept="image/*"
-            />
-            <span class="delete-image">&times;</span>
-          </div>
+        <div class="boardImg">
+          <label for="img2">
+            <img class="preview" src="" />
+          </label>
+          <input type="file" name="images" class="inputImage" id="img2" accept="image/*" />
+          <span class="delete-image">&times;</span>
         </div>
 
-        <!-- 업로드 이미지 영역 -->
-        <h5>업로드 이미지</h5>
-        <div class="img-box">
-          <div class="boardImg">
-            <label for="img1">
-              <img class="preview" src="" />
-            </label>
-            <input
-              type="file"
-              name="images"
-              class="inputImage"
-              id="img1"
-              accept="image/*"
-            />
-            <span class="delete-image">&times;</span>
-          </div>
-
-          <div class="boardImg">
-            <label for="img2">
-              <img class="preview" src="" />
-            </label>
-            <input
-              type="file"
-              name="images"
-              class="inputImage"
-              id="img2"
-              accept="image/*"
-            />
-            <span class="delete-image">&times;</span>
-          </div>
-
-          <div class="boardImg">
-            <label for="img3">
-              <img class="preview" src="" />
-            </label>
-            <input
-              type="file"
-              name="images"
-              class="inputImage"
-              id="img3"
-              accept="image/*"
-            />
-            <span class="delete-image">&times;</span>
-          </div>
-
-          <div class="boardImg">
-            <label for="img4">
-              <img class="preview" src="" />
-            </label>
-            <input
-              type="file"
-              name="images"
-              class="inputImage"
-              id="img4"
-              accept="image/*"
-            />
-            <span class="delete-image">&times;</span>
-          </div>
+        <div class="boardImg">
+          <label for="img3">
+            <img class="preview" src="" />
+          </label>
+          <input type="file" name="images" class="inputImage" id="img3" accept="image/*" />
+          <span class="delete-image">&times;</span>
         </div>
 
-        <!-- 내용 -->
-        <div class="board-content">
-          <textarea
-            name="boardContent"
-            placeholder="내용을 입력해주세요."
-          ></textarea>
+        <div class="boardImg">
+          <label for="img4">
+            <img class="preview" src="" />
+          </label>
+          <input type="file" name="images" class="inputImage" id="img4" accept="image/*" />
+          <span class="delete-image">&times;</span>
         </div>
+      </div>
 
-        <!-- 버튼 영역 -->
-        <div class="board-btn-area">
-          <button type="submit" id="writebtn">등록</button>
-        </div>
-      </form>
-    </main>
+      <!-- 내용 -->
+      <div class="board-content">
+        <textarea name="boardContent" placeholder="내용을 입력해주세요."></textarea>
+      </div>
 
-    <!-- <th:block th:replace="~{common/footer}"></th:block> -->
+      <!-- 버튼 영역 -->
+      <div class="board-btn-area">
+        <button type="submit" id="writebtn">등록</button>
+      </div>
+    </form>
+  </main>
 
-    <script th:src="@{/js/board/freeboard/freeboardWrite.js}"></script>
-  </body>
+  <th:block th:replace="~{common/footer}"></th:block>
+  <script th:src="@{/js/board/freeboard/freeboardWrite.js}"></script>
+</body>
+
 </html>

@@ -1,7 +1,8 @@
-package edu.og.moa.myPage.model.service;
+package edu.og.moa.mypage.model.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,10 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.og.moa.board.freeboard.model.dto.Board;
 import edu.og.moa.common.utility.Util;
 import edu.og.moa.member.model.dto.Member;
-import edu.og.moa.myPage.model.dao.MyPageMapper;
-
+import edu.og.moa.mypage.model.dao.MyPageMapper;
+import edu.og.moa.pay.model.dto.Payment;
 
 @Service
 @PropertySource("classpath:/config.properties")
@@ -89,6 +91,30 @@ public class MyPageServiceImpl implements MyPageService {
 		
 		// 3. 비밀번호 불일치 시 0 반환
 		return 0;
+	}
+
+
+	@Override
+	public List<Board> selectLikeBoard(int memberNo) {
+		return mapper.selectLikeBoard(memberNo);
+	}
+
+	
+	@Override
+	public List<Board> selectMyBoardList(int memberNo) {
+		return mapper.selectMyBoardList(memberNo);
+	}
+
+	// 내 예매내역 불러오기
+	@Override
+	public List<Payment> selectPaymentList(int memberNo) {
+		return mapper.selectPaymentList(memberNo);
+	}
+
+	// 예매 결제 취소
+	@Override
+	public int cancelPayment(String payNo) {
+		 return mapper.cancelPayment(payNo);
 	}
 
 

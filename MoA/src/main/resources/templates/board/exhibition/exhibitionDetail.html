@@ -173,7 +173,27 @@
 
                                     <div class="sec-right-div2 btn-wrapper">
                                         <div class="exhibition-detail-btn-purchase">
-                                            <button id="purchaseBtn">예매하기</button>
+                                            <form th:action="@{/payment/pay}" method="post">
+
+                                                <input type="hidden" name="boardNo" th:value="*{exhibitNo}" />
+                                                <input type="hidden" name="memberNo" th:value="*{memberNo}" />
+                                                <input type="hidden" name="showTitle" th:value="'showTitle info not available'" />
+                                                <input type="hidden" name="showName" th:value="*{exhibitTitle}" />
+                                                
+                                                <input th:unless="*{exhibitDate}" type="hidden" name="showDate" th:value="'showDate info not available'" />
+                                                <input th:if="*{exhibitDate}" type="hidden" name="showDate" th:value="*{exhibitDate}" />
+                                                <input type="hidden" name="showPlace" th:value="*{exhibitInstitution}" />
+                                                <input type="hidden" name="memberNickname" th:value="*{memberNickname}" />
+                                                <input type="hidden" name="memberTel" th:value="*{memberTel}" />
+                                                <input type="hidden" name="memberEmail" th:value="*{memberEmail}" />
+                                                <input type="hidden" name="eventType" th:value="'exhibition'" />
+                                                <input type="hidden" name="PriceType" th:value="'exhibition: price-type info NA'" />
+                                                <input type="hidden" name="Price" th:value="*{exhibitCharge}" />
+
+                                                <button id="purchaseBtn">예매하기</button>
+                                            </form>
+
+
                                         </div>
                                     </div>
 

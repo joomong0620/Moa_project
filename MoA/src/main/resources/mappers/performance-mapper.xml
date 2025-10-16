@@ -42,7 +42,7 @@
 	
 	<select id="selectPmTypeList" resultType="PerformanceBoard">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.B_CREATE_DATE, B.BOARD_COUNT,
-			P.PM_HOUSE_NAME, P.PM_HOUSE_ADDRESS,
+			H.PM_HOUSE_NAME, H.PM_HOUSE_ADDRESS,
 			TO_CHAR(P.PM_START_TIME, 'YYYY.MM.DD') PM_START_TIME,
 			TO_CHAR(P.PM_END_TIME, 'YYYY.MM.DD') PM_END_TIME,
 			(SELECT IMG_PATH FROM BOARD_IMG I WHERE I.BOARD_NO = B.BOARD_NO AND IMG_ORDER = 0) POSTER
@@ -106,6 +106,15 @@
 		AND B.BOARD_NO = #{boardNo}
 	</select>
 	
+		<!-- 좋아요 여부 확인 -->
+	<select id="boardLikeCheck" resultType="_int">
+		SELECT COUNT(*) 
+		FROM "LIKE"
+		WHERE BOARD_NO = ${boardNo}
+		AND MEMBER_NO = ${memberNo}
+	</select>
+	
+	
 	<!-- 좋아요 테이블 추가 -->
 	<insert id="insertBoardLike">
 		INSERT INTO "LIKE"
@@ -131,6 +140,19 @@
 		SET BOARD_COUNT = BOARD_COUNT + 1
 		WHERE BOARD_NO = #{boardNo}
 	</update>
-
+	
+	<!-- 공연 썸네일 목록 조회 -->
+	<select id="selectPerformanceList" resultType="edu.og.moa.board.performance.model.dto.PerformanceBoardImage">
+	    SELECT B.BOARD_NO AS boardNo,
+	           I.IMG_PATH AS imgPath,
+	           I.IMG_ORDER AS imgOrder,
+	           I.IMG_NO AS imgNo
+	    FROM BOARD B
+	    JOIN BOARD_IMG I ON B.BOARD_NO = I.BOARD_NO
+	    WHERE B.BOARD_DEL_FL = 'N'
+	      AND B.COMMUNITY_CODE = 4
+	      AND I.IMG_ORDER = 0
+	    ORDER BY B.B_CREATE_DATE DESC
+	</select>
 
 </mapper>

@@ -1,8 +1,10 @@
 package edu.og.moa.board.performance.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import edu.og.moa.board.performance.model.dto.PerformanceBoard;
+import edu.og.moa.board.performance.model.dto.PerformanceBoardImage;
 
 public interface PerformanceService {
 
@@ -20,6 +22,9 @@ public interface PerformanceService {
 
 	// 좋아요 처리
 	int like(Map<String, Integer> paramMap);
+
+    // 공연 썸네일 목록 조회 (KSY)
+	List<PerformanceBoardImage> selectPerformanceList();
 	
 	
 	

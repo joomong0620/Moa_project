@@ -52,7 +52,7 @@
 	</select>
 
   <!-- 리뷰 상세 -->
-  <select id="selectReviewDetail" parameterType="int" resultType="edu.og.moa.board.review.model.dto.ReviewBoard">
+  <select id="selectReviewDetail" parameterType="map" resultType="edu.og.moa.board.review.model.dto.ReviewBoard">
     SELECT 
       B.BOARD_NO,
       B.BOARD_TITLE,
@@ -124,15 +124,6 @@
       AND C.COMMENT_DEL_FL = 'N'
     ORDER BY C.COMMENT_NO ASC
   </select>
-
-  <!-- 댓글 등록 -->
-  <insert id="insertComment" parameterType="edu.og.moa.board.review.model.dto.ReviewComment" useGeneratedKeys="true" keyProperty="commentNo">
-    INSERT INTO "COMMENT" (
-      COMMENT_NO, MEMBER_NO, BOARD_NO, COMMENT_CONTENT
-    ) VALUES (
-      SEQ_COMMENT_NO.NEXTVAL, #{memberNo}, #{boardNo}, #{commentContent}
-    )
-  </insert>
   
   <!-- 이미지 삽입 -->
 	<insert id="insertReviewImage" parameterType="edu.og.moa.board.review.model.dto.ReviewImage">
@@ -146,13 +137,6 @@
 	     #{imgRename},
 	     #{imgOrder})
 	</insert>
-
-  <!-- 댓글 삭제 -->
-  <update id="deleteComment" parameterType="int">
-    UPDATE "COMMENT"
-    SET COMMENT_DEL_FL = 'Y'
-    WHERE COMMENT_NO = #{commentNo}
-  </update>
 
   <!-- 별점 등록/수정 -->
 	<update id="upsertStar" parameterType="map">

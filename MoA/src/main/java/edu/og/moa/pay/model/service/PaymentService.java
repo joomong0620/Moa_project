@@ -9,4 +9,9 @@ public interface PaymentService {
 
     /** PortOne imp_uid로 결제 조회 */
     Payment selectPaymentByImpUid(String impUid);
+
+    /** 결제 취소 */
+    boolean cancelPayment(String impUid, String reason) throws Exception;
+
+   
 }

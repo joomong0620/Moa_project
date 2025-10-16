@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+        crossorigin="anonymous"></script>
+
     <!-- <script th:src="@{https://kit.fontawesome.com/f7459b8054.js}" crossorigin="anonymous"></script> -->
     <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script>
+
+    <!-- 먼저 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- 그 다음 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
 
     <!-- 임시 -->
     <link th:href="@{/css/main-style.css}" rel="stylesheet" />
@@ -16,103 +26,111 @@
     <link rel="stylesheet" th:href="@{/css/board/performance/pm-detail-style.css}">
     <title>Document</title>
 </head>
+
 <body>
     <th:block th:replace="~{/common/header}">header.html</th:block>
-    
+
     <main>
 
         <section id="main-container" th:object="${board}">
-            
+
             <!-- 뒤로가기 -->
             <div id="back-btn" onclick="history.back()">
                 <i class="fa-solid fa-arrow-left"></i> 뒤로가기
             </div>
-            
+
             <!-- 상단 상세정보 공간 -->
-                <table id="detail-content">
+            <table id="detail-content">
 
-                    <!-- 썸네일 포스터 -->
-                    <tr id="detail-title">
+                <!-- 썸네일 포스터 -->
+                <tr id="detail-title">
 
-                        <td rowspan="6" width="400px" height="533px" id="detail-title-poster">
-                            <img th:src="${thumbnail.imgPath}">
-                            <!-- <img src="http://www.kopis.or.kr/upload/pfmPoster/PF_PF275265_250929_145553.gif" alt=""> -->
-                        </td>
-            
-                        <!-- 제목 -->
-                        <td colspan="3" width="630px" height="130px">
-                            <h3 th:text="*{boardTitle}">제5회 코랄레움 인 서울 연주회: 합창명작 마주하기 프로젝트 V. 바흐 & 헨델 탄생 340주년 기념, 조우: 바로크 동갑내기 거장을 만나다</h3>
-                        </td>
-                    </tr>
+                    <td rowspan="6" width="400px" height="533px" id="detail-title-poster">
+                        <img th:src="${thumbnail.imgPath}">
+                        <!-- <img src="http://www.kopis.or.kr/upload/pfmPoster/PF_PF275265_250929_145553.gif" alt=""> -->
+                    </td>
 
-                    <!-- 장소 -->
-                    <tr id="detail-place">
-                        <td width="" height="60px">
-                            공연 장소
-                        </td>
+                    <!-- 제목 -->
+                    <td colspan="3" width="630px" height="130px">
+                        <h3 th:text="*{boardTitle}">제5회 코랄레움 인 서울 연주회: 합창명작 마주하기 프로젝트 V. 바흐 & 헨델 탄생 340주년 기념, 조우: 바로크
+                            동갑내기 거장을 만나다</h3>
+                    </td>
+                </tr>
 
-                        <td width="" colspan="2"  >
-                            <div th:text="*{pmHouseName}">공연 장소</div>
-                        </td>
-                    </tr>
+                <!-- 장소 -->
+                <tr id="detail-place">
+                    <td width="" height="60px">
+                        공연 장소
+                    </td>
 
-                    <!-- 기간 -->
-                    <tr id="detail-date">
-                        <td width="120px" height="60px">
-                            공연 기간
-                        </td>
-                        <!-- th:text="|[${board.commentCount}]|" -->
-                        <td width="" colspan="2" >
-                            <div th:text="|${board.pmStartTime} ~ ${board.pmEndTime}|">공연 기간</div>
-                        </td>
-                    </tr>
+                    <td width="" colspan="2">
+                        <div th:text="*{pmHouseName}">공연 장소</div>
+                    </td>
+                </tr>
 
-                    <!-- 시간 -->
-                    <tr id="detail-time">
-                        <td width="" height="60px">공연 시간</td>
-                        <td colspan="2">
-                            <div th:text="*{pmPlaytime}">공연 시간</div>
-                        </td>
-                    </tr>
-            
-                    <!-- 가격 -->
-                    <tr id="detail-price">
-                        <td width="" height="140px" rowspan="2">
-                            좌석 가격
-                        </td>
-                        
-                        <td rowspan="2" colspan="2">
+                <!-- 기간 -->
+                <tr id="detail-date">
+                    <td width="120px" height="60px">
+                        공연 기간
+                    </td>
+                    <!-- th:text="|[${board.commentCount}]|" -->
+                    <td width="" colspan="2">
+                        <div th:text="|${board.pmStartTime} ~ ${board.pmEndTime}|">공연 기간</div>
+                    </td>
+                </tr>
 
-                            <!-- 개수만큼 반복 -->
-                            <div class="priceList" th:each="price : ${board.pmPriceList}">
-                                <th:block th:text="|${price.pmPriceType} - ${price.pmPrice}원|">좌석</th:block>
-                            </div>
+                <!-- 시간 -->
+                <tr id="detail-time">
+                    <td width="" height="60px">공연 시간</td>
+                    <td colspan="2">
+                        <div th:text="*{pmPlaytime}">공연 시간</div>
+                    </td>
+                </tr>
 
-                        </td>
-                    </tr>
+                <!-- 가격 -->
+                <tr id="detail-price">
+                    <td width="" height="140px" rowspan="2">
+                        좌석 가격
+                    </td>
 
-                </table>
-    
+                    <td rowspan="2" colspan="2">
+
+                        <!-- 개수만큼 반복 -->
+                        <div class="priceList" th:each="price : ${board.pmPriceList}">
+                            <th:block th:text="|${price.pmPriceType} - ${price.pmPrice}원|">좌석</th:block>
+                        </div>
+
+                    </td>
+                </tr>
+
+            </table>
+
             <!-- 탭 메뉴 -->
             <!-- 단순 네비게이션 역할 -->
             <ul class="detail-nav nav nav-tabs" id="myTab" role="tablist">
 
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="poster-tab" data-bs-toggle="tab" data-bs-target="#poster-tab-pane" type="button" role="tab" aria-controls="poster-tab-pane" aria-selected="true">포스터</button>
+                    <button class="nav-link active" id="poster-tab" data-bs-toggle="tab"
+                        data-bs-target="#poster-tab-pane" type="button" role="tab" aria-controls="poster-tab-pane"
+                        aria-selected="true">포스터</button>
                 </li>
 
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="comment-tab" data-bs-toggle="tab" data-bs-target="#comment-tab-pane" type="button" role="tab" aria-controls="comment-tab-pane" aria-selected="false">
+                    <button class="nav-link" id="comment-tab" data-bs-toggle="tab" data-bs-target="#comment-tab-pane"
+                        type="button" role="tab" aria-controls="comment-tab-pane" aria-selected="false">
                         기대평 <th:block th:text="|(${board.commentCount})|">(숫자)</th:block>
                     </button>
                 </li>
 
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">오시는 길</button>
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
+                        type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"
+                        onclick="resizeMap(); relayout();">오시는 길</button>
                 </li>
 
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review -tab-pane" type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">관련 후기</button>
+                    <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review -tab-pane"
+                        type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">관련 후기</button>
                 </li>
 
             </ul>
@@ -122,40 +140,68 @@
             <div class="tab-content" id="myTabContent">
 
                 <!-- 포스터 부분 탭 내용 -->
-                <div class="tab-pane fade show active" id="poster-tab-pane" role="tabpanel" aria-labelledby="poster-tab" tabindex="0">
+                <div class="tab-pane fade show active" id="poster-tab-pane" role="tabpanel" aria-labelledby="poster-tab"
+                    tabindex="0">
                     <div class="poster-box">
-                        <th:block  th:each="i : ${#numbers.sequence(0, #lists.size(board.pmImageList)-1,1)}">
+                        <th:block th:each="i : ${#numbers.sequence(0, #lists.size(board.pmImageList)-1,1)}">
                             <img th:src="${board.pmImageList[i].imgPath}">
                         </th:block>
                     </div>
                 </div>
 
                 <!-- 기대평 부분 탭 내용 -->
-                <div class="tab-pane fade" id="comment-tab-pane" role="tabpanel" aria-labelledby="comment-tab" tabindex="0">
+                <div class="tab-pane fade" id="comment-tab-pane" role="tabpanel" aria-labelledby="comment-tab"
+                    tabindex="0">
                     <p>기대평들이 없습니다.</p>
                 </div>
 
                 <!-- 오시는 길 부분 탭 내용 -->
-                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-                        <th:block th:replace="~{/board/performance/tab/pm-detail-map}">오시는길.html</th:block>
+                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
+                    tabindex="0">
+                    <th:block th:replace="~{/board/performance/tab/pm-detail-map}">오시는길.html</th:block>
                 </div>
 
                 <!-- 관련 후기 탭 내용 -->
-                <div class="tab-pane fade" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
-                    리뷰게시판에 
+                <div class="tab-pane fade" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab"
+                    tabindex="0">
+                    리뷰게시판에
                 </div>
             </div>
-            
 
 
         </section>
 
         <section id="calendar-container">
-            <div class="calendar">
-                <img src="" alt="">
-            </div>
-            
-            <button id="pm-buy-btn">예매하기</button>
+
+            <!-- 결재할 때 넘어갈 정보들 -->
+            <form th:action="@{/payment/pay}" method="post">
+                <input type="hidden" name="boardNo" th:value="${board.boardNo}" />
+                <input type="hidden" name="showTitle" th:value="${board.boardTitle}" />
+                <input type="hidden" name="showName" th:value="${board.boardTitle}" />
+
+                <!-- 임시 공연 날짜 -->
+                <input type="hidden" id="showDate" name="showDate" th:value="${board.pmStartTime}" />
+
+                <input type="hidden" name="showPlace" th:value="${board.pmHouseName}" />
+                <input type="hidden" name="memberNo" th:value="${session.loginMember?.memberNo}" />
+                <input type="hidden" name="memberNickname" th:value="${session.loginMember?.memberNickname}" />
+                <input type="hidden" name="memberTel" th:value="${session.loginMember?.memberTel}" />
+                <input type="hidden" name="memberEmail" th:value="${session.loginMember?.memberEmail}" />
+                <input type="hidden" name="eventType" th:value="'performance'" />
+
+                <!-- 좌석 분류 및 가격 반복문 -->
+                <th:block th:each="price : ${board.pmPriceList}">
+                    <input type="hidden" name="PriceType" th:value="${price.pmPriceType}" />
+                    <input type="hidden" name="Price" th:value="${price.pmPrice}" />
+                </th:block>
+
+                <!-- 날짜 선택용 달력 들어갈 자리 -->
+                <div id="calendar" class="calendar"></div>
+
+
+                <button id="pm-buy-btn">예매하기</button>
+            </form>
+
 
             <span class="like-area">
                 <!-- <i class="fa-heart" th:classappend="${likeCheck} ? 'fa-solid' : 'fa-regular'" id="boardLike"></i> -->
@@ -168,7 +214,77 @@
 
         </section>
     </main>
-    
+
+
+
+
+
+
+
+
     <th:block th:replace="~{/common/footer}">footer.html</th:block>
+
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const calendarElem = document.getElementById("calendar");
+            const showDateInput = document.getElementById("showDate");
+
+            if (!calendarElem) {
+                console.error("⚠️ #calendar 요소를 찾을 수 없습니다!");
+                return;
+            }
+
+            // 공연 시작/종료일 (서버에서 넘어온 Thymeleaf 값)
+            const startRaw = /*[[${board.pmStartTime}]]*/ "2025.12.25";
+            const endRaw = /*[[${board.pmEndTime}]]*/ "2025.12.27";
+
+            if (!startRaw || !endRaw) {
+                console.warn("⚠️ 공연 날짜 정보가 없습니다. 달력 렌더링 생략.");
+                return;
+            }
+
+            // Oracle의 'YYYY.MM.DD' → flatpickr 인식용 'YYYY-MM-DD'
+            const startDate = startRaw.replaceAll('.', '-');
+            const endDate = endRaw.replaceAll('.', '-');
+
+            // 한국어 로케일 적용
+            flatpickr.localize(flatpickr.l10ns.ko);
+
+            // 달력 초기화
+            flatpickr(calendarElem, {
+                inline: true,
+                dateFormat: "Y-m-d",
+                minDate: startDate,
+                maxDate: endDate,
+                defaultDate: startDate,
+                disable: [
+                    function (date) {
+                        return date < new Date(startDate) || date > new Date(endDate);
+                    }
+                ],
+                onChange: function (selectedDates, dateStr) {
+                    showDateInput.value = dateStr;
+                    console.log("🎫 선택한 공연 날짜:", dateStr);
+                },
+                onDayCreate: function (dObj, dStr, fp, dayElem) {
+                    // 공연 기간 내 날짜는 진하게 표시
+                    const date = dayElem.dateObj;
+                    const s = new Date(startDate);
+                    const e = new Date(endDate);
+                    if (date >= s && date <= e) {
+                        dayElem.style.backgroundColor = "#e3f2fd";
+                    } else {
+                        dayElem.style.opacity = "0.3";
+                        dayElem.style.pointerEvents = "none";
+                    }
+                }
+            });
+        });
+
+
+        const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인한 회원 번호";
+    </script>
+
 </body>
+
 </html>

@@ -3,8 +3,6 @@
 <mapper namespace="edu.og.moa.board.exhibition.model.dao.ExhibitionMapper">
 
 
-			
-
 	<!-- Exhibition DTO에 대한 resultMap -->
 	<resultMap type="Exhibition" id="exhibition_rm">
 		<id property="exhibitNo" column="BOARD_NO" />
@@ -18,6 +16,8 @@
 		<result property="likeCount" column="LIKE_COUNT" />
 
 		<result property="memberNickname" column="MEMBER_NICKNAME" />
+		<result property="memberTel" column="MEMBER_TEL" />
+		<result property="memberEmail" column="MEMBER_EMAIL" />
 		<result property="profileImage" column="PROFILE_IMG" />
 		<result property="thumbnail" column="THUMBNAIL" />		<!-- column="THUMBNAIL"은 sql 조회했을때 만들어준 것 별칭 -->
 												
@@ -70,7 +70,9 @@
 		<result property="imgRename" column="IMG_RENAME" />
 		<result property="imgOrder" column="IMG_ORDER" />
 	</resultMap>
-	
+
+
+
 	<!-- Author DTO에 대한 resultMap -->
 	<resultMap type="AuthorDB" id="author_rm">
 		<id property="authorNo" column="AUTHOR_NO" />
@@ -78,7 +80,8 @@
 		<result property="authorName" column="AUTHOR_NAME" />
 		<result property="boardNo" column="BOARD_NO" />
 	</resultMap>
-		
+
+
 <!-- ###################################################################### -->
 
 	<!-- 특정 게시판의 삭제되지 않은 게시글 수 조회 -->
@@ -95,17 +98,17 @@
 	<!-- CDATA 태그: 해당 태그 내부에 작성된 것은 모두 문자로 취급: "SYSDATE - B_CREATE_DATE < 1/24/60"안에 
 		'<' 처리위함 -->
 	<select id="selectExhibitionList" resultMap="exhibition_rm">
-		SELECT BOARD_NO, BOARD_TITLE, MEMBER_NICKNAME, BOARD_COUNT,
+		SELECT B.BOARD_NO, B.BOARD_TITLE, M.MEMBER_NICKNAME, B.BOARD_COUNT, E.EXHIBIT_DATE, 
 		<!-- 2025-08-27 11 51 , 2025-08-27 10 51 -->
 		         	<![CDATA[
 		            CASE  
-		               WHEN SYSDATE - B_CREATE_DATE < 1/24/60 
-		               THEN FLOOR( (SYSDATE - B_CREATE_DATE) * 24 * 60 * 60 ) || '초 전'
-		               WHEN SYSDATE - B_CREATE_DATE < 1/24 
-		               THEN FLOOR( (SYSDATE - B_CREATE_DATE) * 24 * 60) || '분 전'
-		               WHEN SYSDATE - B_CREATE_DATE < 1   
-		               THEN FLOOR( (SYSDATE - B_CREATE_DATE) * 24) || '시간 전'
-		               ELSE TO_CHAR(B_CREATE_DATE, 'YYYY-MM-DD')
+		               WHEN SYSDATE - B.B_CREATE_DATE < 1/24/60 
+		               THEN FLOOR( (SYSDATE - B.B_CREATE_DATE) * 24 * 60 * 60 ) || '초 전'
+		               WHEN SYSDATE - B.B_CREATE_DATE < 1/24 
+		               THEN FLOOR( (SYSDATE - B.B_CREATE_DATE) * 24 * 60) || '분 전'
+		               WHEN SYSDATE - B.B_CREATE_DATE < 1   
+		               THEN FLOOR( (SYSDATE - B.B_CREATE_DATE) * 24) || '시간 전'
+		               ELSE TO_CHAR(B.B_CREATE_DATE, 'YYYY-MM-DD')
 		            END B_CREATE_DATE,
 		            ]]>
 		<!-- (SELECT COUNT(*) FROM "COMMENT" C WHERE C.BOARD_NO = B.BOARD_NO AND COMMENT_DEL_FL = 'N') COMMENT_COUNT, : 전시게시판은 comment없음-->
@@ -113,10 +116,11 @@
 		(SELECT IMG_PATH || IMG_ORIG FROM BOARD_IMG I WHERE I.BOARD_NO = B.BOARD_NO AND IMG_ORDER = 0) THUMBNAIL
 
 		FROM "BOARD" B
-		JOIN "MEMBER" USING(MEMBER_NO)
-		WHERE BOARD_DEL_FL = 'N'
-		AND COMMUNITY_CODE = ${communityCode}
-		-- ORDER BY BOARD_NO DESC
+		JOIN "MEMBER" M ON(M.MEMBER_NO = B.MEMBER_NO)
+		JOIN EXHIBITION E ON(E.BOARD_NO = B.BOARD_NO)
+		WHERE B.BOARD_DEL_FL = 'N'
+		AND B.COMMUNITY_CODE = ${communityCode}
+		ORDER BY B.BOARD_NO DESC -- 2025/10/14
 
 	</select>
 
@@ -125,7 +129,7 @@
 		 -> selectImageList 실행 후 결과 담음
 	 -->
 	<select id="selectExhibition" resultMap="exhibition_rm">
-		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_COUNT, M.MEMBER_NICKNAME, M.MEMBER_NO, M.PROFILE_IMG,
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_COUNT, M.MEMBER_NICKNAME, M.MEMBER_NO, M.PROFILE_IMG, M.MEMBER_TEL, M.MEMBER_EMAIL,
 		    TO_CHAR(B.B_CREATE_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') B_CREATE_DATE,
 		    TO_CHAR(B.B_UPDATE_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') B_UPDATE_DATE,
 		    (SELECT COUNT(*) FROM "LIKE" L WHERE L.BOARD_NO = B.BOARD_NO) LIKE_COUNT,
@@ -226,6 +230,156 @@
 
 
 
+
+
+	<!-- 특정 게시판의 삭제되지 않고 검색 조건이 일치하는 게시글 수 조회: 
+	주제(CONTENT), 제목(TITLE), 작가(AUTHOR), 
+	전시기관(EXHIBIT_INST_NAME 또는 EXHIBIT_HOST || EXHIBIT_SUPPORT), 
+	기타(EXHIBIT_AUDIENCE ) -->
+	<select id="getSearchListCount" resultType="_int" >
+		SELECT 
+			COUNT(B.BOARD_NO) AS COUNT_EXHIBIT_SEARCH_LIST
+		
+		FROM BOARD B
+		JOIN MEMBER M ON M.MEMBER_NO = B.MEMBER_NO
+		JOIN EXHIBITION E ON E.BOARD_NO = B.BOARD_NO
+		JOIN GENRE GR ON GR.GENRE_NO = E.GENRE_NO
+		LEFT JOIN (
+		    SELECT BOARD_NO, IMG_PATH, IMG_ORIG 
+		    FROM BOARD_IMG 
+		    WHERE IMG_ORDER = 0
+		) BI ON BI.BOARD_NO = B.BOARD_NO
+		<!-- 작가 검색: 작가(AUTHOR) -->
+		LEFT JOIN (
+		    SELECT BOARD_NO, LISTAGG(AUTHOR_NAME, ', ') WITHIN GROUP (ORDER BY AUTHOR_NO) AS AUTHOR_NAMES
+		    FROM AUTHOR 
+		    GROUP BY BOARD_NO
+		) AUTH ON AUTH.BOARD_NO = B.BOARD_NO
+
+		<!-- 전시관 검색: (EXHIBIT_INST_NAME 또는 EXHIBIT_HOST || EXHIBIT_SUPPORT) -->
+		JOIN INSTITUTION ITT ON ITT.INSTITUTION_NO = E.INSTITUTION_NO
+		JOIN CONTRIBUTOR CB ON CB.BOARD_NO = B.BOARD_NO	
+		WHERE 
+			BOARD_DEL_FL = 'N'
+			AND B.COMMUNITY_CODE = #{communityCode}
+			
+			<!-- 검색 조건들 -->
+			<choose>
+				<when test='key == "c"'>
+					<!-- 주제 -->
+					AND B.BOARD_CONTENT LIKE '%${query}%'
+				</when>
+				<when test='key == "t"'>
+					<!-- 제목 -->
+					AND B.BOARD_TITLE LIKE '%${query}%'
+				</when>
+				<when test='key == "auth"'>
+					<!-- 작가 -->
+					AND AUTH.AUTHOR_NAMES LIKE '%${query}%'
+				</when>
+				<when test='key == "i"'>
+					<!-- 전시기관 -->
+					AND (ITT.EXHIBIT_INST_NAME LIKE '%${query}%' OR  CB.EXHIBIT_HOST || CB.EXHIBIT_SUPPORT LIKE '%${query}%')
+				</when>
+				<when test='key == "p"'>
+					<!-- 전시기간:년도 (period === exhibitDate) -->
+					AND (E.EXHIBIT_DATE LIKE '%${query}%' )
+				</when>				
+				<when test='key == "e"'>
+					<!-- 기타 -->
+					AND (E.EXHIBIT_AUDIENCE LIKE '%${query}%' OR E.EXHIBIT_SUB_TITLE LIKE '%${query}%')
+				</when>			
+			</choose>
+	</select>
+	
+	
+	
+	<!-- 검색용 게시글 목록 조회 -->
+	<!-- CDATA 태그: 해당 태그 내부에 작성된 것은 모두 문자로 취급: 
+					"SYSDATE - B_CREATE_DATE < 1/24/60"안에 '<' 처리위함 -->
+					<!-- 통합검색의 경우 COMMUNITY_CODE 필요(placeholder)  -->
+	<select id="selectSearchExhibitionList" resultMap="exhibition_rm">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, M.MEMBER_NICKNAME, B.BOARD_COUNT, B.COMMUNITY_CODE, EXHIBIT_DATE,
+		<!-- 2025-08-27 11 51 , 2025-08-27 10 51 -->
+		         	<![CDATA[
+		            CASE  
+		               WHEN SYSDATE - B.B_CREATE_DATE < 1/24/60 
+		               THEN FLOOR( (SYSDATE - B.B_CREATE_DATE) * 24 * 60 * 60 ) || '초 전'
+		               WHEN SYSDATE - B.B_CREATE_DATE < 1/24 
+		               THEN FLOOR( (SYSDATE - B.B_CREATE_DATE) * 24 * 60) || '분 전'
+		               WHEN SYSDATE - B.B_CREATE_DATE < 1   
+		               THEN FLOOR( (SYSDATE - B.B_CREATE_DATE) * 24) || '시간 전'
+		               ELSE TO_CHAR(B.B_CREATE_DATE, 'YYYY-MM-DD')
+		            END AS B_CREATE_DATE,
+		            ]]>
+		(SELECT COUNT(*) FROM "LIKE" L	WHERE L.BOARD_NO = B.BOARD_NO) LIKE_COUNT,
+		-- 컬럼 별칭, needed
+	    BI.IMG_PATH || BI.IMG_ORIG AS THUMBNAIL,
+	    NVL(AUTH.AUTHOR_NAMES, 'TBA') AS AUTHOR_NAMES,
+	    ITT.EXHIBIT_INST_NAME AS EXHIBIT_INSTITUTION,
+	    CB.EXHIBIT_HOST || CB.EXHIBIT_SUPPORT AS HOST_SUPPORT
+
+		FROM "BOARD" B
+		JOIN "MEMBER" M ON M.MEMBER_NO = B.MEMBER_NO
+		JOIN EXHIBITION E ON E.BOARD_NO = B.BOARD_NO
+		JOIN GENRE GR ON GR.GENRE_NO = E.GENRE_NO
+		-- FOR THUMBNAIL, IMG_OBJECT
+		LEFT JOIN (
+		    SELECT BOARD_NO, IMG_PATH, IMG_ORIG 
+		    FROM BOARD_IMG 
+		    WHERE IMG_ORDER = 0
+		) BI ON BI.BOARD_NO = B.BOARD_NO
+		<!-- 작가 검색: 작가(AUTHOR) -->
+		<!-- <if test='key == "auth"'> -->
+			-- FOR AUTHOR_NAMES
+			LEFT JOIN (
+			    SELECT BOARD_NO, LISTAGG(AUTHOR_NAME, ', ') WITHIN GROUP (ORDER BY AUTHOR_NO) AS AUTHOR_NAMES
+			    FROM AUTHOR 
+			    GROUP BY BOARD_NO
+			) AUTH ON AUTH.BOARD_NO = B.BOARD_NO
+		<!-- </if>  -->
+		<!-- 전시관 검색: (EXHIBIT_INST_NAME 또는 EXHIBIT_HOST || EXHIBIT_SUPPORT) -->
+		<!-- <if test='key == "i"'>	-->					
+			JOIN INSTITUTION ITT ON ITT.INSTITUTION_NO = E.INSTITUTION_NO
+			JOIN CONTRIBUTOR CB ON CB.BOARD_NO = B.BOARD_NO	
+		<!-- </if> -->		
+			
+		WHERE 
+			B.BOARD_DEL_FL = 'N'
+			<if test='key != "all"'>
+				AND B.COMMUNITY_CODE = #{communityCode}
+			</if>
+			
+			<!-- 검색 조건들 -->
+			<choose>
+				<when test='key == "c"'>
+					<!-- 주제 -->
+					AND B.BOARD_CONTENT LIKE '%${query}%'
+				</when>
+				<when test='key == "t"'>
+					<!-- 제목 -->
+					AND B.BOARD_TITLE LIKE '%${query}%'
+				</when>
+				<when test='key == "auth"'>
+					<!-- 작가 -->
+					AND AUTH.AUTHOR_NAMES LIKE '%${query}%'
+				</when>
+				<when test='key == "i"'>
+					<!-- 전시기관 -->
+					AND (ITT.EXHIBIT_INST_NAME LIKE '%${query}%' OR  CB.EXHIBIT_HOST || CB.EXHIBIT_SUPPORT LIKE '%${query}%')
+				</when>
+				<when test='key == "p"'>
+					<!-- 전시기간:년도 (period === exhibitDate) -->
+					AND (E.EXHIBIT_DATE LIKE '%${query}%' )
+				</when>						
+				<when test='key == "e"'>
+					<!-- 기타 -->
+					AND (E.EXHIBIT_AUDIENCE LIKE '%${query}%' OR E.EXHIBIT_SUB_TITLE LIKE '%${query}%' )
+				</when>			
+			</choose>					
+		ORDER BY B.BOARD_NO DESC -- 2025/10/14
+
+	</select>	
 
 
 

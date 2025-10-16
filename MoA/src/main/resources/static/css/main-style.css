@@ -127,7 +127,7 @@ body {
   font-weight: 600;
 }
 
-.menu-item:hover > a {
+.menu-item:hover>a {
   background-color: #fff;
   color: #27374d;
   border-radius: 20px 20px 0 0;
@@ -146,8 +146,7 @@ body {
   margin-left: 3px;
   display: flex;
   width: 30px;
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg)
-    brightness(103%) contrast(101%);
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg) brightness(103%) contrast(101%);
 }
 
 #signin-text {
@@ -157,12 +156,12 @@ body {
 
 /* main */
 .main {
-    display: block;
-    width: 100%;
-    min-height: 100vh;
-  }
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}
 
-.main > h3 {
+.main>h3 {
   color: black;
   justify-content: center;
 }
@@ -199,6 +198,7 @@ body {
   from {
     opacity: 0.4;
   }
+
   to {
     opacity: 1;
   }
@@ -306,8 +306,7 @@ body {
 .sns a {
   margin-right: 10px;
   font-size: 20px;
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg)
-    brightness(103%) contrast(101%); 
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg) brightness(103%) contrast(101%);
 }
 
 .sns a img {
@@ -346,7 +345,7 @@ body {
   background-color: #f8f8f8;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -551,12 +550,14 @@ body {
 /* 카드 묶음 */
 .exhibition-slide-wrapper {
   display: flex;
-  animation: scrollExhibition 60s linear infinite; /* infinite 부드러운 슬라이드 효과를 줄 수 있음 */
+  animation: scrollExhibition 60s linear infinite;
+  /* infinite 부드러운 슬라이드 효과를 줄 수 있음 */
 }
 
 /* 카드 */
 .exhibition-slide {
-  flex: 0 0 16.66%; /* 6개씩 보이게 */
+  flex: 0 0 16.66%;
+  /* 6개씩 보이게 */
   box-sizing: border-box;
   padding: 10px;
 }
@@ -566,7 +567,7 @@ body {
   height: 280px;
   border-radius: 8px;
   object-fit: cover;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* 부드러운 흐름을 줄 수 있는 애니메이션 구글 참조 */
@@ -574,6 +575,45 @@ body {
   0% {
     transform: translateX(0);
   }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* 공연 슬라이드 */
+.show-slider-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.show-slide-wrapper {
+  display: flex;
+  animation: scrollShow 60s linear infinite;
+}
+
+.show-slide {
+  flex: 0 0 16.66%;
+  /* 한 번에 6개씩 보이게 */
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.show-slide img {
+  width: 100%;
+  height: 280px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes scrollShow {
+  0% {
+    transform: translateX(0);
+  }
+
   100% {
     transform: translateX(-50%);
   }

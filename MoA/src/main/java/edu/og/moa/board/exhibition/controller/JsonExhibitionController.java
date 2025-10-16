@@ -468,7 +468,7 @@ public class JsonExhibitionController {
                 Map<String, Integer> catChargeMap = new HashMap<>();
                 catChargeMap.put("무료", 0);
                 catChargeMap.put("0", 0);
-                catChargeMap.put("2,000원", 0);
+                catChargeMap.put("2,000원", 2000);
                 catChargeMap.put("02", 7777777);
                 catChargeMap.put("과천 전시관람권 3,000원", 3000);
                 catChargeMap.put("3,000원", 3000);

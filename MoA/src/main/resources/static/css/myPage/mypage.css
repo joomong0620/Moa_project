@@ -188,7 +188,7 @@ body {
 .menu-btn:hover,
 .menu-btn.active {
     background-color: #27374d;
-    color: #fff;
+    color: #757575;
 }
 
 /* ===== 메인 콘텐츠 ===== */
@@ -197,6 +197,7 @@ body {
     padding: 40px;
     background-color: #f9fbfd;
     overflow-y: auto;
+    max-height: 800px;
 }
 
 .content-section {
@@ -210,6 +211,9 @@ body {
     border-left: 6px solid #27374d;
     padding-left: 10px;
     color: #27374d;
+    position: sticky;
+    top: 0px;
+    z-index: 1;
 }
 
 .empty {
@@ -461,4 +465,17 @@ body {
 
 .myPage-submit:hover {
     background-color: #1d2a3a;
+}
+
+
+.rsv-card .rsv-status.status-ok {
+    color: #007bff !important;
+    /* 파란색 */
+    font-weight: bold;
+}
+
+.rsv-card .rsv-status.status-cancel {
+    color: #dc3545 !important;
+    /* 빨간색 */
+    font-weight: bold;
 }

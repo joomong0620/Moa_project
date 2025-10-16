@@ -62,21 +62,12 @@ public class ReviewBoardController {
             Model model,
             HttpSession session) {
 
-        // 테스트용 임시 세션
-        if (session.getAttribute("loginMember") == null) {
-            Member fakeMember = new Member();
-            fakeMember.setMemberNo(3);
-            fakeMember.setMemberNickname("유저일");
-            model.addAttribute("loginMember", fakeMember);
-        }
-
         Map<String, Object> map = service.selectReviewList(boardCode, cp);
         model.addAttribute("map", map);
         model.addAttribute("boardCode", boardCode);
 
         return "board/reviewboard/reviewList";
     }
-
     // 리뷰 상세
     @GetMapping("/{boardCode:[0-9]+}/{reviewNo:[0-9]+}")
     public String selectReviewDetail(
@@ -89,16 +80,6 @@ public class ReviewBoardController {
             HttpServletResponse resp,
             HttpSession session) throws ParseException {
 
-
-        // 테스트를 위해 로그인한 회원 없을 경우 임시 계정 생성
-        if (loginMember == null) {
-            Member fakeMember = new Member();
-            fakeMember.setMemberNo(3); // 테스트용 임의 번호
-            fakeMember.setMemberNickname("테스트유저");
-            model.addAttribute("loginMember", fakeMember);
-            loginMember = fakeMember;
-        }
-        
         Map<String, Object> map = new HashMap<>();
         map.put("boardCode", boardCode);
         map.put("boardNo", reviewNo);
@@ -176,6 +157,7 @@ public class ReviewBoardController {
     public String insertReview(
             ReviewBoard board,
             @RequestParam("images") List<MultipartFile> imageFiles,
+            @RequestParam("payNo") int payNo,
             RedirectAttributes ra,
             HttpSession session) throws IOException {
 
@@ -303,24 +285,6 @@ public class ReviewBoardController {
             ra.addFlashAttribute("message", "리뷰 삭제 실패");
 
         return "redirect:/reviewboard/" + communityCode;
-    }
-
-    // 댓글 등록
-    @PostMapping("/comment")
-    @ResponseBody
-    public int insertComment(
-            @RequestBody ReviewComment comment,
-            @SessionAttribute("loginMember") Member loginMember) {
-        comment.setMemberNo(loginMember.getMemberNo());
-        return service.insertComment(comment);
-    }
-
-    // 댓글 삭제
-    @PostMapping("/comment/delete")
-    @ResponseBody
-    public int deleteComment(@RequestBody Map<String, Integer> map) {
-        int commentNo = map.get("commentNo");
-        return service.deleteComment(commentNo);
     }
 
     // 별점 등록/수정

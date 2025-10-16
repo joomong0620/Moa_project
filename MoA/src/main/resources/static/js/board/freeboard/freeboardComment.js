@@ -1,6 +1,5 @@
 console.log("comment.js");
 
-// 디버깅: 전역 변수 확인
 console.log("loginMemberNo:", loginMemberNo);
 console.log("boardNo:", boardNo);
 
@@ -102,7 +101,7 @@ addComment.addEventListener("click", (e) => {
     return;
   }
 
-  // AJAX 댓글 등록
+  // 비동기 요청을 통한 댓글 등록
   const data = {
     commentContent: commentContent.value,
     memberNo: loginMemberNo,
@@ -120,12 +119,9 @@ addComment.addEventListener("click", (e) => {
         alert("댓글이 등록되었습니다.");
         console.log(commentNo);
         
-        commentContent.value = ""; // 작성했던 댓글 삭제
+        commentContent.value = "";
 
-        selectCommentList(); // 비동기 댓글 목록 조회 함수 호출
-        // -> 새로운 댓글이 추가되어짐
-        // 댓글을 작성한 경우
-        // -> {닉네임}님이 {게시글 제목} 게시글에 댓글을 작성했습니다.
+        selectCommentList(); // 알림 요청
         sendNotification(
             "insertComment",
             location.pathname + "?cn=" + commentNo, 
@@ -163,7 +159,7 @@ function deleteComment(commentNo) {
   }
 }
 
-// 댓글 수정 화면 전환
+// 댓글 수정
 let beforeCommentRow;
 
 function showUpdateComment(commentNo, btn) {
@@ -242,8 +238,6 @@ function updateComment(commentNo, btn) {
     .catch((err) => console.log(err));
 }
 
-// 페이지 로드 완료 시 댓글 목록 조회
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("페이지 로드 완료 - 댓글 목록 조회 시작");
   selectCommentList();
 });

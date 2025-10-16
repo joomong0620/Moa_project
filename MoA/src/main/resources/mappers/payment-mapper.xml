@@ -32,5 +32,13 @@
         FROM PAY
         WHERE PORTONE_NO = #{impUid}
     </select>
-
+    
+    <!-- 결제 취소 -->
+    <update id="updatePaymentStatus">
+	    UPDATE PAY
+	    SET PAY_OK = #{status}
+	    WHERE PORTONE_NO = #{impUid}
+	</update>
+	
+	
 </mapper>

@@ -15,6 +15,8 @@ public class MemberDAO {
 	// 회원 가입
 	public int signUp(Member inputMember) {
 		
+		System.out.println("inputMember4 : " + inputMember);
+		
 		return memberMapper.signUp(inputMember);
 	}
 	

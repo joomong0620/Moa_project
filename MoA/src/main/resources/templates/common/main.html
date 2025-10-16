@@ -76,6 +76,16 @@
     <!-- Footer -->
     <div th:replace="common/footer :: footer"></div>
 
+    <script th:inline="javascript">
+      const message = /*[[${message}]]*/ "전달 받은 message";
+    
+
+      console.log(message)
+
+      if(message != null) alert(message);
+
+    </script>
+
     <script th:src="@{/js/main.js}"></script>
   </body>
 </html>

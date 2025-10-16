@@ -12,8 +12,6 @@
   //유저의 기본 이미지를 참조할 때 쓴다.
 </script>
 
-<script th:src="@{/js/header.js}"></script>
-
 <header th:fragment="header" class="header">
   <section>
     <a th:href="@{/}">
@@ -112,18 +110,24 @@
     <ul class="notification-list"></ul>
   </section>
 
-  <div class="signin">
-    <!-- 로그인 안 된 경우 -->
-    <a th:if="${session.loginMember == null}" th:href="@{/member/login}">
-      <img th:src="@{/images/common/user.svg}" alt="이미지 준비중" id="signin-image" />
-      <span id="signin-text">sign in</span>
-    </a>
-
-    <!-- 로그인 된 경우 -->
-    <a th:if="${session.loginMember != null}" th:href="@{/mypage/info}">
+  <!-- 로그인 된 경우 -->
+  <div th:if="${session.loginMember != null}" class="profile-container">
+    <button class="profile-btn">
       <img th:src="@{/images/common/user.svg}" alt="프로필 이미지" id="signin-image" />
       <span id="signin-text" th:text="${session.loginMember.memberNickname}">유저닉네임</span>
-    </a>
+    </button>
+    <!-- 두가지 선택할 수 있게 하는 모달 -->
+    <ul class="profile-menu">
+      <li><a th:href="@{/mypage/info}">마이페이지</a></li>
+      <li><a th:href="@{/member/logout}">로그아웃</a></li>
+    </ul>
   </div>
+
+  <!-- 로그인 안 된 경우 -->
+  <a th:if="${session.loginMember == null}" th:href="@{/member/login}">
+    <img th:src="@{/images/common/user.svg}" alt="이미지 준비중" id="signin-image" />
+    <span id="signin-text">sign in</span>
+  </a>
 </header>
 
+<script th:src="@{/js/header.js}"></script>

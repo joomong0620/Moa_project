@@ -3,8 +3,6 @@ console.log("header.js loaded");
 //SSE 연결하는 함수
 // -> 연결을 요청한 클라이언트가 서버로부터 데이터가 전달될 때까지 대기 상태 (비동기)
 const connectSse = () => {
-  
-
   //로그인이 되어있지 않은 경우 함수 종료
   if (notificationLoginCheck == false) return;
 
@@ -37,7 +35,7 @@ const connectSse = () => {
 
     //만약 알림 목록이 열려있는 경우
     const notificationList = document.querySelector(".notification-list");
-    if(notificationList.classList.contains("notification-show")){
+    if (notificationList.classList.contains("notification-show")) {
       selectNotificationList(); //알림 목록 비동기 조회
     }
   });
@@ -53,11 +51,10 @@ const connectSse = () => {
   });
 };
 
-
 const sendNotification = (type, url, pkNo, content) => {
   //로그인이 되어있지 않은 경우 함수 종료
   if (notificationLoginCheck == false) return;
-// type: 댓글, 답글, 게시글 좋아요  등 구분하는 값
+  // type: 댓글, 답글, 게시글 좋아요  등 구분하는 값
   // url : 알림 클릭 시 이동할 페이지 주소
   // pkNo : 알림 받는 회원 번호 또는 회원 번호를 찾을 수 있는 값
   // content : 알림 내용
@@ -90,9 +87,6 @@ const sendNotification = (type, url, pkNo, content) => {
     //.then 생략, 전달 받는 값이 업어서
     .catch((err) => console.log(err));
 };
-
-
-
 
 //비동기로 알림 목록 조회하는 함수
 const selectNotificationList = () => {
@@ -258,4 +252,21 @@ document.addEventListener("DOMContentLoaded", () => {
       notificationList.classList.add("notification-show");
     }
   });
-})
+});
+
+// 모달 관련
+const profileBtn = document.querySelector(".profile-btn");
+const profileMenu = document.querySelector(".profile-menu");
+
+if (profileBtn) {
+  profileBtn.addEventListener("click", () => {
+    profileMenu.classList.toggle("active");
+  });
+
+  // 메뉴 외부에 초점이 맞춰지면 닫도록 하기
+  document.addEventListener("click", (e) => {
+    if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
+      profileMenu.classList.remove("active");
+    }
+  });
+}

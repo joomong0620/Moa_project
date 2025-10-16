@@ -27,14 +27,15 @@ public class CsBoardController {
 	
 	// 자주 묻는 질문으로 화면 이동
 	@GetMapping("/{communityCode:5}")
-	public String question(Model model, @PathVariable("communityCode") int communityCode, int qCode
+	public String question(Model model, @PathVariable("communityCode") int communityCode, 
+			@RequestParam(value="qCode",  defaultValue="1") int qCode
 			
 			) {
 	    model.addAttribute("communityCode", communityCode); // 변수 추가
-	    model.addAttribute("qCode", 1); // 기본 문의 유형 지정 (예시)
+	    model.addAttribute("qCode", qCode); // 기본 문의 유형 지정 (예시)
 	    
 	    
-	   
+	   System.out.println("qCode : " + qCode);
 	    
 	    return "board/csboard/question";
 	}
@@ -61,7 +62,13 @@ public class CsBoardController {
 		
 		model.addAttribute("questionList", map.get("questionList"));
 		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("qCodeList", map.get("qCodeList"));
 
+		System.out.println("communityCode" + communityCode);
+		System.out.println("qCode" + qCode);
+		System.out.println("boardJtw" + boardJtw);
+		System.out.println("cp" + cp);
+		
 		
 		
 		

@@ -224,21 +224,26 @@ public class PerformanceController {
 	@GetMapping("/pmSearchList")
 	public String selectPmSearchList (
 			@RequestParam MultiValueMap<String, String> params,
+			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
 			Model model
 			
 			) {
 		List<String> type = params.get("type");
 	    List<String> price = params.get("price");
+
 	    List<String> date = params.get("date");
 	    List<String> address = params.get("address");
-	    List<String> text = params.get("text");
+	    List<String> query = params.get("query");
 		
 	    log.info("type = {}", type);
 	    log.info("price = {}", price);
 	    log.info("date = {}", date);
 	    log.info("address = {}", address);
-	    log.info("text = {}", text);
+	    log.info("text = {}", query);
 		
+	    Map<String, Object> map = service.selectPmSearchList(type, price, date, address, query, cp);
+	    
+	    
 		
 		return "board/performance/pm-search";
 	}

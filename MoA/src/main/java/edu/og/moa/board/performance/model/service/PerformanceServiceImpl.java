@@ -95,5 +95,52 @@ public class PerformanceServiceImpl implements PerformanceService{
     public List<PerformanceBoardImage> selectPerformanceList() {
         return mapper.selectPerformanceList();
     }
+
+    
+    // 공연 상세검색 목록 조회
+	@Override
+	public Map<String, Object> selectPmSearchList(List<String> type, List<String> price, List<String> date,
+			List<String> address, List<String> query, int cp) {
+		
+		// 가공
+		if (type == null || type.contains("all")) type = null;
+		if (price == null || price.contains("all")) price = null;
+		if (date == null || date.contains("all")) date = null;
+		if (address == null || address.contains("all")) address = null;
+		
+		// 가격
+		Map<String, Object> pMap = new HashMap<>();
+		
+		if (price != null) {
+			
+			String pr = price.get(0);
+			
+			// 범위가격인 경우
+			if (pr.contains("-")) {
+				
+				String[] strPr = pr.split("-");
+				pMap.put("min", strPr[0]);
+				pMap.put("max", strPr[1]);
+				
+			} else if(pr.contains("+")) {
+				
+				String rPr = pr.replace("+", "");
+				pMap.put("min", rPr);
+				
+			} else {
+
+			    pMap.put("max", pr);
+			}
+			
+		}
+		
+		// 검색 조건에 부합하는 + 공연인 + 삭제되지 않은 게시글 수 조회
+		// int pmListCount = mapper.getPmSearchListCount(type, price, date, address, query, cp);
+		
+		
+		
+		
+		return null;
+	}
 	
 }

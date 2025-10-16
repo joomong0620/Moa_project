@@ -40,6 +40,7 @@
 		</if>
 	</select>
 	
+	<!-- 공연 목록 정보 조회(장르별) -->
 	<select id="selectPmTypeList" resultType="PerformanceBoard">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.B_CREATE_DATE, B.BOARD_COUNT,
 			H.PM_HOUSE_NAME, H.PM_HOUSE_ADDRESS,
@@ -90,6 +91,7 @@
 		ORDER SIBLINGS BY COMMENT_NO
 	</select>
 	
+	<!-- 공연 상세페이지 조회 -->
 	<select id="selectPmDetail" resultMap="board_rm">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.B_CREATE_DATE, B.BOARD_COUNT, G.GENRE_NAME,
 			   

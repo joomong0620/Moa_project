@@ -52,6 +52,9 @@
 		JOIN PM_HOUSE H ON(P.PM_HOUSE_NO = H.PM_HOUSE_NO)
 		WHERE BOARD_DEL_FL = 'N'
 		AND COMMUNITY_CODE = 4
+		<if test="type != null and type != 'all'">
+			AND GENRE_NO = #{type}
+		</if>
 		ORDER BY B_CREATE_DATE DESC
 	</select>
 	

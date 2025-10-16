@@ -243,9 +243,9 @@
                 return;
             }
 
-            // Oracle의 'YYYY.MM.DD' → flatpickr 인식용 'YYYY-MM-DD'
-            const startDate = startRaw.replaceAll('.', '-');
-            const endDate = endRaw.replaceAll('.', '-');
+            // 문자열을 Date 객체로 변환 ('.' 구분자 → 인식 가능 형태로 교체)
+            const startDate = new Date(startRaw.replace(/\./g, '-'));
+            const endDate = new Date(endRaw.replace(/\./g, '-'));
 
             // 한국어 로케일 적용
             flatpickr.localize(flatpickr.l10ns.ko);

@@ -56,20 +56,20 @@
 	<select id="getListCount">
 		SELECT COUNT(*)
 		FROM BOARD
-		WHERE COMMUNITY_CODE = ${communityCode}
-		AND Q_CODE = ${qCode}
+		WHERE COMMUNITY_CODE = #{communityCode}
+		AND Q_CODE = #{qCode}
 		AND BOARD_DEL_FL = 'N'
 	
 	</select>
 	
 	
-	<select id="selectQuestionList" parameterType="map" resultMap="board_rm">
-		SELECT BOARD_NO, BOARD_TITLE, B_CREATE_DATE, B.COMMUNITY_CODE, B.Q_CODE, Q.Q_NAME
+	<select id="selectQuestionList" parameterType="edu.og.moa.board.csboard.model.dto.BoardJtw" resultMap="board_rm">
+		SELECT BOARD_NO, BOARD_TITLE, B_CREATE_DATE, B.COMMUNITY_CODE, B.Q_CODE, Q.Q_NAME AS qName
 		FROM BOARD B
 		JOIN QUESTION Q ON B.Q_CODE = Q.Q_CODE
 		WHERE BOARD_DEL_FL='N'
-		AND COMMUNITY_CODE = ${communityCode}
-		AND B.Q_CODE = ${qCode}
+		AND COMMUNITY_CODE = #{communityCode}
+		AND B.Q_CODE = #{qCode}
 	ORDER BY B.BOARD_NO DESC
 	
 	</select>

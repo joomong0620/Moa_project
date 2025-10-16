@@ -27,9 +27,15 @@ public class CsBoardController {
 	
 	// 자주 묻는 질문으로 화면 이동
 	@GetMapping("/{communityCode:5}")
-	public String question(Model model, @PathVariable("communityCode") int communityCode) {
+	public String question(Model model, @PathVariable("communityCode") int communityCode, int qCode
+			
+			) {
 	    model.addAttribute("communityCode", communityCode); // 변수 추가
 	    model.addAttribute("qCode", 1); // 기본 문의 유형 지정 (예시)
+	    
+	    
+	   
+	    
 	    return "board/csboard/question";
 	}
 	

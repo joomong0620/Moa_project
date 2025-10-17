@@ -263,3 +263,15 @@ body {
   background: linear-gradient(135deg, #f25f5f, #d14343);
   transform: translateY(-2px);
 }
+
+.show-title {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.review-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #27374d;
+}

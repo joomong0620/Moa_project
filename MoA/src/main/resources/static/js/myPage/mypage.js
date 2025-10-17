@@ -269,6 +269,6 @@ document.addEventListener("click", (e) => {
   document.querySelectorAll(".review-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const boardNo = btn.dataset.boardno;
-      location.href = `/review/write?boardNo=${boardNo}`;
+      location.href = `/reviewboard/write/2`;
     });
   });

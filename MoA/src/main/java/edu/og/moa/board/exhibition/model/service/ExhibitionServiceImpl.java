@@ -2,7 +2,7 @@ package edu.og.moa.board.exhibition.model.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +16,9 @@ import org.springframework.stereotype.Service;
 import edu.og.moa.board.exhibition.controller.ExhibitionController;
 import edu.og.moa.board.exhibition.model.dao.ExhibitionMapper;
 import edu.og.moa.board.exhibition.model.dto.AuthorDB;
-import edu.og.moa.board.exhibition.model.dto.BoardDB;
 import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
 import edu.og.moa.board.exhibition.model.dto.EventPeriod;
 import edu.og.moa.board.exhibition.model.dto.Exhibition;
-import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
 import edu.og.moa.board.exhibition.model.dto.PaginationDB;
 import lombok.extern.slf4j.Slf4j;
 
@@ -154,18 +152,6 @@ public class ExhibitionServiceImpl implements ExhibitionService{
 	}
 
 	
-//	// DB 이미지 조회 
-//	@Override
-//	public List<BoardImgDB> selectImageList() { // Exhibition DTO select시에 그안에서 implicit하게 수행되므로 여기서 선언하면 안됨
-//		return mapper.selectImageList();
-//	}	
-//
-//	// AUTHOR DB 조회
-//	@Override
-//	public List<AuthorDB> selectAuthorList() { // Exhibition DTO select시에 그안에서 implicit하게 수행되므로 여기서 선언하면 안됨
-//		return mapper.selectAuthorList();
-//	}	
-//		
 	// DB 이미지(파일) 목록 조회
 	@Override
 	public List<String> selectImageListAll() {
@@ -199,6 +185,7 @@ public class ExhibitionServiceImpl implements ExhibitionService{
 	public int updateReadCount(int boardNo) {
 		// 
 		return mapper.updateReadCount(boardNo);
+
 	}	
 			
 	// 검색용 전시게시글 목록조회
@@ -309,5 +296,5 @@ public class ExhibitionServiceImpl implements ExhibitionService{
 		return map;
 	}
 
-	
+
 }

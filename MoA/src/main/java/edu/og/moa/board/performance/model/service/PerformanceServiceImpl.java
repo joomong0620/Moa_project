@@ -1,5 +1,6 @@
 package edu.og.moa.board.performance.model.service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class PerformanceServiceImpl implements PerformanceService{
 		// 4. pagination, pmTypeList를 Map 담아서 반환
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pagination", pagination);
-		map.put("pmTypeList", pmTypeList);
+		map.put("pmList", pmTypeList);
 		
 		return map;
 	}
@@ -95,5 +96,113 @@ public class PerformanceServiceImpl implements PerformanceService{
     public List<PerformanceBoardImage> selectPerformanceList() {
         return mapper.selectPerformanceList();
     }
+
+    
+    // 공연 상세검색 목록 조회
+	@Override
+	public Map<String, Object> selectPmSearchList(List<String> type, List<String> price, List<String> date,
+			List<String> address, List<String> query, int cp) {
+		
+		// 가공
+		if (type == null || type.contains("all")) type = null;
+		if (price == null || price.contains("all")) price = null;
+		if (date == null || date.contains("all")) date = null;
+		if (address == null || address.contains("all")) address = null;
+		
+		
+		
+		// 가격
+		Map<String, Object> pMap = new HashMap<>();
+		
+		if (price != null) {
+			
+			String pr = price.get(0);
+			
+			// 범위가격인 경우
+			if (pr.contains("-")) {
+				
+				String[] strPr = pr.split("-");
+				pMap.put("min", strPr[0]);
+				pMap.put("max", strPr[1]);
+				
+			} else if(pr.contains("+")) {
+				
+				String rPr = pr.replace("+", "");
+				pMap.put("min", rPr);
+				
+			} else {
+
+			    pMap.put("max", pr);
+			}
+			
+		} else {
+		    pMap = null;
+		}
+		
+		// 기간
+		Map<String, Object> dMap = new HashMap<>();
+		
+		if (date != null) {
+			
+			String da = date.get(0);
+			
+			LocalDate now = LocalDate.now();
+			LocalDate endDate = null;
+			
+			switch (da) {
+				case "1day" : endDate = now.plusDays(1); break;
+				case "1week" : endDate = now.plusWeeks(1); break;
+				case "1month" : endDate = now.plusMonths(1); break;
+				case "1year" : endDate = now.plusYears(1); break;
+			}
+		
+            dMap.put("startDate", now);
+            dMap.put("endDate", endDate);
+			
+		} else {
+		    dMap = null;
+		}
+		
+		// 제목 검색
+		String ser = null;
+	
+		if (query != null && query.isEmpty()) {
+			ser = query.get(0);
+		}
+		
+		
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		
+		paramMap.put("typeList", type);
+		paramMap.put("price", pMap);
+		paramMap.put("date", dMap);
+		paramMap.put("addressList", address);
+		paramMap.put("query", ser);
+		
+		
+		
+		// 검색 조건에 부합하는 + 공연인 + 삭제되지 않은 게시글 수 조회
+		int pmListCount = mapper.getPmSearchListCount(paramMap);
+		
+		// Pagination 객체 생성
+		Pagination pagination = new Pagination(cp, pmListCount);
+		
+		// 1) offset 계산
+		int offset = (pagination.getCurrentPage() - 1) * pagination.getLimit();
+		
+		// 2) RowBounds 객체 생성
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		
+		// 목록으로 가져오기
+		List<PerformanceBoard> pmSearchList = mapper.selectPmSearchList(paramMap, rowBounds);
+		
+		// 4. pagination, pmTypeList를 Map 담아서 반환
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pagination", pagination);
+		map.put("pmList", pmSearchList);
+		
+		return map;
+	}
 	
 }

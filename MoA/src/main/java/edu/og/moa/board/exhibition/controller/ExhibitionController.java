@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 //import java.text.ParseException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.og.moa.board.exhibition.model.dto.BoardImgDB;
 import edu.og.moa.board.exhibition.model.dto.Exhibition;
-import edu.og.moa.board.exhibition.model.dto.JsonBoardImage;
-import edu.og.moa.board.exhibition.model.dto.JsonMember;
 import edu.og.moa.board.exhibition.model.dto.MemberDB;
 import edu.og.moa.board.exhibition.model.dto.TicketingInfo;
 import edu.og.moa.board.exhibition.model.service.ExhibitionService;
@@ -80,7 +76,7 @@ public class ExhibitionController {
 			
 			
 			// 로그인 서비스 mock:		
-			MemberDB loginMember = new MemberDB();
+			Member loginMember = new Member();
 			loginMember.setMemberNickname("한국문화정보원");
 			loginMember.setProfileImg("/images/board/exhibition/member/penguin.jpeg"); 
 			loginMember.setMemberNo(10); // 임의할당 for testing (cf:  전시 exhibitionCode === boarcCode ===  communityCode = 3)
@@ -103,7 +99,7 @@ public class ExhibitionController {
 			model.addAttribute("map", map);
 			
 			// 로그인 서비스 mock:		
-			MemberDB loginMember = new MemberDB();
+			Member loginMember = new Member();
 			loginMember.setMemberNickname("한국문화정보원");
 			loginMember.setProfileImg("/images/board/exhibition/member/penguin.jpeg"); 
 			loginMember.setMemberNo(10); // 임의할당 for testing (cf:  전시 exhibitionCode === boarcCode ===  communityCode = 3)
@@ -127,7 +123,7 @@ public class ExhibitionController {
 			, @PathVariable("boardNo") int boardNo
 			, Model model // 데이터 전달용 객체 
 			, RedirectAttributes ra // 리다이렉트 시 데이터 전달용 객체
-			//, @SessionAttribute(value = "loginMember", required=false) MemberDB loginMember
+			//, @SessionAttribute(value = "loginMember", required=false) Member loginMember
 			// 세션에서 loginMember를 얻어오는데 없으면 null, 있으면 회원 정보 저장 (로그인 안하고 하트누를 수도 있으므로 required=false)
 			
 			// 쿠키를 이용한 조회수 증가 시 사용
@@ -144,7 +140,7 @@ public class ExhibitionController {
 		
 		
 		// 로그인 서비스 mock:		
-		MemberDB loginMember = new MemberDB();
+		Member loginMember = new Member();
 		loginMember.setMemberNickname("한국문화정보원");
 		loginMember.setProfileImg("/images/board/exhibition/member/penguin.jpeg"); 
 		loginMember.setMemberNo(10); // 임의할당 for testing (cf:  전시 exhibitionCode === boarcCode ===  communityCode = 3)
@@ -339,6 +335,7 @@ public class ExhibitionController {
 //	}	
 	
 	
+
 //	// 게시글 통합 검색 목록 조회(모든 게시판) // 요청주소예시) http://localhost/board/search?query=100&key=all
 //	@GetMapping("/search")
 //	public String selectBoardList(
@@ -358,6 +355,5 @@ public class ExhibitionController {
 //		return "board/exhibition/exhibitionSearchList"; // 모든 게시판 통합의 경우만 여기 요청주소로(여기서는 구현안함)
 //		//return "board/exhibitionList";
 //	}	
-	
 
 }

@@ -1,19 +1,27 @@
-package edu.og.moa.myPage.controller;
+package edu.og.moa.mypage.controller;
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import edu.og.moa.board.freeboard.model.dto.Board;
 import edu.og.moa.member.model.dto.Member;
-import edu.og.moa.myPage.model.service.MyPageService;
+import edu.og.moa.mypage.model.service.MyPageService;
+import edu.og.moa.pay.model.dto.Payment;
+import edu.og.moa.pay.model.service.PaymentService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -26,10 +34,33 @@ public class MyPageController {
 	private MyPageService service;
 	
 	
-	// 내정보 페이지 이동
+	// 내정보 페이지 이동 + 좋아요한 게시물, 내가 쓴 게시물, 예약한 내역 조회
 	@GetMapping("/info")
-	public String info() {
-		return "myPage/myPage";
+	public String myPageInfo(
+			@SessionAttribute("loginMember") Member loginMember
+			, Model model
+			) {
+		 int memberNo = loginMember.getMemberNo();
+		 
+		 // 좋아요한 게시물
+		 List<Board> likedList = service.selectLikeBoard(memberNo);
+		 
+		 // 내가 쓴 게시물
+		 List<Board> myPostList = service.selectMyBoardList(memberNo);
+		 
+		 // 결제(예매) 내역 조회
+	     List<Payment> reservationList = service.selectPaymentList(memberNo);
+		 
+	     
+	     model.addAttribute("likedList", likedList);
+		 model.addAttribute("myPostList", myPostList);
+		 model.addAttribute("reservationList", reservationList);
+		 
+		 return "myPage/myPage";
+		 
+		 
+	
+	
 	}
 	
 	// 내 정보 수정
@@ -128,4 +159,15 @@ public class MyPageController {
 			
 			
 		}
+		// ========== 예매 관련 추가 ==========
+		
+		// 예매(결제) 취소
+		@PostMapping("/cancel/{payNo}")
+		@ResponseBody
+		public String cancelPayment(@PathVariable("payNo") String payNo) {
+			int result = service.cancelPayment(payNo);
+			return (result > 0) ? "예매가 취소되었습니다." : "취소 실패";
+		}
+
+	
 }

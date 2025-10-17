@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>결제 취소</title>
+  <link th:href="@{/css/main-style.css}" rel="stylesheet" />
+  <link th:href="@{/css/pay/pay_success.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <th:block th:replace="~{/common/header}"></th:block>
+
+  <main>
+    <h2>결제가 취소되었습니다.</h2>
+    <p>해당 예매 건은 정상적으로 취소 처리되었습니다.</p>
+    <p>영업일 기준 1~3일 내로 환불이 완료됩니다.</p>
+    <p>환불이 원활하게 이루어지지 않았을 경우 문의게시판을 이용해주세요.</p>
+    <button class="home-btn" onclick="location.href='/'">메인으로</button>
+  </main>
+
+  <!-- Footer -->
+  <div th:replace="common/footer :: footer"></div>
+</body>
+
+</html>

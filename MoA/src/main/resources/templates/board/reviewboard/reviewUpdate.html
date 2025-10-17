@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>리뷰 수정</title>
   <link th:href="@{/css/main-style.css}" rel="stylesheet" />
   <link th:href="@{/css/board/reviewboard/reviewWrite.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
+
 </head>
 
 <body>
-  <div th:replace="common/header :: header"></div>
+  <th:block th:replace="~{/common/header}"></th:block>
 
   <main class="review-write">
     <h2>리뷰 수정</h2>
@@ -33,14 +37,12 @@
       </div>
 
       <!-- 제목 -->
-      <input type="text" id="titleInput" name="boardTitle"
-             th:value="${board.boardTitle}"
-             placeholder="제목을 입력해주세요." maxlength="100" required />
+      <input type="text" id="titleInput" name="boardTitle" th:value="${board.boardTitle}" placeholder="제목을 입력해주세요."
+        maxlength="100" required />
 
       <!-- 내용 -->
-      <textarea id="contentInput" name="boardContent"
-                minlength="10" maxlength="500" required
-                th:text="${board.boardContent}"></textarea>
+      <textarea id="contentInput" name="boardContent" minlength="10" maxlength="500" required
+        th:text="${board.boardContent}"></textarea>
 
       <div class="char-count">
         <span id="charCount" th:text="${#strings.length(board.boardContent)}">0</span> / 500자
@@ -49,27 +51,40 @@
       <!-- 기존 이미지 미리보기 -->
       <div class="photo-section" th:if="${board.imageList != null and !board.imageList.isEmpty()}">
         <p class="photo-title">기존 등록된 사진</p>
+<<<<<<< HEAD
+        <div class="photo-upload-area">
+          <div class="photo-preview">
+            <div th:each="img : ${board.imageList}" class="preview-img-container">
+              <img th:src="@{${img.imgPath}}" th:attr="data-rename=${img.imgRename}"
+                  th:alt="${img.imgOrig}"
+                  class="preview-image"
+                  onerror="this.src = this.dataset.rename ? this.src.replace(/\/$/, '') + '/' + this.dataset.rename : ''"/>
+              <button type="button" class="preview-remove" onclick="this.parentElement.remove()">×</button>
+            </div>
+          </div>
+=======
         <div class="photo-preview">
-          <img th:each="img : ${board.imageList}"
-               th:src="@{${img.imgPath} + ${img.imgRename}}"
-               th:alt="${img.imgOrig}"
-               class="preview-image"/>
+          <img th:each="img : ${board.imageList}" th:src="@{${img.imgPath} + ${img.imgRename}}" th:alt="${img.imgOrig}"
+            class="preview-image" />
+>>>>>>> 56f41de14231fa6b8baf69951b5d5572ed96ba00
         </div>
       </div>
 
       <!-- 새 이미지 업로드 -->
       <div class="photo-section">
         <p class="photo-title">새 사진 등록 (선택)</p>
-        <label for="photoInput" class="photo-upload"><span>+</span></label>
+        <div class="photo-upload-area">
+          <label for="photoInput" class="photo-upload"><span>+</span></label>
+          <div id="photoPreview" class="photo-preview"></div>
+        </div>
         <input type="file" id="photoInput" name="images" multiple accept="image/*" />
-        <div id="photoPreview" class="photo-preview"></div>
       </div>
 
       <!-- 버튼 -->
       <div class="btn-area">
         <button type="submit" id="saveBtn">수정 완료</button>
         <button type="button" class="cancel-btn"
-                th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">
+          th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">
           취소
         </button>
       </div>
@@ -126,35 +141,8 @@
         charCount.textContent = length > 500 ? 500 : length;
         if (length > 500) textarea.value = textarea.value.substring(0, 500);
       });
-
-      /** 새 이미지 미리보기 **/
-      const photoInput = document.getElementById("photoInput");
-      const photoPreview = document.getElementById("photoPreview");
-
-      photoInput.addEventListener("change", (e) => {
-        const files = Array.from(e.target.files);
-        photoPreview.innerHTML = "";
-
-        if (files.length > 5) {
-          alert("사진은 최대 5장까지만 등록 가능합니다.");
-          photoInput.value = "";
-          return;
-        }
-
-        files.forEach((file) => {
-          if (!file.type.startsWith("image/")) return;
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            const img = document.createElement("img");
-            img.src = event.target.result;
-            img.alt = "사진 미리보기";
-            img.classList.add("preview-image");
-            photoPreview.appendChild(img);
-          };
-          reader.readAsDataURL(file);
-        });
-      });
     });
   </script>
 </body>
+
 </html>

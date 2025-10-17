@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>리뷰게시판 상세</title>
     <link th:href="@{/css/main-style.css}" rel="stylesheet" />
-    <link
-      th:href="@{/css/board/reviewboard/reviewDetail.css}"
-      rel="stylesheet"
-    />
+    <link th:href="@{/css/board/reviewboard/reviewDetail.css}" rel="stylesheet" />
   </head>
 
-  <body>
-    <div th:replace="common/header :: header"></div>
+  <body th:data-board-no="${board.boardNo}"
+        th:data-login-member-no="${session.loginMember != null ? session.loginMember.memberNo : 0}">
+    <div th:replace="~{common/header :: header}"></div>
+
     <main class="review-detail">
       <h2 class="title">리뷰게시판</h2>
       <hr class="divider" />
@@ -20,21 +19,13 @@
       <!-- 리뷰 본문 -->
       <section class="review-content">
         <div class="review-info">
-          <!-- 대표 이미지 -->
-          <img
-            th:src="@{${board.thumbnailPath}}"
-            alt="리뷰 이미지"
-            class="poster"
-          />
+          <img th:src="@{${board.thumbnailPath}}" alt="리뷰 이미지" class="poster" />
 
           <div class="review-text">
-            <p class="review-title" th:text="${board.boardTitle}">리뷰 제목</p>
-            <p
-              class="stars"
-              th:text="${#strings.repeat('★', board.star)} + ${#strings.repeat('☆', 5 - board.star)}"
-            >
-              ★★★★☆
-            </p>
+            <p class="show-title" th:text="${board.showTitle}">공연/전시 제목</p>
+            <p class="review-title" id="reviewTitle" th:text="${board.boardTitle}">리뷰 제목</p>
+            <p class="stars" id="reviewStars"
+               th:text="${#strings.repeat('★', board.star)} + ${#strings.repeat('☆', 5 - board.star)}">★★★★★</p>
           </div>
 
           <div class="review-stats">
@@ -45,122 +36,79 @@
 
         <div class="review-box">
           <div class="review-user">
-            <img
-              th:if="${board.profileImg != null}"
-              th:src="@{${board.profileImg}}"
-              alt="작성자"
-              class="profile-img"
-            />
-            <img
-              th:if="${board.profileImg == null}"
-              th:src="@{/images/default-user.png}"
-              alt="작성자"
-              class="profile-img"
-            />
+            <img th:if="${board.profileImg != null}" th:src="@{${board.profileImg}}" alt="작성자" class="profile-img" />
+            <img th:if="${board.profileImg == null}" th:src="@{/images/default-user.png}" alt="작성자" class="profile-img" />
 
             <div class="review-meta">
-              <p class="username" th:text="${board.memberNickname + ' 님'}">
-                작성자
-              </p>
-              <p class="date" th:text="${board.createDate}">작성일</p>
+              <p class="username" id="username" th:text="${board.memberNickname + ' 님'}">작성자</p>
+              <p class="date" id="reviewDate" th:text="${board.createDate}">작성일</p>
             </div>
           </div>
 
-          <p class="review-text-content" th:text="${board.boardContent}">
+          <p class="review-text-content" id="reviewContent" th:text="${board.boardContent}">
             리뷰 본문 내용
           </p>
         </div>
 
         <!-- 이미지 목록 -->
-        <div
-          class="review-images"
-          th:if="${board.imageList != null and !board.imageList.isEmpty()}"
-        >
+        <div class="review-images"
+             th:if="${board.imageList != null and board.imageList.size() > 1}">
           <p class="sub-title">함께 나눈 이미지</p>
           <div class="image-list">
-            <img
-              th:each="img : ${board.imageList}"
-              th:src="@{${img.imgPath} + '/' + ${img.imgRename}}"
-              th:alt="${img.imgOrig}"
-            />
+            <img th:each="img : ${board.imageList}"
+                 th:if="${img.imgOrder > 0}"
+                 th:src="@{${img.imgPath}${img.imgRename}}"
+                 th:alt="${img.imgOrig}" />
           </div>
         </div>
 
+        <!-- 버튼 영역 -->
         <div class="btn-area">
           <div th:if="${isWriter}">
-            <button type="button" th:onclick="|location.href='@{/reviewboard/update/{boardNo}(boardNo=${board.boardNo})}'|">수정</button>
+            <button type="button"
+                    th:onclick="|location.href='@{/reviewboard/update/{boardNo}(boardNo=${board.boardNo})}'|">
+              수정
+            </button>
             <form th:action="@{/reviewboard/delete}" method="post" style="display:inline;">
-              <input type="hidden" name="boardNo" th:value="${board.boardNo}">
-              <input type="hidden" name="communityCode" th:value="${board.communityCode}">
+              <input type="hidden" name="boardNo" th:value="${board.boardNo}" />
+              <input type="hidden" name="communityCode" th:value="${board.communityCode}" />
               <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
             </form>
-            <button type="button" th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">목록으로</button>
+            <button type="button"
+                    th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">
+              목록으로
+            </button>
           </div>
-        
+
           <div th:if="${!isWriter}">
-            <button type="button" th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">목록으로</button>
+            <button type="button"
+                    th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">
+              목록으로
+            </button>
           </div>
         </div>
 
-      <hr class="divider" />
+        <hr class="divider" />
 
-      <!-- 댓글 -->
-      <section class="comment-section">
-        <h3>댓글</h3>
+        <!-- 댓글 영역 -->
+        <section class="comment-section">
+          <h3>댓글</h3>
 
-        <!-- 댓글 목록 -->
-        <div
-          class="comment-list"
-          th:if="${board.commentList != null and !board.commentList.isEmpty()}"
-          th:each="comment : ${board.commentList}"
-        >
-          <div class="comment-item">
-            <img
-              th:if="${comment.profileImg != null}"
-              th:src="@{${comment.profileImg}}"
-              alt="프로필"
-              class="comment-img"
-            />
-            <img
-              th:if="${comment.profileImg == null}"
-              th:src="@{/images/default-user.png}"
-              alt="프로필"
-              class="comment-img"
-            />
+          <!-- 댓글 목록 -->
+          <div id="commentList" class="comment-list"></div>
 
-            <div class="comment-box">
-              <p class="comment-user" th:text="${comment.memberNickname}">
-                닉네임
-              </p>
-              <p class="comment-text" th:text="${comment.commentContent}">
-                댓글 내용
-              </p>
-            </div>
+          <!-- 댓글 입력 -->
+          <div class="comment-input">
+            <textarea id="commentInput" placeholder="댓글을 입력하세요."></textarea>
+            <button type="button" class="submit-btn">댓글 등록</button>
           </div>
-        </div>
-
-        <!-- 댓글 없을 때 -->
-        <p
-          th:if="${board.commentList == null or board.commentList.isEmpty()}"
-          class="no-comment"
-        >
-          등록된 댓글이 없습니다.
-        </p>
-
-        <!-- 댓글 입력 -->
-        <div class="comment-input">
-          <form th:action="@{/reviewboard/comment}" method="post">
-            <textarea
-              name="commentContent"
-              placeholder="댓글을 입력하세요."
-            ></textarea>
-            <input type="hidden" name="boardNo" th:value="${board.boardNo}" />
-            <button type="submit" class="submit-btn">댓글 등록</button>
-          </form>
-        </div>
+        </section>
       </section>
     </main>
 
-    <div th:replace="common/footer :: footer"></div>
+    <div th:replace="~{common/footer :: footer}"></div>
+
+    <script th:src="@{/js/board/reviewboard/reviewDetail.js}"></script>
+    <script th:src="@{/js/board/reviewboard/reviewComment.js}"></script>
   </body>
 </html>

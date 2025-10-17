@@ -32,10 +32,13 @@ import edu.og.moa.board.review.model.dto.ReviewComment;
 import edu.og.moa.board.review.model.dto.ReviewImage;
 import edu.og.moa.board.review.model.service.ReviewBoardService;
 import edu.og.moa.member.model.dto.Member;
+import edu.og.moa.mypage.model.service.MyPageService;
+import edu.og.moa.pay.model.dto.Payment;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 
 @Controller
 @RequestMapping("/reviewboard")
@@ -44,7 +47,15 @@ public class ReviewBoardController {
 
     @Autowired
     private ReviewBoardService service;
+    
+    @Autowired
+    private MyPageService myPageService;
 
+    @Value("${my.reviewboard.location}")
+    private String uploadDir;
+
+    @Value("${my.reviewboard.webpath}")
+    private String webPath;
     // 비동기 목록
     @GetMapping("/list")
     @ResponseBody
@@ -62,21 +73,12 @@ public class ReviewBoardController {
             Model model,
             HttpSession session) {
 
-        // 테스트용 임시 세션
-        if (session.getAttribute("loginMember") == null) {
-            Member fakeMember = new Member();
-            fakeMember.setMemberNo(3);
-            fakeMember.setMemberNickname("유저일");
-            model.addAttribute("loginMember", fakeMember);
-        }
-
         Map<String, Object> map = service.selectReviewList(boardCode, cp);
         model.addAttribute("map", map);
         model.addAttribute("boardCode", boardCode);
 
         return "board/reviewboard/reviewList";
     }
-
     // 리뷰 상세
     @GetMapping("/{boardCode:[0-9]+}/{reviewNo:[0-9]+}")
     public String selectReviewDetail(
@@ -89,16 +91,6 @@ public class ReviewBoardController {
             HttpServletResponse resp,
             HttpSession session) throws ParseException {
 
-
-        // 테스트를 위해 로그인한 회원 없을 경우 임시 계정 생성
-        if (loginMember == null) {
-            Member fakeMember = new Member();
-            fakeMember.setMemberNo(3); // 테스트용 임의 번호
-            fakeMember.setMemberNickname("테스트유저");
-            model.addAttribute("loginMember", fakeMember);
-            loginMember = fakeMember;
-        }
-        
         Map<String, Object> map = new HashMap<>();
         map.put("boardCode", boardCode);
         map.put("boardNo", reviewNo);
@@ -164,10 +156,24 @@ public class ReviewBoardController {
         return path;
     }
 
-    // 리뷰 작성 페이지 이동
+	// 리뷰 작성 페이지 이동
     @GetMapping("/write/{boardCode}")
-    public String writeReviewPage(@PathVariable("boardCode") int boardCode, Model model) {
+    public String writeReviewPage(
+            @PathVariable("boardCode") int boardCode, 
+            Model model,
+            @SessionAttribute(value = "loginMember", required = false) Member loginMember) {
+        
+        // 로그인 확인
+        if (loginMember == null) {
+            return "redirect:/member/login";
+        }
+        
+        // 예매 내역 조회
+        List<Payment> paymentList = myPageService.selectPaymentList(loginMember.getMemberNo());
+        
         model.addAttribute("boardCode", boardCode);
+        model.addAttribute("reservationList", paymentList);
+        
         return "board/reviewboard/reviewWrite";
     }
 
@@ -176,6 +182,7 @@ public class ReviewBoardController {
     public String insertReview(
             ReviewBoard board,
             @RequestParam("images") List<MultipartFile> imageFiles,
+            @RequestParam("impUid") String impUid,
             RedirectAttributes ra,
             HttpSession session) throws IOException {
 
@@ -189,10 +196,15 @@ public class ReviewBoardController {
 
         board.setMemberNo(loginMember.getMemberNo());
 
-        // 이미지 업로드 경로
-        String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/upload/review/";
         File dir = new File(uploadDir);
         if (!dir.exists()) dir.mkdirs();
+
+        // 로그 출력 테스트
+        System.out.println("========== [이미지 업로드 정보] ==========");
+        System.out.println("실제 저장 경로 : " + uploadDir);
+        System.out.println("웹 접근 경로   : " + webPath);
+        System.out.println("업로드한 파일 수 : " + imageFiles.size());
+        System.out.println("=====================================");
 
         List<ReviewImage> imageList = new ArrayList<>();
 
@@ -200,17 +212,31 @@ public class ReviewBoardController {
             MultipartFile file = imageFiles.get(i);
             if (!file.isEmpty()) {
                 String originalName = file.getOriginalFilename();
-                String rename = System.currentTimeMillis() + "_" + i + "_" + originalName;
+
+                // 괄호, 공백 등 제거
+                String cleanName = originalName.replaceAll("[()\\s]", "_");
+
+                // 오늘 날짜 (yyyyMMdd)
+                String today = new SimpleDateFormat("yyyyMMdd").format(new Date());
+
+                // 새로운 파일명: 20251017_images_3_.jpeg
+                String rename = today + "_" + cleanName;
+
+                // 실제 파일 저장
                 file.transferTo(new File(uploadDir + rename));
 
+                // 로그
+                System.out.println("파일 저장 완료 → " + uploadDir + rename);
+
                 ReviewImage img = new ReviewImage();
-                img.setImgPath("/upload/review/"); // 웹에서 접근할 상대 경로
+                img.setImgPath(webPath);
                 img.setImgOrig(originalName);
                 img.setImgRename(rename);
-                img.setImgOrder(i == 0 ? 0 : i); // 순서 상에서 첫번째 이미지를 썸네일로 표시하도록
+                img.setImgOrder(i); // 첫 번째(0)는 썸네일
                 imageList.add(img);
             }
         }
+
 
         board.setImageList(imageList);
 
@@ -225,7 +251,8 @@ public class ReviewBoardController {
         }
     }
 
- // 리뷰 수정 페이지 이동
+
+    // 리뷰 수정 페이지 이동
     @GetMapping("/update/{reviewNo}")
     public String updateReviewPage(
             @PathVariable("reviewNo") int reviewNo,
@@ -255,12 +282,12 @@ public class ReviewBoardController {
     }
 
     
-    // 리뷰 수정
     @PostMapping("/update")
     public String updateReview(
             @ModelAttribute ReviewBoard board,
+            @RequestParam(value = "images", required = false) List<MultipartFile> imageFiles,
             @SessionAttribute(value = "loginMember", required = false) Member loginMember,
-            RedirectAttributes ra) {
+            RedirectAttributes ra) throws IOException {
 
         // 로그인 안 한 경우
         if (loginMember == null) {
@@ -277,6 +304,37 @@ public class ReviewBoardController {
 
         // 수정 처리
         int result = service.updateReviewBoard(board);
+
+	    // 별점 업데이트
+        if (board.getStar() != null && board.getStar() > 0) {
+            service.upsertStar(board.getBoardNo(), loginMember.getMemberNo(), String.valueOf(board.getStar()));
+        }
+
+        
+     // 새로운 이미지가 있으면 추가
+        if (imageFiles != null && !imageFiles.isEmpty()) {
+            File dir = new File(uploadDir);
+            if (!dir.exists()) dir.mkdirs();
+
+            for (int i = 0; i < imageFiles.size(); i++) {
+                MultipartFile file = imageFiles.get(i);
+                if (!file.isEmpty()) {
+                	String originalName = file.getOriginalFilename();
+                	String safeName = originalName.replaceAll("[()]", "_");
+                	String rename = System.currentTimeMillis() + "_" + i + "_" + safeName;
+
+                    ReviewImage img = new ReviewImage();
+                    img.setBoardNo(board.getBoardNo());
+                    img.setImgPath(webPath);
+                    img.setImgOrig(originalName);
+                    img.setImgRename(rename);
+                    img.setImgOrder(i + 1);
+
+                    service.insertReviewImage(img);
+                }
+            }
+        }
+
 
         if (result > 0) {
             ra.addFlashAttribute("message", "리뷰가 수정되었습니다.");
@@ -303,24 +361,6 @@ public class ReviewBoardController {
             ra.addFlashAttribute("message", "리뷰 삭제 실패");
 
         return "redirect:/reviewboard/" + communityCode;
-    }
-
-    // 댓글 등록
-    @PostMapping("/comment")
-    @ResponseBody
-    public int insertComment(
-            @RequestBody ReviewComment comment,
-            @SessionAttribute("loginMember") Member loginMember) {
-        comment.setMemberNo(loginMember.getMemberNo());
-        return service.insertComment(comment);
-    }
-
-    // 댓글 삭제
-    @PostMapping("/comment/delete")
-    @ResponseBody
-    public int deleteComment(@RequestBody Map<String, Integer> map) {
-        int commentNo = map.get("commentNo");
-        return service.deleteComment(commentNo);
     }
 
     // 별점 등록/수정

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import edu.og.moa.board.review.model.dto.ReviewBoard;
 import edu.og.moa.board.review.model.dto.ReviewComment;
+import edu.og.moa.board.review.model.dto.ReviewImage;
 
 public interface ReviewBoardService {
 
@@ -17,7 +18,6 @@ public interface ReviewBoardService {
     // 리뷰 등록
     int insertReviewBoard(ReviewBoard board);
     
-
     // 리뷰 수정
     int updateReviewBoard(ReviewBoard board);
 
@@ -39,5 +39,11 @@ public interface ReviewBoardService {
     // 게시글 평균 별점
     Double selectAverageStar(int boardNo);
     
+    // 이미지 수정
+    int insertReviewImage(ReviewImage img);
+    
+    // 이미지 삭제
+	int deleteReviewImage(int imgNo);
+
 	int updateReviewReadCount(int reviewNo);
 }

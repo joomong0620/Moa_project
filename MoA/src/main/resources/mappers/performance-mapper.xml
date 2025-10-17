@@ -40,9 +40,10 @@
 		</if>
 	</select>
 	
+	<!-- 공연 목록 정보 조회(장르별) -->
 	<select id="selectPmTypeList" resultType="PerformanceBoard">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.B_CREATE_DATE, B.BOARD_COUNT,
-			P.PM_HOUSE_NAME, P.PM_HOUSE_ADDRESS,
+			H.PM_HOUSE_NAME, H.PM_HOUSE_ADDRESS,
 			TO_CHAR(P.PM_START_TIME, 'YYYY.MM.DD') PM_START_TIME,
 			TO_CHAR(P.PM_END_TIME, 'YYYY.MM.DD') PM_END_TIME,
 			(SELECT IMG_PATH FROM BOARD_IMG I WHERE I.BOARD_NO = B.BOARD_NO AND IMG_ORDER = 0) POSTER
@@ -52,6 +53,9 @@
 		JOIN PM_HOUSE H ON(P.PM_HOUSE_NO = H.PM_HOUSE_NO)
 		WHERE BOARD_DEL_FL = 'N'
 		AND COMMUNITY_CODE = 4
+		<if test="type != null and type != 'all'">
+			AND GENRE_NO = #{type}
+		</if>
 		ORDER BY B_CREATE_DATE DESC
 	</select>
 	
@@ -87,6 +91,7 @@
 		ORDER SIBLINGS BY COMMENT_NO
 	</select>
 	
+	<!-- 공연 상세페이지 조회 -->
 	<select id="selectPmDetail" resultMap="board_rm">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.B_CREATE_DATE, B.BOARD_COUNT, G.GENRE_NAME,
 			   
@@ -105,6 +110,15 @@
 		AND B.COMMUNITY_CODE = 4
 		AND B.BOARD_NO = #{boardNo}
 	</select>
+	
+		<!-- 좋아요 여부 확인 -->
+	<select id="boardLikeCheck" resultType="_int">
+		SELECT COUNT(*) 
+		FROM "LIKE"
+		WHERE BOARD_NO = ${boardNo}
+		AND MEMBER_NO = ${memberNo}
+	</select>
+	
 	
 	<!-- 좋아요 테이블 추가 -->
 	<insert id="insertBoardLike">
@@ -132,7 +146,7 @@
 		WHERE BOARD_NO = #{boardNo}
 	</update>
 	
-	<!-- 공연 썸네일 목록 조회 -->
+	<!-- 공연 썸네일 목록 조회(KSY) -->
 	<select id="selectPerformanceList" resultType="edu.og.moa.board.performance.model.dto.PerformanceBoardImage">
 	    SELECT B.BOARD_NO AS boardNo,
 	           I.IMG_PATH AS imgPath,
@@ -145,5 +159,146 @@
 	      AND I.IMG_ORDER = 0
 	    ORDER BY B.B_CREATE_DATE DESC
 	</select>
+	
+	
+	<!-- 검색 조건에 부합하는 + 공연인 + 삭제되지 않은 게시글 수 조회 -->
+	<select id="getPmSearchListCount" parameterType="map" resultType="_int">
+		SELECT COUNT(*) 
+		FROM BOARD B
+		
+		JOIN PM P ON B.BOARD_NO = P.BOARD_NO
+		
+		<!-- 가격조건이 있을 경우 -->
+		<if test="price != null">
+			LEFT JOIN (
+	             		SELECT BOARD_NO, MIN(PM_PRICE) AS MIN_PRICE
+	             		FROM PM_PRICE_LIST
+	             		GROUP BY BOARD_NO
+	         		) PR ON PR.BOARD_NO = B.BOARD_NO
+        </if>
+        <!-- 지역조건이 있을 경우 -->
+		<if test="addressList != null">
+  			JOIN PM_HOUSE H ON H.PM_HOUSE_NO = P.PM_HOUSE_NO
+		</if>
+		
+		WHERE B.COMMUNITY_CODE = 4
+		AND B.BOARD_DEL_FL = 'N'
+		
+		<!-- 장르 조건 -->
+		<if test="typeList != null">
+			AND P.GENRE_NO IN
+			<foreach collection="typeList" item="type" open="(" separator="," close=")">
+        		#{type}
+      		</foreach>
+		</if>
+		
+		<!-- 가격 조건 -->
+		<if test="price != null">
+		
+			<!-- 범위 -->
+      		<if test="price.min != null and price.max != null">
+        		AND PR.MIN_PRICE BETWEEN #{price.min} AND #{price.max}
+      		</if>
+      		<!-- 이상 -->
+      		<if test="price.min != null and price.max == null">
+        		AND PR.MIN_PRICE &gt;= #{price.min}
+      		</if>
+      		<!-- 0 -->
+      		<if test="price.min == null and price.max != null">
+        		AND PR.MIN_PRICE &lt;= #{price.max}
+      		</if>
+    	</if>
+    	
+    	<!-- 날짜 조건 -->
+    	<if test="date != null">
+      		AND P.PM_START_TIME BETWEEN #{date.startDate} AND #{date.endDate}
+    	</if>
+    	
+    	<!-- 지역 조건 -->
+    	<if test="addressList != null and addressList.size > 0">
+      		AND (
+      		<foreach collection="addressList" item="a" separator="OR">
+        		H.PM_HOUSE_ADDRESS LIKE '%' || #{a} || '%'
+      		</foreach>
+      		)
+    	</if>
+    	
+    	<!-- 제목 검색 -->
+    	<if test="query != null">
+      		AND B.BOARD_TITLE LIKE '%' || #{query} || '%'
+    	</if>
+	
+	</select>
+	
+	<!-- 공연 목록 정보 조회(통합검색) -->
+	<select id="selectPmSearchList" resultType="PerformanceBoard">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.B_CREATE_DATE, B.BOARD_COUNT,
+			H.PM_HOUSE_NAME, H.PM_HOUSE_ADDRESS,
+			TO_CHAR(P.PM_START_TIME, 'YYYY.MM.DD') PM_START_TIME,
+			TO_CHAR(P.PM_END_TIME, 'YYYY.MM.DD') PM_END_TIME,
+			(SELECT IMG_PATH FROM BOARD_IMG I WHERE I.BOARD_NO = B.BOARD_NO AND IMG_ORDER = 0) POSTER
+		
+		FROM "BOARD" B
+		JOIN PM P ON(B.BOARD_NO = P.BOARD_NO)
+		JOIN PM_HOUSE H ON(P.PM_HOUSE_NO = H.PM_HOUSE_NO)
+		<!-- 가격조건이 있을 경우 -->
+		<if test="price != null">
+			LEFT JOIN (
+				SELECT BOARD_NO, MIN(PM_PRICE) AS MIN_PRICE
+	            FROM PM_PRICE_LIST
+	            GROUP BY BOARD_NO
+	        ) PR ON PR.BOARD_NO = B.BOARD_NO
+        </if>		
+		WHERE B.BOARD_DEL_FL = 'N'
+		AND B.COMMUNITY_CODE = 4
+		<!-- 장르 조건 -->
+		<if test="typeList != null">
+			AND P.GENRE_NO IN
+			<foreach collection="typeList" item="type" open="(" separator="," close=")">
+        		#{type}
+      		</foreach>
+		</if>
+		
+		<!-- 가격 조건 -->
+		<if test="price != null">
+		
+			<!-- 범위 -->
+      		<if test="price.min != null and price.max != null">
+        		AND PR.MIN_PRICE BETWEEN #{price.min} AND #{price.max}
+      		</if>
+      		<!-- 이상 -->
+      		<if test="price.min != null and price.max == null">
+        		AND PR.MIN_PRICE &gt;= #{price.min}
+      		</if>
+      		<!-- 0 -->
+      		<if test="price.min == null and price.max != null">
+        		AND PR.MIN_PRICE &lt;= #{price.max}
+      		</if>
+    	</if>
+    	
+    	<!-- 날짜 조건 -->
+    	<if test="date != null">
+      		AND P.PM_START_TIME BETWEEN #{date.startDate} AND #{date.endDate}
+    	</if>
+    	
+    	<!-- 지역 조건 -->
+    	<if test="addressList != null and addressList.size > 0">
+      		AND (
+      		<foreach collection="addressList" item="a" separator="OR">
+        		H.PM_HOUSE_ADDRESS LIKE '%' || #{a} || '%'
+      		</foreach>
+      		)
+    	</if>
+    	
+    	<!-- 제목 검색 -->
+    	<if test="query != null">
+      		AND B.BOARD_TITLE LIKE '%' || #{query} || '%'
+    	</if>
+    	
+		ORDER BY B.B_CREATE_DATE DESC
+	</select>
+	
+	
+	
 
 </mapper>

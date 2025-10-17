@@ -128,7 +128,7 @@
 	<!-- json 데이터 BOARD_IMG 테이블에 insert -->
 	<insert id="jsonBoardImgInsert" parameterType="list"> <!-- 전달받은 파라미터 타입은 "list" -->
 		INSERT INTO BOARD_IMG (IMG_NO, IMG_PATH, IMG_RENAME, IMG_ORIG, IMG_ORDER, BOARD_NO)
-		SELECT SEQ_IMG_NO.NEXTVAL, A.*
+		SELECT SEQ_BOARD_IMG_NO.NEXTVAL, A.*
 		FROM (
 		<foreach collection="list" item="img" separator=" UNION ALL ">
 			SELECT

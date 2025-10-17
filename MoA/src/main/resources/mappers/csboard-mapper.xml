@@ -50,26 +50,43 @@
       
       
    </resultMap>
-
+   
+   
+   <resultMap type="edu.og.moa.board.csboard.model.dto.Question" id="question_rm">
+   
+      <id property="qCode" column="Q_CODE"/>
+      
+      <result property="qName" column="Q_NAME"/>
+	
+   </resultMap>
 
 	<!-- 삭제되지 않은 게시글 수 -->
 	<select id="getListCount">
 		SELECT COUNT(*)
 		FROM BOARD
-		WHERE COMMUNITY_CODE = ${communityCode}
-		AND Q_CODE = ${qCode}
+		WHERE COMMUNITY_CODE = #{communityCode}
+		AND Q_CODE = #{qCode}
 		AND BOARD_DEL_FL = 'N'
 	
 	</select>
 	
 	
-	<select id="selectQuestionList" parameterType="map" resultMap="board_rm">
-		SELECT BOARD_NO, BOARD_TITLE, B_CREATE_DATE, B.COMMUNITY_CODE, B.Q_CODE, Q.Q_NAME
+	<!-- 내 문의 게시판 유형 조회 -->
+	<select id="selectQCodeList" parameterType="edu.og.moa.board.csboard.model.dto.Question" resultMap="question_rm">
+	
+		SELECT Q_CODE, Q_NAME FROM QUESTION
+	
+	</select>
+	
+	
+	<!-- 내 문의 목록 조회 -->
+	<select id="selectQuestionList" parameterType="edu.og.moa.board.csboard.model.dto.BoardJtw" resultMap="board_rm">
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.B_CREATE_DATE, B.B_UPDATE_DATE, B.BOARD_COUNT, B.BOARD_DEL_FL, MEMBER_NO, B.COMMUNITY_CODE, B.Q_CODE, Q.Q_NAME AS qName
 		FROM BOARD B
 		JOIN QUESTION Q ON B.Q_CODE = Q.Q_CODE
-		WHERE BOARD_DEL_FL='N'
-		AND COMMUNITY_CODE = ${communityCode}
-		AND B.Q_CODE = ${qCode}
+		WHERE B.BOARD_DEL_FL='N'
+		AND B.COMMUNITY_CODE = #{communityCode}
+		AND B.Q_CODE = #{qCode}
 	ORDER BY B.BOARD_NO DESC
 	
 	</select>

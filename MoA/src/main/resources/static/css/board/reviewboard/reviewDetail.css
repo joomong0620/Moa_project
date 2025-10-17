@@ -7,9 +7,9 @@ body {
 .review-detail {
   background: #ffffff;
   width: 100%;
-  margin: 60px auto;
   padding: 40px 60px;
 }
+
 .title {
   font-size: 24px;
   font-weight: 700;
@@ -68,9 +68,10 @@ body {
 .review-box {
   background-color: #f9fafc;
   border-radius: 8px;
-  padding: 20px;
+  padding: 25px;
   margin-top: 30px;
   border: 1px solid #ddd;
+  min-height: 200px;
 }
 
 .review-user {
@@ -226,4 +227,54 @@ body {
 
 .btn-area button:hover {
   background-color: #435b7d;
+}
+
+.comment-btn-area .comment-update-btn {
+  background: linear-gradient(135deg, #3c5a99, #27374d);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.comment-btn-area .comment-update-btn:hover {
+  background: linear-gradient(135deg, #4b6ab8, #324c6a);
+  transform: translateY(-2px);
+}
+
+.comment-btn-area .comment-delete-btn {
+  background: linear-gradient(135deg, #e04e4e, #c13a3a);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.comment-btn-area .comment-delete-btn:hover {
+  background: linear-gradient(135deg, #f25f5f, #d14343);
+  transform: translateY(-2px);
+}
+
+.show-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #27374d;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.review-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #27374d;
 }

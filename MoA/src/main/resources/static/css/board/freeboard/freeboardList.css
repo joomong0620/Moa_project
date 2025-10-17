@@ -54,6 +54,7 @@ section.free-category {
   display: flex;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
 }
 
 .card1:hover {
@@ -68,7 +69,9 @@ section.free-category {
   margin: 20px 15px;
   border-radius: 8px;
   object-fit: cover;
+  margin-top: 30px;
 }
+
 
 /* 카드 텍스트 부분 */
 .card1-content {
@@ -76,9 +79,47 @@ section.free-category {
   padding: 15px 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 6px;
+  justify-content: flex-start;
+  /* 위쪽 정렬 */
+  gap: 8px;
+  overflow: hidden;
+  /* 텍스트 잘림 방지 */
+  margin-top: 40px;
 }
+
+/* 제목 (한 줄만, 넘치면 ...) */
+.card1-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #27374D;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4em;
+  max-width: 100%;
+}
+
+.card1 {
+  height: 180px;
+  /* 기존 160px보다 조금 여유 있게 */
+}
+
+
+/* 내용 (두 줄까지만, 넘치면 ...) */
+.card1-text {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* 최대 2줄 */
+  -webkit-box-orient: vertical;
+  max-height: 3em;
+  /* 1.5em * 2줄 = 3em */
+}
+
 
 .card1-title {
   font-size: 16px;
@@ -217,4 +258,8 @@ footer {
   color: #555;
   font-size: 13px;
   text-align: center;
+}
+
+body {
+  background-color: white !important;
 }

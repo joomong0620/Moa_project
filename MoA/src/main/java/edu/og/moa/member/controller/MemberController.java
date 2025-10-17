@@ -16,6 +16,7 @@ import edu.og.moa.member.model.dto.Member;
 import edu.og.moa.member.model.service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/member")
 @Controller
@@ -34,7 +35,9 @@ public class MemberController {
 			
 			HttpServletResponse resp,
 			
-			RedirectAttributes ra
+			RedirectAttributes ra,
+			
+			HttpSession session
 			
 					
 			
@@ -48,7 +51,9 @@ public class MemberController {
 		if(loginMember != null) {
 		
 			
-			model.addAttribute("loginMember", loginMember);
+			session.setAttribute("loginMember", loginMember);
+			
+			System.out.println("loginMember : " + loginMember);
 			
 			Cookie cookie = new Cookie("saveId", loginMember.getMemberId());
 			
@@ -70,9 +75,9 @@ public class MemberController {
 			
 			ra.addFlashAttribute("message", "입력 정보가 올바르지 않습니다.");
 			
+			return "redirect:/member/login";
 		}
 		
-		return "redirect:/";
 		
 		
 		
@@ -121,7 +126,7 @@ public class MemberController {
 //	       inputMember.setMemberAddr(addr);
 //	    }
 		
-		
+		System.out.println("inputMember : " + inputMember);
 		
 		if(memberAddr != null && memberAddr.length > 0) { 
 		    String addr = String.join("^^^", memberAddr);
@@ -151,9 +156,11 @@ public class MemberController {
 	        System.out.println("회원가입 실패...");
 	    }
 		
-		
+		System.out.println("inputMember : " + inputMember);
 		
 		ra.addFlashAttribute("message", message);
+		
+		System.out.println("message :" + message);
 
 	    return path;
 		

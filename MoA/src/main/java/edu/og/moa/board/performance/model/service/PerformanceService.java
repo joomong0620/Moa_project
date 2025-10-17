@@ -25,6 +25,10 @@ public interface PerformanceService {
 
     // 공연 썸네일 목록 조회 (KSY)
 	List<PerformanceBoardImage> selectPerformanceList();
+
+	// 공연 상세검색 목록 조회
+	Map<String, Object> selectPmSearchList(List<String> type, List<String> price, List<String> date,
+			List<String> address, List<String> query, int cp);
 	
 	
 	

@@ -5,11 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,10 +30,12 @@ import edu.og.moa.member.model.dto.Member;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/board/4")
 @SessionAttributes("loginMember")
+@Slf4j
 public class PerformanceController {
 
 	
@@ -104,46 +108,43 @@ public class PerformanceController {
 			}
 				
 			// 쿠키로 조회수 증가
-			if (loginMember == null) {
 				
-				Cookie c = null;
+			Cookie c = null;
+			
+			Cookie[] cookies = req.getCookies();
+			
+			if (cookies != null) {
 				
-				Cookie[] cookies = req.getCookies();
-				
-				if (cookies != null) {
-					
-					for (Cookie cookie : cookies) {
-						if (cookie.getName().equals("readBoardNo")) {
-							c = cookie;
-							break;
-						}
+				for (Cookie cookie : cookies) {
+					if (cookie.getName().equals("readBoardNo")) {
+						c = cookie;
+						break;
 					}
 				}
+			}
+			
+			// 조회수가 늘어나야 하는 경우
+			int result = 0;
+			
+			if (c == null) {
+				// 쿠키 존재 X -> 하나 새로 생성
+				c = new Cookie("readBoardNo", "|" + boardNo + "|");
 				
-				// 조회수가 늘어나야 하는 경우
-				int result = 0;
+				// 조회수 증가 서비스 호출
+				result = service.updateReadCount(boardNo);
+			} else { // 쿠키가 존재함
 				
-				if (c == null) {
-					// 쿠키 존재 X -> 하나 새로 생성
-					c = new Cookie("readBoardNo", "|" + boardNo + "|");
+				// 이 게시글 쿠키인지 확인
+				if (c.getValue().indexOf("|" + boardNo + "|") == -1) {
+					// 쿠키에 현재 게시글 번호가 없다면
+					
+					// 기존 쿠키 값에 게시글 번호를 추가해서 다시 세팅
+					c.setValue(c.getValue() + "|" + boardNo + "|");
 					
 					// 조회수 증가 서비스 호출
 					result = service.updateReadCount(boardNo);
-				} else { // 쿠키가 존재함
-					
-					// 이 게시글 쿠키인지 확인
-					if (c.getValue().indexOf("|" + boardNo + "|") == -1) {
-						// 쿠키에 현재 게시글 번호가 없다면
-						
-						// 기존 쿠키 값에 게시글 번호를 추가해서 다시 세팅
-						c.setValue(c.getValue() + "|" + boardNo + "|");
-						
-						// 조회수 증가 서비스 호출
-						result = service.updateReadCount(boardNo);
-					}
-					
 				}
-				
+
 				// 조회수 증가 성공시
 				if (result != 0) {
 					// 조회된 board의 조회수와 DB의 조회수 동기화
@@ -183,7 +184,7 @@ public class PerformanceController {
 					c.setMaxAge((int)diff); // 수명 설정
 					
 					resp.addCookie(c); // 응답 객체를 이용해서 클라이언트에게 전달
-					
+
 					
 				}
 			}
@@ -219,17 +220,27 @@ public class PerformanceController {
 	// 공연 상세검색 목록 조회
 	@GetMapping("/pmSearchList")
 	public String selectPmSearchList (
-			@RequestParam(value = "type", required = false, defaultValue = "all") String type,
-			@RequestParam(value = "price", required = false, defaultValue = "all") String price,
-			@RequestParam(value = "date", required = false, defaultValue = "all") String date,
-			@RequestParam(value = "address", required = false, defaultValue = "all") String address,
-		
+			@RequestParam MultiValueMap<String, String> params,
 			@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
-			Model model,
-			@RequestParam Map<String, Object> paramMap
+			Model model
+			
 			) {
-		// Map<String, Object> map = service.selectPmSearchList(paramMap, type, price, date, address, cp);
+		List<String> type = params.get("type");
+	    List<String> price = params.get("price");
+
+	    List<String> date = params.get("date");
+	    List<String> address = params.get("address");
+	    List<String> query = params.get("query");
 		
+	    log.info("type = {}", type);
+	    log.info("price = {}", price);
+	    log.info("date = {}", date);
+	    log.info("address = {}", address);
+	    log.info("text = {}", query);
+		
+	    Map<String, Object> map = service.selectPmSearchList(type, price, date, address, query, cp);
+	    
+	    model.addAttribute("map", map);
 		
 		return "board/performance/pm-search";
 	}

@@ -108,3 +108,8 @@
     white-space: pre-wrap;
     /* 작성된 문자열 모양 그대로(공백 유지)*/
 }
+
+
+body {
+    background-color: white !important;
+}

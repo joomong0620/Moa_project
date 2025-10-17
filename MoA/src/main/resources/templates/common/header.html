@@ -1,27 +1,7 @@
-<!-- 알림 관련 전역 변수 -->
-
-<script th:inline="javascript">
-  // 현재 접속한 클라이언트가 로그인 상태인지 확인하는 변수
-  // -> 알림은 로그인한 회원만 받을 수 있다!
-
-  const notificationLoginCheck = /*[[${session.loginMember} ? true : false]]*/ false;
-  //없을때 기본값 false 일 것이다.
-  // 알림을 보낸 회원의 프로필 이미지가 없을 경우 사용할 기본 이미지
-  // -> messages.properties에서 얻어온 값
-  const notificationDefaultImage = /*[[#{user.default.image}]]*/ "기본이미지";
-  //유저의 기본 이미지를 참조할 때 쓴다.
-</script>
-
-<script th:src="@{/js/header.js}"></script>
-
 <header th:fragment="header" class="header">
   <section>
     <a th:href="@{/}">
-      <img
-        th:src="@{/images/common/moa_logo.png}"
-        alt="이미지 준비중"
-        id="logo-image"
-      />
+      <img th:src="@{/images/common/moa_logo.png}" alt="이미지 준비중" id="logo-image" />
     </a>
   </section>
 
@@ -38,7 +18,7 @@
           <div class="submenu-right">
             <ul>
               <li><a href="/board/4/pmTypeList">전체 공연목록 조회</a></li>
-              <li><a href="#">통합 검색</a></li>
+              <li><a href="/board/4/pmSearchList">통합 검색</a></li>
               <li><a href="#">지도 검색</a></li>
             </ul>
           </div>
@@ -55,7 +35,7 @@
           </div>
           <div class="submenu-right">
             <ul>
-              <li><a th:href="@{/exhibition/board/3}">전체 전시목록 조회</a></li>
+              <li><a th:href="@{/board/3}">전체 전시목록 조회</a></li>
               <li><a href="#">전시 일정</a></li>
               <li><a href="#">전시 지도 검색</a></li>
             </ul>
@@ -112,18 +92,30 @@
     <ul class="notification-list"></ul>
   </section>
 
-  <div class="signin">
-    <!-- 로그인 안 된 경우 -->
-    <a th:if="${session.loginMember == null}" th:href="@{/member/login}">
-      <img th:src="@{/images/common/user.svg}" alt="이미지 준비중" id="signin-image" />
-      <span id="signin-text">sign in</span>
-    </a>
-
-    <!-- 로그인 된 경우 -->
-    <a th:if="${session.loginMember != null}" th:href="@{/mypage/info}">
+  <!-- 로그인 된 경우 -->
+  <div th:if="${session.loginMember != null}" class="profile-container">
+    <button class="profile-btn">
       <img th:src="@{/images/common/user.svg}" alt="프로필 이미지" id="signin-image" />
       <span id="signin-text" th:text="${session.loginMember.memberNickname}">유저닉네임</span>
-    </a>
+    </button>
+    <!-- 두가지 선택할 수 있게 하는 모달 -->
+    <ul class="profile-menu">
+      <li><a th:href="@{/mypage/info}">마이페이지</a></li>
+      <li><a th:href="@{/member/logout}">로그아웃</a></li>
+    </ul>
   </div>
+
+  <!-- 로그인 안 된 경우 -->
+  <a th:if="${session.loginMember == null}" th:href="@{/member/login}">
+    <img th:src="@{/images/common/user.svg}" alt="이미지 준비중" id="signin-image" />
+    <span id="signin-text">sign in</span>
+  </a>
 </header>
 
+<!-- 로그인 정보 JS 변수 (모든 페이지에서 공통으로 렌더링됨) -->
+<script th:inline="javascript">
+  const notificationLoginCheck = /*[[${session.loginMember} ? true : false]]*/ false;
+  const notificationDefaultImage = /*[[@{/images/common/user.svg}]]*/ "/images/common/user.svg";
+</script>
+
+<script th:src="@{/js/header.js}"></script>

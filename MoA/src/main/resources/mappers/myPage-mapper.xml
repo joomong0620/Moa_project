@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="edu.og.moa.myPage.model.dao.MyPageMapper">
+<mapper namespace="edu.og.moa.mypage.model.dao.MyPageMapper">
 
+
+	
 	<!-- 회원 정보 수정 -->
 	<update id="updateInfo">
 		UPDATE MEMBER SET
@@ -30,8 +32,90 @@
 		WHERE MEMBER_NO = #{memberNo}
 	</update>
 	
-	
-	
-	
-	
+
+
+  <!-- 좋아요한 게시물 목록 -->
+  <select id="selectLikeBoard" resultType="edu.og.moa.board.freeboard.model.dto.Board">
+    SELECT 
+      B.BOARD_NO,
+      B.BOARD_TITLE,
+      B.COMMUNITY_CODE AS BOARD_CODE,
+      NVL(
+        (SELECT IMG_PATH || IMG_RENAME
+           FROM BOARD_IMG I
+          WHERE I.BOARD_NO = B.BOARD_NO
+            AND I.IMG_ORDER = 0),
+        '/images/board/freeboard/logo.png'
+      ) AS THUMBNAIL
+    FROM BOARD B
+    JOIN "LIKE" L ON (B.BOARD_NO = L.BOARD_NO)
+    WHERE L.MEMBER_NO = #{memberNo}
+      AND B.BOARD_DEL_FL = 'N'
+    ORDER BY B.BOARD_NO DESC
+  </select>
+
+
+  <!-- 내가 쓴 게시물 목록 -->
+  <select id="selectMyBoardList" resultType="edu.og.moa.board.freeboard.model.dto.Board">
+    SELECT 
+      B.BOARD_NO,
+      B.BOARD_TITLE,
+      B.COMMUNITY_CODE AS BOARD_CODE,
+      NVL(
+        (SELECT IMG_PATH || IMG_RENAME
+           FROM BOARD_IMG I
+          WHERE I.BOARD_NO = B.BOARD_NO
+            AND I.IMG_ORDER = 0),
+        '/images/board/freeboard/logo.png'
+      ) AS THUMBNAIL
+    FROM BOARD B
+    WHERE B.MEMBER_NO = #{memberNo}
+      AND B.BOARD_DEL_FL = 'N'
+    ORDER BY B.BOARD_NO DESC
+  </select>
+
+
+
+  <!-- 예매 내역 조회 -->
+    <select id="selectPaymentList" resultType="Payment">
+			SELECT 
+			    p.PORTONE_NO AS impUid,
+			    p.MEMBER_NO AS memberNo,
+			    p.BOARD_NO AS boardNo,
+			    p.SEE_DATE AS seeDate,
+			    p.PAY_MUCH AS payMuch,
+			    p.PAY_WHAT AS payWhat,
+			    p.PAY_DATE AS payDate,
+			    p.PAY_OK AS payOk,
+			    b.COMMUNITY_CODE AS boardCode,
+			    b.BOARD_TITLE AS title,
+			
+			    
+		        (
+		            SELECT IMG_PATH || IMG_RENAME
+		            FROM BOARD_IMG i
+		            WHERE i.BOARD_NO = b.BOARD_NO
+		              AND i.IMG_ORDER = 0
+		              AND ROWNUM = 1
+		        ) AS thumbnail,
+			
+			    -- 장소 / 기간
+			    '장소 정보 없음' AS place,
+			    '기간 정보 없음' AS period
+			
+			FROM PAY p
+			JOIN BOARD b ON p.BOARD_NO = b.BOARD_NO
+			WHERE p.MEMBER_NO = #{memberNo}
+			ORDER BY p.PAY_DATE DESC
+    </select>
+    
+    <!-- 예매 취소 -->
+    <update id="cancelPayment">
+        UPDATE PAY
+        SET PAY_OK = 'N'
+        WHERE PORTONE_NO = #{payNo}
+    </update>
+
+
+
 </mapper>

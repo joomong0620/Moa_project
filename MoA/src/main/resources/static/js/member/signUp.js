@@ -294,5 +294,42 @@ memberTel.addEventListener('input', ()=>{
         telMessage.classList.add("error");
         checkObj.memberTel = false;
     }
+
+
     
+})
+
+
+document.getElementById("signFrm").addEventListener("submit", e=>{
+
+    for(let key in checkObj){
+
+        if(!checkObj[key]){
+
+
+            switch(key){
+                case 'memberId' : alert("아이디가 유효하지 않습니다."); break;
+                case 'memberEmail' : alert("이메일이 유효하지 않습니다."); break;
+                case 'memberPw' : alert("비밀번호가 유효하지 않습니다."); break;
+                case 'memberPwConfirm' : alert("비밀번호 확인이 유효하지 않습니다."); break;
+                case 'memberNickname' : alert("닉네임이 유효하지 않습니다."); break;
+                case 'memberTel' : alert("전화번호가 유효하지 않습니다."); break;
+                
+            }
+
+            console.log(checkObj)
+            document.getElementById(key).focus();
+
+
+            e.preventDefault()
+
+            console.log(checkObj)
+
+            return;
+        }
+        
+        
+    }
+
+
 })

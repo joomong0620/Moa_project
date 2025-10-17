@@ -101,14 +101,16 @@
         	B_CREATE_DATE, B_UPDATE_DATE, 
         	BOARD_COUNT, BOARD_DEL_FL, MEMBER_NO, COMMUNITY_CODE, Q_CODE
     	) VALUES(#{boardNo}, #{boardTitle}, #{boardContent},
-			TO_DATE(#{bCreateDate}, 'YYYY-MM-DD HH24:MI:SS'), NULL,
+			DEFAULT, NULL,
 			#{boardCount}, DEFAULT, #{memberNo}, #{communityCode}, DEFAULT)
 	</insert>
+	<!--		TO_DATE(#{bCreateDate}, 'YYYY-MM-DD HH24:MI:SS'), NULL,
+				NULL, NULL, -->
 
 
 	<!-- json 데이터 BOARD 테이블에 insert: boardNo는 SEQ_BOARD_NO 써서 입력, sql문으로 CREATE SEQUENCE SEQ_IMG_NO START WITH 700 NOCACHE; 시퀀스생성 필수  -->
-	<insert id="jsonBoardInsertViaSelectKey" parameterType="BoardDB">
-	    <selectKey resultType="int" keyProperty="boardNo" order="BEFORE">
+	<insert id="jsonBoardInsertViaSelectKey" parameterType="BoardDB" useGeneratedKeys="true">
+	    <selectKey resultType="_int" keyProperty="boardNo" order="BEFORE">
 	        SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
 	    </selectKey>		
 		INSERT INTO BOARD (
@@ -116,9 +118,11 @@
         	B_CREATE_DATE, B_UPDATE_DATE, 
         	BOARD_COUNT, BOARD_DEL_FL, MEMBER_NO, COMMUNITY_CODE, Q_CODE
     	) VALUES(#{boardNo}, #{boardTitle}, #{boardContent},
-		TO_DATE(#{bCreateDate}, 'YYYY-MM-DD HH24:MI:SS'), NULL,
+		DEFAULT, NULL,
 		DEFAULT, DEFAULT, #{memberNo}, #{communityCode}, DEFAULT)
 	</insert>
+	<!-- TO_DATE(#{bCreateDate}, 'YYYY-MM-DD HH24:MI:SS'), NULL,
+	     NULL, NULL, -->
 	
 	
 	<!-- json 데이터 BOARD_IMG 테이블에 insert -->
@@ -142,7 +146,7 @@
 	
 	<!-- json 데이터 EXHIBITION 테이블에 insert하기위해, InstitutionNo를 INSTITUTION 테이블에서 조회 -->
 	<!-- <select id="jsonInstitutionSelect" resultType="map"> resultType="map"으로 되어있으면 Map을 return함-->
-	<select id="jsonInstitutionSelect" resultType="int">
+	<select id="jsonInstitutionSelect" resultType="_int">
 		SELECT INSTITUTION_NO 
 		FROM INSTITUTION
 		WHERE EXHIBIT_INST_NAME = #{exhibitInstName}
@@ -150,7 +154,7 @@
 
 	<!-- json 데이터 EXHIBITION 테이블에 insert하기위해, genreNo를 GENRE 테이블에서 조회 -->
 	<!-- <select id="jsonGenreSelect" resultType="map"> resultType="map"으로 되어있으면 Map을 return함 -->
-	<select id="jsonGenreSelect" resultType="int">
+	<select id="jsonGenreSelect" resultType="_int">
 		SELECT GENRE_NO 
 		FROM GENRE
 		WHERE GENRE_NAME = #{genreName}

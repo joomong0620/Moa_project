@@ -87,7 +87,7 @@
 	<!-- 특정 게시판의 삭제되지 않은 게시글 수 조회 -->
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*) FROM BOARD
-		WHERE COMMUNITY_CODE = ${communityCode}
+		WHERE COMMUNITY_CODE = #{communityCode}
 		AND
 		BOARD_DEL_FL = 'N'
 		<!-- ORDER BY BOARD_NO DESC -->
@@ -119,7 +119,7 @@
 		JOIN "MEMBER" M ON(M.MEMBER_NO = B.MEMBER_NO)
 		JOIN EXHIBITION E ON(E.BOARD_NO = B.BOARD_NO)
 		WHERE B.BOARD_DEL_FL = 'N'
-		AND B.COMMUNITY_CODE = ${communityCode}
+		AND B.COMMUNITY_CODE = #{communityCode}
 		ORDER BY B.BOARD_NO DESC -- 2025/10/14
 
 	</select>
@@ -139,7 +139,7 @@
 		    NVL((SELECT LISTAGG(AUTHOR_NAME, ', ') WITHIN GROUP (ORDER BY AUTHOR_NO) FROM AUTHOR A WHERE A.BOARD_NO = B.BOARD_NO ), 'TBA') AUTHOR_NAMES,
 		    (SELECT EXHIBIT_INST_NAME FROM INSTITUTION I WHERE I.INSTITUTION_NO = E.INSTITUTION_NO) EXHIBIT_INSTITUTION,
 		    (SELECT GENRE_NAME FROM GENRE G WHERE G.GENRE_NO = E.GENRE_NO) EXHIBIT_GENRE,
-		    (SELECT EXHIBIT_HOST || EXHIBIT_SUPPORT FROM CONTRIBUTOR C WHERE C.BOARD_NO = B.BOARD_NO) HOST_SUPPORT		
+		    (SELECT EXHIBIT_HOST || ' / ' || EXHIBIT_SUPPORT FROM CONTRIBUTOR C WHERE C.BOARD_NO = B.BOARD_NO) HOST_SUPPORT		
 		FROM BOARD B
 		JOIN MEMBER M ON(M.MEMBER_NO=B.MEMBER_NO)
 		JOIN EXHIBITION E ON(E.BOARD_NO = B.BOARD_NO)
@@ -156,14 +156,14 @@
 	<!-- 특정 게시글 이미지 조회: Exhibition DTO select시에 그안에서 implicit하게 수행 -->
    	<select id="selectImageList" resultMap="boardImg_rm">
       SELECT * FROM BOARD_IMG
-      WHERE BOARD_NO = ${boardNo}
+      WHERE BOARD_NO = #{boardNo}
       ORDER BY IMG_ORDER 
    	</select>
    	
 	<!-- 특정 게시글 이미지 조회: 개별적, 명시적 select수행 -->
    	<select id="selectImageListIndep" resultMap="boardImg_rm">
       SELECT * FROM BOARD_IMG
-      WHERE BOARD_NO = ${boardNo}
+      WHERE BOARD_NO = #{boardNo}
       ORDER BY IMG_ORDER 
    	</select>   	
    	
@@ -175,14 +175,14 @@
 	<!-- 특정 게시글  Author names 조회: Exhibition DTO select시에 그안에서 implicit하게 수행  -->
    	<select id="selectAuthorList" resultMap="author_rm">
       SELECT * FROM "AUTHOR"
-      WHERE BOARD_NO = ${boardNo}
+      WHERE BOARD_NO = #{boardNo}
       ORDER BY AUTHOR_NO 
    	</select>
 	
 	<!-- 특정 게시글  Author names 조회: 개별적, 명시적 select수행 -->
    	<select id="selectAuthorListIndep" resultMap="author_rm">
       SELECT * FROM "AUTHOR"
-      WHERE BOARD_NO = ${boardNo}
+      WHERE BOARD_NO = #{boardNo}
       ORDER BY AUTHOR_NO 
    	</select>
 	
@@ -190,8 +190,8 @@
 	<select id="exhibitionLikeCheck" resultType="_int">
 		SELECT COUNT(*) FROM
 		"LIKE"
-		WHERE BOARD_NO = ${boardNo}
-		AND MEMBER_NO = ${memberNo}
+		WHERE BOARD_NO = #{boardNo}
+		AND MEMBER_NO = #{memberNo}
 	</select>	
 
 	<!-- 조회수 증가 -->
@@ -199,7 +199,7 @@
 		UPDATE BOARD SET
 		READ_COUNT = READ_COUNT + 1
 		WHERE
-		BOARD_NO = ${boardNo}
+		BOARD_NO = #{boardNo}
 	</update>
 	
 	  <!-- 전시 대표 이미지 목록 조회 -->

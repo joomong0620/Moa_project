@@ -43,7 +43,7 @@ public class Exhibition { // 일단은 JsonExhibtion과 Exhibition을 같게 두
 	private List<BoardImgDB> imageList;  // From DB, so BoardImageDB, not JsonBoardImage
 	
 	// Author 목록
-	//private List<AuthorDB> authorList; 
+	//private List<AuthorDB> authorList; // for insert, update, delete
 
 	// 4) EXHIBITION JOIN
 	// DTO 필드									 	// API DTO 필드(JSON-key)				// ORACLE DATABASE FIELD	

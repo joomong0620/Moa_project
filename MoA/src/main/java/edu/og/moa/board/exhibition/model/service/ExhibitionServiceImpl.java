@@ -32,7 +32,11 @@ public class ExhibitionServiceImpl implements ExhibitionService{
 	// 전시게시글 목록조회
 	@Override
 	public Map<String, Object> selectExhibitionList(int communityCode, int cp) {
-		// 1. 특정 게시판의 삭제되지 않은 게시글 수 조회
+		
+		log.info("OK so-far, communityCode: {}, cp:{}}", communityCode, cp);
+		System.out.println("selectExhibitionList(); ServiceImple OK so-far, communityCode : " + communityCode);
+		
+		// 1. 특정 게시판의 삭제되지 않은 게시글 수 조회	
 		int listCount = mapper.getListCount(communityCode);
 		
 		// 2. 1번의 조회 결과 + cp를 이용해서 Pagination 객체 생성
@@ -107,9 +111,12 @@ public class ExhibitionServiceImpl implements ExhibitionService{
             	System.out.println("eventPeriod.getEventStatus(): " + eventPeriod.getEventStatus());
             	cntNull++;
             	continue; // Exhibition.exhibitDate == null 인 경우는 그냥 skip (monkey patch.. temporarily)
-            } else {
+            } else { // invalidFormat
             	System.out.println("eventPeriod.getEventStatus(): " + eventPeriod.getEventStatus());
-            	System.out.println("[ERROR] some serious issue to be address ");
+            	System.out.println("eventPeriod.eventPeriod: " + eventPeriod.getEventPeriod());
+            	System.out.println("exhibition: " + exhibition);
+            	
+            	System.out.println("[ERROR] some serious issue to be addressed (hint: 날짜 파싱 regex문제 체크)");
             	System.exit(0);  // 정상 종료
             }
         }		

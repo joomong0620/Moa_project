@@ -88,6 +88,11 @@ public class CsBoardController {
 	
 	
 		
+//		return "board/csboard/questionList";
+//	}
+//	
+//	
+//		
 		
 		
 		

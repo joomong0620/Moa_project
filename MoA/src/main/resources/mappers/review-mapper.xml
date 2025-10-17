@@ -5,17 +5,28 @@
 <mapper namespace="edu.og.moa.board.review.model.dao.ReviewBoardMapper">
 
   <!-- 결과 매핑 -->
-  <resultMap id="reviewBoardResultMap" type="edu.og.moa.board.review.model.dto.ReviewBoard">
-    <id property="boardNo" column="BOARD_NO"/>
-    <result property="boardTitle" column="BOARD_TITLE"/>
-    <result property="boardContent" column="BOARD_CONTENT"/>
-    <result property="createDate" column="B_CREATE_DATE"/>
-    <result property="boardCount" column="BOARD_COUNT"/>
-    <result property="memberNickname" column="MEMBER_NICKNAME"/>
-    <result property="star" column="STAR"/>
-    <result property="categoryName" column="CATEGORY_NAME"/>
-    <result property="thumbnailPath" column="THUMBNAIL_PATH"/>
-  </resultMap>
+	<resultMap id="reviewBoardDetailResultMap" type="edu.og.moa.board.review.model.dto.ReviewBoard">
+	  <id property="boardNo" column="BOARD_NO"/>
+	  <result property="boardTitle" column="BOARD_TITLE"/>
+	  <result property="boardContent" column="BOARD_CONTENT"/>
+	  <result property="memberNo" column="MEMBER_NO"/>
+	  <result property="createDate" column="createDate"/>
+	  <result property="boardCount" column="BOARD_COUNT"/>
+	  <result property="memberNickname" column="MEMBER_NICKNAME"/>
+	  <result property="profileImg" column="profileImg"/>
+	  <result property="communityCode" column="communityCode"/>
+	  <result property="star" column="STAR"/>
+	  <result property="categoryName" column="CATEGORY_NAME"/>
+	  <result property="thumbnailPath" column="THUMBNAIL_PATH"/>
+	  <result property="showTitle" column="showTitle"/>
+	  <collection property="imageList" ofType="edu.og.moa.board.review.model.dto.ReviewImage">
+	    <result property="imgNo" column="IMG_NO"/>
+	    <result property="imgPath" column="IMG_PATH"/>
+	    <result property="imgOrig" column="IMG_ORIG"/>
+	    <result property="imgRename" column="IMG_RENAME"/>
+	    <result property="imgOrder" column="IMG_ORDER"/>
+	  </collection>
+	</resultMap>
 
   <!-- 게시글 개수 -->
   <select id="getListCount" parameterType="int" resultType="int">
@@ -25,13 +36,13 @@
       AND BOARD_DEL_FL = 'N'
   </select>
 
-  <!-- 리뷰 목록 -->
-	<select id="selectReviewList" parameterType="int" resultMap="reviewBoardResultMap">
+	<!-- 리뷰 목록 -->
+	<select id="selectReviewList" parameterType="int" resultMap="reviewBoardDetailResultMap">
 	  SELECT 
 	      B.BOARD_NO,
 	      B.BOARD_TITLE,
 	      B.BOARD_CONTENT,
-	      B.B_CREATE_DATE AS B_CREATE_DATE,
+	      B.B_CREATE_DATE AS createDate,
 	      B.BOARD_COUNT,
 	      M.MEMBER_NICKNAME,
 	      NVL(S.STAR, 0) AS STAR,
@@ -42,17 +53,26 @@
 	      DECODE(B.COMMUNITY_CODE,
 	             3, '전시 게시판',
 	             4, '공연 게시판',
-	             '기타') AS CATEGORY_NAME
+	             '기타') AS CATEGORY_NAME,
+	      B.MEMBER_NO,
+	      M.PROFILE_IMG AS profileImg,
+	      B.COMMUNITY_CODE AS communityCode,
+	      BI.IMG_NO,
+	      BI.IMG_PATH,
+	      BI.IMG_ORIG,
+	      BI.IMG_RENAME,
+	      BI.IMG_ORDER
 	  FROM BOARD B
 	  JOIN MEMBER M ON B.MEMBER_NO = M.MEMBER_NO
 	  LEFT JOIN STAR S ON B.BOARD_NO = S.BOARD_NO
+	  LEFT JOIN BOARD_IMG BI ON B.BOARD_NO = BI.BOARD_NO
 	  WHERE B.COMMUNITY_CODE = #{boardCode}
 	    AND B.BOARD_DEL_FL = 'N'
-	  ORDER BY B.BOARD_NO DESC
+	  ORDER BY B.BOARD_NO DESC, BI.IMG_ORDER ASC
 	</select>
 
-  <!-- 리뷰 상세 -->
-	<select id="selectReviewDetail" parameterType="map" resultType="edu.og.moa.board.review.model.dto.ReviewBoard">
+	<!-- 리뷰 상세 (이미지 포함) -->
+	<select id="selectReviewDetail" parameterType="map" resultMap="reviewBoardDetailResultMap">
 	  SELECT
 	    B.BOARD_NO,
 	    B.BOARD_TITLE,
@@ -64,18 +84,18 @@
 	    M.PROFILE_IMG AS profileImg,
 	    B.COMMUNITY_CODE AS communityCode,
 	    NVL(S.STAR, 0) AS STAR,
-	    (
-	      SELECT IMG_PATH || IMG_RENAME
-	      FROM BOARD_IMG
-	      WHERE BOARD_NO = B.BOARD_NO
-	      AND IMG_ORDER = 0
-	    ) AS THUMBNAIL_PATH,
 	    DECODE(
 	      B.COMMUNITY_CODE,
 	      3, '전시 게시판',
 	      4, '공연 게시판',
 	      '기타'
 	    ) AS CATEGORY_NAME,
+	    (
+	      SELECT IMG_PATH || IMG_RENAME
+	      FROM BOARD_IMG
+	      WHERE BOARD_NO = B.BOARD_NO
+	      AND IMG_ORDER = 0
+	    ) AS THUMBNAIL_PATH,
 	    (
 	      SELECT BOARD_TITLE
 	      FROM BOARD
@@ -84,12 +104,19 @@
 	        FROM PAY
 	        WHERE MEMBER_NO = B.MEMBER_NO
 	      )
-	    ) AS showTitle
+	    ) AS showTitle,
+	    BI.IMG_NO,
+	    BI.IMG_PATH,
+	    BI.IMG_ORIG,
+	    BI.IMG_RENAME,
+	    BI.IMG_ORDER
 	  FROM BOARD B
 	  JOIN MEMBER M ON B.MEMBER_NO = M.MEMBER_NO
 	  LEFT JOIN STAR S ON B.BOARD_NO = S.BOARD_NO
+	  LEFT JOIN BOARD_IMG BI ON B.BOARD_NO = BI.BOARD_NO
 	  WHERE B.BOARD_NO = #{boardNo}
 	  AND B.BOARD_DEL_FL = 'N'
+	  ORDER BY BI.IMG_ORDER ASC
 	</select>
 
   <!-- 게시글 등록 -->
@@ -145,13 +172,18 @@
 	    (IMG_NO, BOARD_NO, IMG_PATH, IMG_ORIG, IMG_RENAME, IMG_ORDER)
 	  VALUES
 	    (SEQ_BOARD_IMG_NO.NEXTVAL,
-	     #{reviewNo},
+	     #{boardNo},
 	     #{imgPath},
 	     #{imgOrig},
 	     #{imgRename},
 	     #{imgOrder})
 	</insert>
 
+	<!-- 이미지 삭제 -->
+	<delete id="deleteReviewImage" parameterType="int">
+	  DELETE FROM BOARD_IMG
+	  WHERE IMG_NO = #{imgNo}
+	</delete>
   <!-- 별점 등록/수정 -->
 	<update id="upsertStar" parameterType="map">
 	  MERGE INTO STAR T
@@ -175,7 +207,7 @@
   <update id="updateReviewReadCount" parameterType="int">
     UPDATE BOARD
     SET BOARD_COUNT = BOARD_COUNT + 1
-    WHERE BOARD_NO = #{reviewNo}
+    WHERE BOARD_NO = #{boardNo}
   </update>
 
 </mapper>

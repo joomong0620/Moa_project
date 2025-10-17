@@ -88,6 +88,13 @@ h2 {
   margin-bottom: 10px;
 }
 
+.photo-upload-area {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
 .photo-upload {
   width: 100px;
   height: 100px;
@@ -95,22 +102,24 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 36px;
+  font-size: 32px;
   color: #999;
   cursor: pointer;
   border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.photo-upload:hover {
-  border-color: #27374d;
-  color: #27374d;
+  flex-shrink: 0;
 }
 
 .photo-preview {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.preview-img-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
 }
 
 .preview-img {
@@ -118,6 +127,41 @@ h2 {
   height: 100px;
   object-fit: cover;
   border-radius: 6px;
+}
+
+.preview-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.preview-remove {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.preview-remove:hover {
+  background-color: #c0392b;
+}
+
+.photo-upload:hover {
+  border-color: #27374d;
+  color: #27374d;
 }
 
 .photo-guide {

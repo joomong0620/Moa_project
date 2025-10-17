@@ -61,10 +61,16 @@ public class FileUploadConfig implements WebMvcConfigurer {
    public void addResourceHandlers(ResourceHandlerRegistry registry) {
       
       // static 폴더와 업로드 폴더 모두 연결
-      registry.addResourceHandler("/images/**")
-            .addResourceLocations("classpath:/static/images/")  // 프로젝트 내 static 폴더
-            .addResourceLocations("file:///C:/uploadImages/")   // C 드라이브 업로드 폴더
-            .addResourceLocations("file:///D:/uploadImages/");  // D 드라이브 업로드 폴더
+       registry.addResourceHandler("/images/board/reviewboard/**")
+       .addResourceLocations("file:/Users/gimsoyeon/moa_upload/reviewboard/");
+
+		// 기본 static + Windows 외부 경로
+		registry.addResourceHandler("/images/**")
+		       .addResourceLocations(
+		               "classpath:/static/images/",   // 프로젝트 내 정적 리소스
+		               "file:///C:/uploadImages/",    // Windows C 드라이브
+		               "file:///D:/uploadImages/"     // Windows D 드라이브
+		       );
       
       // CSS 파일 경로
       registry.addResourceHandler("/css/**")

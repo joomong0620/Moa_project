@@ -12,8 +12,11 @@ function showSlides() {
     slides[i].style.display = "none";
   }
 
-  slideIndex++;
-  if (slideIndex > slides.length) { slideIndex = 1 }
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  } else if (slideIndex < 1) {
+    slideIndex = slides.length;
+  }
 
   for (let i = 0; i < dots.length; i++) {
     dots[i].classList.remove("active");
@@ -23,12 +26,24 @@ function showSlides() {
   dots[slideIndex - 1].classList.add("active");
 
   // 5초마다 자동 변경
-  slideTimer = setTimeout(showSlides, 5000);
+  slideTimer = setTimeout(() => {
+    slideIndex++;
+    if (slideIndex > slides.length) {
+      slideIndex = 1;
+    }
+    showSlides();
+  }, 5000);
 }
 
 function plusSlides(n) {
   clearTimeout(slideTimer);
-  slideIndex += n - 1;
+  const slides = document.getElementsByClassName("banner-slide");
+  slideIndex += n;
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  } else if (slideIndex < 1) {
+    slideIndex = slides.length;
+  }
   showSlides();
 }
 

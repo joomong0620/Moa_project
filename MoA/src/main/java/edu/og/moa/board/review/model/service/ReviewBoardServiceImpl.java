@@ -66,18 +66,21 @@ public class ReviewBoardServiceImpl implements ReviewBoardService {
             mapper.upsertStar(paramMap);
         }
 
-        // 이미지 처리 부분 (기존 그대로)
+        // 이미지 저장 로직 수정
         if (result > 0 && board.getImageList() != null && !board.getImageList().isEmpty()) {
             for (int i = 0; i < board.getImageList().size(); i++) {
                 ReviewImage img = board.getImageList().get(i);
-                img.setReviewNo(board.getBoardNo());
-                img.setImgOrder(i == 0 ? 0 : i);
+                img.setBoardNo(board.getBoardNo());
+                img.setImgOrder(i);
+                System.out.println("안녕하세");
+                System.out.println(img);
                 mapper.insertReviewImage(img);
             }
         }
 
-        return board.getBoardNo();
+        return result;
     }
+
 
     // 리뷰 수정
     @Override
@@ -126,8 +129,21 @@ public class ReviewBoardServiceImpl implements ReviewBoardService {
         return mapper.selectAverageStar(boardNo);
     }
 
+   // 이미지 수
     @Override
-    public int updateReviewReadCount(int reviewNo) {
-        return mapper.updateReviewReadCount(reviewNo);
+    public int insertReviewImage(ReviewImage img) {
+        return mapper.insertReviewImage(img);
     }
+
+    // 조회수
+	@Override
+	public int updateReviewReadCount(int reviewNo) {
+		return mapper.updateReviewReadCount(reviewNo);
+	}
+	
+	// 이미지 삭제
+	@Override
+	public int deleteReviewImage(int imgNo) {
+	    return mapper.deleteReviewImage(imgNo);
+	}
 }

@@ -55,11 +55,13 @@
       <!-- 사진 등록 -->
       <div class="photo-section">
         <p class="photo-title">사진 등록</p>
-        <label for="photoInput" class="photo-upload">
-          <span>+</span>
-        </label>
+        <div class="photo-upload-area">
+          <label for="photoInput" class="photo-upload">
+            <span>+</span>
+          </label>
+          <div id="photoPreview" class="photo-preview"></div>
+        </div>
         <input type="file" id="photoInput" name="images" multiple accept="image/*" />
-        <div id="photoPreview" class="photo-preview"></div>
         <p class="photo-guide">공연/전시와 관련된 사진이 아닐 경우 안내 없이 삭제될 수 있습니다.</p>
       </div>
 

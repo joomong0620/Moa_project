@@ -25,8 +25,6 @@ public interface ReviewBoardMapper {
     // 게시글 등록
     int insertReviewBoard(ReviewBoard board);
 
-    int insertReviewImage(ReviewImage img);
-
     // 게시글 수정
     int updateReviewBoard(ReviewBoard board);
 
@@ -56,7 +54,14 @@ public interface ReviewBoardMapper {
     
     int updateReviewReadCount(int reviewNo);
 
+    // 별점 수정
 	int upsertStar(Map<String, Object> paramMap);
+
+	// 이미지 수정
+	int insertReviewImage(ReviewImage img);
+
+	// 이미지 삭제
+	int deleteReviewImage(int imgNo);
     
     
 }

@@ -127,7 +127,7 @@ body {
   font-weight: 600;
 }
 
-.menu-item:hover > a {
+.menu-item:hover>a {
   background-color: #fff;
   color: #27374d;
   border-radius: 20px 20px 0 0;
@@ -157,8 +157,7 @@ body {
 
 .profile-btn img {
   width: 30px;
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg)
-    brightness(103%) contrast(101%);
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg) brightness(103%) contrast(101%);
 }
 
 .profile-menu {
@@ -196,7 +195,7 @@ body {
 }
 
 /* 로그인 안 된 경우 링크 스타일 */
-.header > a {
+.header>a {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -206,10 +205,9 @@ body {
   font-size: 14px;
 }
 
-.header > a img {
+.header>a img {
   width: 30px;
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg)
-    brightness(103%) contrast(101%);
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg) brightness(103%) contrast(101%);
 }
 
 /* main */
@@ -219,7 +217,7 @@ body {
   min-height: 100vh;
 }
 
-.main > h3 {
+.main>h3 {
   color: black;
   justify-content: center;
 }
@@ -363,8 +361,7 @@ body {
 .sns a {
   margin-right: 10px;
   font-size: 20px;
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg)
-    brightness(103%) contrast(101%);
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg) brightness(103%) contrast(101%);
 }
 
 .sns a img {
@@ -536,7 +533,7 @@ body {
   cursor: pointer;
 }
 
-.notification-text > img {
+.notification-text>img {
   width: 50px;
   height: 50px;
   margin: 5px;
@@ -560,6 +557,7 @@ body {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  color: black;
 }
 
 .notification-delete {
@@ -576,7 +574,7 @@ body {
   color: red;
 }
 
-.notification-item:hover > .notification-text {
+.notification-item:hover>.notification-text {
   text-decoration: underline;
 }
 

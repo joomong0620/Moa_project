@@ -34,7 +34,7 @@ public class PaymentController {
 		// 로그인된 회원 정보 모델에 담기
 		model.addAttribute("member", loginMember);
 		model.addAttribute("ticketingInfo", ticketingInfo);
-
+		model.addAttribute("priceList", ticketingInfo.getPriceList());
 		System.out.println("넘어온 데이터 : " + ticketingInfo);
 
 		return "pay/pay";

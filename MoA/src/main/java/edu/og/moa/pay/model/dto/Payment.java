@@ -1,7 +1,9 @@
 package edu.og.moa.pay.model.dto;
 
 import java.util.Date;
+import java.util.List;
 
+import edu.og.moa.board.performance.model.dto.PerformanceBoardPrice;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -33,7 +35,7 @@ public class Payment {
 
     private String eventType;   // performance(pm) or exhibition (exhb)
     private String PriceType; // ${p.pmPriceType} 좌석/분류명 (VIP, R, S 등..)
-    private String Price;    // ${p.pmPrice} 실제 금액 (정수로); // 전시의 경우는 좌석 분류 없이 0원 아니면 금액으로 넘어간다    
+    private List<PerformanceBoardPrice> priceList;
     
     
     
@@ -46,9 +48,13 @@ public class Payment {
     private Date seeDate;
     private String boardCode; 
     
+    private String pmPriceType;
+    private int pmPrice;
     
     // HTML에서 rsvNo로 사용
     public String getRsvNo() {
         return this.impUid;
+        
+        
     }
 }

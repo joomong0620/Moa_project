@@ -1,35 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" th:inline="javascript">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>리뷰게시판 상세</title>
-  <link th:href="@{/css/main-style.css}" rel="stylesheet" />
-  <link th:href="@{/css/board/reviewboard/reviewDetail.css}" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-</head>
-</head>
+      <!-- 리뷰 본문 -->
+      <section class="review-content">
+        <div class="review-info">
+          <img th:src="@{${board.thumbnailPath}}" alt="리뷰 이미지" class="poster" />
 
-<body th:data-board-no="${board.boardNo}"
-  th:data-login-member-no="${session.loginMember != null ? session.loginMember.memberNo : 0}">
-  <th:block th:replace="~{/common/header}"></th:block>
-
-  <main class="review-detail">
-    <h2 class="title">리뷰게시판</h2>
-    <hr class="divider" />
-
-    <!-- 리뷰 본문 -->
-    <section class="review-content">
-      <div class="review-info">
-        <img th:src="@{${board.thumbnailPath}}" alt="리뷰 이미지" class="poster" />
-
-        <p class="show-title" th:text="${board.showTitle}">공연/전시 제목</p>
-        <div class="review-text">
-          <p class="review-title" id="reviewTitle" th:text="${board.boardTitle}">리뷰 제목</p>
-          <p class="stars" id="reviewStars"
-            th:text="${#strings.repeat('★', board.star)} + ${#strings.repeat('☆', 5 - board.star)}">★★★★★</p>
-        </div>
+          <p class="show-title" th:text="${board.showTitle}">공연/전시 제목</p>
+          <div class="review-text">
+            <p class="review-title" id="reviewTitle" th:text="${board.boardTitle}">리뷰 제목</p>
+            <p class="stars" id="reviewStars"
+              th:text="${#strings.repeat('★', board.star)} + ${#strings.repeat('☆', 5 - board.star)}">★★★★★</p>
+          </div>
 
         <div class="review-stats">
           <img th:src="@{/images/user.svg}" alt="user" class="user-icon" />

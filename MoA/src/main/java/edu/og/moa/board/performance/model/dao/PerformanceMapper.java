@@ -35,4 +35,10 @@ public interface PerformanceMapper {
 
 	// 공연 이미지 썸네일 조회(KSY)
 	public List<PerformanceBoardImage> selectPerformanceList();
+	
+	// 검색 조건에 부합하는 + 공연인 + 삭제되지 않은 게시글 수 조회
+	public int getPmSearchListCount(Map<String, Object> paramMap);
+
+	// 검색 조건에 부합하는 + 공연인 + 삭제되지 않은 게시글 목록
+	public List<PerformanceBoard> selectPmSearchList(Map<String, Object> paramMap, RowBounds rowBounds);
 }

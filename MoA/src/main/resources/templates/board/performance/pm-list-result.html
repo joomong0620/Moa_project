@@ -11,7 +11,7 @@
     <section class="seeType" id="seeType">
 
         <select id="selectOrder">
-            <option value="latest">최신순</option>
+            <option value="latest">최근 업데이트 순</option>
             <option value="popular">조회순</option>
         </select>
 
@@ -48,7 +48,7 @@
                         <p class="city" th:text="${#strings.arraySplit(board.pmHouseAddress, ' ')[0]}">서울특별시</p>
                         <p class="place" th:text="${board.pmHouseName}">예술의전당</p>
                         <p class="date" th:text="|${board.pmStartTime} ~ ${board.pmEndTime}|">2025.10.01 ~ 2025.10.19</p>
-                        <p class="count" th:text="|${board.boardContent} 회|">170,000 회</p>
+                        <p class="count" th:text="|${board.boardCount} 회|">170,000 회</p>
                     </div>
             </div>
         </a>

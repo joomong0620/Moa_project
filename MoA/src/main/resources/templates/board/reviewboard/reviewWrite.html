@@ -36,7 +36,9 @@
       <!-- 예매 내역 선택 -->
       <select id="reservationSelect" name="impUid">
         <option value="">예매 내역 선택</option>
-        <option th:each="item : ${reservationList}" th:value="${item.impUid}" th:text="${item.title}">예시 공연</option>
+        <option th:each="item : ${reservationList}"
+                th:value="${item.impUid}"
+                th:text="${item.title}">예시 공연</option>
       </select>
 
       <!-- 제목 -->

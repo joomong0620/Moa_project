@@ -14,7 +14,8 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 80px 0;
-  min-height: calc(100vh - 160px); /* header/footer 제외 높이 */
+  min-height: calc(100vh - 160px);
+  /* header/footer 제외 높이 */
 }
 
 

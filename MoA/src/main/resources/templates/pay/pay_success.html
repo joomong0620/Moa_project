@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>결제 완료</title>
   <link th:href="@{/css/main-style.css}" rel="stylesheet" />
   <link th:href="@{/css/pay/pay_success.css}" rel="stylesheet" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
 
 <body>
   <!-- Header -->
-  <div th:replace="common/header :: header"></div>
+  <th:block th:replace="~{/common/header}"></th:block>
 
   <main>
     <h2>결제가 완료되었습니다.</h2>
@@ -22,4 +23,5 @@
   <!-- Footer -->
   <div th:replace="common/footer :: footer"></div>
 </body>
+
 </html>

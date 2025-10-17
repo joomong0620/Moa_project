@@ -75,7 +75,7 @@
     font-weight: bold;
     color: #27374D;
 }
-}
+
 
 .pw-top{
 
@@ -85,7 +85,7 @@
     font-weight: bold;
     color: #27374D;
 }
-}
+
 
 .pw-top > *{
     color: red;
@@ -113,7 +113,7 @@
     font-weight: bold;
     color: #27374D;
 }
-}
+
 
 
 .pwcon-top{
@@ -124,7 +124,7 @@
     font-weight: bold;
     color: #27374D;
 }
-}
+
 
 .pwcon-top > *{
     color: red;
@@ -304,6 +304,7 @@
 
     margin-top: 300px;
     margin-left: 700px;
+    margin-bottom: 100px;
     width: 466px;
     height: 116px;
     background-color: #27374D;

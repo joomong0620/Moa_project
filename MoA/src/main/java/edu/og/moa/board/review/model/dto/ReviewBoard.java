@@ -31,4 +31,6 @@ public class ReviewBoard {
     private List<ReviewImage> imageList;   // 첨부 이미지 목록
 
     private List<ReviewComment> commentList;  // 댓글 목록
+    
+    private String showTitle;
 }

@@ -52,31 +52,45 @@
 	</select>
 
   <!-- 리뷰 상세 -->
-  <select id="selectReviewDetail" parameterType="map" resultType="edu.og.moa.board.review.model.dto.ReviewBoard">
-    SELECT 
-      B.BOARD_NO,
-      B.BOARD_TITLE,
-      B.BOARD_CONTENT,
-      B.MEMBER_NO,
-      B.B_CREATE_DATE AS createDate,
-      B.BOARD_COUNT,
-      M.MEMBER_NICKNAME,
-      B.COMMUNITY_CODE AS communityCode,
-      NVL(S.STAR, 0) AS STAR,
-      (SELECT IMG_PATH || IMG_RENAME 
-         FROM BOARD_IMG 
-        WHERE BOARD_NO = B.BOARD_NO 
-          AND IMG_ORDER = 0) AS THUMBNAIL_PATH,
-      DECODE(B.COMMUNITY_CODE,
-             3, '전시 게시판',
-             4, '공연 게시판',
-             '기타') AS CATEGORY_NAME
-    FROM BOARD B
-    JOIN MEMBER M ON B.MEMBER_NO = M.MEMBER_NO
-    LEFT JOIN STAR S ON B.BOARD_NO = S.BOARD_NO
-    WHERE B.BOARD_NO = #{boardNo}
-      AND B.BOARD_DEL_FL = 'N'
-  </select>
+	<select id="selectReviewDetail" parameterType="map" resultType="edu.og.moa.board.review.model.dto.ReviewBoard">
+	  SELECT
+	    B.BOARD_NO,
+	    B.BOARD_TITLE,
+	    B.BOARD_CONTENT,
+	    B.MEMBER_NO,
+	    B.B_CREATE_DATE AS createDate,
+	    B.BOARD_COUNT,
+	    M.MEMBER_NICKNAME,
+	    M.PROFILE_IMG AS profileImg,
+	    B.COMMUNITY_CODE AS communityCode,
+	    NVL(S.STAR, 0) AS STAR,
+	    (
+	      SELECT IMG_PATH || IMG_RENAME
+	      FROM BOARD_IMG
+	      WHERE BOARD_NO = B.BOARD_NO
+	      AND IMG_ORDER = 0
+	    ) AS THUMBNAIL_PATH,
+	    DECODE(
+	      B.COMMUNITY_CODE,
+	      3, '전시 게시판',
+	      4, '공연 게시판',
+	      '기타'
+	    ) AS CATEGORY_NAME,
+	    (
+	      SELECT BOARD_TITLE
+	      FROM BOARD
+	      WHERE BOARD_NO = (
+	        SELECT MAX(BOARD_NO)
+	        FROM PAY
+	        WHERE MEMBER_NO = B.MEMBER_NO
+	      )
+	    ) AS showTitle
+	  FROM BOARD B
+	  JOIN MEMBER M ON B.MEMBER_NO = M.MEMBER_NO
+	  LEFT JOIN STAR S ON B.BOARD_NO = S.BOARD_NO
+	  WHERE B.BOARD_NO = #{boardNo}
+	  AND B.BOARD_DEL_FL = 'N'
+	</select>
 
   <!-- 게시글 등록 -->
   <insert id="insertReviewBoard" parameterType="edu.og.moa.board.review.model.dto.ReviewBoard">

@@ -21,6 +21,7 @@
         <div class="review-info">
           <img th:src="@{${board.thumbnailPath}}" alt="리뷰 이미지" class="poster" />
 
+          <p class="show-title" th:text="${board.showTitle}">공연/전시 제목</p>
           <div class="review-text">
             <p class="review-title" id="reviewTitle" th:text="${board.boardTitle}">리뷰 제목</p>
             <p class="stars" id="reviewStars"

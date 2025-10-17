@@ -11,7 +11,6 @@ import lombok.ToString;
 @ToString
 public class Payment {
 
-    private int payNo;          // PK
     private String impUid;      // PortOne 결제 고유번호
     private String merchantUid; // 주문번호
     private int memberNo;       // 결제자 회원 번호

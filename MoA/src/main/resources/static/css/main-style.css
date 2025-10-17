@@ -336,7 +336,8 @@ body {
   font-size: 13px;
   line-height: 1.6;
   margin-top: 5px;
-}
+  color: white;
+} 
 
 .footer-right {
   display: flex;

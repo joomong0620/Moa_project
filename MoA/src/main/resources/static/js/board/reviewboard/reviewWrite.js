@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
-
+  
   /** 글자 수 카운트 **/
   const textarea = document.getElementById("contentInput");
   const charCount = document.getElementById("charCount");
@@ -63,11 +63,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const reader = new FileReader();
       reader.onload = (event) => {
+        // 이미지 컨테이너
+        const container = document.createElement("div");
+        container.className = "preview-img-container";
+
+        // 이미지
         const img = document.createElement("img");
         img.src = event.target.result;
         img.alt = "사진 미리보기";
-        img.classList.add("preview-image");
-        photoPreview.appendChild(img);
+        img.className = "preview-img";
+
+        // 삭제 버튼
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "preview-remove";
+        removeBtn.textContent = "×";
+        removeBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          container.remove();
+        });
+
+        container.appendChild(img);
+        container.appendChild(removeBtn);
+        photoPreview.appendChild(container);
       };
       reader.readAsDataURL(file);
     });

@@ -1,129 +1,90 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>자유게시판 수정</title>
-    <link
-      rel="stylesheet"
-      th:href="@{/css/board/freeboard/freeboardWrite.css}"
-    />
-  </head>
 
-  <body>
-    <main>
-      <!-- <th:block th:replace="~{common/header}"></th:block> -->
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>자유게시판 수정</title>
+  <link rel="stylesheet" th:href="@{/css/board/freeboard/freeboardWrite.css}" />
+</head>
 
-      <div class="free-container">
-        <h1>자유게시판 수정</h1>
+<body>
+  <main>
+    <th:block th:replace="~{/common/header}"></th:block>
+
+    <div class="free-container">
+      <h1>자유게시판 수정</h1>
+    </div>
+
+    <!-- @PathVariable로 얻어온 boardCode, boardNo -->
+    <form th:action="@{update}" method="POST" class="board-write" id="boardUpdateFrm" enctype="multipart/form-data">
+      <!-- 제목 -->
+      <div class="Title-container">
+        <div class="Title">제목</div>
+        <input type="text" name="boardTitle" class="subTitle" placeholder="제목을 입력해주세요" th:value="${board.boardTitle}" />
       </div>
 
-      <!-- @PathVariable로 얻어온 boardCode, boardNo -->
-      <form
-        th:action="@{update}"
-        method="POST"
-        class="board-write"
-        id="boardUpdateFrm"
-        enctype="multipart/form-data"
-      >
-        <!-- 제목 -->
-        <div class="Title-container">
-          <div class="Title">제목</div>
-          <input
-            type="text"
-            name="boardTitle"
-            class="subTitle"
-            placeholder="제목을 입력해주세요"
-            th:value="${board.boardTitle}"
-          />
+      <!-- 썸네일 영역 -->
+      <h5>썸네일</h5>
+      <div class="img-box">
+        <div class="boardImg thumbnail">
+          <label for="img0">
+            <img class="preview" th:src="${board.imageList != null and board.imageList.size() > 0} ?
+                        ${board.imageList[0].imgPath + board.imageList[0].imgRename} : ''" />
+          </label>
+          <input type="file" name="images" class="inputImage" id="img0" accept="image/*" />
+          <span class="delete-image">&times;</span>
         </div>
+      </div>
 
-        <!-- 썸네일 영역 -->
-        <h5>썸네일</h5>
-        <div class="img-box">
-          <div class="boardImg thumbnail">
-            <label for="img0">
-              <img
-                class="preview"
-                th:src="${board.imageList != null and board.imageList.size() > 0} ?
-                        ${board.imageList[0].imgPath + board.imageList[0].imgRename} : ''"
-              />
-            </label>
-            <input
-              type="file"
-              name="images"
-              class="inputImage"
-              id="img0"
-              accept="image/*"
-            />
-            <span class="delete-image">&times;</span>
-          </div>
+      <!-- 업로드 이미지 영역 -->
+      <h5>업로드 이미지</h5>
+      <div class="img-box">
+        <div class="boardImg" th:each="num : ${#numbers.sequence(1,4)}">
+          <label th:for="'img' + ${num}">
+            <img class="preview" th:if="${board.imageList != null and board.imageList.size() > num}"
+              th:src="${board.imageList[num].imgPath + board.imageList[num].imgRename}" />
+            <img class="preview" th:unless="${board.imageList != null and board.imageList.size() > num}" src="" />
+          </label>
+          <input type="file" name="images" class="inputImage" th:id="'img' + ${num}" accept="image/*" />
+          <span class="delete-image">&times;</span>
         </div>
+      </div>
 
-        <!-- 업로드 이미지 영역 -->
-        <h5>업로드 이미지</h5>
-        <div class="img-box">
-          <div class="boardImg" th:each="num : ${#numbers.sequence(1,4)}">
-            <label th:for="'img' + ${num}">
-              <img
-                class="preview"
-                th:if="${board.imageList != null and board.imageList.size() > num}"
-                th:src="${board.imageList[num].imgPath + board.imageList[num].imgRename}"
-              />
-              <img
-                class="preview"
-                th:unless="${board.imageList != null and board.imageList.size() > num}"
-                src=""
-              />
-            </label>
-            <input
-              type="file"
-              name="images"
-              class="inputImage"
-              th:id="'img' + ${num}"
-              accept="image/*"
-            />
-            <span class="delete-image">&times;</span>
-          </div>
-        </div>
+      <!-- 내용 -->
+      <div class="board-content">
+        <textarea name="boardContent" placeholder="내용을 입력해주세요." th:text="${board.boardContent}"></textarea>
+      </div>
 
-        <!-- 내용 -->
-        <div class="board-content">
-          <textarea
-            name="boardContent"
-            placeholder="내용을 입력해주세요."
-            th:text="${board.boardContent}"
-          ></textarea>
-        </div>
+      <!-- 버튼 영역 -->
+      <div class="board-btn-area">
+        <button type="submit" id="writebtn">수정</button>
+      </div>
 
-        <!-- 버튼 영역 -->
-        <div class="board-btn-area">
-          <button type="submit" id="writebtn">수정</button>
-        </div>
+      <!-- 삭제된 이미지 순서 기록용 -->
+      <input type="hidden" name="deleteList" value="" />
 
-        <!-- 삭제된 이미지 순서 기록용 -->
-        <input type="hidden" name="deleteList" value="" />
+      <!-- 수정 성공 시 쿼리스트링 유지용 -->
+      <input type="hidden" name="cp" th:value="${param.cp}" />
+    </form>
+  </main>
 
-        <!-- 수정 성공 시 쿼리스트링 유지용 -->
-        <input type="hidden" name="cp" th:value="${param.cp}" />
-      </form>
-    </main>
+  <th:block th:replace="~{common/footer}"></th:block>
 
-    <!-- <th:block th:replace="~{common/footer}"></th:block> -->
+  <script th:src="@{/js/board/freeboard/freeboardUpdate.js}"></script>
 
-    <script th:src="@{/js/board/freeboard/freeboardUpdate.js}"></script>
+  <!-- 서버에서 넘어온 이미지리스트를 JS에서 미리보기로 표시 -->
+  <script th:inline="javascript">
+    const imageList = /*[[${board.imageList}]]*/[];
+    const previewList = document.querySelectorAll("img.preview");
 
-    <!-- 서버에서 넘어온 이미지리스트를 JS에서 미리보기로 표시 -->
-    <script th:inline="javascript">
-      const imageList = /*[[${board.imageList}]]*/ [];
-      const previewList = document.querySelectorAll("img.preview");
-
-      for (let img of imageList) {
-        if (img.imgOrder < previewList.length) {
-          previewList[img.imgOrder].src = img.imgPath + img.imgRename;
-        }
+    for (let img of imageList) {
+      if (img.imgOrder < previewList.length) {
+        previewList[img.imgOrder].src = img.imgPath + img.imgRename;
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>

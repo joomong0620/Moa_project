@@ -10,7 +10,7 @@
 <body>
 
     <main th:with="pagination=${pagination}, communityCode=${communityCode}, qCode=${qCode},
-    questionList=${questionList}">
+    questionList=${questionList}, qCodeList=${qCodeList}">
 
 
 
@@ -44,10 +44,10 @@
                         <!-- 게시글 목록이 조회된 경우 --> 
         
                         <nav>
-                            <a th:each="boardJtw : ${questionList}" 
+                            <a th:each="q : ${qCodeList}" 
                                 th:href="@{/board/{communityCode}/questionList/{qCode}
                                 (communityCode=${communityCode}, qCode=${qCode}, cp=${pagination.currentPage})}"
-                                th:text="${boardJtw.qName}"></a>
+                                th:text="${q.qName}"></a>
         
         
                         </nav>

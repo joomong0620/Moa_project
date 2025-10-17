@@ -19,7 +19,8 @@ public class EventPeriodSorter {
        
         // parsing 방법: regex => seems better
         // 정규식: 날짜 형식만 추출 (YYYY-MM-DD)
-        String regex = "\\d{4}-\\d{2}-\\d{2}";
+        // String regex = "\\d{4}-\\d{2}-\\d{2}"; // 2025-10-8 이슈
+        String regex = "\\b(?:\\d{2}|\\d{4})-(?:0?[1-9]|1[0-2])-(?:0?[1-9]|[12][0-9]|3[01])\\b";
         Pattern pattern = Pattern.compile(regex);
 
         Matcher matcher = pattern.matcher(period);
@@ -34,7 +35,7 @@ public class EventPeriodSorter {
             startVar = dates.get(0);
             endVar = dates.get(1);
         } else {
-            return "invalidPeriodFormat";
+            return "invalidPeriodFormat"; // 날짜 regex 실패경우
         }
 
         LocalDate startDate = LocalDate.parse(startVar.trim(), formatter);

@@ -31,6 +31,7 @@ import edu.og.moa.board.exhibition.model.dto.MemberDB;
 import edu.og.moa.board.exhibition.model.dto.TicketingInfo;
 import edu.og.moa.board.exhibition.model.service.ExhibitionService;
 import edu.og.moa.board.exhibition.model.service.JsonExhibitionService;
+import edu.og.moa.pay.model.dto.Payment;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -65,8 +66,8 @@ public class ExhibitionController {
 		// @RequestParam(value="cp", required=false, defaultValue = "1"): 맨처음 페이지에는 cp값 없다(그러므로 처음 cp값은 자동으로 = 1; 이후부터 cp값 존재: 2, 3,  4, ..., )
 		
 		// communityCode 확인
-		System.out.println("communityCode : " + communityCode);
-		System.out.println("cp : " + cp);
+		System.out.println("selectExhibitionList() communityCode : " + communityCode);
+		System.out.println("selectExhibitionList()  cp : " + cp);
 		
 		// 게시글 목록 조회 에서 '검색' 기능 구현 (2025/09/04)
 		if (paramMap.get("query") == null ) { // 검색어가 없을 경우 // paramMap.get("key") == null 써도 됨
@@ -85,6 +86,10 @@ public class ExhibitionController {
 			loginMember.setMemberNo(10); // 임의할당 for testing (cf:  전시 exhibitionCode === boarcCode ===  communityCode = 3)
 			model.addAttribute("loginMember", loginMember); // 
 			
+			System.out.println("selectExhibitionList() loginMember : " + loginMember);
+
+
+			
 		} else { 
 			// 검색어가 있을 경우
 			
@@ -102,9 +107,10 @@ public class ExhibitionController {
 			loginMember.setMemberNickname("한국문화정보원");
 			loginMember.setProfileImg("/images/board/exhibition/member/penguin.jpeg"); 
 			loginMember.setMemberNo(10); // 임의할당 for testing (cf:  전시 exhibitionCode === boarcCode ===  communityCode = 3)
-			model.addAttribute("loginMember", loginMember); // 			
+			model.addAttribute("loginMember", loginMember); // 		
+			
+			System.out.println("selectExhibitionList() loginMember : " + loginMember);
 		}
-		
 		
 		
 		//return null;
@@ -276,6 +282,7 @@ public class ExhibitionController {
 			path = "board/exhibition/exhibitionDetail";
 			
 			model.addAttribute("exhibition", exhibition); // model => forward 하겠다 (request scope)
+			log.info("exhibition: {}", exhibition);
 			
 			// 게시글 이미지가 있는 경우
 			BoardImgDB thumbnail = null; 
@@ -315,7 +322,8 @@ public class ExhibitionController {
 	
 	//@PostMapping("/{communityCode:[3]+}/submitTicketingInfo")
 	@PostMapping("/exhibition/submitTicketingInfo")
-	public String submitInfo(@ModelAttribute TicketingInfo ticketingInfo, Model model) {
+	//public String submitInfo(@ModelAttribute TicketingInfo ticketingInfo, Model model) {
+	public String submitInfo(@ModelAttribute Payment ticketingInfo, Model model) {
 	    model.addAttribute("ticketingInfo", ticketingInfo);
 	    return "/board/exhibition/submitTicketingInfo"; // 값 넘어가는지 확인용
 	}	

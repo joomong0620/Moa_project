@@ -165,10 +165,10 @@
                                                         <!-- 프로필 이미지가 있는 경우 -->                                                        
                                                         <img th:if="${session.loginMember.profileImg}" class="list-thumbnail" th:src="@{${session.loginMember.profileImg}}" id="memberProfile">
                                                         <!-- 검색 X -->
-                                                        <a th:unless="${param.key}" th:href="@{/exhibition/board/{communityCode}/{exhibitionNo}(communityCode=${communityCode}, exhibitionNo=${exhibition.exhibitNo}, cp=${pagination.currentPage} )}" th:utext="${exhibition.exhibitTitle}">게시글 제목</a>  <!-- exhibition는 th:each 문에 exhibition 로, 루프돌고 있다 -->
+                                                        <a th:unless="${param.key}" th:href="@{/board/{communityCode}/{exhibitionNo}(communityCode=${communityCode}, exhibitionNo=${exhibition.exhibitNo}, cp=${pagination.currentPage} )}" th:utext="${exhibition.exhibitTitle}">게시글 제목</a>  <!-- exhibition는 th:each 문에 exhibition 로, 루프돌고 있다 -->
                                                         
                                                         <!-- 검색 O -->
-                                                        <a th:if="${param.key}" th:href="@{exhibition/board/{communityCode}/{exhibitionNo}(communityCode=${communityCode}, exhibitionNo=${exhibition.exhibitNo}, cp=${pagination.currentPage}) , key=${param.key}, query=${param.query} }"  th:text="${exhibition.exhibitTitle}">게시글 제목</a>  <!-- exhibition는 th:each 문에 exhibition 로, 루프돌고 있다 -->
+                                                        <a th:if="${param.key}" th:href="@{/board/{communityCode}/{exhibitionNo}(communityCode=${communityCode}, exhibitionNo=${exhibition.exhibitNo}, cp=${pagination.currentPage}) , key=${param.key}, query=${param.query} }"  th:text="${exhibition.exhibitTitle}">게시글 제목</a>  <!-- exhibition는 th:each 문에 exhibition 로, 루프돌고 있다 -->
                                                             
                                                     </td>
                                                     <td>[[${exhibition.memberNickname}]]</td>

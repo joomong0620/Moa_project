@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <!-- [ [${exhibition}] ]  ok -->
+    [[${exhibition}]] 
     <div th:replace="common/header :: header"></div>
     <div id="page-wrapper">
 
@@ -55,7 +55,8 @@
                                 <!-- 좋아요 하트 -->
                                 <span class="exhibition-detail-like-area">
                                     <span class="heart-wrapper">
-                                        <i class="fa-heart" th:classappend="${likeCheck} ? 'fa-solid' : 'fa-regular'" id="exhibitionLike"></i>                                 
+                                        <!-- <i class="fa-heart" th:classappend="${likeCheck} ? 'fa-solid' : 'fa-regular'" id="exhibitionLike"></i>                                  -->
+                                        <i class="fa-heart" th:classappend="*{likeCount} ? fa-solid : fa-regular" id="exhibitionLike"></i>                                 
                                     </span>
                                     <span  class="like-count"  th:text="*{likeCount}">좋아요 수</span>
                                 </span>
@@ -83,7 +84,8 @@
                                             </th:block>
                                         </th:block>
                             
-                                        <th:block c:if="${#lists.size(exhibition.imageList) >= start}"> <!-- 썸네일 없는 경우 -->
+                                        <!--<th:block c:if="${#lists.size(exhibition.imageList) >= start}">  썸네일 없는 경우 -->
+                                        <th:block th:if="${#lists.size(exhibition.imageList) >= start}"> <!-- 썸네일 없는 경우 -->
                                             <h5>업로드 이미지</h5>
                                             <div class="img-box">
                                                 <th:block th:each="i : ${#numbers.sequence(0, #lists.size(exhibition.imageList)-1, 1)}">
@@ -173,7 +175,11 @@
 
                                     <div class="sec-right-div2 btn-wrapper">
                                         <div class="exhibition-detail-btn-purchase">
-                                            <form th:action="@{/board/exhibition/submitTicketingInfo}" method="post">
+                                            <form th:action="@{/payment/pay}" method="post">
+
+                                                <input type="hidden" name="boardNo" th:value="*{exhibitNo}" />
+                                                <input type="hidden" name="memberNo" th:value="*{memberNo}" />
+                                                <input type="hidden" name="showTitle" th:value="'showTitle info not available'" />
                                                 <input type="hidden" name="showName" th:value="*{exhibitTitle}" />
                                                 
                                                 <input th:unless="*{exhibitDate}" type="hidden" name="showDate" th:value="'showDate info not available'" />
@@ -185,8 +191,9 @@
                                                 <input type="hidden" name="eventType" th:value="'exhibition'" />
                                                 <input type="hidden" name="PriceType" th:value="'exhibition: price-type info NA'" />
                                                 <input type="hidden" name="Price" th:value="*{exhibitCharge}" />
-
-                                                <button id="purchaseBtn">예매하기</button>
+                                                <!-- exhibitCharge=7777777: 관람료 정보 비정상/알기 어려운 경우에 assign된 값 -->
+                                                <!-- <button id="purchaseBtn" th:attr="*{exhibitCharge} == 7777777 ? 'disabled' : null">예매하기</button> -->
+                                                <button type="submit" id="purchaseBtn" >예매하기</button>
                                             </form>
 
 
@@ -209,15 +216,15 @@
                     <div class="content-bottom-btn-wrapper">
                         <th:block th:if="${session.loginMember?.memberNo == exhibition.memberNo}">
                             <div class="exhibition-detail-btn-update">
-                                <button id="updateBtn">수정</button>
+                                <button type="button" id="updateBtn">수정</button>
                             </div>
                             <div class="exhibition-detail-btn-delete">
-                                <button id="deleteBtn">삭제</button>
+                                <button type="button" id="deleteBtn">삭제</button>
                             </div>              
                         </th:block>
                         
                         <div class="exhibition-detail-btn-goList">
-                            <button id="goToListBtn">목록으로</button>
+                            <button type="button" id="goToListBtn">목록으로</button>
                         </div>
                     </div>
 
@@ -247,7 +254,7 @@
 
         const exhibitNo =  /*[[${exhibition.exhibitNo}]]*/ "게시글 번호";
 
-        const exhibitionCode =  /*[[${exhibitionCode}]]*/ "게시글 코드"; // exhibitionCode === boardCode === communityCode 우리경우
+        const communityCode =  /*[[${communityCode}]]*/ "게시글 코드"; // exhibitionCode === boardCode === communityCode 우리경우
 
         const exhibitTitle =  /*[[${exhibition.exhibitTitle}]]*/ "게시글 제목";
         

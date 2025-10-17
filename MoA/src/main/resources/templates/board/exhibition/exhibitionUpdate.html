@@ -36,7 +36,7 @@
 
 
 
-                <form th:action="@{insert}" method="POST" class="board-write" 
+                <form th:action="@{update}" method="POST" class="board-write" 
                     enctype="multipart/form-data" id="boardWriteFrm">  
 
                     <!-- 본문 중앙 영역 -->
@@ -57,32 +57,31 @@
                                             <!-- 이미지가 있을 경우: 우선 thumbnail이미지가 있는 경우 => 전시의 경우는 이거 무시 -->
                                             <th:block th:if="${#lists.size(exhibition.imageList) > 0 }">
                                                 <th:block th:if="${thumbnail}">
-                                                    <!-- [ [|${thumbnail.imagePath}${thumbnail.imageOriginal}|] ] -->
                                                     <h3 class="required">썸네일</h3>
                                                     <div class="img-box">
                                                         <div class="exhibitionImg thumbnail">
-                                                                    <span class="delete-image">&times;</span>
-                                                                    <!-- &times; ==> x 버튼의미 -->        
+                                                                    <span class="delete-image">&times;</span>    
                                                                     <label for="img0">
-                                                                        <img class="preview" th:src="|${thumbnail.imagePath}${thumbnail.imageOriginal}|">
+                                                                        <!-- <img class="preview" th:src="|${thumbnail.imagePath}${thumbnail.imageOriginal}|"> -->
+                                                                        <img class="preview" th:src="|${thumbnail.imgPath}${thumbnail.imgOrig}|">
                                                                     </label>
                                                                     <input type="file" name="images" class="inputImage" id="img0" accept="image/*">
                                                         </div>
                                                     </div>
-                            
                                                 </th:block>
-                                
                                             </th:block>
                                 
                                             <!-- 업로드 이미지가 있는 경우: exhibition의 경우 일단 하나만 추가해보자 -->
-
-                                            <th:block c:if="${#lists.size(exhibition.imageList) >= start}"> <!-- 썸네일 없는 경우 -->
+                                            <!-- start값은 controller에서 전달받음? (전시의 경우 start = 1 이어함: 포스터 필수 & imgOrder=0) -->
+                                            <!-- <th:block c:if="${#lists.size(exhibition.imageList) >= start}">  썸네일 없는 경우 -->
+                                            <th:block th:if="${#lists.size(exhibition.imageList) >= start}"> <!-- 썸네일 없는 경우 -->
                                                 <!-- 썸네일은 들어오면 않된다. -->
                                                 <!-- 업로드 이미지 영역 -->
                                                 <h3 class="required">업로드 이미지</h3>
                                                 <div class="img-box">
                                                     <th:block th:each="i : ${#numbers.sequence(0, #lists.size(exhibition.imageList)-1, 1)}">
-                                                        <div class="exhibitionImg upload" th:with="path=|${exhibition.imageList[i].imagePath}${exhibition.imageList[i].imageOriginal}|"> 
+                                                        <!-- <div class="exhibitionImg upload" th:with="path=|${exhibition.imageList[i].imagePath}${exhibition.imageList[i].imageOriginal}|">  -->
+                                                        <div class="exhibitionImg upload" th:with="path=|${exhibition.imageList[i].imgPath}${exhibition.imageList[i].imgOrig}|"> 
                                                             <!-- start=0, i=0 -->
                                                             <span class="delete-image-upload">&times;</span>
                                                             <label for="img1">
@@ -112,7 +111,7 @@
                             <div class="section-container right" id="sectionContainerRight">
                                 <div class="section-container-right top">
                                     <span class="exhibition-detail-required-input">
-                                        (<span class="required-star">*</span><span>필수</span>)
+                                        (<span class="required-star">*</span><span>필수 </span>)
                                     </span>       
                                 </div>
                                 <section class="section right">
@@ -134,12 +133,14 @@
                                         <div class="exhibition-info institution">
                                             <label for="exhibitInstitution" class="required">전시 기관</label>
                                             <input type="text" name="exhibitInstitution" id="exhibitInstitution" class="input-text-size"
+                                                style="height: 35px; width: 320px"
                                                 placeholder="전시 기관:" th:value="*{exhibitInstitution}">
                                         </div>
                                         <!-- 장소 -->
                                         <div class="exhibition-info location">
                                             <label for="exhibitLocation" class="not-required">전시 장소</label>
                                             <input type="text" name="exhibitLocation" id="exhibitLocation" class="input-text-size"
+                                                style="height: 35px; width: 320px"
                                                 placeholder="전시 장소:" th:value="*{exhibitLocation}">
                                         </div>
 
@@ -148,24 +149,28 @@
                                         <div class="exhibition-info date">
                                             <label for="exhibitDate" class="required">전시 기간</label>
                                             <input type="text" name="exhibitDate" id="exhibitDate" class="input-text-size"
+                                                style="height: 35px; width: 320px"
                                                 placeholder="전시 기간:" th:value="*{exhibitDate}">
                                         </div>
                                         <!-- 장르 -->
                                         <div class="exhibition-info genre">
                                             <label for="exhibitGenre" class="not-required">장르</label>
                                             <input type="text" name="exhibitGenre" id="exhibitGenre" class="input-text-size"
+                                                style="height: 35px; width: 320px"
                                                 placeholder="장르:" th:value="*{exhibitGenre}">
                                         </div>
                                         <!-- 참여작가:필수 -->
                                         <div class="exhibition-info author">
                                             <label for="exhibitAuthor" class="required">참여 작가</label>
                                             <input type="text" name="exhibitAuthor" id="exhibitAuthor" class="input-text-size"
+                                                style="height: 35px; width: 320px"
                                                 placeholder="참여 작가:" th:value="*{exhibitAuthor}">
                                         </div>
                                         <!-- 주최후원 -->
                                         <div class="exhibition-info contributor">
                                             <label for="exhibitContributor" class="not-required">주최/후원</label>
                                             <input type="text" name="exhibitContributor" id="exhibitContributor" class="input-text-size"
+                                                style="height: 35px; width: 320px"
                                                 placeholder="주최/후원:" th:value="*{exhibitContributor}">
         
                                         </div>
@@ -173,6 +178,7 @@
                                         <div class="exhibition-info contact">
                                             <label for="exhibitContact" class="required">문의</label>
                                             <input type="text" name="exhibitContact" id="exhibitContact" class="input-text-size"
+                                                style="height: 35px; width: 320px"
                                                 placeholder="문의:" th:value="*{exhibitContact}">
 
                                         </div>
@@ -180,6 +186,7 @@
                                         <div class="exhibition-info audience">
                                             <label for="exhibitAudience" class="not-required">대상 연령</label>
                                             <input type="text" name="exhibitAudience" id="exhibitAudience" class="input-text-size"
+                                                style="height: 35px; width: 320px"
                                                 placeholder="대상 연령:" th:value="*{exhibitAudience}">
 
                                         </div>
@@ -187,6 +194,7 @@
                                         <div class="exhibition-info charge">
                                             <label for="exhibitCharge" class="not-required">입장료</label>
                                             <input type="text" name="exhibitCharge" id="exhibitCharge" class="input-text-size"
+                                                style="height: 35px; width: 320px"
                                                 placeholder="입장료:" th:value="*{exhibitCharge}">
                                             <!-- <div>원</div> -->
                                         </div>
@@ -248,7 +256,7 @@
         
         const exhibitTitle =  /*[[${exhibition.exhibitTitle}]]*/ "게시글 제목";
         
-        const exhibitionCode =  /*[[${exhibitionCode}]]*/ "게시글 코드"; // exhibitionCode === boardCode === communityCode 우리경우
+        const communityCode =  /*[[${communityCode}]]*/ "게시글 코드"; // exhibitionCode === boardCode === communityCode 우리경우
 
 
     </script>
@@ -257,13 +265,13 @@
         // 타임리프로 얻어온 자바의 자료형을 JS 자료형으로 변환
 
         // Natural Template
-        const imageList = /*[[${exhibition.imageList}]]*/ [];    // "자료형" 배열 [] , 설명에서 배열로 
+        //const imageList = /*[ [${exhibition.imageList}] ]*/ [];    // "자료형" 배열 [] , 설명에서 배열로 
                                                             // ex) 0, 3, 4 번째 이미지 
-        const previewList = document.querySelectorAll("img.preview");
-
-        for (let img of imageList) {
-            previewList[img.imageOrder].src = img.imagePath + img.imageOriginal; // imageOrder: 인덱스로 활용 // imageOriginal, imagePath
-        }
+        //const previewList = document.querySelectorAll("img.preview");
+        //
+        //for (let img of imageList) {
+        //    previewList[img.imageOrder].src = img.imagePath + img.imageOriginal; // imageOrder: 인덱스로 활용 // imageOriginal, imagePath
+        //}
     </script>
 
 

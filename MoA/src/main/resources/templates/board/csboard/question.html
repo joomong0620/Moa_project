@@ -34,30 +34,58 @@
                 </section>
                 
                 
-                <section class="type-btn-area">
-                    
-                    <button id="type" class="type-btn">공연</button>
-                    <div>
-                        <ul>
-                            <li>
-                                공연은 어디서 하나요?
-                            </li>
-                        </ul>
-                    
-                    </div>
-                    <button class="type-btn">전시</button>
-                    <button class="type-btn">예약</button>
-                    <button class="type-btn">이용편의</button>
-                    
-                    
-                    
+                <section class="tap-menu">
+                
+                    <button id="type" class="type-btn" data-tab="tab1">공연</button>
+                    <button class="type-btn" data-tab="tab2">전시</button>
+                    <button class="type-btn" data-tab="tab3">예약</button>
+                    <button class="type-btn" data-tab="tab4">이용편의</button>
+                        
                 </section>
                 
-                
-                <section>
+                <section class="typebox">
+
+                    <section id="tab1" class="tap-content active">
+
+                        <span class="typebox-in">
+    
+                            <span class="search-box">
+                                <img class="search" th:src="@{/images/board/csboard/search.png}">
+        
+                            </span>
+                            <span class="type-input">
+                                
+                                <label class="type" for="type">type</label>
+                                <input id="type" type="checkbox">
+        
+                            </span>
+    
+                        </span>
+                        <div class="question-content">ddddddddddddddddddddd</div>
+
+                    </section>
+
+                    <section id="tab2" class="tab-content">
+
+                        <span class="typebox-in">
+    
+                                <span class="search-box">
+                                    <img class="search" th:src="@{/images/board/csboard/search.png}">
+            
+                                </span>
+                                <span>
+                                    
+                                    <label class="type" for="type">type</label>
+                                    <input id="type" type="checkbox">
+    
+                                </span>
+                                
+                        </span>
+                        <div class="question-content">ddddddddddddddddddddd</div>
+
+                    </section>
                     
-                    <label class="type" for="type">type</label>
-                    <input id="type" type="checkbox">
+
                     
                     <nav id="type-nav">
                         <ul>
@@ -92,21 +120,21 @@
                     
                         <button id="one-question">
                         
-                            <img th:src="@{/uploadImg/quest.png}" class="quest-img">
+                            <img th:src="@{/images/board/csboard/quest.png}" class="quest-img">
 
                             <div class="q-text">
-                            
 
-
-                            
+                                <span class="tex-a">                                    
+                                    1:1문의 하기
+                                </span>
+                                    
                                 <span class="tex">
-                                    <a th:href="@{questionList}"></a>
                                     더 자세한 문의를 할 수 있어요!
                                 </span>
                             </div>
                         
                         </button>
-                    </a>1:1문의 하기
+                    </a>
 
 
                 </section>
@@ -118,7 +146,7 @@
 
                         <button id="question-confirm">
                             
-                            <img th:src="@{/uploadImg/write.png}" class="quest-img">
+                            <img th:src="@{/images/board/csboard/write.png}" class="quest-img">
     
                             <div class="c-text">
                                 <span class="tex-d">

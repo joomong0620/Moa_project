@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import edu.og.moa.board.csboard.model.dto.BoardJtw;
 import edu.og.moa.board.csboard.model.service.CsService;
+import edu.og.moa.member.model.dto.Member;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -44,13 +46,19 @@ public class CsBoardController {
 	@GetMapping("/{communityCode:5}/questionList/{qCode:[1-3]}")
 	public String questionList(@PathVariable("communityCode") int communityCode,
 			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
-			@PathVariable("qCode") int qCode, Model model, BoardJtw boardJtw
+			@PathVariable("qCode") int qCode, Model model, BoardJtw boardJtw,
+			@RequestParam(value="boardNo") int boardNo,
+			@SessionAttribute("loginMember") Member loginMember
 			
 			
 			) {
 		
+		boardJtw.setBoardNo(boardNo);
+
 		boardJtw.setCommunityCode(communityCode);
 		boardJtw.setQCode(qCode);
+		boardJtw.setMemberNo(loginMember.getMemberNo());
+		
 		System.out.println(communityCode);
 		
 		
@@ -68,6 +76,8 @@ public class CsBoardController {
 		System.out.println("qCode" + qCode);
 		System.out.println("boardJtw" + boardJtw);
 		System.out.println("cp" + cp);
+		System.out.println("qCodeList : " + map.get("qCodeList"));
+		System.out.println("questionList : " + map.get("questionList"));
 		
 		
 		

@@ -81,11 +81,11 @@
 	
 	<!-- 내 문의 목록 조회 -->
 	<select id="selectQuestionList" parameterType="edu.og.moa.board.csboard.model.dto.BoardJtw" resultMap="board_rm">
-		SELECT BOARD_NO, BOARD_TITLE, B_CREATE_DATE, B.COMMUNITY_CODE, B.Q_CODE, Q.Q_NAME AS qName
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.B_CREATE_DATE, B.B_UPDATE_DATE, B.BOARD_COUNT, B.BOARD_DEL_FL, MEMBER_NO, B.COMMUNITY_CODE, B.Q_CODE, Q.Q_NAME AS qName
 		FROM BOARD B
 		JOIN QUESTION Q ON B.Q_CODE = Q.Q_CODE
-		WHERE BOARD_DEL_FL='N'
-		AND COMMUNITY_CODE = #{communityCode}
+		WHERE B.BOARD_DEL_FL='N'
+		AND B.COMMUNITY_CODE = #{communityCode}
 		AND B.Q_CODE = #{qCode}
 	ORDER BY B.BOARD_NO DESC
 	

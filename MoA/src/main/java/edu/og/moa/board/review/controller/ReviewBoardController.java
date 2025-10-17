@@ -32,6 +32,8 @@ import edu.og.moa.board.review.model.dto.ReviewComment;
 import edu.og.moa.board.review.model.dto.ReviewImage;
 import edu.og.moa.board.review.model.service.ReviewBoardService;
 import edu.og.moa.member.model.dto.Member;
+import edu.og.moa.mypage.model.service.MyPageService;
+import edu.og.moa.pay.model.dto.Payment;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -44,6 +46,9 @@ public class ReviewBoardController {
 
     @Autowired
     private ReviewBoardService service;
+    
+    @Autowired
+    private MyPageService myPageService;
 
     // 비동기 목록
     @GetMapping("/list")
@@ -145,10 +150,24 @@ public class ReviewBoardController {
         return path;
     }
 
-    // 리뷰 작성 페이지 이동
+	// 리뷰 작성 페이지 이동
     @GetMapping("/write/{boardCode}")
-    public String writeReviewPage(@PathVariable("boardCode") int boardCode, Model model) {
+    public String writeReviewPage(
+            @PathVariable("boardCode") int boardCode, 
+            Model model,
+            @SessionAttribute(value = "loginMember", required = false) Member loginMember) {
+        
+        // 로그인 확인
+        if (loginMember == null) {
+            return "redirect:/member/login";
+        }
+        
+        // 예매 내역 조회
+        List<Payment> paymentList = myPageService.selectPaymentList(loginMember.getMemberNo());
+        
         model.addAttribute("boardCode", boardCode);
+        model.addAttribute("reservationList", paymentList);
+        
         return "board/reviewboard/reviewWrite";
     }
 
@@ -157,10 +176,9 @@ public class ReviewBoardController {
     public String insertReview(
             ReviewBoard board,
             @RequestParam("images") List<MultipartFile> imageFiles,
-            @RequestParam("payNo") int payNo,
+            @RequestParam("impUid") String impUid,
             RedirectAttributes ra,
             HttpSession session) throws IOException {
-
         Member loginMember = (Member) session.getAttribute("loginMember");
 
         if (loginMember == null) {

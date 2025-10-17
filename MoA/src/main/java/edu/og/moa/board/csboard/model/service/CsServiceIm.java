@@ -57,11 +57,12 @@ public class CsServiceIm implements CsService{
 		
 		System.out.println("boardJtw :" + boardJtw);
 		System.out.println("communityCode4 :" + communityCode);
+		System.out.println("questionList :" + questionList);
 		
-		paramMap.put("qCodeList", qCodeList);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		map.put("qCodeList", qCodeList);
 		map.put("pagination", pagination);
 		map.put("questionList", questionList);
 		

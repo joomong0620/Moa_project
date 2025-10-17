@@ -50,7 +50,15 @@
       
       
    </resultMap>
-
+   
+   
+   <resultMap type="edu.og.moa.board.csboard.model.dto.Question" id="question_rm">
+   
+      <id property="qCode" column="Q_CODE"/>
+      
+      <result property="qName" column="Q_NAME"/>
+	
+   </resultMap>
 
 	<!-- 삭제되지 않은 게시글 수 -->
 	<select id="getListCount">
@@ -63,6 +71,15 @@
 	</select>
 	
 	
+	<!-- 내 문의 게시판 유형 조회 -->
+	<select id="selectQCodeList" parameterType="edu.og.moa.board.csboard.model.dto.Question" resultMap="question_rm">
+	
+		SELECT Q_CODE, Q_NAME FROM QUESTION
+	
+	</select>
+	
+	
+	<!-- 내 문의 목록 조회 -->
 	<select id="selectQuestionList" parameterType="edu.og.moa.board.csboard.model.dto.BoardJtw" resultMap="board_rm">
 		SELECT BOARD_NO, BOARD_TITLE, B_CREATE_DATE, B.COMMUNITY_CODE, B.Q_CODE, Q.Q_NAME AS qName
 		FROM BOARD B

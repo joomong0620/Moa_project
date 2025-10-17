@@ -1,20 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" th:inline="javascript">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>리뷰게시판 상세</title>
-    <link th:href="@{/css/main-style.css}" rel="stylesheet" />
-    <link th:href="@{/css/board/reviewboard/reviewDetail.css}" rel="stylesheet" />
-  </head>
-
-  <body th:data-board-no="${board.boardNo}"
-  th:data-login-member-no="${session.loginMember != null ? session.loginMember.memberNo : 0}">
-    <div th:replace="~{common/header :: header}"></div>
-
-    <main class="review-detail">
-      <h2 class="title">리뷰게시판</h2>
-      <hr class="divider" />
 
       <!-- 리뷰 본문 -->
       <section class="review-content">
@@ -28,86 +13,83 @@
               th:text="${#strings.repeat('★', board.star)} + ${#strings.repeat('☆', 5 - board.star)}">★★★★★</p>
           </div>
 
-          <div class="review-stats">
-            <img th:src="@{/images/user.svg}" alt="user" class="user-icon" />
-            <span id="viewCount" th:text="${board.boardCount}">0</span>
+        <div class="review-stats">
+          <img th:src="@{/images/user.svg}" alt="user" class="user-icon" />
+          <span id="viewCount" th:text="${board.boardCount}">0</span>
+        </div>
+      </div>
+
+      <div class="review-box">
+        <div class="review-user">
+          <img th:if="${board.profileImg != null}" th:src="@{${board.profileImg}}" alt="작성자" class="profile-img" />
+          <img th:if="${board.profileImg == null}" th:src="@{/images/default-user.png}" alt="작성자" class="profile-img" />
+
+          <div class="review-meta">
+            <p class="username" id="username" th:text="${board.memberNickname + ' 님'}">작성자</p>
+            <p class="date" id="reviewDate" th:text="${board.createDate}">작성일</p>
           </div>
         </div>
 
-        <div class="review-box">
-          <div class="review-user">
-            <img th:if="${board.profileImg != null}" th:src="@{${board.profileImg}}" alt="작성자" class="profile-img" />
-            <img th:if="${board.profileImg == null}" th:src="@{/images/default-user.png}" alt="작성자" class="profile-img" />
+        <p class="review-text-content" id="reviewContent" th:text="${board.boardContent}">
+          리뷰 본문 내용
+        </p>
+      </div>
 
-            <div class="review-meta">
-              <p class="username" id="username" th:text="${board.memberNickname + ' 님'}">작성자</p>
-              <p class="date" id="reviewDate" th:text="${board.createDate}">작성일</p>
-            </div>
-          </div>
+      <!-- 이미지 목록 -->
+      <div class="review-images" th:if="${board.imageList != null and !board.imageList.isEmpty()}">
+        <p class="sub-title">함께 나눈 이미지</p>
+        <div class="image-list">
+          <img th:each="img : ${board.imageList}" th:src="@{${img.imgPath} + '/' + ${img.imgRename}}"
+            th:alt="${img.imgOrig}" />
+        </div>
+      </div>
 
-          <p class="review-text-content" id="reviewContent" th:text="${board.boardContent}">
-            리뷰 본문 내용
-          </p>
+      <!-- 버튼 영역 -->
+      <div class="btn-area">
+        <div th:if="${isWriter}">
+          <button type="button"
+            th:onclick="|location.href='@{/reviewboard/update/{boardNo}(boardNo=${board.boardNo})}'|">
+            수정
+          </button>
+          <form th:action="@{/reviewboard/delete}" method="post" style="display:inline;">
+            <input type="hidden" name="boardNo" th:value="${board.boardNo}" />
+            <input type="hidden" name="communityCode" th:value="${board.communityCode}" />
+            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+          </form>
+          <button type="button" th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">
+            목록으로
+          </button>
         </div>
 
-        <!-- 이미지 목록 -->
-        <div class="review-images"
-             th:if="${board.imageList != null and !board.imageList.isEmpty()}">
-          <p class="sub-title">함께 나눈 이미지</p>
-          <div class="image-list">
-            <img th:each="img : ${board.imageList}"
-                 th:src="@{${img.imgPath} + '/' + ${img.imgRename}}"
-                 th:alt="${img.imgOrig}" />
-          </div>
+        <div th:if="${!isWriter}">
+          <button type="button" th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">
+            목록으로
+          </button>
         </div>
+      </div>
 
-        <!-- 버튼 영역 -->
-        <div class="btn-area">
-          <div th:if="${isWriter}">
-            <button type="button"
-                    th:onclick="|location.href='@{/reviewboard/update/{boardNo}(boardNo=${board.boardNo})}'|">
-              수정
-            </button>
-            <form th:action="@{/reviewboard/delete}" method="post" style="display:inline;">
-              <input type="hidden" name="boardNo" th:value="${board.boardNo}" />
-              <input type="hidden" name="communityCode" th:value="${board.communityCode}" />
-              <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
-            </form>
-            <button type="button"
-                    th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">
-              목록으로
-            </button>
-          </div>
+      <hr class="divider" />
 
-          <div th:if="${!isWriter}">
-            <button type="button"
-                    th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">
-              목록으로
-            </button>
-          </div>
+      <!-- 댓글 -->
+      <section class="comment-section">
+        <h3>댓글</h3>
+
+        <!-- 댓글 목록 -->
+        <div id="commentList" class="comment-list"></div>
+
+        <!-- 댓글 입력 -->
+        <div class="comment-input">
+          <textarea id="commentInput" placeholder="댓글을 입력하세요."></textarea>
+          <button type="button" class="submit-btn">댓글 등록</button>
         </div>
-
-        <hr class="divider" />
-
-        <!-- 댓글 -->
-        <section class="comment-section">
-          <h3>댓글</h3>
-
-          <!-- 댓글 목록 -->
-          <div id="commentList" class="comment-list"></div>
-
-          <!-- 댓글 입력 -->
-          <div class="comment-input">
-            <textarea id="commentInput" placeholder="댓글을 입력하세요."></textarea>
-            <button type="button" class="submit-btn">댓글 등록</button>
-          </div>
-        </section>
       </section>
-    </main>
+    </section>
+  </main>
 
-    <div th:replace="~{common/footer :: footer}"></div>
+  <div th:replace="~{common/footer :: footer}"></div>
 
-    <script th:src="@{/js/board/reviewboard/reviewDetail.js}"></script>
-    <script th:src="@{/js/board/reviewboard/reviewComment.js}"></script>
-  </body>
+  <script th:src="@{/js/board/reviewboard/reviewDetail.js}"></script>
+  <script th:src="@{/js/board/reviewboard/reviewComment.js}"></script>
+</body>
+
 </html>

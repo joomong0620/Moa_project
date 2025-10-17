@@ -1,144 +1,115 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>게시판 상세</title>
 
-    <!-- 외부 CSS 연결 -->
-    <link rel="stylesheet" th:href="@{/css/main-style.css}" />
-    <link
-      rel="stylesheet"
-      th:href="@{/css/board/freeboard/freeboardDetail.css}"
-    />
-    <link
-      rel="stylesheet"
-      th:href="@{/css/board/freeboard/freeboardComment.css}"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>게시판 상세</title>
 
-  <body>
-    <main>
-      <th:block th:replace="~{common/header}"></th:block>
-      <section class="board-detail">
-        <!-- 카테고리 -->
-        <h1 th:text="${board.boardTypeName}">자유게시판</h1>
+  <!-- 외부 CSS 연결 -->
+  <link rel="stylesheet" th:href="@{/css/main-style.css}" />
+  <link rel="stylesheet" th:href="@{/css/board/freeboard/freeboardDetail.css}" />
+  <link rel="stylesheet" th:href="@{/css/board/freeboard/freeboardComment.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
 
-        <!-- 제목 + 작성자/작성일/조회수 + 좋아요 -->
-        <div class="board-header">
-          <!-- 왼쪽 (제목) -->
-          <div class="left-area">
-            <h3 class="board-title" th:text="${board.boardTitle}">
-              게시글 제목
-            </h3>
+<body>
+  <main>
+    <th:block th:replace="~{common/header}"></th:block>
+    <section class="board-detail">
+      <!-- 카테고리 -->
+      <h1 th:text="${board.boardTypeName}">자유게시판</h1>
+
+      <!-- 제목 + 작성자/작성일/조회수 + 좋아요 -->
+      <div class="board-header">
+        <!-- 왼쪽 (제목) -->
+        <div class="left-area">
+          <h3 class="board-title" th:text="${board.boardTitle}">
+            게시글 제목
+          </h3>
+        </div>
+
+        <!-- 오른쪽 (닉네임, 작성일, 조회수, 좋아요) -->
+        <div class="right-area">
+          <div class="board-info">
+            <p>
+              <span>닉네임</span>
+              <span th:text="${board.memberNickname}">joomong</span>
+            </p>
+            <p>
+              <span>작성일</span>
+              <span th:text="${board.boardCreateDate}">2025-09-29</span>
+            </p>
+            <p>
+              <span>조회수</span>
+              <span th:text="${board.boardCount}">2789</span>
+            </p>
           </div>
 
-          <!-- 오른쪽 (닉네임, 작성일, 조회수, 좋아요) -->
-          <div class="right-area">
-            <div class="board-info">
-              <p>
-                <span>닉네임</span>
-                <span th:text="${board.memberNickname}">joomong</span>
-              </p>
-              <p>
-                <span>작성일</span>
-                <span th:text="${board.boardCreateDate}">2025-09-29</span>
-              </p>
-              <p>
-                <span>조회수</span>
-                <span th:text="${board.boardCount}">2789</span>
-              </p>
-            </div>
+          <!-- 좋아요 하트 -->
+          <span class="like-area">
+            <i class="fa-heart" th:classappend="${likeCheck} ? fa-solid : fa-regular" id="boardLike"></i>
 
-            <!-- 좋아요 하트 -->
-            <span class="like-area">
-              <i
-                class="fa-heart"
-                th:classappend="${likeCheck} ? fa-solid : fa-regular"
-                id="boardLike"
-              ></i>
-
-              <span th:text="${board.likeCount}">0</span>
-            </span>
-          </div>
+            <span th:text="${board.likeCount}">0</span>
+          </span>
         </div>
+      </div>
 
-        <!-- 썸네일 -->
-        <div class="board-thumbnail" th:if="${thumbnail != null}">
-          <h5>썸네일</h5>
-          <img
-            th:src="|${thumbnail.imgPath}${thumbnail.imgRename}|"
-            th:alt="${thumbnail.imgOrig}"
-            class="thumb-img"
-          />
+      <!-- 썸네일 -->
+      <div class="board-thumbnail" th:if="${thumbnail != null}">
+        <h5>썸네일</h5>
+        <img th:src="|${thumbnail.imgPath}${thumbnail.imgRename}|" th:alt="${thumbnail.imgOrig}" class="thumb-img" />
+      </div>
+
+      <!-- 나머지 업로드 이미지 -->
+      <div class="board-images" th:if="${board.imageList != null and #lists.size(board.imageList) > start}">
+        <h5>업로드 이미지</h5>
+        <div class="image-item" th:each="img : ${board.imageList.subList(start, board.imageList.size())}">
+          <img th:src="|${img.imgPath}${img.imgRename}|" th:alt="${img.imgOrig}" />
         </div>
+      </div>
 
-        <!-- 나머지 업로드 이미지 -->
-        <div
-          class="board-images"
-          th:if="${board.imageList != null and #lists.size(board.imageList) > start}"
-        >
-          <h5>업로드 이미지</h5>
-          <div
-            class="image-item"
-            th:each="img : ${board.imageList.subList(start, board.imageList.size())}"
-          >
-            <img
-              th:src="|${img.imgPath}${img.imgRename}|"
-              th:alt="${img.imgOrig}"
-            />
-          </div>
-        </div>
+      <!-- 본문 -->
+      <div class="board-content" th:text="${board.boardContent}">
+        게시글 내용
+      </div>
 
-        <!-- 본문 -->
-        <div class="board-content" th:text="${board.boardContent}">
-          게시글 내용
-        </div>
+      <!-- 버튼 영역 -->
+      <div class="board-btn-area">
+        <!-- 로그인 + 작성자 본인일 때만 수정/삭제 -->
+        <th:block th:if="${session.loginMember != null and session.loginMember.memberNo == board.memberNo}">
+          <button id="updateBtn" type="button">수정</button>
+          <button id="deleteBtn" type="button">삭제</button>
+        </th:block>
 
-        <!-- 버튼 영역 -->
-        <div class="board-btn-area">
-          <!-- 로그인 + 작성자 본인일 때만 수정/삭제 -->
-          <th:block
-            th:if="${session.loginMember != null and session.loginMember.memberNo == board.memberNo}"
-          >
-            <button id="updateBtn" type="button">수정</button>
-            <button id="deleteBtn" type="button">삭제</button>
-          </th:block>
+        <button id="goToListBtn" type="button"
+          th:onclick="|location.href='@{/board/{boardCode}(boardCode=${boardCode})}'|">
+          목록으로
+        </button>
+      </div>
+    </section>
+    <th:block th:replace="~{board/freeboard/freeboardComment}"></th:block>
+  </main>
 
-          <button
-            id="goToListBtn"
-            type="button"
-            th:onclick="|location.href='@{/board/{boardCode}(boardCode=${boardCode})}'|"
-          >
-            목록으로
-          </button>
-        </div>
-      </section>
-      <th:block th:replace="~{board/freeboard/freeboardComment}"></th:block>
-    </main>
-
-    <th:block th:replace="~{common/footer}"></th:block>
-    <script th:inline="javascript">
-      // 수정된 코드
-      const loginMemberNo = /*[[${session.loginMember != null ? session.loginMember.memberNo : 0}]]*/ 0;
-      const memberNickname =
+  <th:block th:replace="~{common/footer}"></th:block>
+  <script th:inline="javascript">
+    // 수정된 코드
+    const loginMemberNo = /*[[${session.loginMember != null ? session.loginMember.memberNo : 0}]]*/ 0;
+    const memberNickname =
         /*[[${session.loginMember != null ? session.loginMember.memberNickname : ''}]]*/ "";
-      const boardNo = /*[[${board != null ? board.boardNo : 0}]]*/ 0;
-      const boardCode = /*[[${boardCode != null ? boardCode : 0}]]*/ 0;
-      const boardTitle = /*[[${board != null ? board.boardTitle : ''}]]*/ "";
+    const boardNo = /*[[${board != null ? board.boardNo : 0}]]*/ 0;
+    const boardCode = /*[[${boardCode != null ? boardCode : 0}]]*/ 0;
+    const boardTitle = /*[[${board != null ? board.boardTitle : ''}]]*/ "";
 
-      // 디버깅
-      console.log("loginMemberNo:", loginMemberNo);
-      console.log("memberNickname:", memberNickname);
-      console.log("boardNo:", boardNo);
-    </script>
+    // 디버깅
+    console.log("loginMemberNo:", loginMemberNo);
+    console.log("memberNickname:", memberNickname);
+    console.log("boardNo:", boardNo);
+  </script>
 
-    <script th:src="@{/js/board/freeboard/freeboardDetail.js}"></script>
-    <script th:src="@{/js/board/freeboard/freeboardComment.js}"></script>
-  </body>
+  <script th:src="@{/js/board/freeboard/freeboardDetail.js}"></script>
+  <script th:src="@{/js/board/freeboard/freeboardComment.js}"></script>
+</body>
+
 </html>

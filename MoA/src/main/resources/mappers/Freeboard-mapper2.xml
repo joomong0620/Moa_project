@@ -19,7 +19,7 @@
 	<!-- 이미지 리스트 삽입 -->
 	<insert id="insertImageList" parameterType="list">
 	    INSERT INTO BOARD_IMG (IMG_NO, BOARD_NO, IMG_PATH, IMG_ORIG, IMG_RENAME, IMG_ORDER)
-	    SELECT SEQ_IMG_NO.NEXTVAL, BOARD_NO, IMG_PATH, IMG_ORIG, IMG_RENAME, IMG_ORDER
+	    SELECT SEQ_BOARD_IMG_NO.NEXTVAL, BOARD_NO, IMG_PATH, IMG_ORIG, IMG_RENAME, IMG_ORDER
 	    FROM (
 	        <foreach collection="list" item="img" separator=" UNION ALL ">
 	            SELECT 
@@ -78,7 +78,7 @@
     <!-- 이미지 삽입 -->
     <insert id="imageInsert">
         INSERT INTO BOARD_IMG (IMG_NO, BOARD_NO, IMG_PATH, IMG_ORIG, IMG_RENAME, IMG_ORDER)
-        VALUES(SEQ_IMG_NO.NEXTVAL, #{boardNo}, #{imgPath}, #{imgOrig}, #{imgRename}, #{imgOrder})
+        VALUES(SEQ_BOARD_IMG_NO.NEXTVAL, #{boardNo}, #{imgPath}, #{imgOrig}, #{imgRename}, #{imgOrder})
     </insert>
 
     <!-- 게시글 삭제 -->

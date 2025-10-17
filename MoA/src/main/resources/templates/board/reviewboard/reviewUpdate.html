@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>리뷰 수정</title>
   <link th:href="@{/css/main-style.css}" rel="stylesheet" />
   <link th:href="@{/css/board/reviewboard/reviewWrite.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
+
 </head>
 
 <body>
-  <div th:replace="common/header :: header"></div>
+  <th:block th:replace="~{/common/header}"></th:block>
 
   <main class="review-write">
     <h2>리뷰 수정</h2>
@@ -33,14 +37,12 @@
       </div>
 
       <!-- 제목 -->
-      <input type="text" id="titleInput" name="boardTitle"
-             th:value="${board.boardTitle}"
-             placeholder="제목을 입력해주세요." maxlength="100" required />
+      <input type="text" id="titleInput" name="boardTitle" th:value="${board.boardTitle}" placeholder="제목을 입력해주세요."
+        maxlength="100" required />
 
       <!-- 내용 -->
-      <textarea id="contentInput" name="boardContent"
-                minlength="10" maxlength="500" required
-                th:text="${board.boardContent}"></textarea>
+      <textarea id="contentInput" name="boardContent" minlength="10" maxlength="500" required
+        th:text="${board.boardContent}"></textarea>
 
       <div class="char-count">
         <span id="charCount" th:text="${#strings.length(board.boardContent)}">0</span> / 500자
@@ -50,10 +52,8 @@
       <div class="photo-section" th:if="${board.imageList != null and !board.imageList.isEmpty()}">
         <p class="photo-title">기존 등록된 사진</p>
         <div class="photo-preview">
-          <img th:each="img : ${board.imageList}"
-               th:src="@{${img.imgPath} + ${img.imgRename}}"
-               th:alt="${img.imgOrig}"
-               class="preview-image"/>
+          <img th:each="img : ${board.imageList}" th:src="@{${img.imgPath} + ${img.imgRename}}" th:alt="${img.imgOrig}"
+            class="preview-image" />
         </div>
       </div>
 
@@ -69,7 +69,7 @@
       <div class="btn-area">
         <button type="submit" id="saveBtn">수정 완료</button>
         <button type="button" class="cancel-btn"
-                th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">
+          th:onclick="|location.href='@{/reviewboard/{code}(code=${board.communityCode})}'|">
           취소
         </button>
       </div>
@@ -157,4 +157,5 @@
     });
   </script>
 </body>
+
 </html>

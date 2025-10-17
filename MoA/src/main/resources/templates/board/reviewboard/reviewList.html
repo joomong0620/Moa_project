@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>리뷰게시판</title>
   <link th:href="@{/css/main-style.css}" rel="stylesheet" />
   <link th:href="@{/css/board/reviewboard/reviewList.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
+
 </head>
 
 <body>
-  <div th:replace="common/header :: header"></div>
+  <th:block th:replace="~{/common/header}"></th:block>
 
   <main th:with="pagination=${map.pagination}, boardList=${map.boardList}">
     <section class="review-section">
       <div class="review-header">
         <h2>리뷰게시판</h2>
         <button class="write-btn"
-                th:onclick="|location.href='@{/reviewboard/write/{boardCode}(boardCode=${boardCode})}'|">
+          th:onclick="|location.href='@{/reviewboard/write/{boardCode}(boardCode=${boardCode})}'|">
           글 작성
         </button>
       </div>
@@ -38,16 +42,16 @@
 
           <!-- 리뷰 목록 반복 출력 -->
           <tr th:each="board : ${boardList}" class="review-row"
-              th:onclick="|location.href='@{/reviewboard/{code}/{no}(code=${board.communityCode}, no=${board.boardNo}, cp=${pagination.currentPage})}'|">
+            th:onclick="|location.href='@{/reviewboard/{code}/{no}(code=${board.communityCode}, no=${board.boardNo}, cp=${pagination.currentPage})}'|">
             <td>
               <img th:if="${board.thumbnailPath}" th:src="${board.thumbnailPath}" alt="리뷰 이미지" class="thumb-img" />
-              <img th:unless="${board.thumbnailPath}" th:src="@{/images/default-thumb.jpg}" alt="기본 이미지" class="thumb-img" />
+              <img th:unless="${board.thumbnailPath}" th:src="@{/images/default-thumb.jpg}" alt="기본 이미지"
+                class="thumb-img" />
             </td>
             <td th:text="${board.categoryName}">전시</td>
             <td th:text="${board.boardContent}">리뷰 내용</td>
             <td>
-              <span class="stars" 
-                    th:text="${'★'.repeat(board.star)} + ${'☆'.repeat(5 - board.star)}">
+              <span class="stars" th:text="${'★'.repeat(board.star)} + ${'☆'.repeat(5 - board.star)}">
               </span>
             </td>
           </tr>
@@ -85,4 +89,5 @@
 
   <div th:replace="common/footer :: footer"></div>
 </body>
+
 </html>

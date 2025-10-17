@@ -283,8 +283,19 @@
 
 
         const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인한 회원 번호";
-    </script>
+        // ==> session.loginMember 의 값이 없으면 오류나니까 ?. 으로 객체가 null인지 탐색(확인)해서 null이 아닐 경우 필드 접근
+        
+        const memberNickname = /*[[${session.loginMember?.memberNickname}]]*/ "로그인한 회원 닉네임";
 
+        // ==> 만약 로그인한 회원의 번호가 없다면 빈칸을 집어넣겠다
+        if (loginMemberNo == null) loginMemberNo = "";
+
+        const boardNo = /*[[${board.boardNo}]]*/ '게시글 번호';
+
+
+        const boardTitle = /*[[${board.boardTitle}]]*/ '게시글 제목';
+    </script>
+    <script th:src="@{/js/board/performance/pm-detail.js}"></script>
 </body>
 
 </html>

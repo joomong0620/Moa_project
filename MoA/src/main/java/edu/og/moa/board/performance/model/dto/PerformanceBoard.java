@@ -13,8 +13,9 @@ public class PerformanceBoard {
 	
 	private int boardNo;
 	private String boardTitle;
-	private String boardContent;
 	private int boardCount;
+	// 작성일
+	private String bCreateDate;
 	
 	// 공연
 	private String pmStartTime;
@@ -48,5 +49,6 @@ public class PerformanceBoard {
 	
 	private List<PerformanceComment> pmCommentList;
 	
-	
+	private String mt20id;
+	private String mt10id;
 }

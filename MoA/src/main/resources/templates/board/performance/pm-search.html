@@ -7,8 +7,8 @@
     <title>Document</title>
 
     <link th:href="@{/css/main-style.css}" rel="stylesheet" />
-
     <link rel="stylesheet" th:href="@{/css/board/performance/pm-search-style.css}">
+    <link rel="stylesheet" th:href="@{/css/board/performance/performance-type-list-style.css}">
 </head>
 
 <body>
@@ -73,13 +73,13 @@
                         <h3>지역</h3>
                         <div class="filter-options">
                             <label><input type="checkbox" data-value="all" checked> 전체</label>
-                            <label><input type="checkbox" data-value="서울"> 서울</label>
-                            <label><input type="checkbox" data-value="부산"> 부산</label>
-                            <label><input type="checkbox" data-value="대구"> 대구</label>
-                            <label><input type="checkbox" data-value="인천"> 인천</label>
-                            <label><input type="checkbox" data-value="광주"> 광주</label>
-                            <label><input type="checkbox" data-value="대전"> 대전</label>
-                            <label><input type="checkbox" data-value="울산"> 울산</label>
+                            <label><input type="checkbox" data-value="서울특별시"> 서울</label>
+                            <label><input type="checkbox" data-value="부산광역시"> 부산</label>
+                            <label><input type="checkbox" data-value="대구광역시"> 대구</label>
+                            <label><input type="checkbox" data-value="인천광역시"> 인천</label>
+                            <label><input type="checkbox" data-value="광주광역시"> 광주</label>
+                            <label><input type="checkbox" data-value="대전광역시"> 대전</label>
+                            <label><input type="checkbox" data-value="울산광역시"> 울산</label>
                             <label><input type="checkbox" data-value="경기도"> 경기도</label>
                             <label><input type="checkbox" data-value="강원도"> 강원도</label>
                             <label><input type="checkbox" data-value="충청북도"> 충청북도</label>
@@ -100,7 +100,8 @@
         </div>
 
 
-
+        <!-- 목록 결과 화면 -->
+        <th:block th:replace="~{board/performance/pm-list-result}"></th:block>
 
 
 

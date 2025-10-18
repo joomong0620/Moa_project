@@ -1,5 +1,4 @@
 /* section, div{ border : 1px solid black;}  */
-/* 요소 영역 확인용 */
 
 /* === 전체 초기화 및 공통 설정 === */
 *,
@@ -24,14 +23,23 @@ html, body {
     flex-direction: column;
     min-height: 100vh;
     background-color: #f9f9f9;
+
 }
 
 .main-header,
 .main-nav,
 .main-footer {
     height: 60px;
-    background-color: #ddd;
+    background-color: white;
     width: 100%;
+    color: white;
+}
+
+.main-header-below-spaceholder{
+    height: 210px;
+    background-color: white;
+    width: 100%;
+    color: white;    
 }
 
 /* === 본문 전체 === */
@@ -76,7 +84,7 @@ html, body {
 
 }
 .content-top-container > div {
-    flex: 0 1 auto; /* 각 항목이 동일한 너비로 배치, inline처럼 요소 콘텐츠영역만 차지 */
+    flex: 0 1 auto; 
     text-align: left; 
     padding: 5px; 
     box-sizing: border-box;
@@ -138,7 +146,8 @@ html, body {
 
 
 .section-container{
-    background-color: #ddd;
+
+    background: linear-gradient(to bottom, #d9d9d9, white);
 } 
 
 .section-container.left {
@@ -236,9 +245,6 @@ html, body {
 
 }
 
-
-
-
 .sec-right-div2.btn-wrapper{
     margin-top: 20px;
 
@@ -258,15 +264,15 @@ html, body {
     font-weight: bold;
     border: 0;
 
-    background-color: #455ba8;
+    background-color: #27374d;
     color : white;
     cursor: pointer;
 }
 
 #purchaseBtn:hover{
     background-color: white;
-    color : #455ba8;
-    border: 2px solid #455ba8;
+    color : #27374d;
+    border: 2px solid #27374d;
 }
 
 #chatbotBtn{
@@ -275,15 +281,18 @@ html, body {
     font-weight: bold;
     border: 0;
 
-    background-color: #455ba8;
+    background-color: #27374d;
     color : white;
     cursor: pointer;
+
+    /* 헤더와 공간 두기 */
+    margin: 60px 0 0 0;
 }
 
 #chatbotBtn:hover{
     background-color: white;
-    color : #455ba8;
-    border: 2px solid #455ba8;
+    color : #27374d;
+    border: 2px solid #27374d;
 }
 
 
@@ -534,7 +543,7 @@ a:hover {
     height: 30px;
     font-weight: bold;
     border: 0;
-    background-color: #455ba8;
+    background-color: #27374d;
     color : white;
 
     cursor: pointer;
@@ -542,6 +551,14 @@ a:hover {
 
 .content-bottom-btn-wrapper button:hover{
     background-color: white;
-    color : #455ba8;
-    border: 2px solid #455ba8;
+    color : #27374d;
+    border: 2px solid #27374d;
+}
+
+.exhibition-info.charge{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+
 }

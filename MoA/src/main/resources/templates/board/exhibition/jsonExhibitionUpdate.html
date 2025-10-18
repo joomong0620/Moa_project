@@ -13,7 +13,7 @@
 
 </head>
 <body>
-    <!-- [ [${exhibition}] ]  ok -->
+
     <div id="page-wrapper">
 
         <main>
@@ -242,13 +242,13 @@
         const loginMemberNo = /*[[${session.loginMember.memberNo}]]*/ "로그인한 회원 번호"; //
 
         const memberNickname = /*[[${session.loginMember.memberNickname}]]*/ "로그인한 회원 닉네임"; //
-        if(loginMemberNo == null) loginMemberNo = ""; // 들어가는 값이 없으면 대신 빈칸 (아래 exhibitionDetail.js ""로 받아서 처리)
+        if(loginMemberNo == null) loginMemberNo = ""; // 들어가는 값이 없으면 대신 빈칸 
 
         const exhibitNo =  /*[[${exhibition.exhibitNo}]]*/ "게시글 번호";
         
         const exhibitTitle =  /*[[${exhibition.exhibitTitle}]]*/ "게시글 제목";
         
-        const exhibitionCode =  /*[[${exhibitionCode}]]*/ "게시글 코드"; // exhibitionCode === boardCode === communityCode 우리경우
+        const exhibitionCode =  /*[[${exhibitionCode}]]*/ "게시글 코드"; 
 
 
     </script>

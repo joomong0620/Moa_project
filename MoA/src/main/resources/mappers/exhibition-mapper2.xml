@@ -45,10 +45,6 @@
 	
 	
 	<!-- Like DTO에 대한 resultMap -->
-	<!-- 2개 이상의 <id> 태그를 쓰는 경우, 복합키(composite key) 로 해석.
-		복합키는 2개 이상의 컬럼을 합쳐서 하나의 고유한 식별자로 사용하는 경우를 말함.
-		예: boardNo + memberNo 조합이 테이블 내에서 유일하다면, 이 둘을 복합키로 간주
-	-->
 	<resultMap type="LikeDB" id="like_rm">
 		<id property="boardNo" column="BOARD_NO" />
 		<id property="memberNo" column="MEMBER_NO" />
@@ -137,8 +133,7 @@
 	
 	
 	
-	<!-- 게시글 삭제 by update BOARD_DEL_FL--> <!-- 전달받은 파라미터 타입은 생략가능: b/c DML항상 int반환, 오히려 쓰면 에러 -->
-	<!-- Exhibition 글 삭제는 BOARD DB에서 -->
+	<!-- 게시글 삭제 by update BOARD_DEL_FL--> 
 	<update id="exhibitionDelete">
 		UPDATE BOARD SET
 		BOARD_DEL_FL = 'Y'
@@ -148,7 +143,7 @@
 	
 	
 	<!-- 게시글 수정 -->
-	<update id="updateBoardDB"> <!-- 전달받은 파라미터 타입은 생략가능: b/c DML -->
+	<update id="updateBoardDB"> 
 		UPDATE BOARD SET
 		BOARD_TITLE = #{boardTitle},
 		BOARD_CONTENT =	#{boardContent},
@@ -158,24 +153,20 @@
 	</update>
 	
 	
-	<!-- 이미지 수정: 전시의 경우는 전시포스터 one*only가정하므로 deleteList불필요:
-		따라서, .checkImage(deleteMap), .imageDelete(deleteMap), .imageInsert(img) 안해도 됨
-	  -->
-	<update id="updateBoardImgDB">
-		UPDATE BOARD_IMG SET
-		IMG_PATH = #{imgPath},
-		IMG_RENAME =#{imgRename},
-		IMG_ORIGINAL = #{imgOrig}
-		WHERE BOARD_NO = #{boardNo}	
-		AND IMG_ORDER = #{imageOrder}
-	</update>
-	<!--  이미 이미지 있는곳에 update -> update; 이미지 없는 곳에 update -> insert해야함 -->	
+	<!--  이미지 리스트 일때 update: 이미지하나 전시의 경우 working-->	
+	<update id="updateBoardImgDBList">
+	    <foreach collection="uploadList" item="img" separator=";">
+	        UPDATE BOARD_IMG SET
+	            IMG_PATH = #{img.imgPath},
+	            IMG_RENAME = #{img.imgRename},
+	            IMG_ORIG = #{img.imgOrig}
+	        WHERE BOARD_NO = #{img.boardNo}
+	          AND IMG_ORDER = #{img.imgOrder}
+	    </foreach>
+	</update>	
 	
 		
-	<!-- 장르 수정:
-		GENRE 테이블 조회 (genreName 을 키값으로)해서 있으면 그 장르번호로 genreName update(여기선 단순반복이나, 나중위해), 
-		없으면 그 장르번호로 genreName insert; 각경우 실패시 사용자 에러생성.
-	 -->
+	<!-- 장르 GENRE 수정:	 -->
 	<update id="updateGenreDB">
 		UPDATE GENRE SET
         GENRE_NAME = #{genreName}
@@ -204,8 +195,8 @@
         WHERE BOARD_NO = #{boardNo}
 	</update>		
 
-	<!-- AUTHOR (AuthorDB) 수정:  -->
-	<update id="updateAuthorDB" parameterType="java.util.List">
+	<!-- AUTHOR (AuthorDB) 수정(List:NG):  -->
+	<update id="updateAuthorDBList" parameterType="java.util.List">
 	    <foreach collection="list" item="author" separator=";">
 	        UPDATE AUTHOR
 	        SET AUTHOR_NAME = #{author.authorName}
@@ -213,12 +204,17 @@
 	    </foreach>
 	</update>
 	
-
+	<!-- AUTHOR (AuthorDB) 수정(single Author):  -->
+	<update id="updateAuthorDB" parameterType="AuthorDB">
+	    UPDATE AUTHOR SET AUTHOR_NAME = #{authorName}
+	    WHERE BOARD_NO = #{boardNo}
+	</update>
+	
 	<!-- CONTRIBUTOR (ContributorDB) 수정:  -->
 	<update id="updateContributorDB">
 		UPDATE "CONTRIBUTOR" SET 
         EXHIBIT_HOST = #{exhibitHost}, 
-        EXHIBIT_SUPPORT = #{exhibitSupport}, 
+        EXHIBIT_SUPPORT = #{exhibitSupport}
         WHERE BOARD_NO = #{boardNo}
 	</update>	
 	

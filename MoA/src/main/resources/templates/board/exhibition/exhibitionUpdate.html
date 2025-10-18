@@ -8,33 +8,22 @@
     <title th:text="${exhibitionName}">게시판 이름</title>
 
     <link rel="stylesheet" th:href="@{/css/board/exhibition/exhibitionUpdate-style.css}">
+    <link rel="stylesheet" th:href="@{/css/main-style.css}">
 
     <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
-    <!-- [ [${exhibition}] ]  ok -->
+    <div th:replace="common/header :: header"></div>
     <div id="page-wrapper">
 
         <main>
-
-            <!-- 헤더 -->
-            <header class="main-header">header</header>
-            <!-- header.html 조각(fragment)을 얻어와서 추가하기 -->
-            <!-- <th:block th:replace="~{/common/header}">header.html</th:block> -->
-            
-            <!-- 네비케이션 -->
-            <nav class="main-nav"></nav>
-            <!--  ###################################################### -->
-
             <!-- 본문 -->
             <div class="content-wrapper"> 
                 <!-- 본문 상단 영역 -->
                 <div class="content-top">
                     <div class="content-top-container"></div>
                 </div>
-
-
 
                 <form th:action="@{update}" method="POST" class="board-write" 
                     enctype="multipart/form-data" id="boardWriteFrm">  
@@ -56,14 +45,13 @@
                                         <div class="image-wrapper bg-color">                                            
                                             <!-- 이미지가 있을 경우: 우선 thumbnail이미지가 있는 경우 => 전시의 경우는 이거 무시 -->
                                             <th:block th:if="${#lists.size(exhibition.imageList) > 0 }">
-                                                <th:block th:if="${thumbnail}">
+                                                <th:block th:if="${exhibition.thumbnail}">
                                                     <h3 class="required">썸네일</h3>
                                                     <div class="img-box">
                                                         <div class="exhibitionImg thumbnail">
                                                                     <span class="delete-image">&times;</span>    
                                                                     <label for="img0">
-                                                                        <!-- <img class="preview" th:src="|${thumbnail.imagePath}${thumbnail.imageOriginal}|"> -->
-                                                                        <img class="preview" th:src="|${thumbnail.imgPath}${thumbnail.imgOrig}|">
+                                                                        <img class="preview" th:src="|${exhibition.thumbnail}|">
                                                                     </label>
                                                                     <input type="file" name="images" class="inputImage" id="img0" accept="image/*">
                                                         </div>
@@ -71,26 +59,10 @@
                                                 </th:block>
                                             </th:block>
                                 
-                                            <!-- 업로드 이미지가 있는 경우: exhibition의 경우 일단 하나만 추가해보자 -->
-                                            <!-- start값은 controller에서 전달받음? (전시의 경우 start = 1 이어함: 포스터 필수 & imgOrder=0) -->
-                                            <!-- <th:block c:if="${#lists.size(exhibition.imageList) >= start}">  썸네일 없는 경우 -->
+                                            <!-- 업로드 이미지가 있는 경우: exhibition의 경우 not used -->
                                             <th:block th:if="${#lists.size(exhibition.imageList) >= start}"> <!-- 썸네일 없는 경우 -->
                                                 <!-- 썸네일은 들어오면 않된다. -->
                                                 <!-- 업로드 이미지 영역 -->
-                                                <h3 class="required">업로드 이미지</h3>
-                                                <div class="img-box">
-                                                    <th:block th:each="i : ${#numbers.sequence(0, #lists.size(exhibition.imageList)-1, 1)}">
-                                                        <!-- <div class="exhibitionImg upload" th:with="path=|${exhibition.imageList[i].imagePath}${exhibition.imageList[i].imageOriginal}|">  -->
-                                                        <div class="exhibitionImg upload" th:with="path=|${exhibition.imageList[i].imgPath}${exhibition.imageList[i].imgOrig}|"> 
-                                                            <!-- start=0, i=0 -->
-                                                            <span class="delete-image-upload">&times;</span>
-                                                            <label for="img1">
-                                                                <img class="preview" th:src="${path}">
-                                                            </label>
-                                                            <input type="file" name="images" class="inputImage" id="img1" accept="image/*">
-                                                        </div>
-                                                    </th:block>
-                                                </div>
                                             </th:block>
                                         </div>
                                     </div>
@@ -192,10 +164,10 @@
                                         </div>
                                         <!-- 입장료 -->
                                         <div class="exhibition-info charge">
-                                            <label for="exhibitCharge" class="not-required">입장료</label>
+                                            <label for="exhibitCharge" class="not-required">입장료(원)</label>
                                             <input type="text" name="exhibitCharge" id="exhibitCharge" class="input-text-size"
                                                 style="height: 35px; width: 320px"
-                                                placeholder="입장료:" th:value="*{exhibitCharge}">
+                                                placeholder="입장료(원,숫자입력):" th:value="*{exhibitCharge}">
                                             <!-- <div>원</div> -->
                                         </div>
 
@@ -215,10 +187,10 @@
     
                             <th:block th:if="${session.loginMember?.memberNo == exhibition.memberNo}">
                                 <div class="exhibition-detail-btn-updateComplete">
-                                    <button id="updateCompleteBtn">수정완료</button>
+                                    <button type="submit" id="updateCompleteBtn">수정완료</button>
                                 </div>
                                 <div class="exhibition-detail-btn-updateCancel">
-                                    <button id="updateCancelBtn">취소</button>
+                                    <button type="button" id="updateCancelBtn">취소</button>
                                 </div>    
                                 <!-- 취소를 '목록으로' 클릭 또는 이전페이지로 -->
                             </th:block>
@@ -240,38 +212,34 @@
 
     </div>
 
-    <footer class="main-footer">footer</footer>
     <!-- footer.html 추가 -->
-    <!-- <th:block th:replace="~{common/footer}">footer.html</th:block> -->
+    <div th:replace="common/footer :: footer"></div>
 
-
-    <script th:inline="javascript"> // exhibitionDetail.js처럼 JS에서 사용할 전역 변수들을 선언
+    <script th:inline="javascript"> //  전역 변수들
 
         const loginMemberNo = /*[[${session.loginMember.memberNo}]]*/ "로그인한 회원 번호"; //
 
-        const memberNickname = /*[[${session.loginMember.memberNickname}]]*/ "로그인한 회원 닉네임"; //
-        if(loginMemberNo == null) loginMemberNo = ""; // 들어가는 값이 없으면 대신 빈칸 (아래 exhibitionDetail.js ""로 받아서 처리)
+        const memberNickname = /*[[${session.loginMember.memberNickname}] ]*/ "로그인한 회원 닉네임"; //
+        if(loginMemberNo == null) loginMemberNo = ""; // 들어가는 값이 없으면 대신 빈칸
 
         const exhibitNo =  /*[[${exhibition.exhibitNo}]]*/ "게시글 번호";
         
-        const exhibitTitle =  /*[[${exhibition.exhibitTitle}]]*/ "게시글 제목";
-        
-        const communityCode =  /*[[${communityCode}]]*/ "게시글 코드"; // exhibitionCode === boardCode === communityCode 우리경우
+        const communityCode =  /*[[${communityCode}]]*/ "게시글 코드"; 
 
 
     </script>
 
     <script th:inline="javascript">
-        // 타임리프로 얻어온 자바의 자료형을 JS 자료형으로 변환
+        //타임리프로 얻어온 자바의 자료형을 JS 자료형으로 변환
 
-        // Natural Template
-        //const imageList = /*[ [${exhibition.imageList}] ]*/ [];    // "자료형" 배열 [] , 설명에서 배열로 
-                                                            // ex) 0, 3, 4 번째 이미지 
-        //const previewList = document.querySelectorAll("img.preview");
-        //
-        //for (let img of imageList) {
-        //    previewList[img.imageOrder].src = img.imagePath + img.imageOriginal; // imageOrder: 인덱스로 활용 // imageOriginal, imagePath
-        //}
+        //Natural Template
+        const imageList = /*[[${exhibition.imageList}]]*/ [];    // "자료형" 배열 [] , 설명에서 배열로 
+                                                                 // ex) 0, 3, 4 번째 이미지 
+        const previewList = document.querySelectorAll("img.preview");
+        
+        for (let img of imageList) {
+           previewList[img.imgOrder].src = img.imgPath + img.imgOrig; // imageOrder: 인덱스로 활용 // imageOriginal, imagePath
+        }
     </script>
 
 

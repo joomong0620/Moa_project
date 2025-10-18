@@ -19,43 +19,32 @@
 		<result property="memberTel" column="MEMBER_TEL" />
 		<result property="memberEmail" column="MEMBER_EMAIL" />
 		<result property="profileImage" column="PROFILE_IMG" />
-		<result property="thumbnail" column="THUMBNAIL" />		<!-- column="THUMBNAIL"은 sql 조회했을때 만들어준 것 별칭 -->
+		<result property="thumbnail" column="THUMBNAIL" />		
 												
 		<result property="exhibitTitle" column="BOARD_TITLE" />
 		<result property="exhibitCreateDate" column="B_CREATE_DATE" />
 		<result property="exhibitContent" column="BOARD_CONTENT" />
 		
-		<result property="exhibitImgObject" column="IMG_OBJECT" />	<!-- column="IMG_OBJECT"은 sql 조회했을때 만들어준 것 별칭 -->		
+		<result property="exhibitImgObject" column="IMG_OBJECT" />			
 		
 		<result property="exhibitSubTitle" column="EXHIBIT_SUB_TITLE" />
 		<result property="exhibitDate" column="EXHIBIT_DATE" />
 		<result property="exhibitLocation" column="EXHIBIT_SITE" />
 		
-		<result property="exhibitGenre" column="EXHIBIT_GENRE" /> <!-- column="GENRE_NAME"은 GENRE join 조회 결과 별칭 -->	
+		<result property="exhibitGenre" column="EXHIBIT_GENRE" /> 	
 		<result property="exhibitContact" column="EXHIBIT_CONTACT" />
 		<result property="exhibitAudience" column="EXHIBIT_AUDIENCE" />
 		<result property="exhibitCharge" column="EXHIBIT_CHARGE" />
 		
-		<result property="exhibitAuthor" column="AUTHOR_NAMES" /> <!-- column="AUTHOR_NAME"은 AUTHOR join 조회 결과 별칭 -->	
+		<result property="exhibitAuthor" column="AUTHOR_NAMES" /> 	
 		
-		<result property="exhibitInstitution" column="EXHIBIT_INSTITUTION" /> <!-- column="EXHIBIT_INST_NAME"은 INSTITUTUION join 조회 결과 별칭 -->	
+		<result property="exhibitInstitution" column="EXHIBIT_INSTITUTION" /> 	
 		
-		<result property="exhibitContributor" column="HOST_SUPPORT" />	<!-- column="HOST_SUPPORT"은 CONTRIBUTOR join 조회 결과 별칭 -->		
+		<result property="exhibitContributor" column="HOST_SUPPORT" />			
 		
 		<collection property="imageList" select="selectImageList"
 			column="BOARD_NO" javaType="java.util.ArrayList" ofType="BoardImgDB" > </collection>
-			<!-- // DAO가 아니라 아래에 있는 <select id="selectImageList" resultMap="boardImage_rm">에서 
-			DB조회 서비스 호출한다. -->
-			<!-- column="BOARD_NO" ==> 아래에 있는 WHERE BOARD_NO = ${boardNo} 를 의미(조회 결과 
-			중 지정된 컬럼의 값), 따라서 resultMap의 DB 컬럼명과 다른의미로 구분할것 -->
 
-
-		<!--<collection property="commentList"
-			select="selectCommentList" column="BOARD_NO"
-			javaType="java.util.ArrayList" ofType="Comment" /> -->
-
-		<!--<collection property="authorList" select="selectAuthorList"
-			column="BOARD_NO" javaType="java.util.ArrayList" ofType="AuthorDB" > </collection>		-->		
 				
 	</resultMap>
 
@@ -111,7 +100,6 @@
 		               ELSE TO_CHAR(B.B_CREATE_DATE, 'YYYY-MM-DD')
 		            END B_CREATE_DATE,
 		            ]]>
-		<!-- (SELECT COUNT(*) FROM "COMMENT" C WHERE C.BOARD_NO = B.BOARD_NO AND COMMENT_DEL_FL = 'N') COMMENT_COUNT, : 전시게시판은 comment없음-->
 		(SELECT COUNT(*) FROM "LIKE" L	WHERE L.BOARD_NO = B.BOARD_NO) LIKE_COUNT,
 		(SELECT IMG_PATH || IMG_ORIG FROM BOARD_IMG I WHERE I.BOARD_NO = B.BOARD_NO AND IMG_ORDER = 0) THUMBNAIL
 
@@ -197,7 +185,7 @@
 	<!-- 조회수 증가 -->
 	<update id="updateReadCount">
 		UPDATE BOARD SET
-		READ_COUNT = READ_COUNT + 1
+		BOARD_COUNT = BOARD_COUNT + 1
 		WHERE
 		BOARD_NO = #{boardNo}
 	</update>

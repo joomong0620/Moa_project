@@ -6,6 +6,9 @@
     width: 100%;
     min-height: 100vh;
     background: #f9f9f9;
+
+    /* 헤더와 공간 두기 */
+    margin-top: 80px;
 }
 
 /* 헤더, 네비게이션, 푸터 */
@@ -15,6 +18,13 @@
     width: 100%;
     height: 60px;
     background-color: #e0e0e0;
+}
+
+.main-header-below-spaceholder{
+    height: 210px;
+    background-color: white;
+    width: 100%;
+    color: white;    
 }
 
 /* 본문 전체 */
@@ -44,7 +54,8 @@
 /* 하단 영역의 서브 영역들 */
 #content-bottom > div {
     min-height: 50px;
-    background-color: #f0f0f0;
+    /* background-color: #f0f0f0; */
+    background-color: white;
 }
 
 
@@ -77,7 +88,6 @@ a:hover {
 
 .exhibition-list{
     width: 1000px;
-    /* height: 800px; */
     margin : 50px auto;
 }
 
@@ -98,7 +108,7 @@ a:hover {
     border-collapse: collapse;
 }
 
-.list-table > thead{ background-color: #455ba8; color: white;}
+.list-table > thead{ background-color: #27374d; color: white;}
 
 
 .list-table tr{
@@ -142,12 +152,9 @@ a:hover {
     height: 40px;   
     font-weight: bold;
 
-    /* background-color: white; */
-    background-color: #455ba8;
-    /* color: #455ba8; */
+    background-color: #27374d;
     color: white;
-    /* border: 2px solid #455ba8; */
-    border: 2px solid #455ba8;
+    border: 2px solid #27374d;
     border-radius: 5px;
 
     cursor: pointer;
@@ -155,11 +162,8 @@ a:hover {
 }
 .btn-area > button:hover{
     background-color: white;
-    /* background-color: #455ba8; */
-    color: #455ba8;
-    /* color: white; */
-    /* border-color: #455ba8; */
-    border-color: #455ba8;
+    color: #27374d;
+    border-color: #27374d;
 }
 
 
@@ -172,18 +176,6 @@ a:hover {
     justify-content: center;
     padding: 0;
 }
-
-/* .pagination li{
-    width: 20px;
-    margin: 0 5px;
-    text-align: center;
-}
-
-.pagination a{
-    display: block;
-    width: 100%;
-    height: 100%;
-} */
 
 /* Feat. KSY 2025/10/12 */
 .pagination li {
@@ -216,15 +208,11 @@ a:hover {
 
 .current{
     font-weight: bold;
-    background-color: #455ba8;
+    background-color: #27374d !important;
     border-radius: 50%;
     color: white !important;
     letter-spacing: 0 !important;
 }
-
-/* li.current{
-    border: 1px solid #455ba8;
-} */
 
 #exhibitionSearch{
     text-align: center;
@@ -258,7 +246,7 @@ a:hover {
     width: 100px;
 
     font-weight: bold;
-    background-color: #455ba8;
+    background-color: #27374d;
     border: none;
     color: white;
 
@@ -435,16 +423,19 @@ section > div {
     align-items: center;    
 }
 
-/*  for all present, future, past classes*/
-.card{
+.card-pyy {
     width: 100%;
-    display: block;
-    position: relative;
-}
+    height: 100%;
 
-/* .card-present-title{ */
-.card-title{
-    font-size: 2em;
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-pyy:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -517,7 +508,7 @@ section > div {
 .slider-thumbnail {
     flex: 0 1 auto; 
 }
-/* for Present, Future, Past */
+
 .slide-item {
     width: 100%;
     height: 100%;
@@ -533,7 +524,6 @@ section > div {
     overflow: hidden;
 }
 
-/* for Present, Future, Past */
 .slide-item img.slider-thumbnail {
     width: 100%;
     height: auto; /* 비율 유지 */
@@ -583,10 +573,9 @@ section > div {
     transform: translateY(-50%);
     z-index: 10;
     background-color: red;
-    /* background-color: red; */
+
     color: white;
     border: none;
-    /* border: 2px solid green; */
     padding: 10px;
     cursor: pointer;
 }
@@ -597,10 +586,9 @@ section > div {
     transform: translateY(-50%);
     z-index: 10;
     background-color: purple;
-    /* background-color: red; */
     color: white;
     border: none;
-    /* border: 2px solid green; */
+
     padding: 10px;
     cursor: pointer;
 }
@@ -611,10 +599,9 @@ section > div {
     transform: translateY(-50%);
     z-index: 10;
     background-color: blue;
-    /* background-color: red; */
+
     color: white;
     border: none;
-    /* border: 2px solid green; */
     padding: 10px;
     cursor: pointer;
 }

@@ -1,16 +1,10 @@
 package edu.og.moa.board.exhibition.model.exception;
 
-//사용자 정의 예외 만들기
-//-> Exception 관련 클래스를 상속 받으면 된다.
-
-//checked exception   : 예외 처리 필수
-//unchecked exception : 예외 처리 선택
-
-//tip. unchecked exception을 만들고 싶은 경우 : RuntimeException 상속 받아서 구현
+//사용자 정의 예외 
 public class ContributorInsertException extends RuntimeException{
 	
 	public ContributorInsertException() {
-		super("파일 업로드 중 예외 발생");
+		super("CONTRIBUTOR DB DML작업 중 예외 발생");
 	}
 	
 	public ContributorInsertException(String message) {

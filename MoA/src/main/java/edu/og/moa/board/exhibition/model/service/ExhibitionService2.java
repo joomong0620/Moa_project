@@ -25,7 +25,6 @@ public interface ExhibitionService2 {
 	 * @param filePath
 	 * @return boardNo // insert하는 보드넘버 가져오겠다 (boardNo === exhibitNo )
 	 */
-	//int exhibtionInsert(Exhibition exhibition, List<MultipartFile> images, String webPath, String filePath) throws IllegalStateException, IOException;
 	int exhibtionInsert(Exhibition exhibition, List<MultipartFile> images) throws IllegalStateException, IOException;
 
 

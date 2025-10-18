@@ -17,23 +17,11 @@ public interface ExhibitionService {
 	 */
 	Map<String, Object> selectExhibitionList(int communityCode, int cp);
 
-	
 	/** 전시게시글 상세조회
 	 * @param map
 	 * @return result
 	 */
 	Exhibition selectExhibition(Map<String, Object> map);
-	
-	
-//	/** DB 이미지 조회
-//	 * @return
-//	 */
-//	List<BoardImgDB> selectImageList(); // Exhibition DTO select시에 그안에서 implicit하게 수행되므로 여기서 선언하면 안됨
-//	
-//	/** AUTHOR DB 조회
-//	 * @return
-//	 */
-//	List<AuthorDB> selectAuthorList(); // Exhibition DTO select시에 그안에서 implicit하게 수행되므로 여기서 선언하면 안됨
 	
 	/** DB 이미지(파일) 목록 조회
 	 * @return

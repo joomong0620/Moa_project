@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <th:block th:replace="~{/common/header}"></th:block>
+  <th:block th:replace="~{common/header :: header}"></th:block>
 
   <main th:with="pagination=${map.pagination}, boardList=${map.boardList}">
     <section class="review-section">
@@ -88,6 +88,7 @@
   </main>
 
   <div th:replace="common/footer :: footer"></div>
+  <script th:src="@{/js/header.js}"></script>
 </body>
 
 </html>

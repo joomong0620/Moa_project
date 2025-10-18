@@ -10,7 +10,7 @@
 
   <body th:data-board-no="${board.boardNo}"
         th:data-login-member-no="${session.loginMember != null ? session.loginMember.memberNo : 0}">
-    <div th:replace="~{common/header :: header}"></div>
+      <th:block th:replace="~{common/header :: header}"></th:block>
 
     <main class="review-detail">
       <h2 class="title">리뷰게시판</h2>
@@ -29,7 +29,7 @@
           </div>
 
           <div class="review-stats">
-            <img th:src="@{/images/user.svg}" alt="user" class="user-icon" />
+            <img th:src="@{/images/board/reviewboard/person.png}" alt="user" class="user-icon" />
             <span id="viewCount" th:text="${board.boardCount}">0</span>
           </div>
         </div>
@@ -37,7 +37,7 @@
         <div class="review-box">
           <div class="review-user">
             <img th:if="${board.profileImg != null}" th:src="@{${board.profileImg}}" alt="작성자" class="profile-img" />
-            <img th:if="${board.profileImg == null}" th:src="@{/images/default-user.png}" alt="작성자" class="profile-img" />
+            <img th:if="${board.profileImg == null}" th:src="@{/images/board/reviewboard/user.png}" alt="작성자" class="profile-img" />
 
             <div class="review-meta">
               <p class="username" id="username" th:text="${board.memberNickname + ' 님'}">작성자</p>

@@ -20,4 +20,6 @@ function loadReviewDetail(no) {
       document.getElementById("viewCount").textContent = data.boardCount;
     })
     .catch((err) => console.error(err));
+
+    
 }

@@ -615,7 +615,7 @@ public class JsonExhibitionController {
 
         if (total <= maxAuthors) {
             for (String name : names) {
-                result.add(new AuthorDB(0, name, boardNo));  
+                result.add(new AuthorDB(0, name, boardNo));  // authorNo는 DB에서 시퀀스처리
             }
         } else {
             for (int i = 0; i < maxAuthors - 1; i++) {

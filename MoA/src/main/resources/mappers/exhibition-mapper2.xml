@@ -195,7 +195,7 @@
         WHERE BOARD_NO = #{boardNo}
 	</update>		
 
-	<!-- AUTHOR (AuthorDB) 수정(List:NG):  -->
+	<!-- AUTHOR (AuthorDB) 수정: (List:NG):  -->
 	<update id="updateAuthorDBList" parameterType="java.util.List">
 	    <foreach collection="list" item="author" separator=";">
 	        UPDATE AUTHOR
@@ -204,10 +204,20 @@
 	    </foreach>
 	</update>
 	
+	
+	<!-- 특정 게시글  AuthorNo 조회: 명시적 select수행 -->
+   	<select id="selectAuthorNo" resultMap="author_rm">
+      SELECT AUTHOR_NO FROM "AUTHOR"
+      WHERE BOARD_NO = #{boardNo}
+      ORDER BY AUTHOR_NO 
+   	</select>
+   		
+	
 	<!-- AUTHOR (AuthorDB) 수정(single Author):  -->
 	<update id="updateAuthorDB" parameterType="AuthorDB">
 	    UPDATE AUTHOR SET AUTHOR_NAME = #{authorName}
 	    WHERE BOARD_NO = #{boardNo}
+	    AND AUTHOR_NO = #{authorNo}
 	</update>
 	
 	<!-- CONTRIBUTOR (ContributorDB) 수정:  -->

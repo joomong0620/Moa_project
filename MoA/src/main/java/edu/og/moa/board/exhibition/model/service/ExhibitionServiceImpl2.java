@@ -613,6 +613,10 @@ public class ExhibitionServiceImpl2 implements ExhibitionService2{
 		String separator = "\\s*,\\s*";  // 쉼표 기준 분리 + 공백 제거
 		int maxAuthors = 3;
 		
+		// AuthorNo 조회
+		List<Integer> authorNoList = new ArrayList<>();
+		authorNoList = mapper.selectAuthorNo(boardNo); // 시간부족으로 여기서 stop... (N1 > N2, N1 = N2, N1 < N2의 3경우따져야함)  
+		
 		// authorsString == null인 경우 처리 ==> authorList에는 한 아이템 & setAuthorName(null)
 		List<AuthorDB> authorList = new ArrayList<>();		
 		if (authorsString != null) {
@@ -620,6 +624,7 @@ public class ExhibitionServiceImpl2 implements ExhibitionService2{
 		} else {
 			author.setAuthorName(null);
 			author.setBoardNo(boardNo);
+			
 			authorList.add(author);
 		}
 		

@@ -17,6 +17,8 @@
     <!-- 전체를 감싸는 태그 -->
     <div id="page-wrapper">
       
+        <!-- [ [${map.exhibitionList}] ] ok -->
+
       <!-- main-태그 내부에서만 사용하는 변수 (전역변수 선언은 body태그 안에 선언) -->
       <main th:with="pagination=${map.pagination}, exhibitionList=${map.exhibitionList}, totalListCount = ${map.totalListCount}, exhibitionListCurrent=${map.exhibitionListCurrent},  exhibitionListFuture=${map.exhibitionListFuture}, exhibitionListPast=${map.exhibitionListPast}" >
 
@@ -118,9 +120,9 @@
     
                             <div id="table-list-exhibition">
                                 <!-- 검색한 안한 경우 -->
-                                <h3 th:unless="${param.query}" th:text='|전시 게시판 : 전체 목록|'></h3>                            
+                                <h3 th:unless="${param.query}" th:text='|전시 게시판 : 전체 목록 (총 ${totalListCount} 건)|'></h3>                            
                                 <!-- 검색한 경우 -->
-                                <h3 th:if="${param.query}" th:text='|전시 게시판 : "${param.query}"  검색 결과|'></h3>
+                                <h3 th:if="${param.query}" th:text='|전시 게시판 : "${param.query}"  검색 결과 (총 ${totalListCount} 건)|'></h3>
     
                                 <!-- Exhibition List -->
                                 <div class="list-table-wrapper">

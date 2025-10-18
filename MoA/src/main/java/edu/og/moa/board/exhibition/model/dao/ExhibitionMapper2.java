@@ -3,6 +3,7 @@ package edu.og.moa.board.exhibition.model.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import edu.og.moa.board.exhibition.model.dto.AuthorDB;
 import edu.og.moa.board.exhibition.model.dto.BoardDB;
@@ -79,7 +80,7 @@ public interface ExhibitionMapper2 {
 	 * @param uploadList
 	 * @return result (성공한 행의 갯수: 있으면 1, 없으면 0)
 	 */
-	public int updateBoardImgDB(List<BoardImgDB> uploadList);
+	public int updateBoardImgDBList(@Param("uploadList") List<BoardImgDB> uploadList);
 
 
 
@@ -115,13 +116,17 @@ public interface ExhibitionMapper2 {
 
 
 
-	/** AUTHOR(AuthorDB) 수정
+	/** AUTHOR(AuthorDB) 수정 (oracle에서 NG)
 	 * @param authorList
 	 * @return result (성공한 행의 갯수: 있으면 1, 없으면 0)
 	 */
-	public int updateAuthorDB(List<AuthorDB> authorList);
+	public int updateAuthorDBList(List<AuthorDB> authorList);
 
 
+	/**  AUTHOR(AuthorDB) 수정(한명씩)
+	 * @param oneAuthor result (성공한 행의 갯수: 있으면 1, 없으면 0)
+	 */
+	public int updateAuthorDB(AuthorDB oneAuthor);	
 
 
 
@@ -130,5 +135,14 @@ public interface ExhibitionMapper2 {
 	 * @return result (성공한 행의 갯수: 있으면 1, 없으면 0)
 	 */
 	public int updateContributorDB(ContributorDB contributor);
+
+
+
+
+
+
+
+
+
 	           	
 }

@@ -17,7 +17,6 @@
 </head>
 
 <body>
-    [[${exhibition}]] 
     <div th:replace="common/header :: header"></div>
     <div id="page-wrapper">
 
@@ -46,8 +45,7 @@
                                 <!-- 프로필 이미지가 없는 경우 기본 이미지 -->
                                 <img th:unless="*{profileImage}" th:src="@{/images/board/exhibition/member/user.png}">
                                 <!-- 프로필 이미지가 있는 경우 회원 프로필이미지에서 꺼내오기 -->
-                                <img th:if="*{profileImage}" th:src="@{*{profileImage}}">  <!-- 위에서  th:object="${exhibition} 으로 선언한 exhibition변수에서 가져온다 -->
-                                <!-- [ [*{profileImage}] ]   ok -->
+                                <img th:if="*{profileImage}" th:src="@{*{profileImage}}">  
 
                                 <span class="exhibition-detail-writer" th:text="*{memberNickname}">
                                     회원닉네임
@@ -55,7 +53,6 @@
                                 <!-- 좋아요 하트 -->
                                 <span class="exhibition-detail-like-area">
                                     <span class="heart-wrapper">
-                                        <!-- <i class="fa-heart" th:classappend="${likeCheck} ? 'fa-solid' : 'fa-regular'" id="exhibitionLike"></i>                                  -->
                                         <i class="fa-heart" th:classappend="*{likeCount} ? fa-solid : fa-regular" id="exhibitionLike"></i>                                 
                                     </span>
                                     <span  class="like-count"  th:text="*{likeCount}">좋아요 수</span>
@@ -69,27 +66,24 @@
                                     <div class="image-wrapper"> 
                                         <!-- 이미지가 있을 경우: 우선 thumbnail이미지가 있는 경우 => 전시의 경우는 이거 무시 -->
                                         <th:block th:if="${#lists.size(exhibition.imageList) > 0 }">
+                                            <!-- thumbnail = exhibition.getImageList().get(0); // 넘어온 thumbnail은 BoardImage 객체임 -->
                                             <th:block th:if="${thumbnail}">
-                                                <!-- [ [|${thumbnail.imgPath}${thumbnail.imgOrig}|] ] -->
-
                                                 <h5>썸네일</h5>
                                                 <div class="img-box">
                                                     <div class="exhibitionImg thumbnail">
                                                         <img th:src="|${thumbnail.imgPath}${thumbnail.imgOrig}|">
                                                         <a th:href="|${thumbnail.imgPath}${thumbnail.imgOrig}|" 
                                                             th:download="${thumbnail.imgOrig}">포스터 이미지 저장</a> 
-                                                                <!-- 다운로드할때 이미지 원본명으로 받자  -->
                                                     </div>
                                                 </div>
                                             </th:block>
                                         </th:block>
                             
-                                        <!--<th:block c:if="${#lists.size(exhibition.imageList) >= start}">  썸네일 없는 경우 -->
                                         <th:block th:if="${#lists.size(exhibition.imageList) >= start}"> <!-- 썸네일 없는 경우 -->
                                             <h5>업로드 이미지</h5>
                                             <div class="img-box">
                                                 <th:block th:each="i : ${#numbers.sequence(0, #lists.size(exhibition.imageList)-1, 1)}">
-                                                    <div class="exhibitionImg" th:with="path=|${exhibition.imageList[i].imgPath}${exhibition.imageList[i].imgOrig}|"> <!-- 변수에 담아두고 div태그 안에서 쓴다  -->
+                                                    <div class="exhibitionImg" th:with="path=|${exhibition.imageList[i].imgPath}${exhibition.imageList[i].imgOrig}|"> 
                                                         <!-- [ [${path}] ] -->
                                                         <img th:src="${path}">
                                                         <a th:href="${path}"
@@ -118,7 +112,8 @@
                         <div class="section-container right" id="sectionContainerRight">
                             <div class="section-container-right top">
                                 <span class="exhibition-detail-create-date">
-                                    <p> <span>작성일</span> [[*{exhibitCreateDate}]] </p>     
+                                    <p th:unless="*{exhibitUpdateDate}"> 
+                                        <span>작성일</span> [[*{exhibitCreateDate}]] </p>     
                     
                                     <!-- 수정한 게시글인 경우 -->
                                     <p th:if="*{exhibitUpdateDate}"> 
@@ -170,32 +165,36 @@
                                     </div>
                                     <!-- 입장료 -->
                                     <div class="exhibition-info charge">
-                                        <span th:if="*{exhibitCharge}" th:text="|입장료: *{exhibitCharge}|">입장료</span><span th:unless="*{exhibitCharge}" th:text="'입장료:TBA'">입장료: TBA</span>
+                                        <span th:if="*{exhibitCharge}" th:text="|입장료(원): *{exhibitCharge}|">입장료</span>
+                                        <span th:unless="*{exhibitCharge}" th:text="'입장료(원):TBA'">입장료: TBA</span>
                                     </div>
 
                                     <div class="sec-right-div2 btn-wrapper">
                                         <div class="exhibition-detail-btn-purchase">
-                                            <form th:action="@{/payment/pay}" method="post">
+                                            
+                                                <form th:action="@{/payment/pay}" method="post">
 
-                                                <input type="hidden" name="boardNo" th:value="*{exhibitNo}" />
-                                                <input type="hidden" name="memberNo" th:value="*{memberNo}" />
-                                                <input type="hidden" name="showTitle" th:value="'showTitle info not available'" />
-                                                <input type="hidden" name="showName" th:value="*{exhibitTitle}" />
-                                                
-                                                <input th:unless="*{exhibitDate}" type="hidden" name="showDate" th:value="'showDate info not available'" />
-                                                <input th:if="*{exhibitDate}" type="hidden" name="showDate" th:value="*{exhibitDate}" />
-                                                <input type="hidden" name="showPlace" th:value="*{exhibitInstitution}" />
-                                                <input type="hidden" name="memberNickname" th:value="*{memberNickname}" />
-                                                <input type="hidden" name="memberTel" th:value="*{memberTel}" />
-                                                <input type="hidden" name="memberEmail" th:value="*{memberEmail}" />
-                                                <input type="hidden" name="eventType" th:value="'exhibition'" />
-                                                <input type="hidden" name="PriceType" th:value="'exhibition: price-type info NA'" />
-                                                <input type="hidden" name="Price" th:value="*{exhibitCharge}" />
-                                                <!-- exhibitCharge=7777777: 관람료 정보 비정상/알기 어려운 경우에 assign된 값 -->
-                                                <!-- <button id="purchaseBtn" th:attr="*{exhibitCharge} == 7777777 ? 'disabled' : null">예매하기</button> -->
-                                                <button type="submit" id="purchaseBtn" >예매하기</button>
-                                            </form>
-
+                                                    <input type="hidden" name="boardNo" th:value="*{exhibitNo}" />
+                                                    <input type="hidden" name="memberNo" th:value="*{memberNo}" />
+                                                    <input type="hidden" name="showTitle" th:value="'showTitle info not available'" />
+                                                    <input type="hidden" name="showName" th:value="*{exhibitTitle}" />
+                                                    
+                                                    <input th:unless="*{exhibitDate}" type="hidden" name="showDate" th:value="'showDate info not available'" />
+                                                    <input th:if="*{exhibitDate}" type="hidden" name="showDate" th:value="*{exhibitDate}" />
+                                                    <input type="hidden" name="showPlace" th:value="*{exhibitInstitution}" />
+                                                    <input type="hidden" name="memberNickname" th:value="*{memberNickname}" />
+                                                    <input type="hidden" name="memberTel" th:value="*{memberTel}" />
+                                                    <input type="hidden" name="memberEmail" th:value="*{memberEmail}" />
+                                                    <input type="hidden" name="eventType" th:value="'exhibition'" />
+                                                    <input type="hidden" name="PriceType" th:value="'exhibition: price-type info NA'" />
+                                                    <input type="hidden" name="Price" th:value="*{exhibitCharge}" />
+                                                    <!-- exhibitCharge=7777777: 관람료 정보 비정상/알기 어려운 경우에 assign된 값 -->
+                                                    <!-- <button id="purchaseBtn" th:attr="*{exhibitCharge} == 7777777 ? 'disabled' : null">예매하기</button> -->
+                                                    <th:block th:if="${session.loginMember?.memberNo == exhibition.memberNo}">
+                                                        <button type="submit" id="purchaseBtn" >예매하기</button>
+                                                    </th:block>
+                                                </form>
+                                            
 
                                         </div>
                                     </div>
@@ -240,21 +239,19 @@
     </div>
     
     <div th:replace="common/footer :: footer"></div>
-    <!-- footer.html 추가 -->
-    <!-- <th:block th:replace="~{common/footer}">footer.html</th:block> -->
+    <!-- footer.html -->
 
 
-    <script th:inline="javascript"> // exhibitionDetail.js처럼 JS에서 사용할 전역 변수들을 선언~~
+    <script th:inline="javascript"> 
 
+        const loginMemberNo = /*[[${session.loginMember.memberNo}] ]*/ "로그인한 회원 번호"; 
+        const memberNickname = /*[[${session.loginMember.memberNickname}] ]*/ "로그인한 회원 닉네임"; // 로그인 했을 경우 (로그인 안했으면 Null로 되어 빈문자열 )
 
-        const loginMemberNo = /*[[${session.loginMember.memberNo}]]*/ "로그인한 회원 번호"; 
-        const memberNickname = /*[[${session.loginMember.memberNickname}]]*/ "로그인한 회원 닉네임"; 
-
-        if(loginMemberNo == null) loginMemberNo = ""; // 들어가는 값이 없으면 대신 빈칸을 넣어준다 (아래 exhibitionDetail.js에서 ""로 받아서 처리)
+        if(loginMemberNo == null) loginMemberNo = ""; // 로그인 안했을 경우; 
 
         const exhibitNo =  /*[[${exhibition.exhibitNo}]]*/ "게시글 번호";
 
-        const communityCode =  /*[[${communityCode}]]*/ "게시글 코드"; // exhibitionCode === boardCode === communityCode 우리경우
+        const communityCode =  /*[[${communityCode}]]*/ "게시글 코드"; 
 
         const exhibitTitle =  /*[[${exhibition.exhibitTitle}]]*/ "게시글 제목";
         

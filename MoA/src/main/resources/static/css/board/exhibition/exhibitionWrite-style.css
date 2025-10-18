@@ -1,5 +1,4 @@
 /* section, div{ border : 1px solid black;}  */
-/* 요소 영역 확인용 */
 
 /* === 전체 초기화 및 공통 설정 === */
 *,
@@ -24,6 +23,9 @@ html, body {
     flex-direction: column;
     min-height: 100vh;
     background-color: #f9f9f9;
+
+    /* 헤더와 공간 두기 */
+    margin-top: 80px;
 }
 
 .main-header,
@@ -133,7 +135,8 @@ html, body {
 
 
 .section-container{
-    background-color: #ddd;
+
+    background: linear-gradient(to bottom, #d9d9d9, white);
 } 
 
 .section-container.left {
@@ -250,15 +253,15 @@ html, body {
     font-weight: bold;
     border: 0;
 
-    background-color: #455ba8;
+    background-color: #27374d;
     color : white;
     cursor: pointer;
 }
 
 #purchaseBtn:hover{
     background-color: white;
-    color : #455ba8;
-    border: 2px solid #455ba8;
+    color : #27374d;
+    border: 2px solid #27374d;
 }
 
 #chatbotBtn{
@@ -267,15 +270,15 @@ html, body {
     font-weight: bold;
     border: 0;
 
-    background-color: #455ba8;
+    background-color: #27374d;
     color : white;
     cursor: pointer;
 }
 
 #chatbotBtn:hover{
     background-color: white;
-    color : #455ba8;
-    border: 2px solid #455ba8;
+    color : #27374d;
+    border: 2px solid #27374d;
 }
 
 
@@ -427,27 +430,6 @@ h3.required{
 
 
 
-/* 주요 배경 색깔 지정 */
-.bg-color {
-    background-color: #ddd;
-}
-
-.sec-left-div2.exhibition-description.bg-color{
-    background-color: #ddd;
-}
-
-.sec-left-div1.exhibition-image.bg-color{
-    background-color: #ddd;
-}
-
-.sec-right-div1.exhibition-lines.bg-color{
-    background-color: #ddd;
-}
-
-.sec-right-div3.exhibition-placeholder.bg-color{
-    background-color: #ddd;
-}
-
 .placeholder-area1{
     background-color: white;
 }
@@ -479,7 +461,6 @@ h3.required{
 }
 
 .sec-right-div1.exhibition-lines span{
-    /* width: 120px; */
     width: 100%;
     display: inline-block;
     font-weight: bold;
@@ -552,7 +533,7 @@ h3.required{
     height: 30px;
     font-weight: bold;
     border: 0;
-    background-color: #455ba8;
+    background-color: #27374d;
     color : white;
 
     cursor: pointer;
@@ -560,8 +541,8 @@ h3.required{
 
 .content-bottom-btn-wrapper button:hover{
     background-color: white;
-    color : #455ba8;
-    border: 2px solid #455ba8;
+    color : #27374d;
+    border: 2px solid #27374d;
 }
 
 

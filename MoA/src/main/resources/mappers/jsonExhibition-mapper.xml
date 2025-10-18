@@ -72,10 +72,6 @@
 	
 	
 	<!-- Like DTO에 대한 resultMap -->
-	<!-- 2개 이상의 <id> 태그를 쓰는 경우, 복합키(composite key) 로 해석.
-		복합키는 2개 이상의 컬럼을 합쳐서 하나의 고유한 식별자로 사용하는 경우를 말함.
-		예: boardNo + memberNo 조합이 테이블 내에서 유일하다면, 이 둘을 복합키로 간주
-	-->
 	<resultMap type="LikeDB" id="like_rm">
 		<id property="boardNo" column="BOARD_NO" />
 		<id property="memberNo" column="MEMBER_NO" />
@@ -104,11 +100,9 @@
 			DEFAULT, NULL,
 			#{boardCount}, DEFAULT, #{memberNo}, #{communityCode}, DEFAULT)
 	</insert>
-	<!--		TO_DATE(#{bCreateDate}, 'YYYY-MM-DD HH24:MI:SS'), NULL,
-				NULL, NULL, -->
 
 
-	<!-- json 데이터 BOARD 테이블에 insert: boardNo는 SEQ_BOARD_NO 써서 입력, sql문으로 CREATE SEQUENCE SEQ_IMG_NO START WITH 700 NOCACHE; 시퀀스생성 필수  -->
+	<!-- json 데이터 BOARD 테이블에 insert: boardNo는 SEQ_BOARD_NO  -->
 	<insert id="jsonBoardInsertViaSelectKey" parameterType="BoardDB" useGeneratedKeys="true">
 	    <selectKey resultType="_int" keyProperty="boardNo" order="BEFORE">
 	        SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
@@ -121,12 +115,10 @@
 		DEFAULT, NULL,
 		DEFAULT, DEFAULT, #{memberNo}, #{communityCode}, DEFAULT)
 	</insert>
-	<!-- TO_DATE(#{bCreateDate}, 'YYYY-MM-DD HH24:MI:SS'), NULL,
-	     NULL, NULL, -->
-	
+
 	
 	<!-- json 데이터 BOARD_IMG 테이블에 insert -->
-	<insert id="jsonBoardImgInsert" parameterType="list"> <!-- 전달받은 파라미터 타입은 "list" -->
+	<insert id="jsonBoardImgInsert" parameterType="list"> 
 		INSERT INTO BOARD_IMG (IMG_NO, IMG_PATH, IMG_RENAME, IMG_ORIG, IMG_ORDER, BOARD_NO)
 		SELECT SEQ_BOARD_IMG_NO.NEXTVAL, A.*
 		FROM (
@@ -145,7 +137,6 @@
 	
 	
 	<!-- json 데이터 EXHIBITION 테이블에 insert하기위해, InstitutionNo를 INSTITUTION 테이블에서 조회 -->
-	<!-- <select id="jsonInstitutionSelect" resultType="map"> resultType="map"으로 되어있으면 Map을 return함-->
 	<select id="jsonInstitutionSelect" resultType="_int">
 		SELECT INSTITUTION_NO 
 		FROM INSTITUTION
@@ -153,7 +144,6 @@
 	</select>
 
 	<!-- json 데이터 EXHIBITION 테이블에 insert하기위해, genreNo를 GENRE 테이블에서 조회 -->
-	<!-- <select id="jsonGenreSelect" resultType="map"> resultType="map"으로 되어있으면 Map을 return함 -->
 	<select id="jsonGenreSelect" resultType="_int">
 		SELECT GENRE_NO 
 		FROM GENRE
@@ -174,7 +164,7 @@
 
 
 	<!-- json 데이터 AUTHOR 테이블에 insert -->
-	<insert id="jsonAuthorInsert" parameterType="list"> <!-- 전달받은 파라미터 타입은 "list" -->
+	<insert id="jsonAuthorInsert" parameterType="list"> 
 		INSERT INTO AUTHOR (AUTHOR_NO, AUTHOR_NAME, BOARD_NO)
 		SELECT SEQ_AUTHOR_NO.NEXTVAL, A.*
 		FROM (
@@ -190,7 +180,7 @@
 	
 
 	<!-- json 데이터 LIKE 테이블에 insert -->
-	<insert id="jsonLikeInsert" parameterType="list"> <!-- 전달받은 파라미터 타입은 "list" -->
+	<insert id="jsonLikeInsert" parameterType="list">
 		INSERT INTO "LIKE" (BOARD_NO, MEMBER_NO)
 		SELECT A.*
 		FROM (
@@ -204,15 +194,6 @@
 		) A
 	</insert>	
 	
-	<!-- 
-	<insert id="jsonLikeInsert">
-    	INSERT INTO "LIKE" (BOARD_NO, MEMBER_NO)
-    		VALUES
-    		<foreach collection="list" item="like" separator=",">
-        		(#{like.boardNo}, #{like.memberNo})
-    		</foreach>
-	</insert>
-	-->
 	
 	<!-- json 데이터 CONTRIBUTOR 테이블에 insert -->
 	<insert id="jsonContributorInsert" parameterType="ContributorDB">

@@ -13,7 +13,7 @@
 
 </head>
 <body>
-    <!-- [ [${exhibition}] ]  ok -->
+
     <div id="page-wrapper">
 
         <main>
@@ -50,8 +50,7 @@
                                 <!-- 프로필 이미지가 없는 경우 기본 이미지 -->
                                 <img th:unless="*{profileImage}" th:src="@{/images/board/exhibition/member/user.png}">
                                 <!-- 프로필 이미지가 있는 경우 회원 프로필이미지에서 꺼내오기 -->
-                                <img th:if="*{profileImage}" th:src="@{*{profileImage}}">  <!-- 위에서  th:object="${exhibition} 으로 선언한 exhibition변수에서 가져온다 -->
-                                <!-- [ [*{profileImage}] ]   ok -->
+                                <img th:if="*{profileImage}" th:src="@{*{profileImage}}">  
 
                                 <span class="exhibition-detail-writer" th:text="*{memberNickname}">
                                     회원닉네임
@@ -73,7 +72,6 @@
                                         <!-- 이미지가 있을 경우: 우선 thumbnail이미지가 있는 경우 => 전시의 경우는 이거 무시 -->
                                         <th:block th:if="${#lists.size(exhibition.imageList) > 0 }">
                                             <th:block th:if="${thumbnail}">
-                                                <!-- [ [|${thumbnail.imagePath}${thumbnail.imageOriginal}|] ] -->
 
                                                 <h5>썸네일</h5>
                                                 <div class="img-box">
@@ -225,17 +223,17 @@
     <!-- <th:block th:replace="~{common/footer}">footer.html</th:block> -->
 
 
-    <script th:inline="javascript"> // exhibitionDetail.js처럼 JS에서 사용할 전역 변수들을 선언~~
+    <script th:inline="javascript"> // e전역 변수들
 
 
         const loginMemberNo = /*[[${session.loginMember.memberNo}]]*/ "로그인한 회원 번호"; 
         const memberNickname = /*[[${session.loginMember.memberNickname}]]*/ "로그인한 회원 닉네임"; 
 
-        if(loginMemberNo == null) loginMemberNo = ""; // 들어가는 값이 없으면 대신 빈칸을 넣어준다 (아래 exhibitionDetail.js에서 ""로 받아서 처리)
+        if(loginMemberNo == null) loginMemberNo = ""; // 들어가는 값이 없으면 대신 빈칸
 
         const exhibitNo =  /*[[${exhibition.exhibitNo}]]*/ "게시글 번호";
 
-        const exhibitionCode =  /*[[${exhibitionCode}]]*/ "게시글 코드"; // exhibitionCode === boardCode === communityCode 우리경우
+        const exhibitionCode =  /*[[${exhibitionCode}]]*/ "게시글 코드"; 
 
         const exhibitTitle =  /*[[${exhibition.exhibitTitle}]]*/ "게시글 제목";
         

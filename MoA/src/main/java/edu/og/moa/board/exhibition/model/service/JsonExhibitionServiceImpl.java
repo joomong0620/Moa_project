@@ -30,7 +30,6 @@ public class JsonExhibitionServiceImpl implements JsonExhibitionService {
 		// 제목만 XSS 방지처리:
 		board.setBoardTitle(Util.XSSHandling(board.getBoardTitle() ) ); // title 변환시킨후 DB에 저장 ==> 타이틀을 읽어야하는 태그가 .html에 있기 때문
 
-		//int boardNo = mapper.boardInsert(board); // 이거 성공해도 아직 commit하면 않됨 by @Transactional()		
 		int result = mapper.jsonBoardInsert(board); // 이거 성공해도 아직 commit하면 않됨 by @Transactional()
 		
 		return result;
@@ -40,9 +39,8 @@ public class JsonExhibitionServiceImpl implements JsonExhibitionService {
 	@Override
 	public int jsonBoardInsertViaSelectKey(BoardDB board) throws IllegalStateException, IOException {
 		// 제목만 XSS 방지처리:
-		board.setBoardTitle(Util.XSSHandling(board.getBoardTitle() ) ); // title 변환시킨후 DB에 저장 ==> 타이틀을 읽어야하는 태그가 .html에 있기 때문
+		board.setBoardTitle(Util.XSSHandling(board.getBoardTitle() ) ); 
 		
-		//int boardNo = mapper.boardInsert(board); // 이거 성공해도 아직 commit하면 않됨 by @Transactional()		
 		int boardNo = mapper.jsonBoardInsertViaSelectKey(board); // 이거 성공해도 아직 commit하면 않됨 by @Transactional()
 		
 		boardNo = board.getBoardNo();

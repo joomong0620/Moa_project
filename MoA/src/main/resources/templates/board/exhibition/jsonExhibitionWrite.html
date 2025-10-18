@@ -11,7 +11,7 @@
     <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- [ [${exhibition}] ]  ok -->
+
     <div id="page-wrapper">
 
         <main>
@@ -20,7 +20,7 @@
             <header class="main-header">header</header>
             <!-- header.html 조각(fragment)을 얻어와서 추가하기 -->
             <!-- <th:block th:replace="~{/common/header}">header.html</th:block> -->
-   
+
             <!-- 네비케이션 -->
             <nav class="main-nav"></nav>
             <!--  ###################################################### -->
@@ -77,8 +77,7 @@
                                                 <div class="img-box">
                                                     <th:block th:if="${start == 0}">
                                                         <!-- start == 0 이면 imageList에 0번째 원소 있는 것 보장 -->
-                                                        <div class="exhibitionImg upload" th:with="path=|${imageList[0].imagePath}${imageList[0].imageOriginal}|"> 
-                                                            <!-- [ [${path}] ]    값이 nullnull -->                                     
+                                                        <div class="exhibitionImg upload" th:with="path=|${imageList[0].imagePath}${imageList[0].imageOriginal}|">                                     
                                                             <span class="delete-image-upload">&times;</span>
                                                             <label for="img1">
                                                                 <img class="preview" src="">
@@ -232,31 +231,17 @@
     <!-- footer.html 추가 -->
     <!-- <th:block th:replace="~{common/footer}">footer.html</th:block> -->
 
-    <script th:inline="javascript"> // exhibitionDetail.js처럼 JS에서 사용할 전역 변수들을 선언
+    <script th:inline="javascript"> // 전역 변수들
 
         const loginMemberNo = /*[[${session.loginMember.memberNo}]]*/ "로그인한 회원 번호"; // 
 
         const memberNickname = /*[[${session.loginMember.memberNickname}]]*/ "로그인한 회원 닉네임"; // 로그인 했을 경우 (로그인 안했으면 Null로 되어 빈문자열 )
 
-        if(loginMemberNo == null) loginMemberNo = ""; // 들어가는 값이 없으면 대신 빈칸(아래 exhibitionDetail.js에서 ""로 받아서 처리)
+        if(loginMemberNo == null) loginMemberNo = ""; // 들어가는 값이 없으면 대신 빈칸
 
-        const exhibitionCode =  /*[[${exhibitionCode}]]*/ "게시글 코드"; // exhibitionCode === boardCode === communityCode 우리경우
+        const exhibitionCode =  /*[[${exhibitionCode}]]*/ "게시글 코드"; 
         
     </script>
-
-    <script th:inline="javascript">
-        console.log("preview 이미지 path 얻기위한 변수선언부분, 전시게시글등록과는 관계없음. controller쪽에서 thumbnail, imageList다 생성해야하므로... ");
-
-        // 타임리프로 얻어온 자바의 자료형을 JS 자료형으로 변환
-
-        //const imageList = /*[ [${exhibition.imageList}] ]*/ [];    // "자료형" 배열 [] 을 써주면, 설명에서 배열로 나온다
-                                                            // ex) 0, 3, 4 번째 이미지 
-        //const previewList = document.querySelectorAll("img.preview");
-        //for (let img of imageList) {
-        //    previewList[img.imageOrder].src = img.imagePath + img.imageOriginal; // imageOrder: 인덱스로 활용 // imageOriginal, imagePath
-        //}
-    </script>
-
 
     <script th:src="@{/js/board/exhibition/exhibitionUpdate.js}"></script>
 

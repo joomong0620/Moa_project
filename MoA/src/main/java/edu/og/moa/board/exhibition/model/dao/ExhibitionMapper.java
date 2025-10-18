@@ -26,9 +26,6 @@ public interface ExhibitionMapper {
 	// 전시게시글 상세조회 
 	public Exhibition selectExhibition(Map<String, Object> map);
 	
-	// public List<BoardImgDB> selectImageList(); // Exhibition DTO select시에 그안에서 implicit하게 수행되므로 여기서 선언하면 안됨
-	// public List<AuthorDB> selectAuthorList(); // Exhibition DTO select시에 그안에서 implicit하게 수행되므로 여기서 선언하면 안됨	
-	
 	// DB 이미지(파일) 목록 조회
 	public List<String> selectImageListAll();
 

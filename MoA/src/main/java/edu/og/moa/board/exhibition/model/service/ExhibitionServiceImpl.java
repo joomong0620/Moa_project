@@ -66,7 +66,6 @@ public class ExhibitionServiceImpl implements ExhibitionService{
 		// String timeToCompare = "2025-10-13"; // 특정날짜를 지정하고 싶을때...
 		String timeToCompare = null;
 		if (timeToCompare == null) {
-			// java.util.Date
 			Date curTime = new Date(); // [요일] [월] [일] [시:분:초] [타임존] [연도]형식, 예시) Tue Oct 14 15:52:30 KST 2025 (내부적으로는 long millis -> 밀리초 단위 timestamp)
 	        timeToCompare = sdf.format(curTime);  // String 객체
 		} 

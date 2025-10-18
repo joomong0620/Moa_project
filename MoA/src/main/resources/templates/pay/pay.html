@@ -25,7 +25,7 @@
             <div class="booking-info">
               <img th:src="@{/images/common/perf1.jpg}" alt="포스터" />
               <div class="info-text">
-                <p class="title" id="showTitle" th:text="${ticketingInfo.showTitle}">뮤지컬 렌트</p>
+                <p class="title" id="showTitle" th:text="${ticketingInfo.showName}">뮤지컬 렌트</p>
                 <p>공연/전시명 : <span id="showName" th:text="${ticketingInfo.showName}">뮤지컬 렌트</span></p>
                 <p>일시 : <span id="showDate" th:text="${ticketingInfo.showDate}">2025년 10월 5일 (토) 19:00</span></p>
                 <p>장소 : <span id="showPlace" th:text="${ticketingInfo.showPlace}">○○아트센터 대극장</span></p>
@@ -37,12 +37,12 @@
           <div class="section-block">
             <h3><span class="circle-number">2</span> 결제 옵션</h3>
             <select id="seatSelect">
-              <option value="">좌석을 선택해주세요.</option>
-              <option value="무료" data-price="0" th:if="${ticketingInfo.eventType == 'exhibition'}">무료</option>
-              <option th:each="p : ${priceList}"
-                th:value="${p.pmPriceType}"
-                th:data-price="${p.pmPrice}"
-                th:text="|${p.pmPriceType}, ${#numbers.formatInteger(p.pmPrice, 3, 'COMMA')}원|">
+              <option th:if="${ticketingInfo.eventType == 'exhibition'}"
+              th:value="${ticketingInfo.price != null && ticketingInfo.price != '0' ? '전시 일반권' : '무료'}"
+              th:data-price="${ticketingInfo.price != null && ticketingInfo.price != '0' ? ticketingInfo.price : 0}"
+              th:text="${ticketingInfo.price != null && ticketingInfo.price != '0' ?
+                        '전시 일반권, ' + #numbers.formatInteger(ticketingInfo.price, 3, 'COMMA') + '원' :
+                        '무료'}">
               </option>
             </select>
           </div>

@@ -10,7 +10,7 @@ document.getElementById("free-write")?.addEventListener("click", ()=>{
 
     // location.href = '주소' : 해당 주소로 요청(GET 방식)
 
-    location.href = `/board2/${location.pathname.split("/")[2]}/insert`;
+    location.href = `/board2/free/${location.pathname.split("/")[2]}/insert`;
                     // /board2/2/insert
 
                     console.log(location.pathname.split("/"));

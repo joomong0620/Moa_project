@@ -137,6 +137,13 @@ public interface ExhibitionMapper2 {
 	public int updateContributorDB(ContributorDB contributor);
 
 
+	/** AUTHOR DB 에서 AUTHOR_NO 조회
+	 * @param boardNo
+	 * @return 조회된 AuthorNo List (최소하나, null: default)
+	 */
+	public List<Integer> selectAuthorNo(int boardNo);
+
+
 
 
 

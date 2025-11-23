@@ -34,20 +34,21 @@ MOA Stage는 공연과 전시 정보를 한눈에 보고, 예매부터 리뷰까
 - 게시글 상세 페이지 내 좋아요, 댓글 작성 기능 지원
 
 
-#### 알림
+#### 알림 - [상세 보기 - WIKI 이동](https://github.com/joomong0620/Moa_project/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C(%EC%95%8C%EB%A6%BC))
 - 좋아요·댓글 발생 시 실시간 알림 전송
 - 클릭 시 관련 게시글로 바로 이동
 - 읽음 여부 시각화 및 알림 개별 삭제 기능
 
   
-#### 마이페이지
+#### 마이페이지 - [상세 보기 - WIKI 이동](https://github.com/joomong0620/Moa_project/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C(%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80))
 - 프로필 이미지 및 닉네임 변경
 - 주소 API(Daum Postcode) 연동 후 DB 저장
 - 예매 내역 조회 및 페이지 이동
 - 예매 취소 및 상태 변경
 - 예매 내역 기반 리뷰 작성
 
-#### 채팅
+#### 채팅 - [상세 보기 - WIKI 이동](https://github.com/joomong0620/Moa_project/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C(%EC%B1%84%ED%8C%85)
+)
 - 개인 및 팀 단위 채팅방 생성 (닉네임 검색)
 - 메시지 입력·전송 및 읽음 알림 표시
 - 팀 채팅 시 다수 인원 그룹 대화 지원

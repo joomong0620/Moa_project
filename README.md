@@ -47,8 +47,8 @@ MOA Stage는 공연과 전시 정보를 한눈에 보고, 예매부터 리뷰까
 - 예매 취소 및 상태 변경
 - 예매 내역 기반 리뷰 작성
 
-#### 채팅 - [상세 보기 - WIKI 이동](https://github.com/joomong0620/Moa_project/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C(%EC%B1%84%ED%8C%85)
-)
+#### 채팅 - [상세 보기 - WIKI 이동]((https://github.com/joomong0620/Moa_project/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C(%EC%B1%84%ED%8C%85)
+))
 - 개인 및 팀 단위 채팅방 생성 (닉네임 검색)
 - 메시지 입력·전송 및 읽음 알림 표시
 - 팀 채팅 시 다수 인원 그룹 대화 지원

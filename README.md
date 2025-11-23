@@ -28,10 +28,11 @@ MOA Stage는 공연과 전시 정보를 한눈에 보고, 예매부터 리뷰까
 - **ORM**: MyBatis
 
 ## 📌 주요 기능
-#### 자유게시판
+#### 자유게시판 - [상세 보기 - WIKI 이동](https://github.com/joomong0620/Moa_project/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C(%EC%9E%90%EC%9C%A0%EA%B2%8C%EC%8B%9C%ED%8C%90))
 - 게시글 목록 조회
 - 게시글 작성, 수정, 삭제, 조회 (CRUD)
 - 게시글 상세 페이지 내 좋아요, 댓글 작성 기능 지원
+
 
 #### 알림
 - 좋아요·댓글 발생 시 실시간 알림 전송
